@@ -6,6 +6,7 @@ import {
   useTheme,
   alpha,
 } from '@mui/material';
+import BrandingPanel from './components/BrandingPanel';
 import LoginFormHeader from './components/LoginFormHeader';
 import LoginForm from './components/LoginForm';
 
@@ -34,7 +35,7 @@ function App() {
         }}
       >
         <Box sx={{ display: 'flex', minHeight: 500 }}>
-          
+          <BrandingPanel />
           
           {/* Right Login Form */}
           <Box sx={{ flex: 1, padding: 4 }}>
