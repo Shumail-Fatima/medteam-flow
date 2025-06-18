@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import BrandingPanel from './components/BrandingPanel';
 import LoginFormHeader from './components/LoginFormHeader';
-import LoginForm from './components/LoginForm';
+import LoginForm from './pages/LoginFormPage';
 
 function App() {
   const theme = useTheme();

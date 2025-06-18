@@ -15,9 +15,9 @@ import {
 } from '@mui/icons-material';
 import type { LoginFormData } from '../types/Auth';
 import { loginValidationSchema } from '../validation/AuthValidation';
-import ControlledTextField from './ControlledTextField';
-import ControlledCheckbox from './ControlledCheckbox';
-import SubmitButton from './SubmitButton';
+import ControlledTextField from '../components/ControlledTextField';
+import ControlledCheckbox from '../components/ControlledCheckbox';
+import SubmitButton from '../components/SubmitButton';
 
 const LoginForm: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
