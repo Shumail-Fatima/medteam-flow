@@ -1,35 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+
+import {
+  Box,
+  Card,
+  CardContent,
+  useTheme,
+  alpha,
+} from '@mui/material';
+import LoginFormHeader from './components/LoginFormHeader';
+import LoginForm from './components/LoginForm';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const theme = useTheme();
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Box
+      sx={{
+        minHeight: '100vh',
+        background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.1)} 0%, ${alpha(theme.palette.secondary.main, 0.1)} 100%)`,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 2,
+      }}
+    >
+      <Card
+        elevation={24}
+        sx={{
+          maxWidth: 1000,
+          width: '100%',
+          borderRadius: 4,
+          overflow: 'hidden',
+          background: 'linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)',
+        }}
+      >
+        <Box sx={{ display: 'flex', minHeight: 500 }}>
+          
+          
+          {/* Right Login Form */}
+          <Box sx={{ flex: 1, padding: 4 }}>
+            <CardContent sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <LoginFormHeader />
+              <LoginForm />
+            </CardContent>
+          </Box>
+        </Box>
+      </Card>
+    </Box>
+  );
 }
 
-export default App
+export default App;
