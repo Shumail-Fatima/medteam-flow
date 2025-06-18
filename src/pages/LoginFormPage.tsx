@@ -18,10 +18,12 @@ import { loginValidationSchema } from '../validation/AuthValidation';
 import ControlledTextField from '../components/ControlledTextField';
 import ControlledCheckbox from '../components/ControlledCheckbox';
 import SubmitButton from '../components/SubmitButton';
+import { useAuth } from '../context/AuthContext';
 
 const LoginForm: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { login } = useAuth();
 
   const {
     control,
@@ -43,6 +45,14 @@ const LoginForm: React.FC = () => {
     setTimeout(() => {
       setIsLoading(false);
       console.log('Login attempt:', data);
+      const success = login(data.email, data.password);
+      if (success) {
+        // Redirect or show success
+        console.log('data = ', data);
+      } else {
+        // Show error
+        console.log('invalid user');
+      }
       // Here you would typically handle the login logic
     }, 2000);
   };

@@ -1,5 +1,6 @@
-import React, { createContext } from "react";
+import  { createContext, useContext, type ReactNode } from "react";
 import users from '../data/Users.json'
+import { useState } from "react";
 
 interface AuthUser{
     id: number;
@@ -17,3 +18,38 @@ interface AuthContextType{
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState<AuthUser | null>(null);
+
+  const login = (email: string, password: string) => {
+    const foundUser = users.find(
+      (u) => u.email === email && u.password === password
+    );
+    if (foundUser) {
+      setUser(foundUser);
+      return true;
+    }
+    return false;
+  };
+
+  const logout = () => setUser(null);
+
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        isAuthenticated: !!user,
+        login,
+        logout,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) throw new Error('useAuth must be used within AuthProvider');
+  return context;
+};
