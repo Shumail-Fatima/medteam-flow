@@ -48,7 +48,7 @@ const LoginForm: React.FC = () => {
       const success = login(data.email, data.password);
       if (success) {
         // Redirect or show success
-        console.log('data = ', data);
+        console.log('login success');
       } else {
         // Show error
         console.log('invalid user');
