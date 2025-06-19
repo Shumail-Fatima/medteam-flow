@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import {
   LocalHospital,
-  Security,
+  //Security,
 } from '@mui/icons-material';
 
 const BrandingPanel: React.FC = () => {

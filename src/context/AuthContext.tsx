@@ -1,7 +1,5 @@
 import  { createContext, useContext, type ReactNode } from "react";
 import { useState } from "react";
-import roles from '../data/Roles.json'
-import users from '../data/Users.json'
 import { getUserWithRole } from "../utils";
 
 interface AuthUser{

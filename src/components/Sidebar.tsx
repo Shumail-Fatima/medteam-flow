@@ -1,8 +1,9 @@
 // components/Sidebar.tsx
 
-import { Box, Icon, List, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material';
+import { Box, Icon, List, ListItem, ListItemButton /*, ListItemText */, Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+//import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+
 
 const navigations = [
   { label: 'User Management', path: '/admin/user-management', icon: <Icon>User</Icon> },
