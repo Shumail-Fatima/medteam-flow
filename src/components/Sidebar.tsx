@@ -4,7 +4,7 @@ import { Box, Icon, List, ListItem, ListItemButton, ListItemText, Typography } f
 import { NavLink } from 'react-router-dom';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 
-const categories = [
+const navigations = [
   { label: 'User Management', path: '/admin/user-management', icon: <Icon>User</Icon> },
   { label: 'Task Management', path: '/category/task-management', icon: <Icon>Task</Icon> },
   { label: 'Reports', path: '/category/reports', icon: <Icon>Report</Icon> },
@@ -17,7 +17,7 @@ const Sidebar = () => {
   return (
     <Box
       sx={{
-        width: 250,
+        width: 150,
         height: '100vh',
         bgcolor: 'primary.main', // MUI theme primary color (usually blue)
         color: 'white',
@@ -25,19 +25,19 @@ const Sidebar = () => {
       }}
     >
       <Typography variant="h6" sx={{ mb: 2 }}>
-        Categories
+        
       </Typography>
       <List>
-        {categories.map((category) => (
-          <ListItem key={category.label} disablePadding>
+        {navigations.map((navigation) => (
+          <ListItem key={navigation.label} disablePadding>
             <ListItemButton>
               <NavLink
-                    to={category.path}
+                    to={navigation.path}
                     className={({ isActive }) =>
                         isActive ? 'sidebar-link active' : 'sidebar-link'
                     }
                     >
-                    {category.label}
+                    {navigation.label}
                 </NavLink>
             </ListItemButton>
           </ListItem>
