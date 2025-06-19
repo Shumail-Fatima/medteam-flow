@@ -11,13 +11,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<LoginFormPage />} />
-        <Route 
-        path='/dashboard'
-        element={
-          <ProtectedRoute>
-            <DashboardPage />
-          </ProtectedRoute>
-        }/>
+
         <Route 
         path='/admin/user-management'
         element={

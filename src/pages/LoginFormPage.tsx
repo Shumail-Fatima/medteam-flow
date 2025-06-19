@@ -57,7 +57,7 @@ const LoginFormPage: React.FC = () => {
         console.log('Login successful');
         // You can redirect to the dashboard or show a success message here
         // For example, using React Router:
-        navigate('/dashboard'); 
+        navigate('/admin/user-management'); 
       } else {
         // Show error
         console.error('Login failed');
