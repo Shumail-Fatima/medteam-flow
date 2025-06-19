@@ -2,6 +2,7 @@ import  { createContext, useContext, type ReactNode } from "react";
 import { useState } from "react";
 import roles from '../data/Roles.json'
 import users from '../data/Users.json'
+import { getUserWithRole } from "../utils";
 
 interface AuthUser{
     id: number;
@@ -24,15 +25,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<AuthUser | null>(null);
 
   const login = (email: string, password: string) => {
-    const foundUser = users.find(
-      (u) => u.email === email && u.password === password
-    );
-    if (foundUser) {
-        const role = roles.find(r => r.id === foundUser.roleId);
-        setUser({
-            ...foundUser,
-            roleName: role ? role.name : 'Unknown Role'
-        });
+    const foundUser = getUserWithRole(email);
+    if (foundUser && foundUser.password === password) {
+        setUser({ ...foundUser });
       return true;
     }
     return false;
