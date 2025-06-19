@@ -1,16 +1,17 @@
 // components/Sidebar.tsx
 
-import { Box, List, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material';
+import { Box, Icon, List, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 
-const categories = [  
-  { label: 'User Management', path: '/admin/user-management' },
-  { label: 'Task Management', path: '/category/task-management' },
-  { label: 'Reports', path: '/category/reports' },
-  { label: 'Settings', path: '/category/settings' },
-  { label: 'Support', path: '/category/support' },
+const categories = [
+  { label: 'User Management', path: '/admin/user-management', icon: <Icon>User</Icon> },
+  { label: 'Task Management', path: '/category/task-management', icon: <Icon>Task</Icon> },
+  { label: 'Reports', path: '/category/reports', icon: <Icon>Report</Icon> },
+  { label: 'Settings', path: '/category/settings', icon: <Icon>Settings</Icon> },
+  { label: 'Support', path: '/category/support', icon: <Icon>Support</Icon> },
 ];
-// This is a sidebar component that lists categories with links to different pages.
+// This is a sidebar component that lists categories with links to different pages. change name of cateogry. can add icons in this
 
 const Sidebar = () => {
   return (
