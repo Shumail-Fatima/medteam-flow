@@ -1,8 +1,16 @@
 // components/Sidebar.tsx
 
 import { Box, List, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material';
+import { NavLink } from 'react-router-dom';
 
-const categories = ['Doctor', 'Admin', 'Nurse'];
+const categories = [  
+  { label: 'User Management', path: '/admin/user-management' },
+  { label: 'Task Management', path: '/category/task-management' },
+  { label: 'Reports', path: '/category/reports' },
+  { label: 'Settings', path: '/category/settings' },
+  { label: 'Support', path: '/category/support' },
+];
+// This is a sidebar component that lists categories with links to different pages.
 
 const Sidebar = () => {
   return (
@@ -20,9 +28,16 @@ const Sidebar = () => {
       </Typography>
       <List>
         {categories.map((category) => (
-          <ListItem key={category} disablePadding>
+          <ListItem key={category.label} disablePadding>
             <ListItemButton>
-              <ListItemText primary={category} sx={{ color: 'white' }} />
+              <NavLink
+                    to={category.path}
+                    className={({ isActive }) =>
+                        isActive ? 'sidebar-link active' : 'sidebar-link'
+                    }
+                    >
+                    {category.label}
+                </NavLink>
             </ListItemButton>
           </ListItem>
         ))}

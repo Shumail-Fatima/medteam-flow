@@ -70,6 +70,20 @@ button:focus-visible {
   gap: 16px;
 }
 
+.sidebar-link {
+  text-decoration: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 400;
+  display: block;
+}
+
+.sidebar-link.active {
+  background-color: #1976d2;
+  font-weight: 700;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
