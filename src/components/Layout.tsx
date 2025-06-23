@@ -34,7 +34,6 @@ interface LayoutProps {
 }
 
 const drawerItems = [
-  { text: 'Dashboard', icon: <DashboardIcon />, path: '/admin/dashboard' },
   { text: 'User Management', icon: <PeopleIcon />, path: '/admin/user-management' },
   { text: 'Task Management', icon: <AssignmentIcon />, path: '/admin/task-management' },
   { text: 'Reports', icon: <AssessmentIcon />, path: '/admin/reports' },
@@ -117,6 +116,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           '& .MuiDrawer-paper': {
             width: 280,
             bgcolor: '#f8fafc',
+            paddingTop: 8,
           }
         }}
       >
