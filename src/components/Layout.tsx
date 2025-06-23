@@ -6,7 +6,7 @@ import {
   Toolbar,
   Typography,
   IconButton,
-  Button,
+  //Button,
   List,
   ListItem,
   ListItemText,
@@ -14,6 +14,8 @@ import {
   ListItemIcon,
   Avatar,
   Divider,
+  useTheme,
+  useMediaQuery,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -48,6 +50,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { user, logout } = useAuth();
   const [anchorE1, setAnchorE1] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorE1);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorE1(event.currentTarget);
@@ -56,7 +61,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     setAnchorE1(null);
   }
 
-  const toggleDrawer = () => setDrawerOpen(!drawerOpen);
+  //const toggleDrawer = () => setDrawerOpen(!drawerOpen);
+  const toggleDrawer = () => setMobileOpen(!mobileOpen);
 
   const handleLogout = () => {
     logout();
@@ -65,85 +71,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   const handleNavigation = (path: string) => {
     navigate(path);
-    setDrawerOpen(false);
+    //setDrawerOpen(false);
+    if (isMobile) setMobileOpen(false);
   };
 
-  return (
-    <Box sx={{ display: 'flex' }}>
-      <AppBar 
-        position="fixed" 
-        sx={{ 
-          zIndex: 1201,
-          background: 'linear-gradient(135deg, #1976d2 0%, #115293 100%)',
-        }}
-      >
-        <Toolbar>
-          <IconButton 
-            color="inherit" 
-            edge="start" 
-            onClick={toggleDrawer}
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          
-          <LocalHospital sx={{ mr: 1 }} />
-          <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 600 }}>
-            MedCare Pro 
-          </Typography>
-          
-          {/* from here till toolbar tag is for adding a dropdown/menu from the user 
-          icon on header. also has logout as a menu option */}
-          <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
-            <IconButton onClick={handleMenuOpen} sx={{ p: 0 }}>
-              <Avatar sx={{ width: 32, height: 32, bgcolor: 'rgba(255,255,255,0.2)' }}>
-                {user?.name.charAt(0).toUpperCase()}
-              </Avatar>
-            </IconButton>
-            <Typography variant="body2" sx={{ ml: 1, cursor: 'pointer' }}>
-              {user?.name}
-            </Typography>
-            <Menu
-              anchorEl={anchorE1}
-              open={open}
-              onClose={handleMenuClose}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-            >
-              <MenuItem disabled>
-                <Typography variant="body2" color="text.secondary">
-                  Role: <b>{user?.roleName?.toUpperCase()}</b>
-                </Typography>
-              </MenuItem>
-              <Divider />
-              <MenuItem onClick={() => { handleMenuClose(); handleLogout(); }}>
-                <LogoutIcon fontSize="small" sx={{ mr: 1 }} />
-                Logout
-              </MenuItem>
-            </Menu>
-          </Box>
-        </Toolbar>
-      </AppBar>
-
-      <Drawer 
-        anchor="left" 
-        open={drawerOpen} 
-        onClose={toggleDrawer}
-        sx={{
-          '& .MuiDrawer-paper': {
-            width: 280,
-            bgcolor: '#f8fafc',
-            paddingTop: 8,
-          }
-        }}
-      >
-        <Box sx={{ width: 280 }} role="presentation">
+  const drawerWidth = 280;
+  const drawerContent = (
+    <Box sx={{ width: 280 }} role="presentation">
           <Box sx={{ p: 3, bgcolor: 'primary.main', color: 'white' }}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <LocalHospital sx={{ fontSize: 32, mr: 1 }} />
@@ -213,7 +147,117 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             </List>
           </Box>
         </Box>
-      </Drawer>
+  );
+
+  return (
+    <Box sx={{ display: 'flex' }}>
+      <AppBar 
+        position="fixed" 
+        sx={{ 
+          zIndex: 1201,
+          background: 'linear-gradient(135deg, #1976d2 0%, #115293 100%)',
+        }}
+      >
+        <Toolbar>
+          <IconButton 
+            color="inherit" 
+            edge="start" 
+            onClick={toggleDrawer}
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon />
+          </IconButton>
+          
+          <LocalHospital sx={{ mr: 1 }} />
+          <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 600 }}>
+            MedCare Pro 
+          </Typography>
+          
+          {/* from here till toolbar tag is for adding a dropdown/menu from the user 
+          icon on header. also has logout as a menu option */}
+          <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
+            <IconButton onClick={handleMenuOpen} sx={{ p: 0 }}>
+              <Avatar sx={{ width: 32, height: 32, bgcolor: 'rgba(255,255,255,0.2)' }}>
+                {user?.name.charAt(0).toUpperCase()}
+              </Avatar>
+            </IconButton>
+            <Typography variant="body2" sx={{ ml: 1, cursor: 'pointer' }}>
+              {user?.name}
+            </Typography>
+            <Menu
+              anchorEl={anchorE1}
+              open={open}
+              onClose={handleMenuClose}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+            >
+              <MenuItem disabled>
+                <Typography variant="body2" color="text.secondary">
+                  Role: <b>{user?.roleName?.toUpperCase()}</b>
+                </Typography>
+              </MenuItem>
+              <Divider />
+              <MenuItem onClick={() => { handleMenuClose(); handleLogout(); }}>
+                <LogoutIcon fontSize="small" sx={{ mr: 1 }} />
+                Logout
+              </MenuItem>
+            </Menu>
+          </Box>
+        </Toolbar>
+      </AppBar>
+
+
+      {/* Drawer – Responsive */}
+      <Box
+        component="nav"
+        sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
+        /*sx={{
+          '& .MuiDrawer-paper': {
+            width: { md: drawerWidth },
+            bgcolor: '#f8fafc',
+            paddingTop: 8,
+            flexShrink: { md: 0 },
+          }
+        }}*/
+        aria-label="sidebar"
+      >
+        {/* Mobile Drawer */}
+        <Drawer
+          variant="temporary"
+          open={mobileOpen}
+          onClose={toggleDrawer}
+          ModalProps={{ keepMounted: true }}
+          sx={{
+            display: { xs: 'block', md: 'none' },
+            '& .MuiDrawer-paper': { width: drawerWidth },
+          }}
+        >
+          {drawerContent}
+        </Drawer>
+        
+         {/* Desktop Drawer */}
+        <Drawer
+          variant="permanent"
+          sx={{
+            display: { xs: 'none', md: 'block' },
+            '& .MuiDrawer-paper': {
+              width: drawerWidth,
+              boxSizing: 'border-box',
+              paddingTop: 8,
+            },
+          }}
+          open
+        >
+          {drawerContent}
+        </Drawer>
+      </Box>
+
 
       <Box 
         component="main" 
