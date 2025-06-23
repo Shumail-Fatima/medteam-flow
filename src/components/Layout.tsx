@@ -34,10 +34,10 @@ interface LayoutProps {
 
 const drawerItems = [
   { text: 'User Management', icon: <PeopleIcon />, path: '/admin/user-management' },
-  { text: 'Task Management', icon: <AssignmentIcon />, path: '/admin/task-management' },
-  { text: 'Reports', icon: <AssessmentIcon />, path: '/admin/reports' },
-  { text: 'Settings', icon: <SettingsIcon />, path: '/admin/settings' },
-  { text: 'Support', icon: <SupportIcon />, path: '/admin/support' },
+  { text: 'Task Management', icon: <AssignmentIcon />, path: '/task-management' },
+  { text: 'Reports', icon: <AssessmentIcon />, path: '/reports' },
+  { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
+  { text: 'Support', icon: <SupportIcon />, path: '/support' },
 ];
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {

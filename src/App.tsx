@@ -20,10 +20,10 @@ function App() {
           {/* Optionally wrap with Layout */}
           <Route element={<Layout> <Outlet /> </Layout>}>
             <Route path="/admin/user-management" element={<AdminUserManagement />} />
-            <Route path="/admin/task-management" element={<AdminTaskManagement />} />
-            <Route path="/admin/reports" element={<AdminReports />} />
-            <Route path="/admin/settings" element={<AdminSettings />} />
-            <Route path="/admin/support" element={<AdminSupport />} />
+            <Route path="/task-management" element={<AdminTaskManagement />} />
+            <Route path="/reports" element={<AdminReports />} />
+            <Route path="/settings" element={<AdminSettings />} />
+            <Route path="/support" element={<AdminSupport />} />
             {/* Add more nested protected routes here */}
           </Route>
         </Route>
