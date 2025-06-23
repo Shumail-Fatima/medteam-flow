@@ -44,7 +44,7 @@ const drawerItems = [
 ];
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const [drawerOpen, setDrawerOpen] = React.useState(false);
+  //const [drawerOpen, setDrawerOpen] = React.useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useAuth();

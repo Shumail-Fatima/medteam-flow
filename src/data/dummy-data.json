@@ -1,0 +1,84 @@
+{
+  "patients": [
+    {
+      "id": "patient_1",
+      "name": "John Doe",
+      "age": 65,
+      "room": "101A"
+    },
+    {
+      "id": "patient_2",
+      "name": "Jane Smith",
+      "age": 72,
+      "room": "102B"
+    }
+  ],
+  "users": [
+    {
+      "id": "user_1",
+      "name": "Admin Alice",
+      "role": "admin"
+    },
+    {
+      "id": "user_2",
+      "name": "Dr. Gregory House",
+      "role": "doctor"
+    },
+    {
+      "id": "user_3",
+      "name": "Nurse Nancy",
+      "role": "nurse"
+    },
+    {
+      "id": "user_4",
+      "name": "Nurse Jack",
+      "role": "nurse"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task_1",
+      "title": "Administer Morning Medication",
+      "type": "Medication",
+      "status": "Pending",
+      "notes": "Give 5mg of Atorvastatin",
+      "patientId": "patient_1",
+      "assigneeId": "user_3",
+      "dueAt": "2025-06-23T09:00:00Z",
+      "createdBy": "user_1"
+    },
+    {
+      "id": "task_2",
+      "title": "Check Blood Pressure",
+      "type": "Vitals Check",
+      "status": "In Progress",
+      "notes": "Record systolic and diastolic values",
+      "patientId": "patient_2",
+      "assigneeId": "user_4",
+      "dueAt": "2025-06-23T10:30:00Z",
+      "createdBy": "user_2"
+    },
+    {
+      "id": "task_3",
+      "title": "Prep for Knee Surgery",
+      "type": "Procedure Prep",
+      "status": "Pending",
+      "notes": "Ensure patient is fasting and gown is ready",
+      "patientId": "patient_1",
+      "assigneeId": "user_3",
+      "dueAt": "2025-06-23T13:00:00Z",
+      "createdBy": "user_2"
+    },
+    {
+      "id": "task_4",
+      "title": "Consultation Follow-up: Diabetes",
+      "type": "Consultation Follow-up",
+      "status": "Done",
+      "notes": "Review insulin dosage and dietary habits",
+      "patientId": "patient_2",
+      "assigneeId": "user_2",
+      "dueAt": "2025-06-22T15:00:00Z",
+      "createdBy": "user_2"
+    }
+  ]
+}

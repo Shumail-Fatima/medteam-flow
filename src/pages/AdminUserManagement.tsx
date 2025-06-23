@@ -320,7 +320,7 @@ const AdminUserManagement: React.FC = () => {
         PaperProps={{ sx: { borderRadius: 3 } }}
       >
         <DialogTitle sx={{ pb: 1 }}>
-          <Typography variant="h6" fontWeight="bold">
+          <Typography variant="h6" component="span" fontWeight="bold">
             User Details
           </Typography>
         </DialogTitle>
@@ -410,7 +410,7 @@ const AdminUserManagement: React.FC = () => {
         PaperProps={{ sx: { borderRadius: 3 } }}
       >
         <DialogTitle>
-          <Typography variant="h6" fontWeight="bold" color="error">
+          <Typography variant="h6" component="span" fontWeight="bold" color="error">
             Confirm Delete
           </Typography>
         </DialogTitle>
