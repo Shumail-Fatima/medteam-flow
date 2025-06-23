@@ -270,6 +270,8 @@ const AdminUserManagement: React.FC = () => {
                       >
                         <Visibility fontSize="small" />
                       </IconButton>
+                      {user.roleName !== 'admin' &&(
+                        <>
                       <IconButton
                         onClick={() => handleEditUser(user)}
                         color="primary"
@@ -286,6 +288,7 @@ const AdminUserManagement: React.FC = () => {
                       >
                         <Delete fontSize="small" />
                       </IconButton>
+                      </>)}
                     </Box>
                   </TableCell>
                 </TableRow>
