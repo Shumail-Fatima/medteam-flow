@@ -25,6 +25,7 @@ import {
   Support as SupportIcon,
   LocalHospital,
 } from '@mui/icons-material';
+import {Menu, MenuItem} from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
@@ -38,7 +39,6 @@ const drawerItems = [
   { text: 'Reports', icon: <AssessmentIcon />, path: '/reports' },
   { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
   { text: 'Support', icon: <SupportIcon />, path: '/support' },
-  { text: 'Logout', icon: <LogoutIcon />, path: '/'},
 ];
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
@@ -46,6 +46,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useAuth();
+  const [anchorE1, setAnchorE1] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorE1);
+
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorE1(event.currentTarget);
+  }
+  const handleMenuClose = () => {
+    setAnchorE1(null);
+  }
 
   const toggleDrawer = () => setDrawerOpen(!drawerOpen);
 
@@ -83,16 +92,42 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             MedCare Pro 
           </Typography>
           
+          {/* from here till toolbar tag is for adding a dropdown/menu from the user 
+          icon on header. also has logout as a menu option */}
           <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
-            <Avatar sx={{ width: 32, height: 32, mr: 1, bgcolor: 'rgba(255,255,255,0.2)' }}>
-              {user?.name.charAt(0).toUpperCase()}
-            </Avatar>
-            <Typography variant="body2">
+            <IconButton onClick={handleMenuOpen} sx={{ p: 0 }}>
+              <Avatar sx={{ width: 32, height: 32, bgcolor: 'rgba(255,255,255,0.2)' }}>
+                {user?.name.charAt(0).toUpperCase()}
+              </Avatar>
+            </IconButton>
+            <Typography variant="body2" sx={{ ml: 1, cursor: 'pointer' }}>
               {user?.name}
             </Typography>
+            <Menu
+              anchorEl={anchorE1}
+              open={open}
+              onClose={handleMenuClose}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+            >
+              <MenuItem disabled>
+                <Typography variant="body2" color="text.secondary">
+                  Role: <b>{user?.roleName?.toUpperCase()}</b>
+                </Typography>
+              </MenuItem>
+              <Divider />
+              <MenuItem onClick={() => { handleMenuClose(); handleLogout(); }}>
+                <LogoutIcon fontSize="small" sx={{ mr: 1 }} />
+                Logout
+              </MenuItem>
+            </Menu>
           </Box>
-          
-          
         </Toolbar>
       </AppBar>
 
@@ -157,19 +192,26 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             ))}
           </List>
 
-          <Button 
-            color="inherit" 
-            startIcon={<LogoutIcon />}
-            onClick={handleLogout}
-            sx={{ 
-              borderRadius: 2,
-              '&:hover': {
-                bgcolor: 'rgba(255,255,255,0.1)',
-              }
-            }}
-          >
-            Logout
-          </Button>
+          {/* Sticky Logout at bottom
+          tried to move the logout to the bottom of sidebar */}
+          <Box sx={{ mt: 'auto' }}>
+            <List>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={handleLogout}
+                  sx={{
+                    color: 'error.main',
+                    '&:hover': { bgcolor: 'error.light', color: 'white' }
+                  }}
+                >
+                  <ListItemIcon sx={{ color: 'error.main' }}>
+                    <LogoutIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Logout" />
+                </ListItemButton>
+              </ListItem>
+            </List>
+          </Box>
         </Box>
       </Drawer>
 

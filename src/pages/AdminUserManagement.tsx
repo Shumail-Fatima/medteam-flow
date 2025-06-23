@@ -270,7 +270,9 @@ const AdminUserManagement: React.FC = () => {
                       >
                         <Visibility fontSize="small" />
                       </IconButton>
-                      {user.roleName !== 'admin' &&(
+                      {/*admins can only delete doctor or nurse users not admin users*/
+                      
+                      user.roleName !== 'admin' &&(
                         <>
                       <IconButton
                         onClick={() => handleEditUser(user)}
