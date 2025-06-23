@@ -38,6 +38,7 @@ const drawerItems = [
   { text: 'Reports', icon: <AssessmentIcon />, path: '/reports' },
   { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
   { text: 'Support', icon: <SupportIcon />, path: '/support' },
+  { text: 'Logout', icon: <LogoutIcon />, path: '/'},
 ];
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
@@ -79,7 +80,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           
           <LocalHospital sx={{ mr: 1 }} />
           <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 600 }}>
-            MedCare Pro - Admin Dashboard
+            MedCare Pro 
           </Typography>
           
           <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
@@ -91,19 +92,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             </Typography>
           </Box>
           
-          <Button 
-            color="inherit" 
-            startIcon={<LogoutIcon />}
-            onClick={handleLogout}
-            sx={{ 
-              borderRadius: 2,
-              '&:hover': {
-                bgcolor: 'rgba(255,255,255,0.1)',
-              }
-            }}
-          >
-            Logout
-          </Button>
+          
         </Toolbar>
       </AppBar>
 
@@ -167,6 +156,20 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               </ListItem>
             ))}
           </List>
+
+          <Button 
+            color="inherit" 
+            startIcon={<LogoutIcon />}
+            onClick={handleLogout}
+            sx={{ 
+              borderRadius: 2,
+              '&:hover': {
+                bgcolor: 'rgba(255,255,255,0.1)',
+              }
+            }}
+          >
+            Logout
+          </Button>
         </Box>
       </Drawer>
 
