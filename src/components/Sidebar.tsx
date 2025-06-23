@@ -1,5 +1,3 @@
-// components/Sidebar.tsx
-
 import { Box, Icon, List, ListItem, ListItemButton /*, ListItemText */, Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 //import PeopleAltIcon from '@mui/icons-material/PeopleAlt';

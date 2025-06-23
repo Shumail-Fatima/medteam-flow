@@ -26,8 +26,6 @@ import {
   LocalHospital,
   People,
 } from '@mui/icons-material';
-//import { UserFormData, User } from '../types/auth';
-//import { UserFormData, User } from '../types/auth';
 import type { UserFormData } from '../types/Auth';
 import type { User } from '../types/Auth';
 import rolesData from '../data/Roles.json';

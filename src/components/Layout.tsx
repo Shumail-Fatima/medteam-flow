@@ -18,7 +18,6 @@ import {
 import {
   Menu as MenuIcon,
   Logout as LogoutIcon,
-  Dashboard as DashboardIcon,
   People as PeopleIcon,
   Assignment as AssignmentIcon,
   Assessment as AssessmentIcon,

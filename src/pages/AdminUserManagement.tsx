@@ -19,9 +19,6 @@ import {
   DialogContentText,
   Alert,
   Snackbar,
-  Card,
-  CardContent,
-  Grid,
   Avatar,
 } from '@mui/material';
 import {
@@ -178,89 +175,7 @@ const AdminUserManagement: React.FC = () => {
           Manage healthcare professionals and their access permissions
         </Typography>
       </Box>
-    {/*}
-      <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} sm={6} md={3}>
-          <Card sx={{ borderRadius: 3 }}>
-            <CardContent>
-              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Box>
-                  <Typography variant="h4" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
-                    {stats.totalUsers}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Total Users
-                  </Typography>
-                </Box>
-                <Avatar sx={{ bgcolor: 'primary.main', width: 56, height: 56 }}>
-                  <People />
-                </Avatar>
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid>
-        
-        <Grid item xs={12} sm={6} md={3}>
-          <Card sx={{ borderRadius: 3 }}>
-            <CardContent>
-              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Box>
-                  <Typography variant="h4" sx={{ fontWeight: 'bold', color: 'error.main' }}>
-                    {stats.adminCount}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Administrators
-                  </Typography>
-                </Box>
-                <Avatar sx={{ bgcolor: 'error.main', width: 56, height: 56 }}>
-                  <AdminPanelSettings />
-                </Avatar>
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={3}>
-          <Card sx={{ borderRadius: 3 }}>
-            <CardContent>
-              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Box>
-                  <Typography variant="h4" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
-                    {stats.doctorCount}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Doctors
-                  </Typography>
-                </Box>
-                <Avatar sx={{ bgcolor: 'primary.main', width: 56, height: 56 }}>
-                  <LocalHospital />
-                </Avatar>
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={3}>
-          <Card sx={{ borderRadius: 3 }}>
-            <CardContent>
-              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Box>
-                  <Typography variant="h4" sx={{ fontWeight: 'bold', color: 'secondary.main' }}>
-                    {stats.nurseCount}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Nurses
-                  </Typography>
-                </Box>
-                <Avatar sx={{ bgcolor: 'secondary.main', width: 56, height: 56 }}>
-                  <People />
-                </Avatar>
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-      */}
+    
 
       {/* Action Button */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
