@@ -43,8 +43,7 @@ interface Props {
   role: Role;
   taskId?: string;
   onClose: () => void;
-  //onSave: (task: TaskFormValues) => void;
-  onSubmit: (task: TaskFormValues) => void;
+  onSave: (task: TaskFormValues) => void;
   onDelete?: (taskId: string) => void;
 }
 
@@ -79,8 +78,7 @@ const TaskFormModal: React.FC<Props> = ({
   role,
   taskId,
   onClose,
-  //onSave,
-  onSubmit,
+  onSave,
   onDelete,
 }) => {
   /* find existing task if editing */
@@ -132,8 +130,7 @@ const TaskFormModal: React.FC<Props> = ({
     const task = mode === 'create'
       ? { ...vals, id: `task_${Date.now()}` }
       : vals;
-    //onSave(task);
-    onSubmit(task);
+    onSave(task);
   };
 
   return (
