@@ -26,6 +26,7 @@ import {
   LocalHospital,
   People,
 } from '@mui/icons-material';
+import InputAdornment from '@mui/material/InputAdornment';
 import type { UserFormData } from '../types/Auth';
 import type { User } from '../types/Auth';
 import rolesData from '../data/Roles.json';
@@ -68,11 +69,11 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
       username: '',
       email: '',
       password: '',
-      roleId: 2, // Default to doctor
+      roleId: 2 as number, // Default to doctor
     },
   });
 
-  const selectedRoleId = watch('roleId');
+  const selectedRoleId = watch('roleId') ?? 2;
   const selectedRole = rolesData.find(role => role.id === selectedRoleId);
 
   const getRoleIcon = (roleId: number) => {
@@ -186,7 +187,12 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
               error={!!errors.name}
               helperText={errors.name?.message}
               InputProps={{
-                startAdornment: <Person sx={{ mr: 1, color: 'action.active' }} />,
+                //startAdornment: <Person sx={{ mr: 1, color: 'action.active' }} />,
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Person sx={{ mr: 1, color: 'action.active' }} />
+                    </InputAdornment>
+                  ),
               }}
             />
 
@@ -197,7 +203,12 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
               error={!!errors.username}
               helperText={errors.username?.message}
               InputProps={{
-                startAdornment: <Badge sx={{ mr: 1, color: 'action.active' }} />,
+                //startAdornment: <Badge sx={{ mr: 1, color: 'action.active' }} />,
+                startAdornment: (
+                    <InputAdornment position="start">
+                      <Person sx={{ mr: 1, color: 'action.active' }} />
+                    </InputAdornment>
+                  ),
               }}
             />
 
@@ -209,7 +220,12 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
               error={!!errors.email}
               helperText={errors.email?.message}
               InputProps={{
-                startAdornment: <Email sx={{ mr: 1, color: 'action.active' }} />,
+                //startAdornment: <Email sx={{ mr: 1, color: 'action.active' }} />,
+                startAdornment: (
+                    <InputAdornment position="start">
+                      <Person sx={{ mr: 1, color: 'action.active' }} />
+                    </InputAdornment>
+                  ),
               }}
             />
 
@@ -221,7 +237,12 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
               error={!!errors.password}
               helperText={errors.password?.message || 'Minimum 6 characters required'}
               InputProps={{
-                startAdornment: <Lock sx={{ mr: 1, color: 'action.active' }} />,
+                //startAdornment: <Lock sx={{ mr: 1, color: 'action.active' }} />,
+                startAdornment: (
+                    <InputAdornment position="start">
+                      <Person sx={{ mr: 1, color: 'action.active' }} />
+                    </InputAdornment>
+                  ),
               }}
             />
 

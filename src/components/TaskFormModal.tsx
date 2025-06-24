@@ -95,8 +95,9 @@ const TaskFormModal: React.FC<Props> = ({
   } = useForm<TaskFormValues>({
     resolver: yupResolver(schema),
     defaultValues: existing ?? {
+      id: '', // <-- Add this line to avoid uncontrolled state
       title: '',
-      type: 'Medication',
+      type: 'Medication', // default type
       patientId: '',
       assigneeId: '',
       dueAt: new Date().toISOString().slice(0, 16), // default ISO string for datetime-local input
@@ -110,6 +111,8 @@ const TaskFormModal: React.FC<Props> = ({
     if (existing) {
       reset({
         ...existing,
+        type: existing.type ?? 'Medication',
+        status: existing.status ?? 'Pending', // ✅ fallback
         dueAt: new Date(existing.dueAt).toISOString().slice(0, 16),
       });
     }
@@ -144,17 +147,23 @@ const TaskFormModal: React.FC<Props> = ({
             helperText={errors.title?.message}
             {...register('title')}
           />
-
+        <Controller
+            name="type"
+            control={control}
+            render={({ field }) => (
           <FormControl fullWidth disabled={disableField.type}>
             <InputLabel>Task Type</InputLabel>
-            <Select {...register('type')}>
+            <Select label="Task Type"
+                value={field.value ?? ''} // ✅ Ensure it never becomes undefined
+                onChange={field.onChange}>
               <MenuItem value="Medication">Medication</MenuItem>
               <MenuItem value="Vitals Check">Vitals Check</MenuItem>
               <MenuItem value="Procedure Prep">Procedure Prep</MenuItem>
               <MenuItem value="Consultation Follow-up">Consultation Follow-up</MenuItem>
             </Select>
           </FormControl>
-
+          )}
+        />
           <Controller
             name="patientId"
             control={control}
@@ -207,15 +216,25 @@ const TaskFormModal: React.FC<Props> = ({
             {...register('dueAt')}
           />
 
-          <FormControl fullWidth>
-            <InputLabel>Status</InputLabel>
-            <Select {...register('status')}>
-              <MenuItem value="Pending">Pending</MenuItem>
-              <MenuItem value="In Progress">In Progress</MenuItem>
-              <MenuItem value="Done">Done</MenuItem>
-            </Select>
-          </FormControl>
-
+            <Controller
+            name="status"
+            control={control}
+            render={({ field }) => (
+                <FormControl fullWidth error={!!errors.status}>
+                <InputLabel>Status</InputLabel>
+                <Select
+                    label="Status"
+                    value={field.value ?? ''}  // Fallback to '' to avoid undefined
+                    onChange={field.onChange}
+                >
+                    <MenuItem value="Pending">Pending</MenuItem>
+                    <MenuItem value="In Progress">In Progress</MenuItem>
+                    <MenuItem value="Done">Done</MenuItem>
+                </Select>
+                </FormControl>
+            )}
+            />
+            
           <TextField
             label="Notes"
             multiline
