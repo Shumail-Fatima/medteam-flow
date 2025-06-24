@@ -441,7 +441,8 @@ const AdminTaskManagement: React.FC = () => {
           setIsModalOpen(false);
           setSelectedTask(null);
         }}
-        onSave={handleTaskSave}
+        //onSave={handleTaskSave}
+        onSubmit={handleTaskSave}
         onDelete={handleTaskDelete}
       />
 
