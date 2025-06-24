@@ -43,8 +43,9 @@ interface Props {
   role: Role;
   taskId?: string;
   onClose: () => void;
-  onSave: (task: TaskFormValues) => void;
+  //onSave: (task: TaskFormValues) => void;
   onDelete?: (taskId: string) => void;
+  onSubmit: (task: TaskFormValues) => void;
 }
 
 /* ---- utility: convert dummy JSON to dropdown-friendly arrays ---- */
@@ -61,7 +62,7 @@ const staff: Option[] = data.users.map(u => ({
 
 
 // -------- validation --------
-const schema: yup.ObjectSchema<TaskFormValues> = yup.object({
+const schema: yup.ObjectSchema<TaskFormValues > = yup.object({
   id: yup.string().required(), // id is required to match TaskFormValues
   title: yup.string().required(),
   type: yup.mixed<TaskType>().required(),
@@ -78,8 +79,9 @@ const TaskFormModal: React.FC<Props> = ({
   role,
   taskId,
   onClose,
-  onSave,
+  //onSave,
   onDelete,
+  onSubmit,
 }) => {
   /* find existing task if editing */
   const existing = mode === 'edit'
@@ -108,15 +110,26 @@ const TaskFormModal: React.FC<Props> = ({
 
   /* keep form in sync when taskId changes */
   useEffect(() => {
-    if (existing) {
-      reset({
-        ...existing,
-        type: existing.type ?? 'Medication',
-        status: existing.status ?? 'Pending', // ✅ fallback
-        dueAt: new Date(existing.dueAt).toISOString().slice(0, 16),
-      });
-    }
-  }, [existing, reset]);
+    if (mode === 'edit' && existing) {
+    reset({
+      ...existing,
+      type: existing.type ?? 'Medication',
+      status: existing.status ?? 'Pending',
+      dueAt: new Date(existing.dueAt).toISOString().slice(0, 16),
+    });
+  } else if (mode === 'create') {
+    reset({
+      id: '',
+      title: '',
+      type: 'Medication',
+      patientId: '',
+      assigneeId: '',
+      dueAt: new Date().toISOString().slice(0, 16),
+      status: 'Pending',
+      notes: '',
+    });
+  }
+}, [existing, mode, reset]);
 
   /* simple permission check */
   const isNurse = role === 'nurse';
@@ -130,7 +143,8 @@ const TaskFormModal: React.FC<Props> = ({
     const task = mode === 'create'
       ? { ...vals, id: `task_${Date.now()}` }
       : vals;
-    onSave(task);
+    //onSave(task);
+    onSubmit(task);
   };
 
   return (
