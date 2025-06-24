@@ -62,8 +62,7 @@ const staff: Option[] = data.users.map(u => ({
 
 
 // -------- validation --------
-const schema: yup.ObjectSchema<TaskFormValues > = yup.object({
-  id: yup.string().required(), // id is required to match TaskFormValues
+const schema: yup.ObjectSchema<Omit<TaskFormValues, 'id'>> = yup.object({
   title: yup.string().required(),
   type: yup.mixed<TaskType>().required(),
   patientId: yup.string().required(),
@@ -94,10 +93,10 @@ const TaskFormModal: React.FC<Props> = ({
     register,
     reset,
     formState: { errors },
-  } = useForm<TaskFormValues>({
+  } = useForm<Omit<TaskFormValues, 'id'>>({
     resolver: yupResolver(schema),
     defaultValues: existing ?? {
-      id: '', // <-- Add this line to avoid uncontrolled state
+      //id: '', // <-- Add this line to avoid uncontrolled state
       title: '',
       type: 'Medication', // default type
       patientId: '',
@@ -119,7 +118,7 @@ const TaskFormModal: React.FC<Props> = ({
     });
   } else if (mode === 'create') {
     reset({
-      id: '',
+      //id: '',
       title: '',
       type: 'Medication',
       patientId: '',
@@ -139,11 +138,11 @@ const TaskFormModal: React.FC<Props> = ({
     assignee: isNurse,
   };
 
-  const submit = (vals: TaskFormValues) => {
-    const task = mode === 'create'
-      ? { ...vals, id: `task_${Date.now()}` }
-      : vals;
-    //onSave(task);
+  const submit = (vals: Omit<TaskFormValues, 'id'>) => {
+    const task: TaskFormValues = {
+      ...vals,
+      id: mode === 'create' ? `task_${Date.now()}` : taskId ?? '',
+    };
     onSubmit(task);
   };
 
