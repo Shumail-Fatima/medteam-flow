@@ -3,7 +3,7 @@ import LoginFormPage from './pages/LoginFormPage';
 import AdminUserManagement from './pages/AdminUserManagement';
 import ProtectedRoute from './components/ProtectedRoutes';
 import AdminTaskManagement from './pages/AdminTaskManagement';
-import AdminReports from './pages/AdminReports';
+import Appointment from './pages/Appointment';
 import AdminSupport from './pages/AdminSupport';
 import AdminSettings from './pages/AdminSettings';
 import DashboardPage from './pages/DashboardPage';
@@ -22,7 +22,7 @@ function App() {
             <Route path='/dashboard' element={<DashboardPage/>}/>
             <Route path="/admin/user-management" element={<AdminUserManagement />} />
             <Route path="/task-management" element={<AdminTaskManagement />} />
-            <Route path="/reports" element={<AdminReports />} />
+            <Route path="/Appointment" element={<Appointment />} />
             <Route path="/settings" element={<AdminSettings />} />
             <Route path="/support" element={<AdminSupport />} />
             {/* Add more nested protected routes here */}

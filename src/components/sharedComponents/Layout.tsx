@@ -38,7 +38,7 @@ interface LayoutProps {
 const drawerItems = [
   { text: 'User Management', icon: <PeopleIcon />, path: '/admin/user-management' },
   { text: 'Task Management', icon: <AssignmentIcon />, path: '/task-management' },
-  { text: 'Reports', icon: <AssessmentIcon />, path: '/reports' },
+  { text: 'Appointment', icon: <AssessmentIcon />, path: '/Appointment' },
   { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
   { text: 'Support', icon: <SupportIcon />, path: '/support' },
 ];
