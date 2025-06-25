@@ -17,15 +17,14 @@ function App() {
 
         {/* Protected Routes Wrapper */}
         <Route element={<ProtectedRoute> <Outlet /> </ProtectedRoute>}>
-          {/* Optionally wrap with Layout */}
-          <Route element={<Layout> <Outlet /> </Layout>}>
+          {/* Optionally wrap with Layout 
+          <Route element={<Layout> <Outlet /> </Layout>}></Route>*/}
             <Route path="/admin/user-management" element={<AdminUserManagement />} />
             <Route path="/task-management" element={<AdminTaskManagement />} />
             <Route path="/reports" element={<AdminReports />} />
             <Route path="/settings" element={<AdminSettings />} />
             <Route path="/support" element={<AdminSupport />} />
             {/* Add more nested protected routes here */}
-          </Route>
         </Route>
       </Routes>
     </Router>

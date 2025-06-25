@@ -53,6 +53,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  console.log('isMobile:', isMobile); // ← ADD THIS LINE
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorE1(event.currentTarget);
@@ -67,12 +68,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const handleLogout = () => {
     logout();
     navigate('/login');
+    handleMenuClose();
   };
 
   const handleNavigation = (path: string) => {
     navigate(path);
     //setDrawerOpen(false);
-    if (isMobile) setMobileOpen(false);
+    if (isMobile) {setMobileOpen(false)}
   };
 
   const drawerWidth = 280;
@@ -149,6 +151,40 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         </Box>
   );
 
+  const renderDrawer = () => {
+  if (isMobile) {
+    return (
+      <Drawer
+        variant="temporary"
+        open={mobileOpen}
+        onClose={toggleDrawer}
+        ModalProps={{ keepMounted: true }}
+        sx={{ '& .MuiDrawer-paper': { width: drawerWidth } }}
+      >
+        {drawerContent}
+      </Drawer>
+    );
+  } else {
+    return (
+      <Drawer
+        variant="permanent"
+        open
+        sx={{
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            top: 64,
+            height: 'calc(100% - 64px)',
+          },
+        }}
+      >
+        {drawerContent}
+      </Drawer>
+    );
+  }
+};
+
+
+
   return (
     <Box sx={{ display: 'flex' }}>
       <AppBar 
@@ -214,49 +250,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
 
       {/* Drawer – Responsive */}
-      <Box
-        component="nav"
-        sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
-        /*sx={{
-          '& .MuiDrawer-paper': {
-            width: { md: drawerWidth },
-            bgcolor: '#f8fafc',
-            paddingTop: 8,
-            flexShrink: { md: 0 },
-          }
-        }}*/
-        aria-label="sidebar"
-      >
-        {/* Mobile Drawer */}
-        <Drawer
-          variant="temporary"
-          open={mobileOpen}
-          onClose={toggleDrawer}
-          ModalProps={{ keepMounted: true }}
-          sx={{
-            display: { xs: 'block', md: 'none' },
-            '& .MuiDrawer-paper': { width: drawerWidth },
-          }}
-        >
-          {drawerContent}
-        </Drawer>
-        
-         {/* Desktop Drawer */}
-        <Drawer
-          variant="permanent"
-          sx={{
-            display: { xs: 'none', md: 'block' },
-            '& .MuiDrawer-paper': {
-              width: drawerWidth,
-              boxSizing: 'border-box',
-              paddingTop: 8,
-            },
-          }}
-          open
-        >
-          {drawerContent}
-        </Drawer>
-      </Box>
+              
+        {/* Drawer */}
+  <Box
+    component="nav"
+    sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
+  >
+   {renderDrawer()}
+  </Box>
 
 
       <Box 
