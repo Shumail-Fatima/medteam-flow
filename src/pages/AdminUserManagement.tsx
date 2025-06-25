@@ -4,10 +4,6 @@ import {
   Typography,
   Button,
   Chip,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   Avatar,
 } from '@mui/material';
 import {
@@ -24,6 +20,7 @@ import usersData from '../data/Users.json';
 import DataTable from '../components/sharedComponents/DataTable';
 import ConfirmDeleteDialog from '../components/sharedComponents/ConfirmDeleteDialog';
 import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';
+import ViewDialog from '../components/sharedComponents/ViewDialog';
 
 const AdminUserManagement: React.FC = () => {
   const [users, setUsers] = useState<User[]>(
@@ -242,96 +239,47 @@ const AdminUserManagement: React.FC = () => {
       />
 
       {/* View User Dialog */}
-      <Dialog 
-        open={viewDialogOpen} 
-        onClose={() => setViewDialogOpen(false)} 
-        maxWidth="sm" 
-        fullWidth
-        PaperProps={{ sx: { borderRadius: 3 } }}
-      >
-        <DialogTitle sx={{ pb: 1 }}>
-          <Typography variant="h6" component="span" fontWeight="bold">
-            User Details
-          </Typography>
-        </DialogTitle>
-        <DialogContent>
-          {userToView && (
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, pt: 2 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                <Avatar 
-                  sx={{ 
-                    width: 64, 
-                    height: 64, 
-                    mr: 3,
-                    bgcolor: getRoleColor(userToView.roleId) + '.main',
-                    fontSize: '1.5rem'
-                  }}
-                >
-                  {userToView.name.charAt(0).toUpperCase()}
-                </Avatar>
-                <Box>
-                  <Typography variant="h6" fontWeight="bold">
-                    {userToView.name}
-                  </Typography>
-                  <Chip
-                    icon={getRoleIcon(userToView.roleId)}
-                    label={userToView.roleName.toUpperCase()}
-                    color={getRoleColor(userToView.roleId)}
-                    size="small"
-                  />
-                </Box>
-              </Box>
-              
-              <Box sx={{ display: 'grid', gap: 2 }}>
-                <Box>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Username
-                  </Typography>
-                  <Typography variant="body1" fontWeight="medium">
-                    {userToView.username}
-                  </Typography>
-                </Box>
-                
-                <Box>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Email Address
-                  </Typography>
-                  <Typography variant="body1" fontWeight="medium">
-                    {userToView.email}
-                  </Typography>
-                </Box>
-                
-                <Box>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    User ID
-                  </Typography>
-                  <Typography variant="body1" fontWeight="medium">
-                    {userToView.id}
-                  </Typography>
-                </Box>
-                
-                <Box>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Account Created
-                  </Typography>
-                  <Typography variant="body1" fontWeight="medium">
-                    {formatDate(userToView.createdAt)}
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
-          )}
-        </DialogContent>
-        <DialogActions sx={{ p: 3 }}>
-          <Button 
-            onClick={() => setViewDialogOpen(false)}
-            variant="contained"
-            sx={{ borderRadius: 2 }}
-          >
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <ViewDialog
+        open={viewDialogOpen}
+        onClose={() => setViewDialogOpen(false)}
+        title="User Details"
+        avatar={
+          userToView && (
+            <Avatar
+              sx={{
+                width: 64,
+                height: 64,
+                mr: 3,
+                bgcolor: getRoleColor(userToView.roleId) + '.main',
+                fontSize: '1.5rem'
+              }}
+            >
+              {userToView.name.charAt(0).toUpperCase()}
+            </Avatar>
+          )
+        }
+        chip={
+          userToView && (
+            <Chip
+              icon={getRoleIcon(userToView.roleId)}
+              label={userToView.roleName.toUpperCase()}
+              color={getRoleColor(userToView.roleId)}
+              size="small"
+            />
+          )
+        }
+        fields={
+          userToView
+            ? [
+                { label: 'Username', value: userToView.username },
+                { label: 'Email Address', value: userToView.email },
+                { label: 'User ID', value: userToView.id },
+                { label: 'Account Created', value: formatDate(userToView.createdAt) },
+              ]
+            : []
+        }
+      />
+
 
       {/* Delete Confirmation Dialog */}
       <ConfirmDeleteDialog
