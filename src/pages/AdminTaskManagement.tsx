@@ -29,6 +29,7 @@ import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';
 import type { Task, TaskFormData, Patient, TaskUser } from '../types/task';
 import { useAuth } from '../context/AuthContext';
 import dummyData from '../data/dummy-data.json';
+import ViewDialog from '../components/sharedComponents/ViewDialog';
 
 const AdminTaskManagement: React.FC = () => {
   const { user } = useAuth();
@@ -434,9 +435,9 @@ const AdminTaskManagement: React.FC = () => {
       {/* Task Form Modal */}
       <TaskFormModal
         open={isModalOpen}
-        mode={selectedTask ? 'edit' : 'create'}  //target
+        mode={selectedTask ? 'edit' : 'create'}  
         role={userRole}
-        taskId={selectedTask?.id}  //target
+        taskId={selectedTask?.id}  
         onClose={() => {
           setIsModalOpen(false);
           setSelectedTask(null);
@@ -447,90 +448,51 @@ const AdminTaskManagement: React.FC = () => {
       />
 
       {/* View Task Dialog */}
-      <Dialog 
-        open={viewDialogOpen} 
-        onClose={() => setViewDialogOpen(false)} 
-        maxWidth="sm" 
-        fullWidth
-        PaperProps={{ sx: { borderRadius: 3 } }}
-      >
-        <DialogTitle sx={{ pb: 1 }}>
-          <Typography variant="h6" fontWeight="bold">
-            Task Details
-          </Typography>
-        </DialogTitle>
-        <DialogContent>
-          {taskToView && (
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, pt: 2 }}>
-              <Box>
-                <Typography variant="h6" fontWeight="bold" gutterBottom>
-                  {taskToView.title}
-                </Typography>
-                <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
-                  <Chip
-                    label={taskToView.type}
-                    color={getTypeColor(taskToView.type)}
-                    size="small"
-                  />
-                  <Chip
-                    icon={getStatusIcon(taskToView.status)}
-                    label={taskToView.status}
-                    color={getStatusColor(taskToView.status)}
-                    size="small"
-                  />
-                </Box>
+        <ViewDialog
+          open={viewDialogOpen}
+          onClose={() => setViewDialogOpen(false)}
+          title="Task Details"
+          avatar={null}
+          chip={
+            taskToView && (
+              <Box sx={{ display: 'flex', gap: 1 }}>
+                <Chip
+                  label={taskToView.type}
+                  color={getTypeColor(taskToView.type)}
+                  size="small"
+                />
+                <Chip
+                  icon={getStatusIcon(taskToView.status)}
+                  label={taskToView.status}
+                  color={getStatusColor(taskToView.status)}
+                  size="small"
+                />
               </Box>
-              
-              <Box sx={{ display: 'grid', gap: 2 }}>
-                <Box>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Patient
-                  </Typography>
-                  <Typography variant="body1" fontWeight="medium">
-                    {getPatientName(taskToView.patientId)}
-                  </Typography>
-                </Box>
-                
-                <Box>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Assigned To
-                  </Typography>
-                  <Typography variant="body1" fontWeight="medium">
-                    {getAssigneeName(taskToView.assigneeId)}
-                  </Typography>
-                </Box>
-                
-                <Box>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Due Date
-                  </Typography>
-                  <Typography variant="body1" fontWeight="medium">
-                    {formatDate(taskToView.dueAt)}
-                  </Typography>
-                </Box>
-                
-                <Box>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Notes
-                  </Typography>
-                  <Typography variant="body1" fontWeight="medium">
-                    {taskToView.notes || 'No notes provided'}
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
-          )}
-        </DialogContent>
-        <DialogActions sx={{ p: 3 }}>
-          <Button 
-            onClick={() => setViewDialogOpen(false)}
-            variant="contained"
-            sx={{ borderRadius: 2 }}
-          >
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
+            )
+          }
+          fields={
+            taskToView
+              ? [
+                  {
+                    label: 'Patient',
+                    value: getPatientName(taskToView.patientId),
+                  },
+                  {
+                    label: 'Assigned To',
+                    value: getAssigneeName(taskToView.assigneeId),
+                  },
+                  {
+                    label: 'Due Date',
+                    value: formatDate(taskToView.dueAt),
+                  },
+                  {
+                    label: 'Notes',
+                    value: taskToView.notes || 'No notes provided',
+                  },
+                ]
+              : []
+          }
+        />
 
       {/* Delete Confirmation Dialog */}
       <ConfirmDeleteDialog
