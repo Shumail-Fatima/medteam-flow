@@ -29,7 +29,7 @@ import {
 } from '@mui/icons-material';
 import {Menu, MenuItem} from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -162,7 +162,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         open={mobileOpen}
         onClose={toggleDrawer}
         ModalProps={{ keepMounted: true }}
-        sx={{ '& .MuiDrawer-paper': { width: drawerWidth } }}
+        sx={{ '& .MuiDrawer-paper': { width: drawerWidth, paddingTop: '80px' } }}
       >
         {drawerContent}
       </Drawer>
@@ -196,6 +196,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         }}
       >
         <Toolbar>
+          {isMobile &&(
           <IconButton 
             color="inherit" 
             edge="start" 
@@ -204,7 +205,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           >
             <MenuIcon />
           </IconButton>
-          
+          )}
           <LocalHospital sx={{ mr: 1 }} />
           <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 600 }}>
             MedCare Pro 
@@ -261,7 +262,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         component="main" 
         sx={{ 
           flexGrow: 1, 
-          p: 4, 
+          p: {xs: 2, md: 4}, 
           mt: 8,
           bgcolor: '#f5f5f5',
           minHeight: 'calc(100vh - 64px)',
