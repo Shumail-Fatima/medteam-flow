@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom
 import LoginFormPage from './pages/LoginFormPage';
 import AdminUserManagement from './pages/AdminUserManagement';
 import ProtectedRoute from './components/ProtectedRoutes';
-import Layout from './components/Layout'; // If you have a layout
 import AdminTaskManagement from './pages/AdminTaskManagement';
 import AdminReports from './pages/AdminReports';
 import AdminSupport from './pages/AdminSupport';

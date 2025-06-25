@@ -12,7 +12,7 @@ import {
   AdminPanelSettings,
   LocalHospital,
 } from '@mui/icons-material';
-import Layout from '../components/Layout';
+import Layout from '../components/sharedComponents/Layout';
 import UserFormModal from '../components/UserFormModal';
 import type { User, UserFormData } from '../types/Auth';
 import rolesData from '../data/Roles.json';
