@@ -1,18 +1,21 @@
-import { Typography } from '@mui/material';
-import Sidebar from '../components/Sidebar';
+import React from 'react';
+import { Box, Typography } from '@mui/material';
+import Layout from '../components/sharedComponents/Layout';
 
-const DashboardPage = () => {
+const DashboardPage: React.FC = () => {
   return (
-    <div style={{ display: 'flex' }}>
-      <Sidebar />
-      <div style={{ flexGrow: 1, padding: 20 }}>
-        <Typography variant="h4" component="h1" sx={{ fontWeight: 600 }}>
-          Dashboard
+    <Layout>
+      <Box sx={{ p: 3 }}>
+        <Typography variant="h4" gutterBottom>
+          Default dashboard
         </Typography>
-      </div>
-      {/* Rest of dashboard content */}
-    </div>
+        <Typography variant="body1">
+          This is the Default dashboard page.
+        </Typography>
+      </Box>
+    </Layout>
   );
 };
 
 export default DashboardPage;
+

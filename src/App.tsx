@@ -6,6 +6,7 @@ import AdminTaskManagement from './pages/AdminTaskManagement';
 import AdminReports from './pages/AdminReports';
 import AdminSupport from './pages/AdminSupport';
 import AdminSettings from './pages/AdminSettings';
+import DashboardPage from './pages/DashboardPage';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route element={<ProtectedRoute> <Outlet /> </ProtectedRoute>}>
           {/* Optionally wrap with Layout 
           <Route element={<Layout> <Outlet /> </Layout>}></Route>*/}
+            <Route path='/dashboard' element={<DashboardPage/>}/>
             <Route path="/admin/user-management" element={<AdminUserManagement />} />
             <Route path="/task-management" element={<AdminTaskManagement />} />
             <Route path="/reports" element={<AdminReports />} />

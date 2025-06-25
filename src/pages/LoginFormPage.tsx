@@ -29,7 +29,7 @@ import { useNavigate } from 'react-router-dom';
 const LoginFormPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, user } = useAuth();
   const navigate = useNavigate();
   const theme = useTheme();
 
@@ -52,12 +52,16 @@ const LoginFormPage: React.FC = () => {
     setTimeout(() => {
       setIsLoading(false);
       const success = login(data.email, data.password);
-      if (success) {
+      if (success ) {
         // Redirect or show success
         console.log('Login successful');
         // You can redirect to the dashboard or show a success message here
         // For example, using React Router:
-        navigate('/admin/user-management'); 
+        //if (user?.roleId === 1){
+          navigate('/admin/user-management'); 
+        //} else if (user?.roleId === 2){
+          //  navigate('/dashboard'); 
+        //} 
       } else {
         // Show error
         console.error('Login failed');
