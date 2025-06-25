@@ -55,6 +55,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   console.log('isMobile:', isMobile); // ← ADD THIS LINE
 
+  const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorE1(event.currentTarget);
   }
@@ -80,6 +82,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const drawerWidth = 280;
   const drawerContent = (
     <Box sx={{ width: 280 }} role="presentation">
+          {/* the head on the sidebar removed
           <Box sx={{ p: 3, bgcolor: 'primary.main', color: 'white' }}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <LocalHospital sx={{ fontSize: 32, mr: 1 }} />
@@ -90,11 +93,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <Typography variant="body2" sx={{ opacity: 0.8, mt: 0.5 }}>
               Admin Panel
             </Typography>
-          </Box>
+          </Box>*/}
           
-          <List sx={{ pt: 2 }}>
+          <List sx={{ pt: 5 }}>
             {drawerItems.map((item) => (
-              <ListItem key={item.text} disablePadding sx={{ px: 2, mb: 0.5 }}>
+              <ListItem key={item.text} disablePadding sx={{ px: 1, mb: 0.5 }}>
                 <ListItemButton
                   onClick={() => handleNavigation(item.path)}
                   selected={location.pathname === item.path}
@@ -183,8 +186,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   }
 };
 
-
-
   return (
     <Box sx={{ display: 'flex' }}>
       <AppBar 
@@ -217,9 +218,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 {user?.name.charAt(0).toUpperCase()}
               </Avatar>
             </IconButton>
-            <Typography variant="body2" sx={{ ml: 1, cursor: 'pointer' }}>
-              {user?.name}
-            </Typography>
+            <Box sx={{ ml: 1 }}>
+              <Typography variant="body2" sx={{ ml: 0, cursor: 'pointer' }}>
+                {/*user?.name*/}
+                {user && capitalize(user.name)}
+              </Typography>
+              <Typography variant="caption" color="text">
+                {user?.roleName}
+              </Typography>
+            </Box>
             <Menu
               anchorEl={anchorE1}
               open={open}
@@ -233,12 +240,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 horizontal: 'right',
               }}
             >
-              <MenuItem disabled>
-                <Typography variant="body2" color="text.secondary">
-                  Role: <b>{user?.roleName?.toUpperCase()}</b>
-                </Typography>
-              </MenuItem>
-              <Divider />
               <MenuItem onClick={() => { handleMenuClose(); handleLogout(); }}>
                 <LogoutIcon fontSize="small" sx={{ mr: 1 }} />
                 Logout
@@ -248,17 +249,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         </Toolbar>
       </AppBar>
 
-
       {/* Drawer – Responsive */}
-              
-        {/* Drawer */}
-  <Box
-    component="nav"
-    sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
-  >
-   {renderDrawer()}
-  </Box>
-
+      <Box
+        component="nav"
+        sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
+      >
+      {renderDrawer()}
+      </Box>
 
       <Box 
         component="main" 
