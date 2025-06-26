@@ -94,7 +94,8 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
             <TextField
               label="Patient Name"
               fullWidth
-              required
+              /*required  => this triggers the browser’s native validation is triggered (showing the yellow 
+              popup "Please fill in this field") before React Hook Form can handle it. */
               error={!!errors.name}
               helperText={errors.name?.message}
               {...register('name')}
@@ -103,7 +104,7 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
               label="Email"
               type="email"
               fullWidth
-              required
+              //required
               error={!!errors.email}
               helperText={errors.email?.message}
               {...register('email')}
@@ -111,7 +112,7 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
             <TextField
               label="Phone"
               fullWidth
-              required
+              //required
               error={!!errors.phone}
               helperText={errors.phone?.message}
               {...register('phone')}
@@ -131,7 +132,7 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
                     <TextField
                       {...params}
                       label="Doctor"
-                      required
+                      //required
                       error={!!errors.doctorId}
                       helperText={errors.doctorId?.message}
                     />
@@ -148,7 +149,7 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
                   select
                   label="Appointment Slot"
                   fullWidth
-                  required
+                  //required
                   disabled={!selectedDoctor}
                   error={!!errors.appointmentSlot}
                   helperText={
