@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "patientId": "101",
+    "patientName": "Jane Doe",
+    "doctorId": "2",
+    "doctorName": "Dr. Alice Smith",
+    "appointmentSlot": "2025-07-01T09:00",
+    "createdAt": "2025-06-25T10:00"
+  },
+  {
+    "id": "2",
+    "patientId": "102",
+    "patientName": "John Smith",
+    "doctorId": "3",
+    "doctorName": "Dr. Bob Johnson",
+    "appointmentSlot": "2025-07-01T13:00",
+    "createdAt": "2025-06-25T11:00"
+  }
+]
