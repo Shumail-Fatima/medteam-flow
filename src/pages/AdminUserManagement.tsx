@@ -13,7 +13,7 @@ import {
   LocalHospital,
 } from '@mui/icons-material';
 import Layout from '../components/sharedComponents/Layout';
-import UserFormModal from '../components/UserFormModal';
+import UserFormModal from '../components//formModals/UserFormModal';
 import type { User, UserFormData } from '../types/Auth';
 import rolesData from '../data/Roles.json';
 import usersData from '../data/Users.json';

@@ -10,7 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 // -------- import dummy data --------
-import data from '../data/dummy-data.json';
+import data from '../../data/dummy-data.json';
 
 // -------- types --------
 type Role = 'admin' | 'doctor' | 'nurse';

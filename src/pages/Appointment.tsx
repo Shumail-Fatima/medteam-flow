@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import Layout from '../components/sharedComponents/Layout';
 import usersData from '../data/Users.json'
-import PatientFormModal from '../components/PatientRegisterFormModal';
+import PatientFormModal from '../components/formModals/PatientRegisterFormModal';
 import doctorSlots from '../data/DoctorSlots.json'
 
 

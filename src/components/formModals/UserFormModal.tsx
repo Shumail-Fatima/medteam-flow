@@ -27,9 +27,9 @@ import {
   People,
 } from '@mui/icons-material';
 import InputAdornment from '@mui/material/InputAdornment';
-import type { UserFormData } from '../types/Auth';
-import type { User } from '../types/Auth';
-import rolesData from '../data/Roles.json';
+import type { UserFormData } from '../../types/Auth';
+import type { User } from '../../types/Auth';
+import rolesData from '../../data/Roles.json';
 
 const userSchema = yup.object({
   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),

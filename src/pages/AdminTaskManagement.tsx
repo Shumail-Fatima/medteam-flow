@@ -22,7 +22,7 @@ import {
   PlayArrow,
 } from '@mui/icons-material';
 import Layout from '../components/sharedComponents/Layout';
-import TaskFormModal from '../components/TaskFormModal';
+import TaskFormModal from '../components//formModals/TaskFormModal';
 import DataTable from '../components/sharedComponents/DataTable';
 import ConfirmDeleteDialog from '../components/sharedComponents/ConfirmDeleteDialog';
 import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';
