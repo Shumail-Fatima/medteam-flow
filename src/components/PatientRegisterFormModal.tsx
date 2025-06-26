@@ -1,0 +1,196 @@
+import React, { useEffect } from 'react';
+import {
+  Dialog, DialogTitle, DialogContent, DialogActions,
+  TextField, Button, Box, MenuItem, Autocomplete
+} from '@mui/material';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+
+interface DoctorOption {
+  label: string;
+  value: string;
+  availableSlots: string[];
+}
+
+interface PatientFormValues {
+  name: string;
+  email: string;
+  phone: string;
+  doctorId: string;
+  appointmentSlot: string;
+  reason: string;
+}
+
+interface PatientFormModalProps {
+  open: boolean;
+  onClose: () => void;
+  onSubmit: (data: PatientFormValues) => void;
+  isLoading?: boolean;
+  initialValues?: Partial<PatientFormValues>;
+  doctors: DoctorOption[];
+}
+
+const schema = yup.object({
+  name: yup.string().required('Patient name is required'),
+  email: yup.string().email('Invalid email').required('Email is required'),
+  phone: yup.string().required('Phone is required'),
+  doctorId: yup.string().required('Doctor is required'),
+  appointmentSlot: yup.string().required('Appointment slot is required'),
+  reason: yup.string().required(),
+});
+
+const PatientFormModal: React.FC<PatientFormModalProps> = ({
+  open,
+  onClose,
+  onSubmit,
+  isLoading = false,
+  initialValues = {},
+  doctors,
+}) => {
+  const {
+    control,
+    handleSubmit,
+    register,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm<PatientFormValues>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      name: '',
+      email: '',
+      phone: '',
+      doctorId: '',
+      appointmentSlot: '',
+      reason: '',
+      ...initialValues,
+    },
+  });
+
+  const selectedDoctorId = watch('doctorId');
+  const selectedDoctor = doctors.find(d => d.value === selectedDoctorId);
+
+  useEffect(() => {
+    if (open) {
+      reset({
+      name: initialValues.name ?? '',
+      email: initialValues.email ?? '',
+      phone: initialValues.phone ?? '',
+      doctorId: initialValues.doctorId ?? '',
+      appointmentSlot: initialValues.appointmentSlot ?? '',
+      reason: initialValues.reason ?? '',
+      });
+    }
+  }, [open]);
+
+  return (
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
+      <DialogTitle>Register Patient & Schedule Appointment</DialogTitle>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <DialogContent>
+          <Box display="flex" flexDirection="column" gap={2} mt={1}>
+            <TextField
+              label="Patient Name"
+              fullWidth
+              required
+              error={!!errors.name}
+              helperText={errors.name?.message}
+              {...register('name')}
+            />
+            <TextField
+              label="Email"
+              type="email"
+              fullWidth
+              required
+              error={!!errors.email}
+              helperText={errors.email?.message}
+              {...register('email')}
+            />
+            <TextField
+              label="Phone"
+              fullWidth
+              required
+              error={!!errors.phone}
+              helperText={errors.phone?.message}
+              {...register('phone')}
+            />
+            {/* Doctor selection */}
+            <Controller
+              name="doctorId"
+              control={control}
+              render={({ field }) => (
+                <Autocomplete
+                  options={doctors}
+                  getOptionLabel={option => option.label}
+                  isOptionEqualToValue={(o, v) => o.value === v.value}
+                  value={doctors.find(d => d.value === field.value) || null}
+                  onChange={(_, val) => field.onChange(val?.value ?? '')}
+                  renderInput={params => (
+                    <TextField
+                      {...params}
+                      label="Doctor"
+                      required
+                      error={!!errors.doctorId}
+                      helperText={errors.doctorId?.message}
+                    />
+                  )}
+                />
+              )}
+            />
+            {/* Appointment slot selection */}
+            <Controller
+              name="appointmentSlot"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  select
+                  label="Appointment Slot"
+                  fullWidth
+                  required
+                  disabled={!selectedDoctor}
+                  error={!!errors.appointmentSlot}
+                  helperText={
+                    !selectedDoctor
+                      ? 'Select a doctor to see available slots'
+                      : errors.appointmentSlot?.message
+                  }
+                  {...field}
+                >
+                    {selectedDoctor?.availableSlots.length
+                        ? selectedDoctor.availableSlots.map(slot => (
+                            <MenuItem key={slot} value={slot}>
+                            {new Date(slot).toLocaleString()}
+                            </MenuItem>
+                        ))
+                        : (
+                            <MenuItem value="" disabled>
+                            {selectedDoctor ? 'No slots available' : 'Select a doctor first'}
+                            </MenuItem>
+                        )
+                    }
+                </TextField>
+              )}
+            />
+            <TextField
+              label="Reason for Visit"
+              fullWidth
+              multiline
+              rows={2}
+              {...register('reason')}
+            />
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={onClose} disabled={isLoading}>Cancel</Button>
+          <Button type="submit" variant="contained" disabled={isLoading}>
+            Register & Schedule
+          </Button>
+        </DialogActions>
+      </form>
+    </Dialog>
+  );
+};
+
+export default PatientFormModal;

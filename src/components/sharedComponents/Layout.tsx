@@ -53,7 +53,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  console.log('isMobile:', isMobile); // ← ADD THIS LINE
 
   const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
