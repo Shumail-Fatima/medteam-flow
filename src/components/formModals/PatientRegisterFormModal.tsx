@@ -30,6 +30,7 @@ interface PatientFormModalProps {
   isLoading?: boolean;
   initialValues?: Partial<PatientFormValues>;
   doctors: DoctorOption[];
+  mode?: 'create' | 'edit' | 'view';
 }
 
 const schema = yup.object({
@@ -48,6 +49,7 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
   isLoading = false,
   initialValues = {},
   doctors,
+  mode = 'create',
 }) => {
   const {
     control,
@@ -87,34 +89,49 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-      <DialogTitle>Register Patient & Schedule Appointment</DialogTitle>
+      <DialogTitle>        
+        {mode === 'view'
+          ? 'Patient Details'
+          : mode === 'edit'
+          ? 'Edit Appointment'
+          : 'Register Patient & Schedule Appointment'}
+      </DialogTitle>
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogContent>
           <Box display="flex" flexDirection="column" gap={2} mt={1}>
             <TextField
               label="Patient Name"
               fullWidth
+              disabled= {mode === 'view'}
+              error= {!!errors.name && mode !== 'view'}
+              helperText= {mode !== 'view' ? errors.name?.message: ''}
               /*required  => this triggers the browser’s native validation is triggered (showing the yellow 
               popup "Please fill in this field") before React Hook Form can handle it. */
-              error={!!errors.name}
-              helperText={errors.name?.message}
+              //error={!!errors.name}
+              //helperText={errors.name?.message}
               {...register('name')}
             />
             <TextField
               label="Email"
               type="email"
               fullWidth
+              disabled= {mode === 'view'}
+              error= {!!errors.name && mode !== 'view'}
+              helperText= {mode !== 'view' ? errors.name?.message: ''}
               //required
-              error={!!errors.email}
-              helperText={errors.email?.message}
+              //error={!!errors.email}
+              //helperText={errors.email?.message}
               {...register('email')}
             />
             <TextField
               label="Phone"
               fullWidth
+              disabled= {mode === 'view'}
+              error= {!!errors.name && mode !== 'view'}
+              helperText= {mode !== 'view' ? errors.name?.message: ''}
               //required
-              error={!!errors.phone}
-              helperText={errors.phone?.message}
+              //error={!!errors.phone}
+              //helperText={errors.phone?.message}
               {...register('phone')}
             />
             {/* Doctor selection */}
@@ -132,9 +149,12 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
                     <TextField
                       {...params}
                       label="Doctor"
+                      disabled= {mode === 'view'}
+                      error= {!!errors.name && mode !== 'view'}
+                      helperText= {mode !== 'view' ? errors.name?.message: ''}
                       //required
-                      error={!!errors.doctorId}
-                      helperText={errors.doctorId?.message}
+                      //error={!!errors.doctorId}
+                      //helperText={errors.doctorId?.message}
                     />
                   )}
                 />
@@ -150,12 +170,14 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
                   label="Appointment Slot"
                   fullWidth
                   //required
-                  disabled={!selectedDoctor}
-                  error={!!errors.appointmentSlot}
+                  disabled={mode === 'view' || !selectedDoctor}
+                  error={!!errors.appointmentSlot || mode === 'view'}
                   helperText={
+                    mode === 'view' ?(
                     !selectedDoctor
                       ? 'Select a doctor to see available slots'
                       : errors.appointmentSlot?.message
+                    ) : ''
                   }
                   {...field}
                 >
@@ -179,15 +201,21 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
               fullWidth
               multiline
               rows={2}
+              disabled= {mode === 'view'}
               {...register('reason')}
             />
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose} disabled={isLoading}>Cancel</Button>
-          <Button type="submit" variant="contained" disabled={isLoading}>
+          <Button onClick={onClose} disabled={isLoading}>Close</Button>
+          {/*<Button type="submit" variant="contained" disabled={isLoading}>
             Register & Schedule
-          </Button>
+          </Button>*/}
+           {mode !== 'view' && (
+            <Button type="submit" variant="contained">
+              {mode === 'edit' ? 'Update' : 'Register & Schedule'}
+            </Button>
+          )}
         </DialogActions>
       </form>
     </Dialog>

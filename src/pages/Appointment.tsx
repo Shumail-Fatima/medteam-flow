@@ -1,64 +1,180 @@
 import React, { useState } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import Layout from '../components/sharedComponents/Layout';
-import usersData from '../data/Users.json'
+import DataTable from '../components/sharedComponents/DataTable';
+import CustomTabs, { type TabOption } from '../components/GeneralizedTabs';
 import PatientFormModal from '../components/formModals/PatientRegisterFormModal';
-import doctorSlots from '../data/DoctorSlots.json'
+import ConfirmDeleteDialog from '../components/sharedComponents/ConfirmDeleteDialog';
+import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';
 
+import appointmentsData from '../data/Appointments.json';
+import usersData from '../data/Users.json';
+import doctorSlots from '../data/DoctorSlots.json';
 
+// Prepare doctors array
 const doctors = usersData
-    .filter((user: any) => user.roleId === 2)
-    .map((user: any) => {
-      const slotObj = doctorSlots.find(s => String(s.doctorId) === String(user.id));
-      return{
+  .filter((user: any) => user.roleId === 2)
+  .map((user: any) => {
+    const slotObj = doctorSlots.find((s: any) => String(s.doctorId) === String(user.id));
+    return {
       label: user.name,
       value: String(user.id),
       availableSlots: slotObj ? slotObj.slots : [],
-      };
+    };
   });
 
+const tabOptions: TabOption[] = [
+  { label: 'Appointments' },
+  { label: 'Create Appointment' }
+];
+
 const Appointment: React.FC = () => {
-  const [modalOpen, setModelOpen] = useState(false);
+  const [tab, setTab] = useState(0);
+  const [appointments, setAppointments] = useState<any[]>(appointmentsData);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedAppointment, setSelectedAppointment] = useState<any | null>(null);
+  const [modalMode, setModalMode] = useState<'create' | 'edit' | 'view'>('create');
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [appointmentToDelete, setAppointmentToDelete] = useState<any | null>(null);
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' as 'success' | 'error' });
 
-  const handleOpenModal = () => setModelOpen(true);
-  const handleCloseModal = () => setModelOpen(false);
+  // Tab change handler
+  const handleTabChange = (_: any, newValue: number) => setTab(newValue);
 
-  const handlePatientSubmit = (data: any) => {
-  /* 1) What is the use of the data in handlePatientSubmit?
-        The data parameter in handlePatientSubmit contains all the form values submitted from your PatientFormModal.
-        This includes patient details, selected doctor, appointment slot, and reason for visit.
-        Typical uses:
-        Save the new patient and appointment to your backend or local state.
-        Show a success message or notification.
-        Update a list of appointments in your UI.
-        For now, your code just closes the modal, but you can expand it to do any of the above. 
-        Example: send data to backend or update state
-        await api.createAppointment(data);
-        */
-    setModelOpen(false);
+  // View patient details (open modal in view mode)
+  const handleViewPatient = (appointment: any) => {
+    setSelectedAppointment(appointment);
+    setModalMode('view');
+    setModalOpen(true);
   };
-  
+
+  // Edit appointment (open modal in edit mode)
+  const handleEdit = (appointment: any) => {
+    setSelectedAppointment(appointment);
+    setModalMode('edit');
+    setModalOpen(true);
+  };
+
+  // Delete appointment
+  const handleDelete = (appointment: any) => {
+    setAppointmentToDelete(appointment);
+    setDeleteDialogOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (appointmentToDelete) {
+      setAppointments(prev => prev.filter(a => a.id !== appointmentToDelete.id));
+      setSnackbar({ open: true, message: 'Appointment deleted.', severity: 'success' });
+      setDeleteDialogOpen(false);
+      setAppointmentToDelete(null);
+    }
+  };
+
+  // Create or update appointment
+  const handlePatientSubmit = (data: any) => {
+    if (modalMode === 'edit') {
+      setAppointments(prev =>
+        prev.map(a => a.id === selectedAppointment.id ? { ...a, ...data } : a)
+      );
+      setSnackbar({ open: true, message: 'Appointment updated.', severity: 'success' });
+    } else if (modalMode === 'create') {
+      const newAppointment = {
+        ...data,
+        id: Date.now().toString(),
+        createdAt: new Date().toISOString(),
+        patientName: data.name,
+        doctorName: doctors.find(d => d.value === data.doctorId)?.label || '',
+      };
+      setAppointments(prev => [...prev, newAppointment]);
+      setSnackbar({ open: true, message: 'Appointment created.', severity: 'success' });
+    }
+    setModalOpen(false);
+    setSelectedAppointment(null);
+    setTab(0); // Switch to listing tab after create/edit
+  };
+
   return (
     <Layout>
-      <Box sx={{ p: 3 }}>
-        <Typography variant="h4" gutterBottom>
-          Appointment
+      <Box sx={{ mb: 4 }}>
+        <Typography variant="h4" component="h1" sx={{ fontWeight: 600, mb: 1 }}>
+          Appointments
         </Typography>
-        <Typography variant="body1" gutterBottom>
-          This is the Appointment page.
+        <Typography variant="body1" color="text.secondary">
+          Manage and schedule patient appointments
         </Typography>
-        <Button variant="contained" onClick={handleOpenModal}>
-          Register Patient & Schedule Appointment
-        </Button>
       </Box>
+
+      <CustomTabs value={tab} onChange={handleTabChange} tabs={tabOptions} />
+
+      {tab === 0 && (
+        <Box>
+          <Button
+            variant="contained"
+            sx={{ mb: 2 }}
+            onClick={() => {
+              setSelectedAppointment(null);
+              setModalMode('create');
+              setModalOpen(true);
+              setTab(1);
+            }}
+          >
+            New Appointment
+          </Button>
+          <DataTable
+            data={appointments}
+            columns={[
+              {
+                header: 'Patient',
+                render: (a: any) => (
+                  <Typography
+                    variant="body2"
+                    color="primary"
+                    sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+                    onClick={() => handleViewPatient(a)}
+                  >
+                    {a.patientName}
+                  </Typography>
+                ),
+              },
+              { header: 'Doctor', render: (a: any) => a.doctorName },
+              { header: 'Appointment Date', render: (a: any) => new Date(a.appointmentSlot).toLocaleString() },
+              { header: 'Created At', render: (a: any) => new Date(a.createdAt).toLocaleString() },
+            ]}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            showEdit={() => true}
+            showDelete={() => true}
+          />
+        </Box>
+      )}
+
+      {/* Patient Form Modal for create, edit, view */}
       <PatientFormModal
         open={modalOpen}
-        onClose={handleCloseModal}
+        onClose={() => { setModalOpen(false); setSelectedAppointment(null); }}
         onSubmit={handlePatientSubmit}
         doctors={doctors}
+        initialValues={selectedAppointment || {}}
+        mode={modalMode}
+      />
+
+      {/* Delete Confirmation Dialog */}
+      <ConfirmDeleteDialog
+        open={deleteDialogOpen}
+        itemName={appointmentToDelete?.patientName || ''}
+        onClose={() => setDeleteDialogOpen(false)}
+        onConfirm={confirmDelete}
+      />
+
+      {/* Snackbar for feedback */}
+      <SnackbarAlert
+        open={snackbar.open}
+        severity={snackbar.severity}
+        message={snackbar.message}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
       />
     </Layout>
   );
-}
+};
 
-export default Appointment
+export default Appointment;
