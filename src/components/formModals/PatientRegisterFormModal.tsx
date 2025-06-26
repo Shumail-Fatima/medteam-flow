@@ -87,6 +87,11 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
     }
   }, [open]);
 
+  useEffect(() => {
+  console.log('Initial values received:', initialValues);
+}, [initialValues]);
+
+
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
       <DialogTitle>        

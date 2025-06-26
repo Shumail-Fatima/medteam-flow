@@ -29,7 +29,7 @@
     "username":"Bob Johnson",
     "email": "bob.johnson@hospital.com",
     "password": "bob123",
-    "roleId": 2
+    "roleId": 1
   },
   {
     "id": 5,
