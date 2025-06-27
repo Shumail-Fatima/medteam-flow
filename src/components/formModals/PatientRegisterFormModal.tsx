@@ -77,12 +77,12 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
   useEffect(() => {
     if (open) {
       reset({
-      name: initialValues.name ?? '',
-      email: initialValues.email ?? '',
-      phone: initialValues.phone ?? '',
-      doctorId: initialValues.doctorId ?? '',
-      appointmentSlot: initialValues.appointmentSlot ?? '',
-      reason: initialValues.reason ?? '',
+      name: initialValues.name || '',
+      email: initialValues.email || '',
+      phone: initialValues.phone || '',
+      doctorId: initialValues.doctorId || '',
+      appointmentSlot: initialValues.appointmentSlot || '',
+      reason: initialValues.reason || '',
       });
     }
   }, [open]);
@@ -121,8 +121,8 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
               type="email"
               fullWidth
               disabled= {mode === 'view'}
-              error= {!!errors.name && mode !== 'view'}
-              helperText= {mode !== 'view' ? errors.name?.message: ''}
+              error= {!!errors.email && mode !== 'view'}
+              helperText= {mode !== 'view' ? errors.email?.message: ''}
               //required
               //error={!!errors.email}
               //helperText={errors.email?.message}
@@ -132,8 +132,8 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
               label="Phone"
               fullWidth
               disabled= {mode === 'view'}
-              error= {!!errors.name && mode !== 'view'}
-              helperText= {mode !== 'view' ? errors.name?.message: ''}
+              error= {!!errors.phone && mode !== 'view'}
+              helperText= {mode !== 'view' ? errors.phone?.message: ''}
               //required
               //error={!!errors.phone}
               //helperText={errors.phone?.message}
@@ -155,8 +155,8 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
                       {...params}
                       label="Doctor"
                       disabled= {mode === 'view'}
-                      error= {!!errors.name && mode !== 'view'}
-                      helperText= {mode !== 'view' ? errors.name?.message: ''}
+                      error= {!!errors.doctorId && mode !== 'view'}
+                      helperText= {mode !== 'view' ? errors.doctorId?.message: ''}
                       //required
                       //error={!!errors.doctorId}
                       //helperText={errors.doctorId?.message}

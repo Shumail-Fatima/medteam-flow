@@ -154,7 +154,15 @@ const Appointment: React.FC = () => {
         onClose={() => { setModalOpen(false); setSelectedAppointment(null); }}
         onSubmit={handlePatientSubmit}
         doctors={doctors}
-        initialValues={selectedAppointment || {}}
+        initialValues={selectedAppointment ? {
+          name: selectedAppointment.name || selectedAppointment.patientName || '',
+          email: selectedAppointment.email || '',
+          phone: selectedAppointment.phone || '',
+          doctorId: selectedAppointment.doctorId || '',
+          appointmentSlot: selectedAppointment.appintmentSlot || '',
+          reason: selectedAppointment.reason || '',
+        }
+        :{}}
         mode={modalMode}
       />
 
