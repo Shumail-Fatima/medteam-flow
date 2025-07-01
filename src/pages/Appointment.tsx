@@ -1,17 +1,27 @@
 import React, { useState } from 'react';
-import { Box, Typography, Button } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Button,
+  Chip,
+} from '@mui/material';
+import { Add, CalendarToday, Label } from '@mui/icons-material';
+import { useSelector, useDispatch } from 'react-redux';
 import Layout from '../components/sharedComponents/Layout';
-import DataTable from '../components/sharedComponents/DataTable';
 import CustomTabs, { type TabOption } from '../components/GeneralizedTabs';
-import PatientFormModal from '../components/formModals/PatientFormModal';
+import DataTable from '../components/sharedComponents/DataTable';
+import AppointmentForm from '../components/formModals/AppointmentForm';
 import ConfirmDeleteDialog from '../components/sharedComponents/ConfirmDeleteDialog';
 import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';
-
-import appointmentsData from '../data/Appointments.json';
+import type { RootState, AppDispatch } from '../store/Store';
+import { addAppointment, updateAppointment, deleteAppointment } from '../store/slices/AppointmentSlice';
+import { addPatient } from '../store/slices/PatientSlice';
+import type { Appointment, AppointmentFormData, PatientFormData } from '../types/appointment';
 import usersData from '../data/Users.json';
 import doctorSlots from '../data/DoctorSlots.json';
+import ViewDialog from '../components/sharedComponents/ViewDialog';
 
-// Prepare doctors array
+// Prepare doctors array from users data
 const doctors = usersData
   .filter((user: any) => user.roleId === 2)
   .map((user: any) => {
@@ -24,135 +34,289 @@ const doctors = usersData
   });
 
 const tabOptions: TabOption[] = [
-  { label: 'Appointments' },
-  { label: 'Create Appointment' }
+  { label: 'Appointments List' },
+  { label: 'Create Appointment' },
 ];
 
-const Appointment: React.FC = () => {
-  const [tab, setTab] = useState(0);
-  const [appointments, setAppointments] = useState<any[]>(appointmentsData);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [selectedAppointment, setSelectedAppointment] = useState<any | null>(null);
-  const [modalMode, setModalMode] = useState<'create' | 'edit' | 'view'>('create');
+const AppointmentManagement: React.FC = () => {
+  // Redux state and dispatch setup
+  const dispatch = useDispatch<AppDispatch>();
+  const appointments = useSelector((state: RootState) => state.appointments.appointments);
+  const patients = useSelector((state: RootState) => state.patients.patients);
+
+  const [activeTab, setActiveTab] = useState(0);
+  const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [appointmentToDelete, setAppointmentToDelete] = useState<any | null>(null);
-  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' as 'success' | 'error' });
+  const [viewDialogOpen, setViewDialogOpen] = useState(false);
+  const [appointmentToDelete, setAppointmentToDelete] = useState<Appointment | null>(null);
+  const [snackbar, setSnackbar] = useState({ 
+    open: false, 
+    message: '', 
+    severity: 'success' as 'success' | 'error' 
+  });
 
   // Tab change handler
-  const handleTabChange = (_: any, newValue: number) => setTab(newValue);
-
-  // View patient details (open modal in view mode)
-  const handleViewPatient = (appointment: any) => {
-    setSelectedAppointment(appointment);
-    setModalMode('view');
-    setModalOpen(true);
+  const handleTabChange = (_: any, newValue: number) => {
+    setActiveTab(newValue);
+    if (newValue === 1) {
+      // Reset selected appointment when switching to create tab
+      setSelectedAppointment(null);
+    }
   };
 
-  // Edit appointment (open modal in edit mode)
-  const handleEdit = (appointment: any) => {
-    setSelectedAppointment(appointment);
-    setModalMode('edit');
-    setModalOpen(true);
+  // Create new appointment button handler
+  const handleCreateAppointment = () => {
+    setSelectedAppointment(null);
+    setActiveTab(1); // Switch to create appointment tab
   };
 
-  // Delete appointment
-  const handleDelete = (appointment: any) => {
+  // View appointment details
+  const handleViewAppointment = (appointment: Appointment) => {
+    setSelectedAppointment(appointment);
+    setViewDialogOpen(true);
+    // For now, just show a snackbar. You can implement a view modal if needed
+    setSnackbar({
+      open: true,
+      message: `Viewing appointment for ${appointment.patientName}`,
+      severity: 'success'
+    });
+  };
+
+  // Edit appointment handler
+  const handleEditAppointment = (appointment: Appointment) => {
+    setSelectedAppointment(appointment);
+    setActiveTab(1); // Switch to create/edit tab
+  };
+
+  // Delete appointment handler
+  const handleDeleteAppointment = (appointment: Appointment) => {
     setAppointmentToDelete(appointment);
     setDeleteDialogOpen(true);
   };
 
+  // Confirm delete appointment
   const confirmDelete = () => {
     if (appointmentToDelete) {
-      setAppointments(prev => prev.filter(a => a.id !== appointmentToDelete.id));
-      setSnackbar({ open: true, message: 'Appointment deleted.', severity: 'success' });
+      // Dispatch Redux action to delete appointment
+      dispatch(deleteAppointment(appointmentToDelete.id));
+      setSnackbar({
+        open: true,
+        message: 'Appointment deleted successfully!',
+        severity: 'success'
+      });
       setDeleteDialogOpen(false);
       setAppointmentToDelete(null);
     }
   };
 
-  // Create or update appointment
-  const handlePatientSubmit = (data: any) => {
-    if (modalMode === 'edit') {
-      setAppointments(prev =>
-        prev.map(a => a.id === selectedAppointment.id ? { ...a, ...data } : a)
-      );
-      setSnackbar({ open: true, message: 'Appointment updated.', severity: 'success' });
-    } else if (modalMode === 'create') {
-      const newAppointment = {
-        ...data,
-        id: Date.now().toString(),
-        createdAt: new Date().toISOString(),
-        patientName: data.name,
-        doctorName: doctors.find(d => d.value === data.doctorId)?.label || '',
-      };
-      setAppointments(prev => [...prev, newAppointment]);
-      setSnackbar({ open: true, message: 'Appointment created.', severity: 'success' });
+  // Handle appointment form submission (create or update)
+  const handleAppointmentSubmit = (data: AppointmentFormData) => {
+    const selectedPatient = patients.find(p => p.id === data.patientId);
+    const selectedDoctor = doctors.find(d => d.value === data.doctorId);
+
+    if (!selectedPatient || !selectedDoctor) {
+      setSnackbar({
+        open: true,
+        message: 'Invalid patient or doctor selection',
+        severity: 'error'
+      });
+      return;
     }
-    setModalOpen(false);
+
+    if (selectedAppointment) {
+      // Update existing appointment using Redux action
+      const updatedAppointment: Appointment = {
+        ...selectedAppointment,
+        doctorId: data.doctorId,
+        doctorName: selectedDoctor.label,
+        appointmentSlot: data.appointmentSlot,
+        reason: data.reason,
+      };
+      dispatch(updateAppointment(updatedAppointment));
+      setSnackbar({
+        open: true,
+        message: 'Appointment updated successfully!',
+        severity: 'success'
+      });
+    } else {
+      // Create new appointment using Redux action
+      const newAppointment: Appointment = {
+        id: `apt_${Date.now()}`,
+        patientId: data.patientId,
+        patientName: selectedPatient.name,
+        patientAge: selectedPatient.age || 0,
+        doctorId: data.doctorId,
+        doctorName: selectedDoctor.label,
+        appointmentSlot: data.appointmentSlot,
+        reason: data.reason,
+        createdAt: new Date().toISOString(),
+      };
+      dispatch(addAppointment(newAppointment));
+      setSnackbar({
+        open: true,
+        message: 'Appointment created successfully!',
+        severity: 'success'
+      });
+    }
+
+    // Switch back to appointments list tab
+    setActiveTab(0);
     setSelectedAppointment(null);
-    setTab(0); // Switch to listing tab after create/edit
+  };
+
+  // Handle new patient registration from appointment form
+  const handleAddPatient = (patientData: PatientFormData) => {
+    const newPatient = {
+      id: `patient_${Date.now()}`,
+      ...patientData,
+    };
+    
+    // Dispatch Redux action to add new patient
+    dispatch(addPatient(newPatient));
+    setSnackbar({
+      open: true,
+      message: 'Patient registered successfully!',
+      severity: 'success'
+    });
+  };
+
+  // Format date for display
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
   };
 
   return (
     <Layout>
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" component="h1" sx={{ fontWeight: 600, mb: 1 }}>
-          Appointments
+          Appointment Management
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          Manage and schedule patient appointments
+          Schedule and manage patient appointments with healthcare professionals
         </Typography>
       </Box>
 
-      <CustomTabs value={tab} onChange={handleTabChange} tabs={tabOptions} />
+      {/* Tabs for switching between list and create views */}
+      <CustomTabs value={activeTab} onChange={handleTabChange} tabs={tabOptions} />
 
-      {tab === 0 && (
+      {/* Appointments List Tab */}
+      {activeTab === 0 && (
         <Box>
-          <Button
-            variant="contained"
-            sx={{ mb: 2 }}
-            onClick={() => {
-              setSelectedAppointment(null);
-              setModalMode('create');
-              setModalOpen(true);
-              setTab(1);
-            }}
-          >
-            New Appointment
-          </Button>
-          <DataTable
+          {/* Create Appointment Button */}
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+            <Typography variant="h5" sx={{ fontWeight: 600 }}>
+              All Appointments
+            </Typography>
+            <Button
+              variant="contained"
+              startIcon={<Add />}
+              onClick={handleCreateAppointment}
+              sx={{ 
+                borderRadius: 3,
+                px: 3,
+                py: 1.5,
+                background: 'linear-gradient(135deg, #1976d2 0%, #115293 100%)',
+              }}
+            >
+              Create New Appointment
+            </Button>
+          </Box>
+
+          {/* Appointments Table */}
+          <DataTable<Appointment>
             data={appointments}
             columns={[
-              { header: 'Patient', render: (a: any) => a.patientName },
-              { header: 'Doctor', render: (a: any) => a.doctorName },
-              { header: 'Appointment Date', render: (a: any) => new Date(a.appointmentSlot).toLocaleString() },
-              { header: 'Created At', render: (a: any) => new Date(a.createdAt).toLocaleString() },
+              {
+                header: 'Patient',
+                render: (appointment) => (
+                  <Box>
+                    <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                      {appointment.patientName}
+                    </Typography>
+                    <Chip
+                      label={`Age: ${appointment.patientAge}`}
+                      size="small"
+                      sx={{ mt: 0.5 }}
+                    />
+                  </Box>
+                )
+              },
+              {
+                header: 'Doctor',
+                render: (appointment) => (
+                  <Typography variant="body2">
+                    {appointment.doctorName}
+                  </Typography>
+                )
+              },
+              {
+                header: 'Appointment Date',
+                render: (appointment) => (
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <CalendarToday sx={{ fontSize: 16, mr: 1, color: 'action.active' }} />
+                    <Typography variant="body2">
+                      {formatDate(appointment.appointmentSlot)}
+                    </Typography>
+                  </Box>
+                )
+              },
+              {
+                header: 'Created',
+                render: (appointment) => (
+                  <Typography variant="body2" color="text.secondary">
+                    {formatDate(appointment.createdAt)}
+                  </Typography>
+                )
+              },
             ]}
-            onView={handleViewPatient}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
+            onView={handleViewAppointment}
+            onEdit={handleEditAppointment}
+            onDelete={handleDeleteAppointment}
             showEdit={() => true}
             showDelete={() => true}
           />
         </Box>
       )}
 
-      {/* Patient Form Modal for create, edit, view */}
-      <PatientFormModal
-        open={modalOpen}
-        onClose={() => { setModalOpen(false); setSelectedAppointment(null); }}
-        onSubmit={handlePatientSubmit}
-        doctors={doctors}
-        initialValues={selectedAppointment ? {
-          name: selectedAppointment.name || selectedAppointment.patientName || '',
-          email: selectedAppointment.email || '',
-          phone: selectedAppointment.phone || '',
-          doctorId: selectedAppointment.doctorId || '',
-          appointmentSlot: selectedAppointment.appintmentSlot || '',
-          reason: selectedAppointment.reason || '',
+      {/* Create/Edit Appointment Tab */}
+      {activeTab === 1 && (
+        <AppointmentForm
+          onSubmit={handleAppointmentSubmit}
+          doctors={doctors}
+          initialValues={selectedAppointment ? {
+            patientId: selectedAppointment.patientId,
+            doctorId: selectedAppointment.doctorId,
+            appointmentSlot: selectedAppointment.appointmentSlot,
+            reason: selectedAppointment.reason,
+          } : {}}
+          mode={selectedAppointment ? 'edit' : 'create'}
+          onAddPatient={handleAddPatient}
+        />
+      )}
+
+      {/* View User Dialog */}
+      <ViewDialog
+        open={viewDialogOpen}
+        onClose={() => setViewDialogOpen(false)}
+        title="User Details"
+        fields={
+          selectedAppointment
+            ? [
+                { label: 'Patient name', value: selectedAppointment.patientName },
+                { label: 'Patient age', value: selectedAppointment.patientAge },
+                { label: 'Doctor', value: selectedAppointment.doctorName },
+                { label: 'Appointment slot', value: selectedAppointment.appointmentSlot},
+                { label: 'Created at', value: formatDate(selectedAppointment.createdAt)},
+                { label: 'Reason', value: selectedAppointment.reason}
+              ]
+            : []
         }
-        :{}}
-        mode={modalMode}
       />
 
       {/* Delete Confirmation Dialog */}
@@ -161,9 +325,11 @@ const Appointment: React.FC = () => {
         itemName={appointmentToDelete?.patientName || ''}
         onClose={() => setDeleteDialogOpen(false)}
         onConfirm={confirmDelete}
+        title="Cancel Appointment"
+        message={`Are you sure you want to cancel the appointment for "${appointmentToDelete?.patientName}"? This action cannot be undone.`}
       />
 
-      {/* Snackbar for feedback */}
+      {/* Success/Error Snackbar */}
       <SnackbarAlert
         open={snackbar.open}
         severity={snackbar.severity}
@@ -174,4 +340,4 @@ const Appointment: React.FC = () => {
   );
 };
 
-export default Appointment;
+export default AppointmentManagement;

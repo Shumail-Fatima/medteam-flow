@@ -8,9 +8,14 @@ interface Props {
   itemName: string;
   onConfirm: () => void;
   onClose: () => void;
+  title?: string; // ✅ Add this line
+  message?: string; // ✅ Add this line
 }
 
-const ConfirmDeleteDialog = ({ open, itemName, onConfirm, onClose }: Props) => (
+const ConfirmDeleteDialog = ({ open, itemName, onConfirm, onClose, 
+  title = "Confirm Deletion", // Default fallback
+  message= `Are you sure you want to delete "${itemName}"? This action cannot be undone.`
+ }: Props) => (
   <Dialog open={open} onClose={onClose}>
     <DialogTitle>Confirm Delete</DialogTitle>
     <DialogContent>
