@@ -5,6 +5,7 @@ export interface TabOption {
   label: string;
   value?: string | number;
   icon?: React.ReactNode;
+  disabled?: boolean;
 }
 
 interface CustomTabsProps {
@@ -23,6 +24,12 @@ const CustomTabs: React.FC<CustomTabsProps> = ({ value, onChange, tabs, sx }) =>
           label={tab.label}
           icon={React.isValidElement(tab.icon) ? tab.icon : undefined}
           iconPosition={React.isValidElement(tab.icon) ? 'start' : undefined}
+          disabled={tab.disabled || false}
+            sx={{
+              textTransform: 'none',
+              fontWeight: 600,
+              fontSize: '1rem',
+            }}
           {...(tab.value !== undefined ? { value: tab.value } : {})}
         />
       ))}

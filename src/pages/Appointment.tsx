@@ -3,7 +3,7 @@ import { Box, Typography, Button } from '@mui/material';
 import Layout from '../components/sharedComponents/Layout';
 import DataTable from '../components/sharedComponents/DataTable';
 import CustomTabs, { type TabOption } from '../components/GeneralizedTabs';
-import PatientFormModal from '../components/formModals/PatientRegisterFormModal';
+import PatientFormModal from '../components/formModals/PatientFormModal';
 import ConfirmDeleteDialog from '../components/sharedComponents/ConfirmDeleteDialog';
 import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';
 
@@ -123,23 +123,12 @@ const Appointment: React.FC = () => {
           <DataTable
             data={appointments}
             columns={[
-              {
-                header: 'Patient',
-                render: (a: any) => (
-                  <Typography
-                    variant="body2"
-                    color="primary"
-                    sx={{ cursor: 'pointer', textDecoration: 'underline' }}
-                    onClick={() => handleViewPatient(a)}
-                  >
-                    {a.patientName}
-                  </Typography>
-                ),
-              },
+              { header: 'Patient', render: (a: any) => a.patientName },
               { header: 'Doctor', render: (a: any) => a.doctorName },
               { header: 'Appointment Date', render: (a: any) => new Date(a.appointmentSlot).toLocaleString() },
               { header: 'Created At', render: (a: any) => new Date(a.createdAt).toLocaleString() },
             ]}
+            onView={handleViewPatient}
             onEdit={handleEdit}
             onDelete={handleDelete}
             showEdit={() => true}

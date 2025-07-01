@@ -1,20 +1,25 @@
 [
   {
-    "id": "1",
-    "patientId": "101",
-    "patientName": "Jane Doe",
+    "id": "apt_1",
+    "patientId": "patient_1",
+    "patientName": "John Doe",
+    "patientAge": 65,
     "doctorId": "2",
     "doctorName": "Dr. Alice Smith",
-    "appointmentSlot": "2025-07-01T09:00",
-    "createdAt": "2025-06-25T10:00"
+    "appointmentSlot": "2025-01-20T10:00:00Z",
+    "reason": "Regular checkup",
+    "createdAt": "2025-01-15T08:30:00Z"
   },
   {
-    "id": "2",
-    "patientId": "102",
-    "patientName": "John Smith",
+    "id": "apt_2",
+    "patientId": "patient_2",
+    "patientName": "Jane Smith",
+    "patientAge": 72,
     "doctorId": "3",
     "doctorName": "Dr. Bob Johnson",
-    "appointmentSlot": "2025-07-01T13:00",
-    "createdAt": "2025-06-25T11:00"
+    "appointmentSlot": "2025-01-21T14:30:00Z",
+    "reason": "Follow-up consultation",
+    "createdAt": "2025-01-16T09:15:00Z"
   }
+
 ]
