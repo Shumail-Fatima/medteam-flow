@@ -135,32 +135,35 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
                     }}
                   />
                 )}
-                renderOption={(props, option) => (
-                  <li {...props}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-                      {option.value === 'add_new' ? (
-                        <>
-                          <Add sx={{ mr: 1, color: 'primary.main' }} />
-                          <Typography color="primary.main" fontWeight="medium">
-                            {option.label}
-                          </Typography>
-                        </>
-                      ) : (
-                        <>
-                          <Person sx={{ mr: 1, color: 'action.active' }} />
-                          <Box>
-                            <Typography variant="body2">
-                              {option.patient?.name}
-                            </Typography>
-                            <Typography variant="caption" color="text.secondary">
-                              Age: {option.patient?.age} • {option.patient?.email}
-                            </Typography>
-                          </Box>
-                        </>
-                      )}
-                    </Box>
-                  </li>
-                )}
+                renderOption={(props, option) => {
+                    const { key, ...rest } = props;
+                    return (
+                        <li key={key} {...rest}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+                            {option.value === 'add_new' ? (
+                            <>
+                                <Add sx={{ mr: 1, color: 'primary.main' }} />
+                                <Typography color="primary.main" fontWeight="medium">
+                                {option.label}
+                                </Typography>
+                            </>
+                            ) : (
+                            <>
+                                <Person sx={{ mr: 1, color: 'action.active' }} />
+                                <Box>
+                                <Typography variant="body2">
+                                    {option.patient?.name}
+                                </Typography>
+                                <Typography variant="caption" color="text.secondary">
+                                    Age: {option.patient?.age} • {option.patient?.email}
+                                </Typography>
+                                </Box>
+                            </>
+                            )}
+                        </Box>
+                        </li>
+                    );
+                }}
               />
             )}
           />
