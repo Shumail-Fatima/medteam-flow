@@ -17,14 +17,15 @@ import { useSelector } from 'react-redux';
 import type { RootState } from '../../store/Store';
 import type { AppointmentFormData, DoctorOption, Patient } from '../../types/appointment';
 import PatientFormModal from './PatientFormModal';
+import { Schema } from "yup";
 
 // Validation schema for appointment form using Yup
 
-const appointmentSchema = yup.object({
+const appointmentSchema : yup.ObjectSchema<AppointmentFormData> = yup.object({
     patientId: yup.string().required('Patient is required'),
     doctorId: yup.string().required('Doctor is required'),
     appointmentSlot: yup.string().required('Appointment slot is required'),
-    reason: yup.string(),
+    reason: yup.string().optional(),
 });
 
 interface AppointmentFormProps {
