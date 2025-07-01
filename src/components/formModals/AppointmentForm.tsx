@@ -115,6 +115,7 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
                 options={patientOptions}
                 getOptionLabel={(option) => option.label}
                 value={patientOptions.find(p => p.value === field.value) || null}
+                disabled={mode === 'edit'} // Only editable in create mode
                 onChange={(_, newValue) => {
                   if (newValue?.value === 'add_new') {
                     handlePatientSelect('add_new');
@@ -188,7 +189,6 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
                 getOptionLabel={(option) => option.label}
                 value={doctors.find(d => d.value === field.value) || null}
                 onChange={(_, newValue) => field.onChange(newValue?.value || '')}
-                disabled={mode === 'edit'} // Only editable in create mode
                 renderInput={(params) => (
                   <TextField
                     {...params}

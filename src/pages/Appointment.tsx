@@ -311,7 +311,7 @@ const AppointmentManagement: React.FC = () => {
                 { label: 'Patient name', value: selectedAppointment.patientName },
                 { label: 'Patient age', value: selectedAppointment.patientAge },
                 { label: 'Doctor', value: selectedAppointment.doctorName },
-                { label: 'Appointment slot', value: selectedAppointment.appointmentSlot},
+                { label: 'Appointment slot', value: formatDate(selectedAppointment.appointmentSlot)},
                 { label: 'Created at', value: formatDate(selectedAppointment.createdAt)},
                 { label: 'Reason', value: selectedAppointment.reason}
               ]
