@@ -81,18 +81,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const drawerWidth = 280;
   const drawerContent = (
     <Box sx={{ width: 280 }} role="presentation">
-          {/* the head on the sidebar removed
-          <Box sx={{ p: 3, bgcolor: 'primary.main', color: 'white' }}>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <LocalHospital sx={{ fontSize: 32, mr: 1 }} />
-              <Typography variant="h6" fontWeight="bold">
-                MedCare Pro
-              </Typography>
-            </Box>
-            <Typography variant="body2" sx={{ opacity: 0.8, mt: 0.5 }}>
-              Admin Panel
-            </Typography>
-          </Box>*/}
           
           <List sx={{ pt: 5 }}>
             {drawerItems.map((item) => (
