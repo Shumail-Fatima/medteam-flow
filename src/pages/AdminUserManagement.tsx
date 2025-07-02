@@ -24,9 +24,10 @@ import ViewDialog from '../components/sharedComponents/ViewDialog';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '../store/Store';
 import { addUser, updateUser, deleteUser } from '../store/slices/UserSlice';
+import { data } from 'react-router-dom';
 
 const AdminUserManagement: React.FC = () => {
-  const [users, setUsers] = useState<User[]>(
+  /*const [users, setUsers] = useState<User[]>(
     usersData.map((user: any) => ({
       ...user,
       id: String(user.id),
@@ -34,7 +35,9 @@ const AdminUserManagement: React.FC = () => {
       roleName: user.roleName ?? (rolesData.find((role) => role.id === user.roleId)?.name || ''),
       createdAt: user.createdAt ?? new Date().toISOString(),
     }))
-  );
+  );*/
+  const dispatch = useDispatch<AppDispatch>();
+  const users = useSelector((state: RootState) => state.user.users);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -101,6 +104,7 @@ const AdminUserManagement: React.FC = () => {
     setDeleteDialogOpen(true);
   };
 
+  /*
   const handleFormSubmit = (data: UserFormData) => {
     const roleName = rolesData.find(role => role.id === data.roleId)?.name || 'unknown';
     
@@ -135,8 +139,50 @@ const AdminUserManagement: React.FC = () => {
     setIsModalOpen(false);
     setSelectedUser(null);
   };
+  */
 
-  const confirmDelete = () => {
+  const handleUserSubmit = (data:UserFormData) => {
+    const roleName = rolesData.find(role => role.id === data.roleId)?.name || 'unknown';
+    if (selectedUser) {
+      // Editing an existing user
+      const updatedUser: User = {
+        ...selectedUser,
+        name: data.name,
+        username: data.username,
+        email: data.email,
+        password: data.password,
+        roleId: data.roleId,
+        roleName,
+      };
+      dispatch(updateUser(updatedUser));
+      setSnackbar({
+        open: true,
+        message: 'User updated successfully!',
+        severity: 'success'
+      });
+  } else {
+    const newUser: User ={
+      id: `apt_${Date.now()}`,
+      name: data.name,
+      username: data.username,
+      email: data.email,
+      password: data.password,
+      roleId: data.roleId,
+      createdAt: new Date().toISOString(),
+      roleName,
+    };
+    dispatch(addUser(newUser));
+    setSnackbar({
+      open: true,
+      message: 'User created successfully!',
+      severity: 'success'
+    })
+  }
+    setIsModalOpen(false);
+    setSelectedUser(null);
+}
+
+  /*const confirmDelete = () => {
     if (userToDelete) {
       setUsers(prev => prev.filter(user => user.id !== userToDelete.id));
       setSnackbar({ 
@@ -147,7 +193,20 @@ const AdminUserManagement: React.FC = () => {
       setDeleteDialogOpen(false);
       setUserToDelete(null);
     }
-  };
+  };*/
+
+  const confirmDelete = () => {
+    if (userToDelete){
+      dispatch(deleteUser(userToDelete.id));
+      setSnackbar({
+        open: true,
+        message: 'User deleted successfully!',
+        severity: 'success'
+      });
+      setDeleteDialogOpen(false);
+      setUserToDelete(null);
+    }
+  }
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -229,7 +288,8 @@ const AdminUserManagement: React.FC = () => {
           setIsModalOpen(false);
           setSelectedUser(null);
         }}
-        onSubmit={handleFormSubmit}
+        //onSubmit={handleFormSubmit}
+        onSubmit={handleUserSubmit}
         user={selectedUser}
       />
 
