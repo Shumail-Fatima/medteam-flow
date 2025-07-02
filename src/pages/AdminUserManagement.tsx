@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   Box,
   Typography,
-  Button,
   Chip,
   Avatar,
 } from '@mui/material';
@@ -12,6 +11,7 @@ import {
   AdminPanelSettings,
   LocalHospital,
 } from '@mui/icons-material';
+import {AddButton} from '../components/CustomButton';
 import Layout from '../components/sharedComponents/Layout';
 import UserFormModal from '../components//formModals/UserFormModal';
 import type { User, UserFormData } from '../types/Auth';
@@ -173,19 +173,11 @@ const AdminUserManagement: React.FC = () => {
         <Typography variant="h5" sx={{ fontWeight: 600 }}>
           All Users
         </Typography>
-        <Button
-          variant="contained"
-          startIcon={<Add />}
-          onClick={handleAddUser}
-          sx={{ 
-            borderRadius: 3,
-            px: 3,
-            py: 1.5,
-            background: 'linear-gradient(135deg, #1976d2 0%, #115293 100%)',
-          }}
-        >
-          Add New User
-        </Button>
+        <AddButton
+        onClick={handleAddUser} 
+        label='Add New User'
+        startIcon= {<Add />}
+        ></AddButton>
       </Box>
 
       {/* Users Table in adminusermanagement*/}

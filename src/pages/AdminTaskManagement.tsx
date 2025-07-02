@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   Box,
   Typography,
-  Button,
   Chip,
   Dialog,
   DialogTitle,
@@ -21,6 +20,7 @@ import {
   Pending,
   PlayArrow,
 } from '@mui/icons-material';
+import {AddButton} from '../components/CustomButton';
 import Layout from '../components/sharedComponents/Layout';
 import TaskFormModal from '../components//formModals/TaskFormModal';
 import DataTable from '../components/sharedComponents/DataTable';
@@ -269,19 +269,11 @@ const AdminTaskManagement: React.FC = () => {
           {userRole === 'nurse' ? 'My Tasks' : 'All Tasks'}
         </Typography>
         {canCreateTask && (
-          <Button
-            variant="contained"
-            startIcon={<Add />}
-            onClick={handleAddTask}
-            sx={{ 
-              borderRadius: 3,
-              px: 3,
-              py: 1.5,
-              background: 'linear-gradient(135deg, #1976d2 0%, #115293 100%)',
-            }}
-          >
-            Create New Task
-          </Button>
+          <AddButton
+          onClick={ handleAddTask }
+          label='Create New Task'
+          startIcon= {<Add />}
+          ></AddButton>
         )}
       </Box>
 

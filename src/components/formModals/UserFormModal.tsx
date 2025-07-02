@@ -30,6 +30,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import type { UserFormData } from '../../types/Auth';
 import type { User } from '../../types/Auth';
 import rolesData from '../../data/Roles.json';
+import { DailogButton } from '../CustomButton';
 
 const userSchema = yup.object({
   name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
@@ -268,6 +269,12 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
           </Box>
         </DialogContent>
 
+        <DailogButton
+        onCancel={handleClose}
+        isLoading={isLoading}
+        isEdit={isEdit}
+        />
+        {/*
         <DialogActions sx={{ p: 3, gap: 1 }}>
           <Button 
             onClick={handleClose} 
@@ -289,6 +296,7 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
             {isEdit ? 'Update User' : 'Add User'}
           </Button>
         </DialogActions>
+        */}
       </form>
     </Dialog>
   );

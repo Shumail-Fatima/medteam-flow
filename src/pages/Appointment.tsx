@@ -5,6 +5,7 @@ import {
   Button,
   Chip,
 } from '@mui/material';
+import {AddButton} from '../components/CustomButton';
 import { Add, CalendarToday, Label } from '@mui/icons-material';
 import { useSelector, useDispatch } from 'react-redux';
 import Layout from '../components/sharedComponents/Layout';
@@ -213,19 +214,11 @@ const AppointmentManagement: React.FC = () => {
             <Typography variant="h5" sx={{ fontWeight: 600 }}>
               All Appointments
             </Typography>
-            <Button
-              variant="contained"
-              startIcon={<Add />}
-              onClick={handleCreateAppointment}
-              sx={{ 
-                borderRadius: 3,
-                px: 3,
-                py: 1.5,
-                background: 'linear-gradient(135deg, #1976d2 0%, #115293 100%)',
-              }}
-            >
-              Create New Appointment
-            </Button>
+            <AddButton
+            onClick={handleCreateAppointment}
+            label='Create New Appointment'
+            startIcon= {<Add />}
+            ></AddButton>
           </Box>
 
           {/* Appointments Table */}

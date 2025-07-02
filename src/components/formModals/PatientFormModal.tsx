@@ -3,6 +3,7 @@ import {
   Dialog, DialogTitle, DialogContent, DialogActions,
   TextField, Button, Box, MenuItem, Autocomplete, Typography,IconButton,
 } from '@mui/material';
+import { DailogButton } from '../CustomButton';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -162,6 +163,11 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
           </Box>
         </DialogContent>
 
+        <DailogButton
+        onCancel={handleClose}
+        isLoading={isLoading}
+        />
+        {/*
         <DialogActions sx={{ p: 3, gap: 1 }}>
           <Button 
             onClick={handleClose} 
@@ -170,7 +176,7 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
           >
             {isView ? 'Close' : 'Cancel'}
           </Button>
-          {!isView && (
+          {//!isView && ( 
             <Button
               type="submit"
               variant="contained"
@@ -181,10 +187,12 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
                 background: 'linear-gradient(135deg, #1976d2 0%, #115293 100%)',
               }}
             >
-              {isEdit ? 'Update Patient' : 'Register Patient'}
+              
             </Button>
-          )}
+         
+          }
         </DialogActions>
+        */}
       </form>
     </Dialog>
   );
