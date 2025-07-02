@@ -21,6 +21,9 @@ import DataTable from '../components/sharedComponents/DataTable';
 import ConfirmDeleteDialog from '../components/sharedComponents/ConfirmDeleteDialog';
 import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';
 import ViewDialog from '../components/sharedComponents/ViewDialog';
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState, AppDispatch } from '../store/Store';
+import { addUser, updateUser, deleteUser } from '../store/slices/UserSlice';
 
 const AdminUserManagement: React.FC = () => {
   const [users, setUsers] = useState<User[]>(
