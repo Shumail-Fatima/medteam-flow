@@ -38,6 +38,15 @@
     "email": "emily.lee@hospital.com",
     "password": "emily123",
     "roleId": 2
+  },
+  {
+    "id": 6,
+    "name": "Nurse Robert House",
+    "username":"Robert House",
+    "email": "robert.house@hospital.com",
+    "password": "robert123",
+    "roleId": 3
   }
+
 ]
 

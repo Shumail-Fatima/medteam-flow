@@ -10,7 +10,15 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 // -------- import dummy data --------
-import data from '../../data/dummy-data.json';
+import tasksData from '../../data/Tasks.json';
+import usersData from '../../data/Users.json'
+import patientsData from '../../data/Patients.json'
+
+const data = {
+  tasks: tasksData.tasks,
+  users: usersData,
+  patients: patientsData
+};
 
 // -------- types --------
 type Role = 'admin' | 'doctor' | 'nurse';
@@ -56,7 +64,7 @@ const patients: Option[] = data.patients.map(p => ({
 
 const staff: Option[] = data.users.map(u => ({
   label: u.name,
-  value: u.id,
+  value: String(u.id),
 }));
 
 

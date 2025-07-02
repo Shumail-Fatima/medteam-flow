@@ -28,8 +28,17 @@ import ConfirmDeleteDialog from '../components/sharedComponents/ConfirmDeleteDia
 import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';
 import type { Task, TaskFormData, Patient, TaskUser } from '../types/task';
 import { useAuth } from '../context/AuthContext';
-import dummyData from '../data/dummy-data.json';
+import tasksData from '../data/Tasks.json';
 import ViewDialog from '../components/sharedComponents/ViewDialog';
+import usersData from '../data/Users.json'
+import patientsData from '../data/Patients.json'
+
+const dummyData = {
+  tasks: tasksData.tasks,
+  users: usersData,
+  patients: patientsData
+};
+
 
 const AdminTaskManagement: React.FC = () => {
   const { user } = useAuth();
@@ -62,7 +71,7 @@ const AdminTaskManagement: React.FC = () => {
   };
 
   const getAssigneeName = (assigneeId: string) => {
-    const assignee = dummyData.users.find(u => u.id === assigneeId);
+    const assignee = dummyData.users.find(u => u.id === Number(assigneeId));
     return assignee?.name || 'Unknown User';
   };
 
