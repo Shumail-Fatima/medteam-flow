@@ -167,32 +167,6 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
         onCancel={handleClose}
         isLoading={isLoading}
         />
-        {/*
-        <DialogActions sx={{ p: 3, gap: 1 }}>
-          <Button 
-            onClick={handleClose} 
-            disabled={isLoading}
-            sx={{ borderRadius: 2 }}
-          >
-            {isView ? 'Close' : 'Cancel'}
-          </Button>
-          {//!isView && ( 
-            <Button
-              type="submit"
-              variant="contained"
-              disabled={isLoading}
-              sx={{ 
-                borderRadius: 2,
-                px: 3,
-                background: 'linear-gradient(135deg, #1976d2 0%, #115293 100%)',
-              }}
-            >
-              
-            </Button>
-         
-          }
-        </DialogActions>
-        */}
       </form>
     </Dialog>
   );

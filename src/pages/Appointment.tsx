@@ -297,7 +297,7 @@ const AppointmentManagement: React.FC = () => {
       <ViewDialog
         open={viewDialogOpen}
         onClose={() => setViewDialogOpen(false)}
-        title="User Details"
+        title="Appointment Details"
         fields={
           selectedAppointment
             ? [

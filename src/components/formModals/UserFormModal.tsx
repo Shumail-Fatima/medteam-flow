@@ -274,29 +274,6 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
         isLoading={isLoading}
         isEdit={isEdit}
         />
-        {/*
-        <DialogActions sx={{ p: 3, gap: 1 }}>
-          <Button 
-            onClick={handleClose} 
-            disabled={isLoading}
-            sx={{ borderRadius: 2 }}
-          >
-            Cancel
-          </Button>
-          <Button
-            type="submit"
-            variant="contained"
-            disabled={isLoading}
-            sx={{ 
-              borderRadius: 2,
-              px: 3,
-              background: 'linear-gradient(135deg, #1976d2 0%, #115293 100%)',
-            }}
-          >
-            {isEdit ? 'Update User' : 'Add User'}
-          </Button>
-        </DialogActions>
-        */}
       </form>
     </Dialog>
   );

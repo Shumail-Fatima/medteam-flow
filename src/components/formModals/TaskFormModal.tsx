@@ -147,7 +147,7 @@ const TaskFormModal: React.FC<Props> = ({
   };
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm"> 
       <DialogTitle>{mode === 'create' ? 'New Task' : 'Edit Task'}</DialogTitle>
 
       <DialogContent dividers>
