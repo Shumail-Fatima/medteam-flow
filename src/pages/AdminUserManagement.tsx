@@ -16,7 +16,6 @@ import Layout from '../components/sharedComponents/Layout';
 import UserFormModal from '../components//formModals/UserFormModal';
 import type { User, UserFormData } from '../types/Auth';
 import rolesData from '../data/Roles.json';
-import usersData from '../data/Users.json';
 import DataTable from '../components/sharedComponents/DataTable';
 import ConfirmDeleteDialog from '../components/sharedComponents/ConfirmDeleteDialog';
 import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';
@@ -27,15 +26,6 @@ import { addUser, updateUser, deleteUser } from '../store/slices/UserSlice';
 import { data } from 'react-router-dom';
 
 const AdminUserManagement: React.FC = () => {
-  /*const [users, setUsers] = useState<User[]>(
-    usersData.map((user: any) => ({
-      ...user,
-      id: String(user.id),
-      username: user.username ?? '',
-      roleName: user.roleName ?? (rolesData.find((role) => role.id === user.roleId)?.name || ''),
-      createdAt: user.createdAt ?? new Date().toISOString(),
-    }))
-  );*/
   const dispatch = useDispatch<AppDispatch>();
   const users = useSelector((state: RootState) => state.user.users);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -83,68 +73,36 @@ const AdminUserManagement: React.FC = () => {
   };
 
   const stats = getStats(); */
-
+  
+  //create new user button handler
   const handleAddUser = () => {
     setSelectedUser(null);
     setIsModalOpen(true);
   };
 
+  //edit user button handler
   const handleEditUser = (user: User) => {
     setSelectedUser(user);
     setIsModalOpen(true);
   };
 
+  //view user button handler
   const handleViewUser = (user: User) => {
     setUserToView(user);
     setViewDialogOpen(true);
   };
 
+  //delete user button handler
   const handleDeleteUser = (user: User) => {
     setUserToDelete(user);
     setDeleteDialogOpen(true);
   };
 
-  /*
-  const handleFormSubmit = (data: UserFormData) => {
-    const roleName = rolesData.find(role => role.id === data.roleId)?.name || 'unknown';
-    
-    if (selectedUser) {
-      // Edit existing user
-      setUsers(prev => prev.map(user => 
-        user.id === selectedUser.id 
-          ? { ...user, ...data, roleName }
-          : user
-      ));
-      setSnackbar({ 
-        open: true, 
-        message: 'User updated successfully!', 
-        severity: 'success' 
-      });
-    } else {
-      // Add new user
-      const newUser: User = {
-        id: Date.now().toString(),
-        ...data,
-        roleName,
-        createdAt: new Date().toISOString(),
-      };
-      setUsers(prev => [...prev, newUser]);
-      setSnackbar({ 
-        open: true, 
-        message: 'User added successfully!', 
-        severity: 'success' 
-      });
-    }
-    
-    setIsModalOpen(false);
-    setSelectedUser(null);
-  };
-  */
-
+  // Handle user form submission (create or update)
   const handleUserSubmit = (data:UserFormData) => {
     const roleName = rolesData.find(role => role.id === data.roleId)?.name || 'unknown';
     if (selectedUser) {
-      // Editing an existing user
+      // Update existing user using Redux action
       const updatedUser: User = {
         ...selectedUser,
         name: data.name,
@@ -161,6 +119,7 @@ const AdminUserManagement: React.FC = () => {
         severity: 'success'
       });
   } else {
+    // Create new user using Redux action
     const newUser: User ={
       id: `apt_${Date.now()}`,
       name: data.name,
@@ -178,25 +137,15 @@ const AdminUserManagement: React.FC = () => {
       severity: 'success'
     })
   }
+  //close form modal
     setIsModalOpen(false);
     setSelectedUser(null);
 }
 
-  /*const confirmDelete = () => {
-    if (userToDelete) {
-      setUsers(prev => prev.filter(user => user.id !== userToDelete.id));
-      setSnackbar({ 
-        open: true, 
-        message: 'User deleted successfully!', 
-        severity: 'success' 
-      });
-      setDeleteDialogOpen(false);
-      setUserToDelete(null);
-    }
-  };*/
-
+  // Confirm delete user
   const confirmDelete = () => {
     if (userToDelete){
+      // Dispatch Redux action to delete user
       dispatch(deleteUser(userToDelete.id));
       setSnackbar({
         open: true,
@@ -208,6 +157,7 @@ const AdminUserManagement: React.FC = () => {
     }
   }
 
+  // Format date for display
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
