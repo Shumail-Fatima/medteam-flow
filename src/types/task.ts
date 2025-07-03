@@ -21,16 +21,3 @@ export interface TaskFormData {
   status: 'Pending' | 'In Progress' | 'Done';
   notes: string;
 }
-
-export interface Patient {
-  id: string;
-  name: string;
-  age: number;
-  room: string;
-}
-
-export interface TaskUser {
-  id: string;
-  name: string;
-  role: string;
-}

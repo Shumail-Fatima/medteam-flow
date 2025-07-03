@@ -26,12 +26,16 @@ import TaskFormModal from '../components//formModals/TaskFormModal';
 import DataTable from '../components/sharedComponents/DataTable';
 import ConfirmDeleteDialog from '../components/sharedComponents/ConfirmDeleteDialog';
 import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';
-import type { Task, TaskFormData, Patient, TaskUser } from '../types/task';
+import type { Task, TaskFormData } from '../types/task';
 import { useAuth } from '../context/AuthContext';
 import tasksData from '../data/Tasks.json';
 import ViewDialog from '../components/sharedComponents/ViewDialog';
 import usersData from '../data/Users.json'
 import patientsData from '../data/Patients.json'
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState, AppDispatch } from '../store/Store';
+import { addTask, updateTask, deleteTask } from '../store/slices/TaskSlice';
+
 
 const dummyData = {
   tasks: tasksData.tasks,
@@ -45,12 +49,14 @@ const AdminTaskManagement: React.FC = () => {
   const userRole = user?.roleName as 'admin' | 'doctor' | 'nurse';
 
   // Initialize tasks with proper typing
-  const [tasks, setTasks] = useState<Task[]>(
+  /*const [tasks, setTasks] = useState<Task[]>(
     dummyData.tasks.map((task: any) => ({
       ...task,
       createdAt: task.createdAt || new Date().toISOString(),
     }))
-  );
+  );*/
+  const dispatch = useDispatch<AppDispatch>();
+  const tasks = useSelector((state: RootState) => state.task.tasks);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
@@ -65,15 +71,29 @@ const AdminTaskManagement: React.FC = () => {
   });
 
   // Helper functions
+  const patients = useSelector((state: RootState) => state.patients.patients);
   const getPatientName = (patientId: string) => {
+    const patient = patients.find(p => p.id === patientId);
+    return patient?.name || 'Unknown Patient';
+  }
+
+  /*const getPatientName = (patientId: string) => {
     const patient = dummyData.patients.find(p => p.id === patientId);
     return patient?.name || 'Unknown Patient';
-  };
+  };*/
 
+  const users = useSelector((state: RootState) => state.user.users);
+  const getAssigneeName = (assigneeId: string) => {
+    const user = users.find(u => String(u.id) === String(assigneeId));
+    return user?.name || 'Unknown User';
+  }
+
+  /*
   const getAssigneeName = (assigneeId: string) => {
     const assignee = dummyData.users.find(u => u.id === Number(assigneeId));
     return assignee?.name || 'Unknown User';
   };
+  */
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -201,11 +221,13 @@ const AdminTaskManagement: React.FC = () => {
   const handleTaskSave = (taskData: TaskFormData) => {
     if (selectedTask) {
       // Edit existing task
+      dispatch(updateTask({...selectedTask, ...taskData}));
+      /*
       setTasks(prev => prev.map(task => 
         task.id === selectedTask.id 
           ? { ...task, ...taskData, createdBy: task.createdBy }
           : task
-      ));
+      ));*/
       setSnackbar({ 
         open: true, 
         message: 'Task updated successfully!', 
@@ -219,7 +241,8 @@ const AdminTaskManagement: React.FC = () => {
         createdBy: user?.id?.toString() || 'unknown',
         createdAt: new Date().toISOString(),
       };
-      setTasks(prev => [...prev, newTask]);
+      dispatch(addTask(newTask));
+      //setTasks(prev => [...prev, newTask]);
       setSnackbar({ 
         open: true, 
         message: 'Task created successfully!', 
@@ -232,7 +255,8 @@ const AdminTaskManagement: React.FC = () => {
   };
 
   const handleTaskDelete = (taskId: string) => {
-    setTasks(prev => prev.filter(task => task.id !== taskId));
+    dispatch(deleteTask(taskId));
+    //setTasks(prev => prev.filter(task => task.id !== taskId));
     setSnackbar({ 
       open: true, 
       message: 'Task deleted successfully!', 
