@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import Layout from '../components/sharedComponents/Layout';
@@ -18,3 +19,5 @@ const AdminSettings: React.FC = () => {
 };
 
 export default AdminSettings;
+
+

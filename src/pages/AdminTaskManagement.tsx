@@ -73,7 +73,7 @@ const AdminTaskManagement: React.FC = () => {
   // Helper functions
   const patients = useSelector((state: RootState) => state.patients.patients);
   const getPatientName = (patientId: string) => {
-    const patient = patients.find(p => p.id === patientId);
+    const patient = patients?.find(p => p.id === patientId);
     return patient?.name || 'Unknown Patient';
   }
 
@@ -84,7 +84,7 @@ const AdminTaskManagement: React.FC = () => {
 
   const users = useSelector((state: RootState) => state.user.users);
   const getAssigneeName = (assigneeId: string) => {
-    const user = users.find(u => String(u.id) === String(assigneeId));
+    const user = users?.find(u => String(u.id) === String(assigneeId));
     return user?.name || 'Unknown User';
   }
 
