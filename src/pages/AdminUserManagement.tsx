@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   Box,
   Typography,
   Chip,
   Avatar,
+  TextField,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Select,
 } from '@mui/material';
 import {
   Add,
@@ -23,7 +28,6 @@ import ViewDialog from '../components/sharedComponents/ViewDialog';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '../store/Store';
 import { addUser, updateUser, deleteUser } from '../store/slices/UserSlice';
-import { data } from 'react-router-dom';
 
 const AdminUserManagement: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -39,6 +43,11 @@ const AdminUserManagement: React.FC = () => {
     message: '', 
     severity: 'success' as 'success' | 'error' 
   });
+
+  // Filter states
+  const [nameFilter, setNameFilter] = useState('');
+  const [emailFilter, setEmailFilter] = useState('');
+  const [roleFilter, setRoleFilter] = useState('');
 
   const getRoleColor = (roleId: number) => {
     switch (roleId) {
@@ -73,6 +82,20 @@ const AdminUserManagement: React.FC = () => {
   };
 
   const stats = getStats(); */
+
+  // Filtered users based on search criteria
+  const filteredUsers = useMemo(() => {
+    return users.filter(user => {
+      const matchesName = nameFilter === '' || 
+        user.name.toLowerCase().includes(nameFilter.toLowerCase());
+      const matchesEmail = emailFilter === '' || 
+        user.email.toLowerCase().includes(emailFilter.toLowerCase());
+      const matchesRole = roleFilter === '' || 
+        user.roleName.toLowerCase() === roleFilter.toLowerCase();
+      
+      return matchesName && matchesEmail && matchesRole;
+    });
+  }, [users, nameFilter, emailFilter, roleFilter]);
   
   //create new user button handler
   const handleAddUser = () => {
@@ -183,7 +206,7 @@ const AdminUserManagement: React.FC = () => {
       {/* Action Button */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Typography variant="h5" sx={{ fontWeight: 600 }}>
-          All Users
+          All Users ({filteredUsers.length})
         </Typography>
         <AddButton
         onClick={handleAddUser} 
@@ -192,9 +215,47 @@ const AdminUserManagement: React.FC = () => {
         ></AddButton>
       </Box>
 
+      {/* Filter Section */}
+      <Box sx={{ mb: 3, p: 2, bgcolor: 'grey.50', borderRadius: 2 }}>
+        <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
+          Filter Users
+        </Typography>
+        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+          <TextField
+            label="Filter by Name"
+            value={nameFilter}
+            onChange={(e) => setNameFilter(e.target.value)}
+            size="small"
+            placeholder="Enter name to search..."
+            sx={{ minWidth: 200, flex: 1 }}
+          />
+          <TextField
+            label="Filter by Email"
+            value={emailFilter}
+            onChange={(e) => setEmailFilter(e.target.value)}
+            size="small"
+            placeholder="Enter email to search..."
+            sx={{ minWidth: 200, flex: 1 }}
+          />
+          <FormControl size="small" sx={{ minWidth: 200, flex: 1 }}>
+            <InputLabel>Filter by Role</InputLabel>
+            <Select
+              value={roleFilter}
+              label="Filter by Role"
+              onChange={(e) => setRoleFilter(e.target.value)}
+            >
+              <MenuItem value="">All Roles</MenuItem>
+              <MenuItem value="admin">Admin</MenuItem>
+              <MenuItem value="doctor">Doctor</MenuItem>
+              <MenuItem value="nurse">Nurse</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+      </Box>
+
       {/* Users Table in adminusermanagement*/}
       <DataTable<User>
-        data={users}
+        data={filteredUsers}
         columns={[
           {
             header: 'User',
