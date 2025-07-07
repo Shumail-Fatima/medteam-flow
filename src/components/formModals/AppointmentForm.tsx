@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   Box,
   TextField,
@@ -9,24 +9,15 @@ import {
   Paper,
   Chip,
 } from '@mui/material';
-import { Add, Person } from '@mui/icons-material';
+import { Add, Person, LocalHospital, Category } from '@mui/icons-material';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { useSelector } from 'react-redux';
-import type { RootState } from '../../store/Store';
+import type { RootState, AppDispatch } from '../../store/Store';
+import { useSelector, useDispatch } from 'react-redux';
 import type { AppointmentFormData, DoctorOption, Patient } from '../../types/appointment';
+import { setSelectedSpecialty, clearSpecialtyFilter } from '../../store/slices/DoctorSlice';
 import PatientFormModal from './PatientFormModal';
-import { Schema } from "yup";
-
-// Validation schema for appointment form using Yup
-
-const appointmentSchema : yup.ObjectSchema<AppointmentFormData> = yup.object({
-    patientId: yup.string().required('Patient is required'),
-    doctorId: yup.string().required('Doctor is required'),
-    appointmentSlot: yup.string().required('Appointment slot is required'),
-    reason: yup.string().optional(),
-});
+import { appointmentValidationSchema } from '../../validation/AppointmentValid';
 
 interface AppointmentFormProps {
     onSubmit: (data: AppointmentFormData) => void;
@@ -42,15 +33,21 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
     isLoading= false, onAddPatient,
 }) => {
     //Get patients from Redux store
+    const dispatch = useDispatch<AppDispatch>();
     const patients = useSelector((state: RootState) => state.patients.patients);
+    const specialties = useSelector((state: RootState) => state.doctors.specialties);
+    const selectedSpecialtyId = useSelector((state: RootState) => state.doctors.selectedSpecialtyId);
+
     const [patientModalOpen, setPatientModalOpen] = useState(false);
+
 
     //React hook form setup with yup validation
     const {
-        control, handleSubmit, watch, reset, formState: {errors},
+        control, handleSubmit, watch, reset, setValue, formState: {errors},
     } = useForm<AppointmentFormData>({
-        resolver: yupResolver(appointmentSchema),
+        resolver: yupResolver(appointmentValidationSchema),
         defaultValues:{
+            specialtyId: '',
             patientId: '',
             doctorId: '',
             appointmentSlot: '',
@@ -61,10 +58,20 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
 
     const selectedDoctorId = watch('doctorId');
     const selectedPatientId = watch('patientId');
+    const watchedSpecialtyId = watch('specialtyId');
 
     // find selected doctor and patient for displaying additional info
     const selectedDoctor = doctors.find(d => d.value === selectedDoctorId);
     const selectedPatient = patients.find(p => p.id === selectedPatientId);
+
+    // Filter doctors based on selected specialty using Redux state
+    const filteredDoctors = useMemo(() => {
+      const specialtyToFilter = selectedSpecialtyId || watchedSpecialtyId;
+      if (!specialtyToFilter){
+        return doctors;
+      }
+      return doctors.filter(doctor => doctor.specialtyId === specialtyToFilter);
+    },[doctors, selectedSpecialtyId, watchedSpecialtyId]);
 
     //prepare patient options for autocomplete with 'Add new Patient' option
     const patientOptions = [
@@ -74,10 +81,19 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
             patient: patient,
         })),
         {
-            label: '+ Register New Patient',
+            label: 'Register New Patient',
             value: 'add_new',
             patient: null,
         }
+    ];
+
+    const specialtyOptions = [
+      {label: 'All Specialties', value: ''},
+      ...specialties.map(specialty => ({
+        label: specialty.name,
+        value: specialty.id,
+        description: specialty.description,
+      }))
     ];
 
     const handleFormSubmit = (data: AppointmentFormData) => {
@@ -97,6 +113,22 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
         onAddPatient(patientData);
         setPatientModalOpen(false);
     };
+
+    // Handle specialty selection and filter doctors using Redux
+    const handleSpecialtyChange = (specialtyId: string) => {
+    setValue('specialtyId', specialtyId);
+    setValue('doctorId', ''); // Clear doctor selection when specialty changes
+    setValue('appointmentSlot', ''); // Clear appointment slot when doctor changes
+    
+    // Redux action - Set selected specialty for filtering
+    dispatch(setSelectedSpecialty(specialtyId || null));
+  };
+
+  // Handle doctor selection and clear appointment slot
+  const handleDoctorChange = (doctorId: string) => {
+    setValue('doctorId', doctorId);
+    setValue('appointmentSlot', ''); // Clear appointment slot when doctor changes
+  };
 
      return (
     <Paper sx={{ p: 4, borderRadius: 3 }}>
@@ -182,27 +214,119 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
             </Box>
           )}
 
-          {/* Doctor Selection */}
+          {/* Doctor Specialty Selection */}
+          <Controller
+            name="specialtyId"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                select
+                label="Doctor Specialty"
+                fullWidth
+                value={field.value}
+                onChange={(e) => {
+                  field.onChange(e.target.value);
+                  handleSpecialtyChange(e.target.value);
+                }}
+                error={!!errors.specialtyId}
+                helperText={errors.specialtyId?.message || 'Select a specialty to filter doctors'}
+                InputProps={{
+                  startAdornment: <Category sx={{ mr: 1, color: 'action.active' }} />,
+                }}
+              >
+                {specialtyOptions.map((specialty) => (
+                  <MenuItem key={specialty.value} value={specialty.value}>
+                    <Box>
+                      <Typography variant="body2" fontWeight={specialty.value === '' ? 'bold' : 'normal'}>
+                        {specialty.label}
+                      </Typography>
+                      {/*specialty. && (
+                        <Typography variant="caption" color="text.secondary">
+                          {specialty.description}
+                        </Typography>
+                      )*/}
+                    </Box>
+                  </MenuItem>
+                ))}
+              </TextField>
+            )}
+          />
+
+          {/* Doctor Selection - Filtered by Specialty */}
           <Controller
             name="doctorId"
             control={control}
             render={({ field }) => (
               <Autocomplete
-                options={doctors}
+                options={filteredDoctors}
                 getOptionLabel={(option) => option.label}
-                value={doctors.find(d => d.value === field.value) || null}
-                onChange={(_, newValue) => field.onChange(newValue?.value || '')}
+                value={filteredDoctors.find(d => d.value === field.value) || null}
+                onChange={(_, newValue) => {
+                  const doctorId = newValue?.value || '';
+                  field.onChange(doctorId);
+                  handleDoctorChange(doctorId);
+                }}
+                disabled={!watchedSpecialtyId && !selectedSpecialtyId}
                 renderInput={(params) => (
                   <TextField
                     {...params}
                     label="Select Doctor"
                     error={!!errors.doctorId}
-                    helperText={errors.doctorId?.message || (mode === 'edit' ? 'Doctor can only be changed in create mode' : '')}
+                    helperText={
+                      !watchedSpecialtyId && !selectedSpecialtyId
+                        ? 'Select a specialty first to see available doctors'
+                        : errors.doctorId?.message
+                    }
+                    InputProps={{
+                      ...params.InputProps,
+                      startAdornment: <LocalHospital sx={{ mr: 1, color: 'action.active' }} />,
+                    }}
                   />
+                )}
+                renderOption={(props, option) => (
+                  <li {...props}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+                      <LocalHospital sx={{ mr: 1, color: 'action.active' }} />
+                      <Box>
+                        <Typography variant="body2">
+                          {option.label}
+                        </Typography>
+                        {option.specialtyName && (
+                          <Typography variant="caption" color="text.secondary">
+                            {option.specialtyName}
+                          </Typography>
+                        )}
+                      </Box>
+                    </Box>
+                  </li>
                 )}
               />
             )}
           />
+
+          {/* Selected Doctor Info */}
+          {selectedDoctor && (
+            <Box sx={{ p: 2, bgcolor: 'primary.light', borderRadius: 2 }}>
+              <Typography variant="body2" color="primary.contrastText" gutterBottom>
+                Selected Doctor
+              </Typography>
+              <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                <Chip 
+                  label={selectedDoctor.label} 
+                  color="primary" 
+                  size="small" 
+                  sx={{ color: 'white', bgcolor: 'primary.dark' }}
+                />
+                {selectedDoctor.specialtyName && (
+                  <Chip 
+                    label={selectedDoctor.specialtyName} 
+                    size="small" 
+                    sx={{ bgcolor: 'white', color: 'primary.main' }}
+                  />
+                )}
+              </Box>
+            </Box>
+          )}
 
           {/* Appointment Slot Selection */}
           <Controller

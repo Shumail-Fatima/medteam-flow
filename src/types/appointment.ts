@@ -31,6 +31,7 @@ export interface DoctorOption {
   availableSlots: string[];
   specialtyId?: string;
   specialtyName?: string;
+  description?: string;
 }
 
 export interface AppointmentFormData {

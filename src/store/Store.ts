@@ -6,6 +6,7 @@ import userReducer from './slices/UserSlice'
 import taskReducer from './slices/TaskSlice'
 import settingsReducer from './slices/SettingsSlice';
 import supportReducer from './slices/SupportSlice';
+import doctorReducer from './slices/DoctorSlice';
 
 // Configure the Redux store with appointment and patient slices
 export const store = configureStore({
@@ -16,6 +17,7 @@ export const store = configureStore({
     task: taskReducer,
     settings: settingsReducer,
     support: supportReducer,
+    doctors: doctorReducer,
   },
 });
 

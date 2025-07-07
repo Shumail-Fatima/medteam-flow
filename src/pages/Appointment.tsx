@@ -21,16 +21,20 @@ import type { Appointment, AppointmentFormData, PatientFormData } from '../types
 import usersData from '../data/Users.json';
 import doctorSlots from '../data/DoctorSlots.json';
 import ViewDialog from '../components/sharedComponents/ViewDialog';
+import doctorSpecialtiesData from '../data/DoctorSpeciality.json';
 
 // Prepare doctors array from users data
 const doctors = usersData
   .filter((user: any) => user.roleId === 2)
   .map((user: any) => {
     const slotObj = doctorSlots.find((s: any) => String(s.doctorId) === String(user.id));
+    const specialty = doctorSpecialtiesData.find((spec: any) => spec.id === user.specialtyId);
     return {
       label: user.name,
       value: String(user.id),
       availableSlots: slotObj ? slotObj.slots : [],
+      specialtyId: user.specialtyId,
+      specialtyName: specialty?.name || 'General Medicine',
     };
   });
 
