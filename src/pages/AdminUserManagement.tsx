@@ -33,9 +33,8 @@ const AdminUserManagement: React.FC = () => {
   });
 
   // Filter states
-  const [nameFilter, setNameFilter] = useState('');
-  const [emailFilter, setEmailFilter] = useState('');
   const [roleFilter, setRoleFilter] = useState('');
+  const [searchFilter, setSearchFilter] = useState('');
 
   const getRoleColor = (roleId: number) => {
     switch (roleId) {
@@ -74,16 +73,15 @@ const AdminUserManagement: React.FC = () => {
   // Filtered users based on search criteria
   const filteredUsers = useMemo(() => {
     return users.filter(user => {
-      const matchesName = nameFilter === '' || 
-        user.name.toLowerCase().includes(nameFilter.toLowerCase());
-      const matchesEmail = emailFilter === '' || 
-        user.email.toLowerCase().includes(emailFilter.toLowerCase());
       const matchesRole = roleFilter === '' || 
         user.roleName.toLowerCase() === roleFilter.toLowerCase();
+      const matchesSearch = searchFilter === '' || 
+        user.name.toLowerCase().includes(searchFilter.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchFilter.toLowerCase());
       
-      return matchesName && matchesEmail && matchesRole;
+      return  matchesRole && matchesSearch;
     });
-  }, [users, nameFilter, emailFilter, roleFilter]);
+  }, [users, roleFilter, searchFilter]);
   
   //create new user button handler
   const handleAddUser = () => {
@@ -204,28 +202,17 @@ const AdminUserManagement: React.FC = () => {
       </Box>
 
       {/* Filter Section */}
-      <Box sx={{ mb: 3, p: 2, bgcolor: 'grey.50', borderRadius: 2 }}>
-        <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
-          Filter Users
-        </Typography>
-        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+      <Box sx={{ mb: 3, p: 2, borderRadius: 2 }}>
+        <Box sx={{  display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
           <TextField
-            label="Filter by Name"
-            value={nameFilter}
-            onChange={(e) => setNameFilter(e.target.value)}
+            label="Filter by Name or Email"
+            value={searchFilter}
+            onChange={(e) => setSearchFilter(e.target.value)}
             size="small"
             placeholder="Enter name to search..."
-            sx={{ minWidth: 200, flex: 1 }}
+            sx={{ minWidth: 200, width: 250 }}
           />
-          <TextField
-            label="Filter by Email"
-            value={emailFilter}
-            onChange={(e) => setEmailFilter(e.target.value)}
-            size="small"
-            placeholder="Enter email to search..."
-            sx={{ minWidth: 200, flex: 1 }}
-          />
-          <FormControl size="small" sx={{ minWidth: 200, flex: 1 }}>
+          <FormControl size="small" sx={{ minWidth: 200, width: 250 }}>
             <InputLabel>Filter by Role</InputLabel>
             <Select
               value={roleFilter}

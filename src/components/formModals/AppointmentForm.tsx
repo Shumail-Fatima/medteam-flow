@@ -176,12 +176,12 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
           {/* Add New Patient Button */}
           <Button
             type="button"
-            variant="outlined"
+            variant="text"
             startIcon={<Add />}
             onClick={handleAddNewPatient}
             disabled={mode === 'edit'}
             sx={{
-              alignSelf: 'flex-start',
+              alignSelf: 'flex-end',
               borderRadius: 2,
               borderColor: 'primary.main',
               color: 'primary.main',
@@ -217,7 +217,7 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
                 select
                 label="Doctor Specialty"
                 fullWidth
-                value={field.value}
+                value={field.value || 'All Specialties'}
                 onChange={(e) => {
                   field.onChange(e.target.value);
                   handleSpecialtyChange(e.target.value);
@@ -260,7 +260,7 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
                   field.onChange(doctorId);
                   handleDoctorChange(doctorId);
                 }}
-                disabled={!watchedSpecialtyId && !selectedSpecialtyId}
+                disabled={false}
                 renderInput={(params) => (
                   <TextField
                     {...params}
