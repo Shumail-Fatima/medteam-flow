@@ -19,10 +19,18 @@ export interface Appointment {
   createdAt: string;
 }
 
+export interface DoctorSpecialty {
+  id: string;
+  name: string;
+  description: string;
+}
+
 export interface DoctorOption {
   label: string;
   value: string;
   availableSlots: string[];
+  specialtyId?: string;
+  specialtyName?: string;
 }
 
 export interface AppointmentFormData {
@@ -30,6 +38,7 @@ export interface AppointmentFormData {
   doctorId: string;
   appointmentSlot: string;
   reason?: string;
+  specialtyId?: string;
 }
 
 export interface PatientFormData {
