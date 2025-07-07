@@ -73,19 +73,12 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
       return doctors.filter(doctor => doctor.specialtyId === specialtyToFilter);
     },[doctors, selectedSpecialtyId, watchedSpecialtyId]);
 
-    //prepare patient options for autocomplete with 'Add new Patient' option
-    const patientOptions = [
-        ...patients.map(patient => ({
-            label: `${patient.name} (Age: ${patient.age})`,
-            value: patient.id,
-            patient: patient,
-        })),
-        {
-            label: 'Register New Patient',
-            value: 'add_new',
-            patient: null,
-        }
-    ];
+    //prepare patient options for autocomplete
+    const patientOptions = patients.map(patient => ({
+        label: `${patient.name} (Age: ${patient.age})`,
+        value: patient.id,
+        patient: patient,
+    }));
 
     const specialtyOptions = [
       {label: 'All Specialties', value: ''},
@@ -103,10 +96,8 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
         }
     };
 
-    const handlePatientSelect = (value: string | null) => {
-        if (value === 'add_new'){
-            setPatientModalOpen(true);
-        }
+    const handleAddNewPatient = () => {
+        setPatientModalOpen(true);
     };
 
     const handlePatientAdd = (patientData: any) => {
@@ -149,11 +140,7 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
                 value={patientOptions.find(p => p.value === field.value) || null}
                 disabled={mode === 'edit'} // Only editable in create mode
                 onChange={(_, newValue) => {
-                  if (newValue?.value === 'add_new') {
-                    handlePatientSelect('add_new');
-                  } else {
-                    field.onChange(newValue?.value || '');
-                  }
+                  field.onChange(newValue?.value || '');
                 }}
                 renderInput={(params) => (
                   <TextField
@@ -167,38 +154,45 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
                     }}
                   />
                 )}
-                renderOption={(props, option) => {
-                    const { key, ...rest } = props;
-                    return (
-                        <li key={key} {...rest}>
+                renderOption={(props, option) => (
+                    <li {...props}>
                         <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-                            {option.value === 'add_new' ? (
-                            <>
-                                <Add sx={{ mr: 1, color: 'primary.main' }} />
-                                <Typography color="primary.main" fontWeight="medium">
-                                {option.label}
-                                </Typography>
-                            </>
-                            ) : (
-                            <>
-                                <Person sx={{ mr: 1, color: 'action.active' }} />
-                                <Box>
+                            <Person sx={{ mr: 1, color: 'action.active' }} />
+                            <Box>
                                 <Typography variant="body2">
                                     {option.patient?.name}
                                 </Typography>
                                 <Typography variant="caption" color="text.secondary">
                                     Age: {option.patient?.age} • {option.patient?.email}
                                 </Typography>
-                                </Box>
-                            </>
-                            )}
+                            </Box>
                         </Box>
-                        </li>
-                    );
-                }}
+                    </li>
+                )}
               />
             )}
           />
+
+          {/* Add New Patient Button */}
+          <Button
+            type="button"
+            variant="outlined"
+            startIcon={<Add />}
+            onClick={handleAddNewPatient}
+            disabled={mode === 'edit'}
+            sx={{
+              alignSelf: 'flex-start',
+              borderRadius: 2,
+              borderColor: 'primary.main',
+              color: 'primary.main',
+              '&:hover': {
+                borderColor: 'primary.dark',
+                backgroundColor: 'primary.light',
+              },
+            }}
+          >
+            Register New Patient
+          </Button>
 
           {/* Selected Patient Info */}
           {selectedPatient && (
