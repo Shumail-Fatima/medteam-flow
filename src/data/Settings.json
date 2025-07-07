@@ -1,0 +1,32 @@
+[
+  {
+    "id": "settings_1",
+    "userId": "1",
+    "theme": "light",
+    "language": "en",
+    "timezone": "America/New_York",
+    "emailNotifications": true,
+    "smsNotifications": false,
+    "appointmentReminders": true,
+    "systemAlerts": true,
+    "autoLogout": 30,
+    "dateFormat": "MM/DD/YYYY",
+    "timeFormat": "12h",
+    "updatedAt": "2025-01-15T10:30:00Z"
+  },
+  {
+    "id": "settings_2",
+    "userId": "2",
+    "theme": "dark",
+    "language": "en",
+    "timezone": "America/Los_Angeles",
+    "emailNotifications": true,
+    "smsNotifications": true,
+    "appointmentReminders": true,
+    "systemAlerts": false,
+    "autoLogout": 60,
+    "dateFormat": "DD/MM/YYYY",
+    "timeFormat": "24h",
+    "updatedAt": "2025-01-16T14:20:00Z"
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "id": "ticket_1",
+    "userId": "2",
+    "userName": "Dr. Sarah",
+    "userEmail": "doctor@example.com",
+    "category": "technical",
+    "priority": "medium",
+    "status": "open",
+    "subject": "Unable to access patient records",
+    "description": "I'm experiencing issues accessing patient records from the dashboard. The page loads but shows no data.",
+    "createdAt": "2025-01-15T09:30:00Z",
+    "updatedAt": "2025-01-15T09:30:00Z",
+    "responses": [
+      {
+        "id": "response_1",
+        "ticketId": "ticket_1",
+        "responderId": "support_1",
+        "responderName": "Support Team",
+        "responderRole": "support",
+        "message": "Thank you for reporting this issue. We're investigating the patient records access problem and will update you shortly.",
+        "createdAt": "2025-01-15T10:15:00Z"
+      }
+    ]
+  },
+  {
+    "id": "ticket_2",
+    "userId": "1",
+    "userName": "John Admin",
+    "userEmail": "admin@example.com",
+    "category": "feature-request",
+    "priority": "low",
+    "status": "resolved",
+    "subject": "Add bulk appointment scheduling",
+    "description": "It would be helpful to have a feature that allows scheduling multiple appointments at once for recurring patients.",
+    "createdAt": "2025-01-10T14:20:00Z",
+    "updatedAt": "2025-01-14T16:45:00Z",
+    "resolvedAt": "2025-01-14T16:45:00Z",
+    "assignedTo": "dev_team",
+    "responses": [
+      {
+        "id": "response_2",
+        "ticketId": "ticket_2",
+        "responderId": "support_2",
+        "responderName": "Development Team",
+        "responderRole": "admin",
+        "message": "Great suggestion! We've added this to our roadmap for the next quarter. We'll notify you when this feature is available.",
+        "createdAt": "2025-01-14T16:45:00Z"
+      }
+    ]
+  }
+]
