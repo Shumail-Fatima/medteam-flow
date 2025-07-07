@@ -31,14 +31,7 @@ import type { UserFormData } from '../../types/Auth';
 import type { User } from '../../types/Auth';
 import rolesData from '../../data/Roles.json';
 import { DailogButton } from '../CustomButton';
-
-const userSchema = yup.object({
-  name: yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
-  username: yup.string().required('Username is required').min(3, 'Username must be at least 3 characters'),
-  email: yup.string().email('Invalid email').required('Email is required'),
-  password: yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
-  roleId: yup.number().required('Role is required'),
-});
+import { userSchema } from '../../validation/UserFormValidation';
 
 interface UserFormModalProps {
   open: boolean;

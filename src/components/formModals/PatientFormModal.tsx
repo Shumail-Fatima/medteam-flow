@@ -6,31 +6,9 @@ import {
 import { DailogButton } from '../CustomButton';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import type { PatientFormData, Patient } from '../../types/appointment';
 import { Close } from '@mui/icons-material';
-
-const patientSchema = yup.object({
-  name: yup.string().required('Patient name is required').min(2, 'Name must be at least 2 characters'),
-  dateOfBirth:yup.string().required('Date of birth is required'),
-  email:yup.string().email('Invalid email').required('Email is required'),
-  phone:yup.string().required('Phone number is required'),
-});
-
-interface DoctorOption {
-  label: string;
-  value: string;
-  availableSlots: string[];
-}
-
-interface PatientFormValues {
-  name: string;
-  email: string;
-  phone: string;
-  doctorId: string;
-  appointmentSlot: string;
-  reason: string;
-}
+import { patientSchema } from '../../validation/PatientValidation';
 
 interface PatientFormModalProps {
   open: boolean;
@@ -38,8 +16,6 @@ interface PatientFormModalProps {
   onSubmit: (data: PatientFormData) => void;
   patient?: Patient | null;
   isLoading?: boolean;
-  //initialValues?: Partial<PatientFormValues>;
-  //doctors: DoctorOption[];
   mode?: 'create' | 'edit' | 'view';
 }
 

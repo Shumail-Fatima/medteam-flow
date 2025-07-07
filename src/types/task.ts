@@ -21,3 +21,23 @@ export interface TaskFormData {
   status: 'Pending' | 'In Progress' | 'Done';
   notes: string;
 }
+
+// -------- types --------
+export type Role = 'admin' | 'doctor' | 'nurse';
+export type TaskStatus = 'Pending' | 'In Progress' | 'Done';
+export type TaskType =
+  | 'Medication'
+  | 'Vitals Check'
+  | 'Procedure Prep'
+  | 'Consultation Follow-up';
+
+export interface TaskFormValues {
+  id: string;
+  title: string;
+  type: TaskType;
+  patientId: string;
+  assigneeId: string;
+  dueAt: string; // updated to string instead of Date
+  status: TaskStatus;
+  notes: string;
+}

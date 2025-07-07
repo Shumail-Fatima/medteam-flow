@@ -7,7 +7,9 @@ import {
 } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import { schema } from '../../validation/TaskValidation';
+import type { TaskFormValues, Role } from '../../types/task';
+
 
 // -------- import dummy data --------
 import tasksData from '../../data/Tasks.json';
@@ -19,26 +21,6 @@ const data = {
   users: usersData,
   patients: patientsData
 };
-
-// -------- types --------
-type Role = 'admin' | 'doctor' | 'nurse';
-type TaskStatus = 'Pending' | 'In Progress' | 'Done';
-type TaskType =
-  | 'Medication'
-  | 'Vitals Check'
-  | 'Procedure Prep'
-  | 'Consultation Follow-up';
-
-interface TaskFormValues {
-  id: string;
-  title: string;
-  type: TaskType;
-  patientId: string;
-  assigneeId: string;
-  dueAt: string; // updated to string instead of Date
-  status: TaskStatus;
-  notes: string;
-}
 
 interface Option {
   label: string;
@@ -67,18 +49,6 @@ const staff: Option[] = data.users.map(u => ({
   value: String(u.id),
 }));
 
-
-
-// -------- validation --------
-const schema: yup.ObjectSchema<Omit<TaskFormValues, 'id'>> = yup.object({
-  title: yup.string().required(),
-  type: yup.mixed<TaskType>().required(),
-  patientId: yup.string().required(),
-  assigneeId: yup.string().required(),
-  dueAt: yup.string().required(),
-  status: yup.mixed<TaskStatus>().required(),
-  notes: yup.string().required(),
-});
 
 const TaskFormModal: React.FC<Props> = ({
   open,
