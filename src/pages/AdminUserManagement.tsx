@@ -1,21 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import {
-  Box,
-  Typography,
-  Chip,
-  Avatar,
-  TextField,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Select,
+  Box,Typography,Chip,Avatar,TextField,MenuItem,FormControl,
+  InputLabel,Select,
 } from '@mui/material';
-import {
-  Add,
-  People,
-  AdminPanelSettings,
-  LocalHospital,
-} from '@mui/icons-material';
+import { Add, People, AdminPanelSettings, LocalHospital, } from '@mui/icons-material';
 import {AddButton} from '../components/CustomButton';
 import Layout from '../components/sharedComponents/Layout';
 import UserFormModal from '../components//formModals/UserFormModal';

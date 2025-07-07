@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import {
   Box,
   Typography,
-  Button,
   Chip,
 } from '@mui/material';
 import {AddButton} from '../components/CustomButton';
-import { Add, CalendarToday, Label } from '@mui/icons-material';
+import { Add, CalendarToday, } from '@mui/icons-material';
 import { useSelector, useDispatch } from 'react-redux';
 import Layout from '../components/sharedComponents/Layout';
 import CustomTabs, { type TabOption } from '../components/GeneralizedTabs';

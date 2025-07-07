@@ -1,25 +1,6 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  Typography,
-  Chip,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Avatar,
-  Grid,
-  Card,
-  CardContent,
-} from '@mui/material';
-import {
-  Add,
-  Assignment,
-  Schedule,
-  CheckCircle,
-  Pending,
-  PlayArrow,
-} from '@mui/icons-material';
+import { Box,Typography, Chip, Avatar, Grid, Card, CardContent, } from '@mui/material';
+import { Add, Schedule, CheckCircle, Pending, PlayArrow, } from '@mui/icons-material';
 import {AddButton} from '../components/CustomButton';
 import Layout from '../components/sharedComponents/Layout';
 import TaskFormModal from '../components//formModals/TaskFormModal';
@@ -28,33 +9,15 @@ import ConfirmDeleteDialog from '../components/sharedComponents/ConfirmDeleteDia
 import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';
 import type { Task, TaskFormData } from '../types/task';
 import { useAuth } from '../context/AuthContext';
-import tasksData from '../data/Tasks.json';
 import ViewDialog from '../components/sharedComponents/ViewDialog';
-import usersData from '../data/Users.json'
-import patientsData from '../data/Patients.json'
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '../store/Store';
 import { addTask, updateTask, deleteTask } from '../store/slices/TaskSlice';
 
 
-const dummyData = {
-  tasks: tasksData.tasks,
-  users: usersData,
-  patients: patientsData
-};
-
-
 const AdminTaskManagement: React.FC = () => {
   const { user } = useAuth();
   const userRole = user?.roleName as 'admin' | 'doctor' | 'nurse';
-
-  // Initialize tasks with proper typing
-  /*const [tasks, setTasks] = useState<Task[]>(
-    dummyData.tasks.map((task: any) => ({
-      ...task,
-      createdAt: task.createdAt || new Date().toISOString(),
-    }))
-  );*/
   const dispatch = useDispatch<AppDispatch>();
   const tasks = useSelector((state: RootState) => state.task.tasks);
 
@@ -77,23 +40,11 @@ const AdminTaskManagement: React.FC = () => {
     return patient?.name || 'Unknown Patient';
   }
 
-  /*const getPatientName = (patientId: string) => {
-    const patient = dummyData.patients.find(p => p.id === patientId);
-    return patient?.name || 'Unknown Patient';
-  };*/
-
   const users = useSelector((state: RootState) => state.user.users);
   const getAssigneeName = (assigneeId: string) => {
     const user = users?.find(u => String(u.id) === String(assigneeId));
     return user?.name || 'Unknown User';
   }
-
-  /*
-  const getAssigneeName = (assigneeId: string) => {
-    const assignee = dummyData.users.find(u => u.id === Number(assigneeId));
-    return assignee?.name || 'Unknown User';
-  };
-  */
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -154,6 +105,7 @@ const AdminTaskManagement: React.FC = () => {
 
   // Permission checks
   const canCreateTask = userRole === 'admin';
+  
   const canEditTask = (task: Task) => {
     if (userRole === 'admin') return true;
     if (userRole === 'doctor') return true;
