@@ -17,6 +17,7 @@ export interface Appointment {
   appointmentSlot: string;
   reason?: string;
   createdAt: string;
+  specialtyName?: string;
 }
 
 export interface DoctorSpecialty {

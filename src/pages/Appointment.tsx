@@ -117,6 +117,7 @@ const AppointmentManagement: React.FC = () => {
   const handleAppointmentSubmit = (data: AppointmentFormData) => {
     const selectedPatient = patients.find(p => p.id === data.patientId);
     const selectedDoctor = doctors.find(d => d.value === data.doctorId);
+    const selectedSpecialty = doctorSpecialtiesData.find(s => s.id === selectedDoctor?.specialtyId);
 
     if (!selectedPatient || !selectedDoctor) {
       setSnackbar({
@@ -131,6 +132,7 @@ const AppointmentManagement: React.FC = () => {
       // Update existing appointment using Redux action
       const updatedAppointment: Appointment = {
         ...selectedAppointment,
+        specialtyName: selectedSpecialty?.name,
         doctorId: data.doctorId,
         doctorName: selectedDoctor.label,
         appointmentSlot: data.appointmentSlot,
@@ -149,6 +151,7 @@ const AppointmentManagement: React.FC = () => {
         patientId: data.patientId,
         patientName: selectedPatient.name,
         patientAge: selectedPatient.age || 0,
+        specialtyName: selectedSpecialty?.name,
         doctorId: data.doctorId,
         doctorName: selectedDoctor.label,
         appointmentSlot: data.appointmentSlot,
@@ -307,6 +310,7 @@ const AppointmentManagement: React.FC = () => {
                 { label: 'Patient name', value: selectedAppointment.patientName },
                 { label: 'Patient age', value: selectedAppointment.patientAge },
                 { label: 'Doctor', value: selectedAppointment.doctorName },
+                { label: 'Doctor specialty', value: selectedAppointment.specialtyName },
                 { label: 'Appointment slot', value: formatDate(selectedAppointment.appointmentSlot)},
                 { label: 'Created at', value: formatDate(selectedAppointment.createdAt)},
                 { label: 'Reason', value: selectedAppointment.reason}
