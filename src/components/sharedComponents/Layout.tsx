@@ -207,11 +207,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               </Avatar>
             </IconButton>
             <Box sx={{ ml: 1 }}>
-              <Typography variant="body2" sx={{ ml: 0, cursor: 'pointer' }}>
+              <Typography variant="body2" sx={{ ml: 0, cursor: 'pointer', lineHeight: 0.5, mt: 1}}>
                 {/*user?.name*/}
                 {user && capitalize(user.name)}
               </Typography>
-              <Typography variant="caption" color="text">
+              <Typography variant="caption" color="text"
+                  sx={{
+                    lineHeight: 0,
+                    mt: '1px',
+                  }}>
                 {user?.roleName}
               </Typography>
             </Box>
@@ -249,7 +253,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         component="main" 
         sx={{ 
           flexGrow: 1, 
-          p: {xs: 2, md: 4}, 
+          p: {xs: 2, md: 8}, 
           mt: 8,
           bgcolor: '#f5f5f5',
           minHeight: 'calc(100vh - 64px)',

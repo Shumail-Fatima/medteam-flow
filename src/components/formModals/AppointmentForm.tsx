@@ -217,13 +217,11 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
                 select
                 label="Doctor Specialty"
                 fullWidth
-                value={field.value || 'All Specialties'}
+                value={field.value }
                 onChange={(e) => {
                   field.onChange(e.target.value);
                   handleSpecialtyChange(e.target.value);
                 }}
-                error={!!errors.specialtyId}
-                helperText={errors.specialtyId?.message || 'Select a specialty to filter doctors'}
                 InputProps={{
                   startAdornment: <Category sx={{ mr: 1, color: 'action.active' }} />,
                 }}
@@ -267,8 +265,8 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
                     label="Select Doctor"
                     error={!!errors.doctorId}
                     helperText={
-                      !watchedSpecialtyId && !selectedSpecialtyId
-                        ? 'Select a specialty first to see available doctors'
+                      watchedSpecialtyId === ''
+                        ? 'Showing all doctors'
                         : errors.doctorId?.message
                     }
                     InputProps={{
