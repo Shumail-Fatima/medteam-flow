@@ -377,15 +377,15 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
             )}
           />
 
-          {/* Submit Button */}
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
           <Button
             type="submit"
             variant="contained"
-            size="large"
             disabled={isLoading}
             sx={{
+              borderRadius: 3,
+              minWidth: 180, // or any standard width you prefer
               py: 1.5,
-              borderRadius: 2,
               background: 'linear-gradient(135deg, #1976d2 0%, #115293 100%)',
               '&:hover': {
                 background: 'linear-gradient(135deg, #115293 0%, #1976d2 100%)',
@@ -394,6 +394,8 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
           >
             {mode === 'edit' ? 'Update Appointment' : 'Create Appointment'}
           </Button>
+        </Box>
+
         </Box>
       </form>
 
