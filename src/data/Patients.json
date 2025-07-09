@@ -4,14 +4,66 @@
     "name": "John Doe",
     "dateOfBirth": "1958-03-15",
     "email": "john.doe@email.com",
-    "phone": "+1-555-0123"
-  },
+    "phone": "+1-555-0123",
+    "address": "123 Main St, City, State 12345",
+      "emergencyContact": {
+        "name": "Jane Doe",
+        "phone": "+1-555-0124",
+        "relationship": "Spouse"
+      },
+      "medicalHistory": [
+        {
+          "id": "mh_1",
+          "date": "2024-01-10T10:00:00Z",
+          "type": "diagnosis",
+          "doctorId": "2",
+          "doctorName": "Dr. Sarah Wilson",
+          "title": "Hypertension",
+          "description": "Patient diagnosed with stage 1 hypertension",
+          "severity": "moderate"
+        },
+        {
+          "id": "mh_2",
+          "date": "2024-01-15T14:30:00Z",
+          "type": "prescription",
+          "doctorId": "2",
+          "doctorName": "Dr. Sarah Wilson",
+          "title": "Lisinopril 10mg",
+          "description": "Take once daily for blood pressure control",
+          "dosage": "10mg daily"
+        }
+      ],
+      "allergies": ["Penicillin", "Shellfish"],
+      "bloodType": "A+",
+      "createdAt": "2024-01-01T08:00:00Z"
+    },
   {
     "id": "patient_2",
     "name": "Jane Smith",
     "dateOfBirth": "1951-07-22",
     "email": "jane.smith@email.com",
-    "phone": "+1-555-0456"
+    "phone": "+1-555-0456",
+    "address": "456 Oak Ave, City, State 12345",
+    "emergencyContact": {
+      "name": "Robert Smith",
+      "phone": "+1-555-0457",
+      "relationship": "Son"
+    },
+    "medicalHistory": [
+      {
+        "id": "mh_3",
+        "date": "2024-01-12T09:00:00Z",
+        "type": "consultation",
+        "doctorId": "3",
+        "doctorName": "Dr. Michael Chen",
+        "title": "Neurological Assessment",
+        "description": "Routine neurological examination - all normal",
+        "symptoms": ["Mild headaches", "Occasional dizziness"]
+      }
+    ],
+    "allergies": ["Aspirin"],
+    "bloodType": "O-",
+    "createdAt": "2024-01-02T09:00:00Z"
   },
   {
     "id": "patient_3",

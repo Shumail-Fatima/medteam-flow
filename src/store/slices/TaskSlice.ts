@@ -42,6 +42,13 @@ const taskSlice = createSlice({
         setError: (state, action: PayloadAction<string | null>) => {
             state.error = action.payload;
         },
+         // Update task status
+        updateTaskStatus: (state, action: PayloadAction<{ taskId: string; status: Task['status'] }>) => {
+        const task = state.tasks.find(task => task.id === action.payload.taskId);
+        if (task) {
+            task.status = action.payload.status;
+      }
+    },
     },
 });
 
@@ -50,7 +57,8 @@ export const {
     updateTask,
     deleteTask,
     setLoading,
-    setError
+    setError,
+    updateTaskStatus,
 } = taskSlice.actions;
 
 export default taskSlice.reducer;

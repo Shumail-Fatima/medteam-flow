@@ -1,0 +1,151 @@
+// Redux slice for managing medical data (consultations, medical history)
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import type { Consultation, ExtendedPatient, MedicalHistoryEntry } from '../../types/medical';
+import patient from '../../data/Patients.json';
+import consultation from '../../data/Consultations.json';
+
+interface MedicalState {
+  consultations: Consultation[];
+  extendedPatients: ExtendedPatient[];
+  loading: boolean;
+  error: string | null;
+}
+
+// Calculate age from date of birth
+const calculateAge = (dateOfBirth: string): number => {
+  const today = new Date();
+  const birthDate = new Date(dateOfBirth);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const monthDiff = today.getMonth() - birthDate.getMonth();
+  
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  
+  return age;
+};
+
+// Initial state with medical data loaded from JSON
+const initialState: MedicalState = {
+  consultations: (consultation.consultations || []) as Consultation[],
+  extendedPatients: patient.map((patient: any) => ({
+    ...patient,
+    age: calculateAge(patient.dateOfBirth)
+  })) as ExtendedPatient[],
+  loading: false,
+  error: null,
+};
+
+// Create medical slice with reducers for medical data management
+const medicalSlice = createSlice({
+  name: 'medical',
+  initialState,
+  reducers: {
+    // Add a new consultation record
+    addConsultation: (state, action: PayloadAction<Consultation>) => {
+      state.consultations.push(action.payload);
+      
+      // Also add to patient's medical history
+      const patient = state.extendedPatients.find(p => p.id === action.payload.patientId);
+      if (patient) {
+        const historyEntry: MedicalHistoryEntry = {
+          id: `mh_${Date.now()}`,
+          date: action.payload.date,
+          type: 'consultation',
+          doctorId: action.payload.doctorId,
+          doctorName: action.payload.doctorName,
+          title: action.payload.diagnosis,
+          description: action.payload.notes,
+          symptoms: action.payload.symptoms,
+        };
+        patient.medicalHistory.push(historyEntry);
+        
+        // Add prescriptions to medical history
+        action.payload.prescriptions.forEach(prescription => {
+          const prescriptionEntry: MedicalHistoryEntry = {
+            id: `mh_${Date.now()}_${prescription.id}`,
+            date: action.payload.date,
+            type: 'prescription',
+            doctorId: action.payload.doctorId,
+            doctorName: action.payload.doctorName,
+            title: prescription.medication,
+            description: prescription.instructions || '',
+            dosage: `${prescription.dosage} ${prescription.frequency}`,
+          };
+          patient.medicalHistory.push(prescriptionEntry);
+        });
+      }
+    },
+    
+    // Update an existing consultation
+    updateConsultation: (state, action: PayloadAction<Consultation>) => {
+      const index = state.consultations.findIndex(c => c.id === action.payload.id);
+      if (index !== -1) {
+        state.consultations[index] = action.payload;
+      }
+    },
+    
+    // Add medical history entry to a patient
+    addMedicalHistoryEntry: (state, action: PayloadAction<{
+      patientId: string;
+      entry: MedicalHistoryEntry;
+    }>) => {
+      const patient = state.extendedPatients.find(p => p.id === action.payload.patientId);
+      if (patient) {
+        patient.medicalHistory.push(action.payload.entry);
+      }
+    },
+    
+    // Update patient medical information (allergies, blood type, etc.)
+    updatePatientMedicalInfo: (state, action: PayloadAction<{
+      patientId: string;
+      allergies?: string[];
+      bloodType?: string;
+    }>) => {
+      const patient = state.extendedPatients.find(p => p.id === action.payload.patientId);
+      if (patient) {
+        if (action.payload.allergies) {
+          patient.allergies = action.payload.allergies;
+        }
+        if (action.payload.bloodType) {
+          patient.bloodType = action.payload.bloodType;
+        }
+      }
+    },
+    
+    // Get consultations by doctor ID
+    getConsultationsByDoctor: (state, action: PayloadAction<string>) => {
+      // This is handled by selectors, but we can add filtering logic here if needed
+    },
+    
+    // Get consultations by patient ID
+    getConsultationsByPatient: (state, action: PayloadAction<string>) => {
+      // This is handled by selectors, but we can add filtering logic here if needed
+    },
+    
+    // Set loading state for async operations
+    setMedicalLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
+    },
+    
+    // Set error message for medical operations
+    setMedicalError: (state, action: PayloadAction<string | null>) => {
+      state.error = action.payload;
+    },
+  },
+});
+
+// Export actions for use in components
+export const {
+  addConsultation,
+  updateConsultation,
+  addMedicalHistoryEntry,
+  updatePatientMedicalInfo,
+  getConsultationsByDoctor,
+  getConsultationsByPatient,
+  setMedicalLoading,
+  setMedicalError,
+} = medicalSlice.actions;
+
+// Export reducer for store configuration
+export default medicalSlice.reducer;

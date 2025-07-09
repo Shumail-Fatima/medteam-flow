@@ -1,0 +1,27 @@
+{"consultations": [
+    {
+      "id": "cons_1",
+      "patientId": "patient_1",
+      "patientName": "John Doe",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentId": "apt_1",
+      "date": "2024-01-10T10:00:00Z",
+      "symptoms": ["Chest pain", "Shortness of breath"],
+      "diagnosis": "Hypertension Stage 1",
+      "notes": "Patient presents with elevated blood pressure readings. Lifestyle modifications recommended along with medication.",
+      "prescriptions": [
+        {
+          "id": "rx_1",
+          "medication": "Lisinopril",
+          "dosage": "10mg",
+          "frequency": "Once daily",
+          "duration": "30 days",
+          "instructions": "Take with food, monitor blood pressure"
+        }
+      ],
+      "followUpRequired": true,
+      "followUpDate": "2024-02-10T10:00:00Z",
+      "createdAt": "2024-01-10T10:00:00Z"
+    }
+  ]}
