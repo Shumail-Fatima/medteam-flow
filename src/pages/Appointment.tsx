@@ -137,6 +137,7 @@ const AppointmentManagement: React.FC = () => {
         doctorName: selectedDoctor.label,
         appointmentSlot: data.appointmentSlot,
         reason: data.reason,
+        status: selectedAppointment.status,
       };
       dispatch(updateAppointment(updatedAppointment));
       setSnackbar({
@@ -157,6 +158,8 @@ const AppointmentManagement: React.FC = () => {
         appointmentSlot: data.appointmentSlot,
         reason: data.reason,
         createdAt: new Date().toISOString(),
+        status: 'scheduled',
+        consultationCompleted: false,
       };
       dispatch(addAppointment(newAppointment));
       setSnackbar({

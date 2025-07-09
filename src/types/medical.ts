@@ -48,20 +48,20 @@ export interface MedicalHistoryEntry {
     patientName: string;
     doctorId: string;
     doctorName: string;
-    appointmentId?: string;
+    appointmentId: string | undefined;
     date: string;
     symptoms: string[];
     diagnosis: string;
     notes: string;
     prescriptions: Prescription[];
     followUpRequired: boolean;
-    followUpDate?: string;
+    followUpDate: string | undefined;
     createdAt: string;
   }
   
   export interface ConsultationFormData {
     patientId: string;
-    appointmentId?: string;
+    appointmentId: string;
     symptoms: string;
     diagnosis: string;
     notes: string;
@@ -70,7 +70,7 @@ export interface MedicalHistoryEntry {
       dosage: string;
       frequency: string;
       duration: string;
-      instructions: string;
+      instructions?: string;
     }[];
     followUpRequired: boolean;
     followUpDate?: string;

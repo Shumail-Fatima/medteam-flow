@@ -58,11 +58,11 @@ const LoginFormPage: React.FC = () => {
         // You can redirect to the dashboard or show a success message here
         // below in comment are checks if the user is doctor/admin/nurse so they will be directed to thier relevant pages accordingly
         // For example, using React Router:
-        //if (user?.roleId === 1){
+        if (user?.roleId === 1){
           navigate('/admin/user-management'); 
-        //} else if (user?.roleId === 2){
-          //  navigate('/dashboard'); 
-        //} 
+        } else if (user?.roleId === 2){
+          navigate('/doc/dashboard'); 
+        }
       } else {
         // Show error
         console.error('Login failed');

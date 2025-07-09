@@ -18,6 +18,8 @@ export interface Appointment {
   reason?: string;
   createdAt: string;
   specialtyName?: string;
+  status: "scheduled" | "completed" | "cancelled" | "no-show";
+  consultationCompleted: boolean;
 }
 
 export interface DoctorSpecialty {

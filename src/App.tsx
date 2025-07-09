@@ -7,7 +7,9 @@ import Appointment from './pages/Appointment';
 import AdminSupport from './pages/AdminSupport';
 import AdminSettings from './pages/AdminSettings';
 import DashboardPage from './pages/DashboardPage';
-
+import DocPatientManage from './pages/DocPatientManage';
+import DocDashboard from './pages/DocDashboard';
+import Consultation from './pages/Consultation';
 
 function App() {
   return (
@@ -26,6 +28,9 @@ function App() {
             <Route path="/Appointment" element={<Appointment />} />
             <Route path="/settings" element={<AdminSettings />} />
             <Route path="/support" element={<AdminSupport />} />
+            <Route path="/doc/dashboard" element={<DocDashboard />} />
+            <Route path="/doc/patient-manage" element={<DocPatientManage />} />
+            <Route path="/doc/consultation" element={<Consultation />} />
             {/* Add more nested protected routes here */}
         </Route>
       </Routes>

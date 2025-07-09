@@ -26,6 +26,7 @@ import {
   Settings as SettingsIcon,
   Support as SupportIcon,
   LocalHospital,
+  Dashboard as DashboardIcon,
 } from '@mui/icons-material';
 import {Menu, MenuItem} from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -41,6 +42,9 @@ const drawerItems = [
   { text: 'Appointment', icon: <AssessmentIcon />, path: '/Appointment' },
   { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
   { text: 'Support', icon: <SupportIcon />, path: '/support' },
+  { text: 'Patient Management', icon: <PeopleIcon />, path: '/doc/patient-manage' },
+  { text: 'Consultation', icon: <AssessmentIcon />, path: '/doc/consultation' },
+  { text: 'Dashboard', icon: <DashboardIcon />, path: '/doc/dashboard' },
 ];
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {

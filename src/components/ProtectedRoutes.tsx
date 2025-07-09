@@ -5,19 +5,24 @@ import { useAuth } from '../context/AuthContext';
 interface ProtectedRouteProps {
   children: React.ReactNode;
   requireAdmin?: boolean;
+  requireDoctor?: boolean;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ 
   children, 
-  requireAdmin = false 
+  requireAdmin = false,
+  requireDoctor = false,
 }) => {
-  const { isAuthenticated, isAdmin } = useAuth();
+  const { isAuthenticated, isAdmin, user } = useAuth();
     // Check if the user is authenticated
   if (!isAuthenticated) {
     return <Navigate to="/" replace />;
   }
 
   if (requireAdmin && !isAdmin) {
+    return <Navigate to="/dashboard" replace />;
+  }
+  if (requireDoctor && user?.roleId !== 2) {
     return <Navigate to="/dashboard" replace />;
   }
 

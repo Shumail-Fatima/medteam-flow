@@ -3,7 +3,7 @@ import { useState } from "react";
 import { getUserWithRole } from "../utils";
 
 interface AuthUser{
-    id: number;
+    id: string;
     name: string;
     email: string;
     roleId: number;
