@@ -23,17 +23,20 @@ import {
   LocalHospital,
   AccessTime,
 } from '@mui/icons-material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/sharedComponents/Layout';
 import { useAuth } from '../context/AuthContext';
 import type { RootState } from '../store/Store';
 import type { ExtendedAppointment } from '../types/medical';
+import { updateConsultation } from '../store/slices/MedicalSlice';
 
 const DoctorDashboard: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  
+  const dispatch = useDispatch();
+
+
   // Redux state - Get appointments, tasks, and consultations for current doctor
   const appointments = useSelector((state: RootState) => state.appointments.appointments);
   const tasks = useSelector((state: RootState) => state.task.tasks);
@@ -62,11 +65,28 @@ const DoctorDashboard: React.FC = () => {
   }, [doctorAppointments]);
 
   // Get pending consultation tasks
+
   const pendingConsultations = useMemo(() => {
     return doctorAppointments.filter(apt => 
       apt.status === 'scheduled' && !apt.consultationCompleted
     );
   }, [doctorAppointments]);
+  
+  const completedConsultations = useMemo(() =>
+    consultations.filter(c => c.doctorId === user?.id && c.status === 'completed'),
+    [consultations, user?.id]
+  );
+  
+  const pendingAppointments = useMemo(() =>
+    appointments.filter(a => a.doctorId === user?.id && a.status === 'scheduled' && !a.consultationCompleted),
+    [appointments, user?.id]
+  );
+  
+  const completedAppointments = useMemo(() =>
+    appointments.filter(a => a.doctorId === user?.id && a.status === 'completed'),
+    [appointments, user?.id]
+  );
+  
 
   // Get recently accessed patients (last 5 consultations)
   const recentPatients = useMemo(() => {
@@ -199,6 +219,9 @@ const DoctorDashboard: React.FC = () => {
           </Card>
         </Grid>
       </Grid>
+
+      
+     
 
       <Grid container spacing={3}>
         {/* Today's Appointments */}

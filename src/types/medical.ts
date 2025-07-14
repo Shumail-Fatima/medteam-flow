@@ -57,6 +57,7 @@ export interface Consultation {
   followUpRequired: boolean;
   followUpDate?: string;
   createdAt: string;
+  status: 'pending' | 'completed';
 }
 
 export interface ConsultationFormData {

@@ -160,6 +160,7 @@ const ConsultationManagement: React.FC = () => {
         followUpRequired: data.followUpRequired,
         followUpDate: data.followUpDate || undefined,
         createdAt: new Date().toISOString(),
+        status: 'completed' as 'pending' | 'completed',
       };
 
       // Redux action - Add consultation to store
