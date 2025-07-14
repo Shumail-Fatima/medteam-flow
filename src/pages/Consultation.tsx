@@ -17,6 +17,7 @@ import {
   ListItem,
   ListItemText,
   ListItemAvatar,
+  MenuItem,
 } from '@mui/material';
 import {
   Add,
@@ -316,21 +317,21 @@ const ConsultationManagement: React.FC = () => {
                   control={control}
                   render={({ field }) => (
                     <TextField
-                      select
-                      label="Link to Appointment (Optional)"
-                      fullWidth
-                      sx={{ mt: 2 }}
-                      value={field.value || ''}
-                      onChange={field.onChange}
-                      error={!!errors.appointmentId}
-                      helperText={errors.appointmentId?.message}
-                    >
-                      <option value="">No appointment</option>
-                      {patientAppointments.map((appointment) => (
-                        <option key={appointment.id} value={appointment.id}>
-                          {formatDate(appointment.appointmentSlot)} - {appointment.reason || 'General'}
-                        </option>
-                      ))}
+                        select
+                        label="Link to Appointment (Optional)"
+                        fullWidth
+                        sx={{ mt: 2 }}
+                        value={field.value || ''}
+                        onChange={field.onChange}
+                        error={!!errors.appointmentId}
+                        helperText={errors.appointmentId?.message}
+                        >
+                        <MenuItem value="">No appointment</MenuItem>
+                        {patientAppointments.map((appointment) => (
+                            <MenuItem key={appointment.id} value={appointment.id}>
+                            {formatDate(appointment.appointmentSlot)} - {appointment.reason || 'General'}
+                            </MenuItem>
+                        ))}
                     </TextField>
                   )}
                 />
@@ -541,8 +542,8 @@ const ConsultationManagement: React.FC = () => {
                           error={!!errors.followUpRequired}
                           helperText={errors.followUpRequired?.message}
                         >
-                          <option value="false">No</option>
-                          <option value="true">Yes</option>
+                        <MenuItem value="false">No</MenuItem>
+                        <MenuItem value="true">Yes</MenuItem>
                         </TextField>
                       )}
                     />
