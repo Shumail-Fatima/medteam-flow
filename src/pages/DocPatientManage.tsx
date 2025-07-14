@@ -57,12 +57,15 @@ const DoctorPatientManagement: React.FC = () => {
   const [selectedPatient, setSelectedPatient] = useState<ExtendedPatient | null>(null);
   const [medicalHistoryDialogOpen, setMedicalHistoryDialogOpen] = useState(false);
 
-  // Filter patients that have had consultations with current doctor
+  // Filter patients that have had consultations or appointments with current doctor
   const doctorPatients = useMemo(() => {
     const doctorConsultations = consultations.filter(cons => cons.doctorId === user?.id);
-    const patientIds = [...new Set(doctorConsultations.map(cons => cons.patientId))];
-    return patients.filter(patient => patientIds.includes(patient.id));
-  }, [patients, consultations, user?.id]);
+    const doctorAppointments = appointments.filter(apt => apt.doctorId === user?.id);
+    const consultationPatientIds = [...new Set(doctorConsultations.map(cons => cons.patientId))];
+    const appointmentPatientIds = [...new Set(doctorAppointments.map(apt => apt.patientId))];
+    const allPatientIds = [...new Set([...consultationPatientIds, ...appointmentPatientIds])];
+    return patients.filter(patient => allPatientIds.includes(patient.id));
+  }, [patients, consultations, appointments, user?.id]);
 
   // Get specific patient if patientId is provided
   const currentPatient = useMemo(() => {
@@ -97,6 +100,10 @@ const DoctorPatientManagement: React.FC = () => {
 
   const handleStartConsultation = (patient: ExtendedPatient) => {
     navigate(`/consultation?patientId=${patient.id}`);
+  };
+
+  const handleBackToPatients = () => {
+    navigate('/patients');
   };
 
   const formatDate = (dateString: string) => {
@@ -151,7 +158,7 @@ const DoctorPatientManagement: React.FC = () => {
       <Layout>
         <Box sx={{ mb: 4 }}>
           <Button 
-            onClick={() => navigate('/patients')} 
+            onClick={handleBackToPatients} 
             sx={{ mb: 2, textTransform: 'none' }}
           >
             ← Back to Patients

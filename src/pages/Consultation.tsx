@@ -82,8 +82,7 @@ const ConsultationManagement: React.FC = () => {
   const getPatientAppointments = (selectedPatientId: string) => {
     return appointments.filter(apt => 
       apt.patientId === selectedPatientId && 
-      apt.doctorId === user?.id &&
-      !apt.consultationCompleted
+      apt.doctorId === user?.id
     );
   };
 
@@ -239,7 +238,7 @@ const ConsultationManagement: React.FC = () => {
       <form onSubmit={handleSubmit(handleFormSubmit)}>
         <Grid container spacing={3}>
           {/* Patient Selection */}
-          <Grid >
+          <Grid>
             <Card sx={{ borderRadius: 3 }}>
               <CardContent>
                 <Typography variant="h6" fontWeight="bold" gutterBottom>
@@ -312,38 +311,35 @@ const ConsultationManagement: React.FC = () => {
                 )}
 
                 {/* Appointment Selection */}
-                {patientAppointments.length > 0 && (
-                  <Controller
-                    name="appointmentId"
-                    control={control}
-                    render={({ field }) => (
-                      <TextField
-                        select
-                        label="Link to Appointment (Optional)"
-                        fullWidth
-                        sx={{ mt: 2 }}
-                        value={field.value}
-                        onChange={field.onChange}
-                        SelectProps={{
-                          native: false,
-                        }}
-                      >
-                        <option value="">No appointment</option>
-                        {patientAppointments.map((appointment) => (
-                          <option key={appointment.id} value={appointment.id}>
-                            {formatDate(appointment.appointmentSlot)} - {appointment.reason || 'General'}
-                          </option>
-                        ))}
-                      </TextField>
-                    )}
-                  />
-                )}
+                <Controller
+                  name="appointmentId"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      select
+                      label="Link to Appointment (Optional)"
+                      fullWidth
+                      sx={{ mt: 2 }}
+                      value={field.value || ''}
+                      onChange={field.onChange}
+                      error={!!errors.appointmentId}
+                      helperText={errors.appointmentId?.message}
+                    >
+                      <option value="">No appointment</option>
+                      {patientAppointments.map((appointment) => (
+                        <option key={appointment.id} value={appointment.id}>
+                          {formatDate(appointment.appointmentSlot)} - {appointment.reason || 'General'}
+                        </option>
+                      ))}
+                    </TextField>
+                  )}
+                />
               </CardContent>
             </Card>
           </Grid>
 
           {/* Consultation Details */}
-          <Grid >
+          <Grid>
             <Card sx={{ borderRadius: 3 }}>
               <CardContent>
                 <Typography variant="h6" fontWeight="bold" gutterBottom>
@@ -402,7 +398,7 @@ const ConsultationManagement: React.FC = () => {
           </Grid>
 
           {/* Prescriptions */}
-          <Grid >
+          <Grid>
             <Card sx={{ borderRadius: 3 }}>
               <CardContent>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
@@ -523,7 +519,7 @@ const ConsultationManagement: React.FC = () => {
           </Grid>
 
           {/* Follow-up */}
-          <Grid >
+          <Grid>
             <Card sx={{ borderRadius: 3 }}>
               <CardContent>
                 <Typography variant="h6" fontWeight="bold" gutterBottom>
@@ -542,6 +538,8 @@ const ConsultationManagement: React.FC = () => {
                           fullWidth
                           value={field.value ? 'true' : 'false'}
                           onChange={(e) => field.onChange(e.target.value === 'true')}
+                          error={!!errors.followUpRequired}
+                          helperText={errors.followUpRequired?.message}
                         >
                           <option value="false">No</option>
                           <option value="true">Yes</option>
@@ -577,7 +575,7 @@ const ConsultationManagement: React.FC = () => {
           </Grid>
 
           {/* Submit Button */}
-        <Grid >
+          <Grid>
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
               <Button
                 variant="outlined"

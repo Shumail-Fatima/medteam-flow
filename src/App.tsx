@@ -29,8 +29,9 @@ function App() {
             <Route path="/settings" element={<AdminSettings />} />
             <Route path="/support" element={<AdminSupport />} />
             <Route path="/doc/dashboard" element={<DocDashboard />} />
-            <Route path="/doc/patient-manage" element={<DocPatientManage />} />
-            <Route path="/doc/consultation" element={<Consultation />} />
+            <Route path="/patients" element={<DocPatientManage />} />
+            <Route path="/consultation" element={<Consultation />} />
+            <Route path="/patients/:patientId" element={<DocPatientManage />} />
             {/* Add more nested protected routes here */}
         </Route>
       </Routes>

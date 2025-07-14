@@ -248,7 +248,7 @@ const DoctorDashboard: React.FC = () => {
                         <Button
                           size="small"
                           variant="outlined"
-                          onClick={() => navigate(`/doc/consultation?appointmentId=${appointment.id}`)}
+                          onClick={() => navigate(`/consultation?appointmentId=${appointment.id}&patientId=${appointment.patientId}`)}
                           sx={{ textTransform: 'none' }}
                         >
                           {appointment.consultationCompleted ? 'View' : 'Start'}
@@ -277,7 +277,7 @@ const DoctorDashboard: React.FC = () => {
                 </Typography>
                 <Button
                   size="small"
-                  onClick={() => navigate('/doc/patient-manage')}
+                  onClick={() => navigate('/patients')}
                   sx={{ textTransform: 'none' }}
                 >
                   View All
@@ -311,7 +311,7 @@ const DoctorDashboard: React.FC = () => {
                         <Button
                           size="small"
                           variant="text"
-                          onClick={() => navigate(`/doc/patient-manage/${item.patient?.id}`)}
+                          onClick={() => navigate(`/patients/${item.patient?.id}`)}
                           sx={{ textTransform: 'none' }}
                         >
                           View
@@ -341,7 +341,7 @@ const DoctorDashboard: React.FC = () => {
                 <Button
                   variant="contained"
                   startIcon={<Add />}
-                  onClick={() => navigate('/doc/consultation')}
+                  onClick={() => navigate('/consultation')}
                   sx={{ 
                     borderRadius: 2,
                     background: 'linear-gradient(135deg, #1976d2 0%, #115293 100%)',
@@ -360,7 +360,7 @@ const DoctorDashboard: React.FC = () => {
                 <Button
                   variant="outlined"
                   startIcon={<Person />}
-                  onClick={() => navigate('/doc/patient-manage')}
+                  onClick={() => navigate('/patients')}
                   sx={{ borderRadius: 2 }}
                 >
                   Patient Records

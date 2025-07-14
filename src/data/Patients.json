@@ -70,6 +70,16 @@
     "name": "Robert Johnson",
     "dateOfBirth": "1975-11-08",
     "email": "robert.j@email.com",
-    "phone": "+1-555-0789"
+    "phone": "+1-555-0789",
+    "address": "789 Pine St, City, State 12345",
+    "emergencyContact": {
+      "name": "Mary Johnson",
+      "phone": "+1-555-0790",
+      "relationship": "Wife"
+    },
+    "medicalHistory": [],
+    "allergies": [],
+    "bloodType": "B+",
+    "createdAt": "2024-01-03T10:00:00Z"
   }
 ]

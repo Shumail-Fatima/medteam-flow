@@ -3,10 +3,10 @@ import * as yup from 'yup';
 // Validation schema for consultation form
 export const consultationValidationSchema = yup.object({
   patientId: yup.string().required('Patient is required'),
-  appointmentId: yup.string().required('Appointment is required'),
-  symptoms: yup.string().required('Symptoms are required'),
+  appointmentId: yup.string().optional(),
+  symptoms: yup.string().required('Symptoms are required').min(10, 'Please provide detailed symptoms'),
   diagnosis: yup.string().required('Diagnosis is required').min(5, 'Please provide a detailed diagnosis'),
-  notes: yup.string().required(),
+  notes: yup.string().required('Notes are required').min(20, 'Please provide detailed consultation notes'),
   prescriptions: yup.array().of(
     yup.object({
       medication: yup.string().required('Medication name is required'),
@@ -15,8 +15,8 @@ export const consultationValidationSchema = yup.object({
       duration: yup.string().required('Duration is required'),
       instructions: yup.string().optional(),
     })
-  ).required(),
-  followUpRequired: yup.boolean().required('Follow-up is required'),
+  ).required().min(1, 'At least one prescription is required'),
+  followUpRequired: yup.boolean().required(),
   followUpDate: yup.string().when('followUpRequired', {
     is: true,
     then: (schema) => schema.required('Follow-up date is required when follow-up is needed'),

@@ -42,8 +42,8 @@ const drawerItems = [
   { text: 'Appointment', icon: <AssessmentIcon />, path: '/Appointment' },
   { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
   { text: 'Support', icon: <SupportIcon />, path: '/support' },
-  { text: 'Patient Management', icon: <PeopleIcon />, path: '/doc/patient-manage' },
-  { text: 'Consultation', icon: <AssessmentIcon />, path: '/doc/consultation' },
+  { text: 'Patient Management', icon: <PeopleIcon />, path: '/patients' },
+  { text: 'Consultation', icon: <AssessmentIcon />, path: '/consultation' },
   { text: 'Dashboard', icon: <DashboardIcon />, path: '/doc/dashboard' },
 ];
 
