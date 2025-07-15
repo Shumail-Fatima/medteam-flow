@@ -21,6 +21,7 @@ import usersData from '../data/Users.json';
 import doctorSlots from '../data/DoctorSlots.json';
 import ViewDialog from '../components/sharedComponents/ViewDialog';
 import doctorSpecialtiesData from '../data/DoctorSpeciality.json';
+import { useAuth } from '../context/AuthContext';
 
 // Prepare doctors array from users data
 const doctors = usersData
@@ -37,15 +38,19 @@ const doctors = usersData
     };
   });
 
-const tabOptions: TabOption[] = [
-  { label: 'Appointments List' },
-  { label: 'Create Appointment' },
-];
+
+
+
 
 const AppointmentManagement: React.FC = () => {
   // Redux state and dispatch setup
+  const { user } = useAuth();
   const dispatch = useDispatch<AppDispatch>();
-  const appointments = useSelector((state: RootState) => state.appointments.appointments);
+  //const appointments = useSelector((state: RootState) => state.appointments.appointments);
+  const allAppointments = useSelector((state: RootState) => state.appointments.appointments);
+  const appointments = user && user.roleName === 'doctor'
+    ? allAppointments.filter((a) => a.doctorId === user.id)
+    : allAppointments;
   const patients = useSelector((state: RootState) => state.patients.patients);
 
   const [activeTab, setActiveTab] = useState(0);
@@ -58,6 +63,13 @@ const AppointmentManagement: React.FC = () => {
     message: '', 
     severity: 'success' as 'success' | 'error' 
   });
+
+  const tabOptions: TabOption[] = user && user.roleName === 'doctor'
+? [{ label: 'Appointments List' }]
+: [
+  { label: 'Appointments List' },
+  { label: 'Create Appointment' },
+];
 
   // Tab change handler
   const handleTabChange = (_: any, newValue: number) => {
@@ -223,11 +235,13 @@ const AppointmentManagement: React.FC = () => {
             <Typography variant="h5" sx={{ fontWeight: 600 }}>
               All Appointments
             </Typography>
+            {user?.roleName !== 'doctor' && (
             <AddButton
             onClick={handleCreateAppointment}
             label='Create New Appointment'
             startIcon= {<Add />}
             ></AddButton>
+            )}
           </Box>
 
           {/* Appointments Table */}
@@ -280,14 +294,14 @@ const AppointmentManagement: React.FC = () => {
             onView={handleViewAppointment}
             onEdit={handleEditAppointment}
             onDelete={handleDeleteAppointment}
-            showEdit={() => true}
+            showEdit={() => user?.roleName !== 'doctor'}
             showDelete={() => true}
           />
         </Box>
       )}
 
       {/* Create/Edit Appointment Tab */}
-      {activeTab === 1 && (
+      {activeTab === 1 && user?.roleName !== 'doctor' &&(
         <AppointmentForm
           onSubmit={handleAppointmentSubmit}
           doctors={doctors}
