@@ -35,7 +35,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import Layout from '../components/sharedComponents/Layout';
 import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';
 import type { RootState, AppDispatch } from '../store/Store';
-import { addConsultation } from '../store/slices/MedicalSlice';
+import { addConsultation, updateConsultation, addMedicalHistoryEntry, updatePatientMedicalInfo } from '../store/slices/MedicalSlice';
 import { updateAppointment } from '../store/slices/AppointmentSlice';
 import { useAuth } from '../context/AuthContext';
 import type { ConsultationFormData, Consultation, ExtendedAppointment } from '../types/medical';
@@ -166,6 +166,11 @@ const ConsultationManagement: React.FC = () => {
       // Redux action - Add consultation to store
       dispatch(addConsultation(newConsultation));
 
+      dispatch(updateConsultation({
+        ...newConsultation, // the consultation object you want to update
+        status: 'completed'
+      }));
+
       // If consultation is linked to an appointment, mark it as completed
       if (data.appointmentId) {
         const appointment = appointments.find(apt => apt.id === data.appointmentId);
@@ -188,7 +193,7 @@ const ConsultationManagement: React.FC = () => {
       // Reset form and navigate back
       reset();
       setTimeout(() => {
-        navigate('/dashboard');
+        navigate('/doc/dashboard');
       }, 1500);
 
     } catch (error) {
@@ -581,7 +586,7 @@ const ConsultationManagement: React.FC = () => {
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
               <Button
                 variant="outlined"
-                onClick={() => navigate('/dashboard')}
+                onClick={() => navigate('/doc/dashboard')}
                 sx={{ borderRadius: 2 }}
               >
                 Cancel

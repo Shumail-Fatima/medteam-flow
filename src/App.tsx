@@ -10,6 +10,7 @@ import DashboardPage from './pages/DashboardPage';
 import DocPatientManage from './pages/DocPatientManage';
 import DocDashboard from './pages/DocDashboard';
 import Consultation from './pages/Consultation';
+import ConsultMain from './pages/ConsultMain';
 
 function App() {
   return (
@@ -30,7 +31,8 @@ function App() {
             <Route path="/support" element={<AdminSupport />} />
             <Route path="/doc/dashboard" element={<DocDashboard />} />
             <Route path="/patients" element={<DocPatientManage />} />
-            <Route path="/consultation" element={<Consultation />} />
+            <Route path="/consultationss" element={<ConsultMain />} />
+            <Route path='/consultation' element={<Consultation />} />
             <Route path="/patients/:patientId" element={<DocPatientManage />} />
             {/* Add more nested protected routes here */}
         </Route>
