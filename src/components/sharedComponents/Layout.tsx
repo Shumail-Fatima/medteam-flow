@@ -31,12 +31,13 @@ import {
 import {Menu, MenuItem} from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { rolePages } from '../RolePages';
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
-const drawerItems = [
+/*const drawerItems = [
   { text: 'User Management', icon: <PeopleIcon />, path: '/admin/user-management' },
   { text: 'Task Management', icon: <AssignmentIcon />, path: '/task-management' },
   { text: 'Appointment', icon: <AssessmentIcon />, path: '/Appointment' },
@@ -45,13 +46,14 @@ const drawerItems = [
   { text: 'Patient Management', icon: <PeopleIcon />, path: '/patients' },
   { text: 'Consultation', icon: <AssessmentIcon />, path: '/consultation' },
   { text: 'Dashboard', icon: <DashboardIcon />, path: '/doc/dashboard' },
-];
+];*/
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   //const [drawerOpen, setDrawerOpen] = React.useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useAuth();
+  const drawerItems = user ? rolePages[user.roleName as keyof typeof rolePages] || [] : [];
   const [anchorE1, setAnchorE1] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorE1);
   const theme = useTheme();
@@ -88,7 +90,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           
           <List sx={{ pt: 5 }}>
             {drawerItems.map((item) => (
-              <ListItem key={item.text} disablePadding sx={{ px: 1, mb: 0.5 }}>
+              <ListItem key={item.label} disablePadding sx={{ px: 1, mb: 0.5 }}>
                 <ListItemButton
                   onClick={() => handleNavigation(item.path)}
                   selected={location.pathname === item.path}
@@ -116,7 +118,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   <ListItemIcon sx={{ minWidth: 40 }}>
                     {item.icon}
                   </ListItemIcon>
-                  <ListItemText primary={item.text} />
+                  <ListItemText primary={item.label} />
                 </ListItemButton>
               </ListItem>
             ))}

@@ -15,6 +15,8 @@ interface AuthContextType{
     login: (email: string , password: string) => boolean;
     logout: () => void;
     isAdmin: boolean;
+    isDoctor: boolean;
+    isNurse: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -42,6 +44,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         logout,
         //isAdmin: user ? user.roleId === 1 : false, // assuming roleId 1 is admin
         isAdmin: user ? user.roleName === 'admin' : false,
+        isDoctor: user ? user.roleName === 'doctor' : false,
+        isNurse: user ? user.roleName === 'nurse' : false,
       }}
     >
       {children}
