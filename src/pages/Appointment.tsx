@@ -5,6 +5,7 @@ import {
   Chip,
   Badge,
   Stack ,
+  Button,
 } from '@mui/material';
 import {AddButton} from '../components/CustomButton';
 import { Add, CalendarToday, } from '@mui/icons-material';
@@ -24,6 +25,7 @@ import doctorSlots from '../data/DoctorSlots.json';
 import ViewDialog from '../components/sharedComponents/ViewDialog';
 import doctorSpecialtiesData from '../data/DoctorSpeciality.json';
 import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 // Prepare doctors array from users data
 const doctors = usersData
@@ -55,6 +57,7 @@ const AppointmentManagement: React.FC = () => {
     : allAppointments;
   const patients = useSelector((state: RootState) => state.patients.patients);
 
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0);
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -361,6 +364,23 @@ const AppointmentManagement: React.FC = () => {
                   <Typography variant="body2" color="text.secondary">
                     {formatDate(appointment.createdAt)}
                   </Typography>
+                )
+              },
+              {
+                header: 'Actions',
+                render: (appointment) => (
+                  <Box sx={{ display: 'flex', gap: 1 }}>
+                    {user?.roleName === 'doctor' && (
+                      <Button
+                        size="small"
+                        variant="outlined"
+                        onClick={() => navigate(`/consultation?appointmentId=${appointment.id}&patientId=${appointment.patientId}`)}
+                        sx={{ textTransform: 'none' }}
+                      >
+                        {appointment.consultationCompleted ? 'View' : 'Start'}
+                      </Button>
+                    )}
+                  </Box>
                 )
               },
             ]}
