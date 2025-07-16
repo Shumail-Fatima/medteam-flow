@@ -60,7 +60,8 @@ const DoctorDashboard: React.FC = () => {
   const todaysAppointments = useMemo(() => {
     const today = new Date().toDateString();
     return doctorAppointments.filter(apt => 
-      new Date(apt.appointmentSlot).toDateString() === today
+      new Date(apt.appointmentSlot).toDateString() === today &&
+      !apt.consultationCompleted // Only show if not completed
     );
   }, [doctorAppointments]);
 
@@ -139,7 +140,7 @@ const DoctorDashboard: React.FC = () => {
 
       {/* Stats Cards */}
       <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid >
+        <Grid size={3} >
           <Card sx={{ borderRadius: 3 }}>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -159,7 +160,7 @@ const DoctorDashboard: React.FC = () => {
           </Card>
         </Grid>
         
-        <Grid>
+        <Grid size={3}>
           <Card sx={{ borderRadius: 3 }}>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -179,7 +180,7 @@ const DoctorDashboard: React.FC = () => {
           </Card>
         </Grid>
 
-        <Grid >
+        <Grid size={3}>
           <Card sx={{ borderRadius: 3 }}>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -199,7 +200,7 @@ const DoctorDashboard: React.FC = () => {
           </Card>
         </Grid>
 
-        <Grid >
+        <Grid size={3}>
           <Card sx={{ borderRadius: 3 }}>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -225,7 +226,7 @@ const DoctorDashboard: React.FC = () => {
 
       <Grid container spacing={3}>
         {/* Today's Appointments */}
-        <Grid >
+        <Grid size={12}>
           <Card sx={{ borderRadius: 3, height: '100%' }}>
             <CardContent>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
@@ -259,23 +260,26 @@ const DoctorDashboard: React.FC = () => {
                               <Typography variant="caption">
                                 {formatTime(appointment.appointmentSlot)}
                               </Typography>
-                              <Chip
-                                label={appointment.status}
-                                color={getStatusColor(appointment.status)}
-                                size="small"
-                                sx={{ ml: 1 }}
-                              />
                             </Box>
                           }
                         />
+                        {appointment.consultationCompleted ? (
+                          <Chip
+                            label="Completed"
+                            color="success"
+                            size="small"
+                            sx={{ ml: 1 }}
+                          />
+                        ) : (
                         <Button
                           size="small"
                           variant="outlined"
                           onClick={() => navigate(`/consultation?appointmentId=${appointment.id}&patientId=${appointment.patientId}`)}
                           sx={{ textTransform: 'none' }}
                         >
-                          {appointment.consultationCompleted ? 'View' : 'Start'}
+                          Start
                         </Button>
+                        )}
                       </ListItem>
                       {index < todaysAppointments.slice(0, 4).length - 1 && <Divider />}
                     </React.Fragment>
@@ -290,7 +294,7 @@ const DoctorDashboard: React.FC = () => {
           </Card>
         </Grid>
 
-        {/* Recent Patient Records */}
+        {/* Recent Patient Records 
         <Grid >
           <Card sx={{ borderRadius: 3, height: '100%' }}>
             <CardContent>
@@ -351,27 +355,16 @@ const DoctorDashboard: React.FC = () => {
               )}
             </CardContent>
           </Card>
-        </Grid>
+        </Grid>*/}
 
         {/* Quick Actions */}
-        <Grid >
+        <Grid size={12}>
           <Card sx={{ borderRadius: 3 }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" gutterBottom>
                 Quick Actions
               </Typography>
               <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                <Button
-                  variant="contained"
-                  startIcon={<Add />}
-                  onClick={() => navigate('/consultation')}
-                  sx={{ 
-                    borderRadius: 2,
-                    background: 'linear-gradient(135deg, #1976d2 0%, #115293 100%)',
-                  }}
-                >
-                  New Consultation
-                </Button>
                 <Button
                   variant="outlined"
                   startIcon={<Schedule />}
