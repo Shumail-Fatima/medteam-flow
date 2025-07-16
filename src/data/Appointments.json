@@ -589,7 +589,7 @@
     "doctorId": "2",
     "doctorName": "Dr. Sarah Wilson",
     "specialtyName": "Cardiology",
-    "appointmentSlot": "2025-07-19T14:30:00Z",
+    "appointmentSlot": "2025-07-16T14:30:00Z",
     "reason": "Routine ECG",
     "status": "scheduled",
     "consultationCompleted": false,

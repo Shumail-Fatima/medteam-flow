@@ -252,99 +252,44 @@ const ConsultationManagement: React.FC = () => {
                   Patient Information
                 </Typography>
 
-                <Controller
-                  name="patientId"
-                  control={control}
-                  render={({ field }) => (
-                    <Autocomplete
-                      options={doctorPatients}
-                      getOptionLabel={(option) => `${option.name} (Age: ${option.age})`}
-                      value={doctorPatients.find(p => p.id === field.value) || null}
-                      onChange={(_, newValue) => field.onChange(newValue?.id || '')}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          label="Select Patient"
-                          error={!!errors.patientId}
-                          helperText={errors.patientId?.message}
-                          InputProps={{
-                            ...params.InputProps,
-                            startAdornment: <Person sx={{ mr: 1, color: 'action.active' }} />,
-                          }}
-                        />
-                      )}
-                      renderOption={(props, option) => (
-                        <li {...props}>
-                          <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-                            <Avatar sx={{ mr: 2, bgcolor: 'primary.main' }}>
-                              {option.name.charAt(0)}
-                            </Avatar>
-                            <Box>
-                              <Typography variant="body2">
-                                {option.name}
-                              </Typography>
-                              <Typography variant="caption" color="text.secondary">
-                                Age: {option.age} • {option.email}
-                              </Typography>
-                            </Box>
-                          </Box>
-                        </li>
-                      )}
-                    />
-                  )}
-                />
-
-                {/* Selected Patient Info */}
-                {selectedPatient && (
+                {preSelectedPatient ? (
                   <Paper sx={{ p: 2, mt: 2, bgcolor: 'grey.50', borderRadius: 2 }}>
                     <Typography variant="body2" color="text.secondary" gutterBottom>
-                      Selected Patient
+                      Patient
                     </Typography>
                     <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 2 }}>
-                      <Chip label={selectedPatient.name} color="primary" size="small" />
-                      <Chip label={`Age: ${selectedPatient.age}`} size="small" />
-                      {selectedPatient.bloodType && (
-                        <Chip label={`Blood: ${selectedPatient.bloodType}`} size="small" />
+                      <Chip label={preSelectedPatient.name} color="primary" size="small" />
+                      <Chip label={`Age: ${preSelectedPatient.age}`} size="small" />
+                      {preSelectedPatient.bloodType && (
+                        <Chip label={`Blood: ${preSelectedPatient.bloodType}`} size="small" />
                       )}
                     </Box>
-                    {selectedPatient.allergies.length > 0 && (
+                    {preSelectedPatient.allergies.length > 0 && (
                       <Box>
                         <Typography variant="caption" color="error.main" fontWeight="bold">
-                          Allergies: {selectedPatient.allergies.join(', ')}
+                          Allergies: {preSelectedPatient.allergies.join(', ')}
                         </Typography>
                       </Box>
                     )}
                   </Paper>
+                ) : (
+                  <Typography color="error">No patient selected.</Typography>
                 )}
 
-                {/* Appointment Selection */}
-                <Controller
-                  name="appointmentId"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                        select
-                        label="Link to Appointment (Optional)"
-                        fullWidth
-                        sx={{ mt: 2 }}
-                        value={field.value || ''}
-                        onChange={field.onChange}
-                        error={!!errors.appointmentId}
-                        helperText={errors.appointmentId?.message}
-                        >
-                        <MenuItem value="">No appointment</MenuItem>
-                        {patientAppointments.map((appointment) => (
-                            <MenuItem key={appointment.id} value={appointment.id}>
-                            {formatDate(appointment.appointmentSlot)} - {appointment.reason || 'General'}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-                  )}
-                />
+                {preSelectedAppointment && (
+                  <Paper sx={{ p: 2, mt: 2, bgcolor: 'grey.50', borderRadius: 2 }}>
+                    <Typography variant="body2" color="text.secondary" gutterBottom>
+                      Appointment
+                    </Typography>
+                    <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 2 }}>
+                      <Chip label={`Date: ${formatDate(preSelectedAppointment.appointmentSlot)}`} size="small" />
+                      <Chip label={`Reason: ${preSelectedAppointment.reason}`} size="small" />
+                    </Box>
+                  </Paper>
+                )}
               </CardContent>
             </Card>
           </Grid>
-
           {/* Consultation Details */}
           <Grid>
             <Card sx={{ borderRadius: 3 }}>

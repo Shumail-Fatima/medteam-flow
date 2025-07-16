@@ -367,19 +367,27 @@ const AppointmentManagement: React.FC = () => {
                 )
               },
               {
-                header: 'Actions',
+                header: '',
                 render: (appointment) => (
                   <Box sx={{ display: 'flex', gap: 1 }}>
                     {user?.roleName === 'doctor' && (
+                      appointment.consultationCompleted ? (
+                        <Chip 
+                        label="Completed"
+                        color='success'
+                        size='small'
+                        sx={{ fontWeight: 600}}
+                        />
+                      ):(
                       <Button
                         size="small"
                         variant="outlined"
                         onClick={() => navigate(`/consultation?appointmentId=${appointment.id}&patientId=${appointment.patientId}`)}
                         sx={{ textTransform: 'none' }}
                       >
-                        {appointment.consultationCompleted ? 'View' : 'Start'}
+                        Start
                       </Button>
-                    )}
+      ))}
                   </Box>
                 )
               },
