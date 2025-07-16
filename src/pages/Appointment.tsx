@@ -3,6 +3,8 @@ import {
   Box,
   Typography,
   Chip,
+  Badge,
+  Stack ,
 } from '@mui/material';
 import {AddButton} from '../components/CustomButton';
 import { Add, CalendarToday, } from '@mui/icons-material';
@@ -58,6 +60,7 @@ const AppointmentManagement: React.FC = () => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [viewDialogOpen, setViewDialogOpen] = useState(false);
   const [appointmentToDelete, setAppointmentToDelete] = useState<Appointment | null>(null);
+  const [filter, setFilter] = useState<'all' | 'today' | 'upcoming' | 'previous'>('all');
   const [snackbar, setSnackbar] = useState({ 
     open: false, 
     message: '', 
@@ -79,6 +82,41 @@ const AppointmentManagement: React.FC = () => {
       setSelectedAppointment(null);
     }
   };
+
+  //filter appointments based on the filter state (date)
+  const now = new Date();
+
+  const filteredAppointments = appointments.filter((appointment) => {
+    const slotDate = new Date(appointment.appointmentSlot);
+    if (filter === 'today') {
+      return (
+        slotDate.getFullYear() === now.getFullYear() &&
+        slotDate.getMonth() === now.getMonth() &&
+        slotDate.getDate() === now.getDate()
+      );
+    }
+    if (filter === 'upcoming') {
+      // After today
+      return slotDate > now && (
+        slotDate.getFullYear() !== now.getFullYear() ||
+        slotDate.getMonth() !== now.getMonth() ||
+        slotDate.getDate() !== now.getDate()
+      );
+    }
+    if (filter === 'previous') {
+      // Before today
+      return (
+        slotDate < now &&
+        (
+          slotDate.getFullYear() !== now.getFullYear() ||
+          slotDate.getMonth() !== now.getMonth() ||
+          slotDate.getDate() !== now.getDate()
+        )
+      );
+    }
+    return true; // 'all'
+  });
+
 
   // Create new appointment button handler
   const handleCreateAppointment = () => {
@@ -244,9 +282,44 @@ const AppointmentManagement: React.FC = () => {
             )}
           </Box>
 
+          <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
+            <Badge color={filter === 'all' ? 'primary' : 'default'}>
+              <Chip
+                label="All"
+                color={filter === 'all' ? 'primary' : 'default'}
+                onClick={() => setFilter('all')}
+                clickable
+              />
+            </Badge>
+            <Badge color={filter === 'today' ? 'primary' : 'default'}>
+              <Chip
+                label="Today"
+                color={filter === 'today' ? 'primary' : 'default'}
+                onClick={() => setFilter('today')}
+                clickable
+              />
+            </Badge>
+            <Badge color={filter === 'upcoming' ? 'primary' : 'default'}>
+              <Chip
+                label="Upcoming"
+                color={filter === 'upcoming' ? 'primary' : 'default'}
+                onClick={() => setFilter('upcoming')}
+                clickable
+              />
+            </Badge>
+            <Badge color={filter === 'previous' ? 'primary' : 'default'}>
+              <Chip
+                label="Previous"
+                color={filter === 'previous' ? 'primary' : 'default'}
+                onClick={() => setFilter('previous')}
+                clickable
+              />
+            </Badge>
+          </Stack>
+
           {/* Appointments Table */}
           <DataTable<Appointment>
-            data={appointments}
+            data={filteredAppointments}
             columns={[
               {
                 header: 'Patient',
