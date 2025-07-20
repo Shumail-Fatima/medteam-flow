@@ -40,6 +40,8 @@ import { updateAppointment } from '../store/slices/AppointmentSlice';
 import { useAuth } from '../context/AuthContext';
 import type { ConsultationFormData, Consultation, ExtendedAppointment } from '../types/medical';
 import { consultationValidationSchema } from '../validation/MedValidation';
+import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const ConsultationManagement: React.FC = () => {
   const navigate = useNavigate();
@@ -54,7 +56,18 @@ const ConsultationManagement: React.FC = () => {
   // Redux state - Get patients, appointments, and consultations
   const patients = useSelector((state: RootState) => state.medical.extendedPatients);
   const appointments = useSelector((state: RootState) => state.appointments.appointments);
+  //const consultations = useSelector((state: RootState) => state.medical.consultations);
+
+  // Inside your component:
+  const { consultationId } = useParams();
+  //const isReadOnly = !!consultationId;
+
   const consultations = useSelector((state: RootState) => state.medical.consultations);
+  const consultationRecord = consultationId
+    ? consultations.find(c => c.id === consultationId)
+    : null;
+
+
 
   const [snackbar, setSnackbar] = useState({ 
     open: false, 
@@ -66,11 +79,14 @@ const ConsultationManagement: React.FC = () => {
   const preSelectedAppointment = useMemo(() => {
     return appointmentId ? appointments.find(apt => apt.id === appointmentId) : null;
   }, [appointments, appointmentId]);
-
+  
   const preSelectedPatient = useMemo(() => {
+    if (consultationRecord) {
+      return patients.find(p => p.id === consultationRecord.patientId) || null;
+    }
     const targetPatientId = patientId || preSelectedAppointment?.patientId;
     return targetPatientId ? patients.find(p => p.id === targetPatientId) : null;
-  }, [patients, patientId, preSelectedAppointment]);
+  }, [patients, consultationRecord, patientId, preSelectedAppointment]);
 
   // Get doctor's patients (those who have had appointments)
   const doctorPatients = useMemo(() => {
@@ -205,6 +221,23 @@ const ConsultationManagement: React.FC = () => {
     }
   };
 
+  
+    // ... inside your component
+    useEffect(() => {
+      if (consultationRecord) {
+        reset({
+          patientId: consultationRecord.patientId,
+          appointmentId: consultationRecord.appointmentId,
+          symptoms: consultationRecord.symptoms.join(', '),
+          diagnosis: consultationRecord.diagnosis,
+          notes: consultationRecord.notes,
+          prescriptions: consultationRecord.prescriptions,
+          followUpRequired: consultationRecord.followUpRequired,
+          followUpDate: consultationRecord.followUpDate || '',
+        });
+      }
+    }, [consultationRecord, reset]);
+
   const addPrescription = () => {
     append({
       medication: '',
@@ -311,6 +344,7 @@ const ConsultationManagement: React.FC = () => {
                       error={!!errors.symptoms}
                       helperText={errors.symptoms?.message || 'Separate multiple symptoms with commas'}
                       sx={{ mb: 2 }}
+                      InputProps={{ readOnly: !!consultationId }}
                     />
                   )}
                 />
@@ -326,7 +360,8 @@ const ConsultationManagement: React.FC = () => {
                       error={!!errors.diagnosis}
                       helperText={errors.diagnosis?.message}
                       sx={{ mb: 2 }}
-                    />
+                      InputProps={{ readOnly: !!consultationId }}
+                      />
                   )}
                 />
 
@@ -342,7 +377,8 @@ const ConsultationManagement: React.FC = () => {
                       rows={4}
                       error={!!errors.notes}
                       helperText={errors.notes?.message}
-                    />
+                      InputProps={{ readOnly: !!consultationId }}
+                      />
                   )}
                 />
               </CardContent>
@@ -398,8 +434,9 @@ const ConsultationManagement: React.FC = () => {
                               size="small"
                               InputProps={{
                                 startAdornment: <Medication sx={{ mr: 1, color: 'action.active' }} />,
+                                readOnly: !!consultationId,
                               }}
-                            />
+                              />
                           )}
                         />
                       </Grid>
@@ -414,7 +451,8 @@ const ConsultationManagement: React.FC = () => {
                               fullWidth
                               size="small"
                               placeholder="e.g., 10mg"
-                            />
+                              InputProps={{ readOnly: !!consultationId }}
+                              />
                           )}
                         />
                       </Grid>
@@ -429,7 +467,8 @@ const ConsultationManagement: React.FC = () => {
                               fullWidth
                               size="small"
                               placeholder="e.g., Twice daily"
-                            />
+                              InputProps={{ readOnly: !!consultationId }}
+                              />
                           )}
                         />
                       </Grid>
@@ -444,7 +483,8 @@ const ConsultationManagement: React.FC = () => {
                               fullWidth
                               size="small"
                               placeholder="e.g., 7 days"
-                            />
+                              InputProps={{ readOnly: !!consultationId }}
+                              />
                           )}
                         />
                       </Grid>
@@ -459,7 +499,8 @@ const ConsultationManagement: React.FC = () => {
                               fullWidth
                               size="small"
                               placeholder="e.g., Take with food"
-                            />
+                              InputProps={{ readOnly: !!consultationId }}
+                              />
                           )}
                         />
                       </Grid>
@@ -492,7 +533,8 @@ const ConsultationManagement: React.FC = () => {
                           onChange={(e) => field.onChange(e.target.value === 'true')}
                           error={!!errors.followUpRequired}
                           helperText={errors.followUpRequired?.message}
-                        >
+                          InputProps={{ readOnly: !!consultationId }}
+                          >
                         <MenuItem value="false">No</MenuItem>
                         <MenuItem value="true">Yes</MenuItem>
                         </TextField>
@@ -515,6 +557,7 @@ const ConsultationManagement: React.FC = () => {
                             InputLabelProps={{ shrink: true }}
                             InputProps={{
                               startAdornment: <Schedule sx={{ mr: 1, color: 'action.active' }} />,
+                              readOnly: !!consultationId,
                             }}
                           />
                         )}

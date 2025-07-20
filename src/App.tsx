@@ -11,6 +11,9 @@ import DocPatientManage from './pages/DocPatientManage';
 import DocDashboard from './pages/DocDashboard';
 import Consultation from './pages/Consultation';
 import ConsultMain from './pages/ConsultMain';
+import ConsultationList from './pages/ConsultationList';
+import ConsultationManagement from './pages/Consultation';
+
 
 function App() {
   return (
@@ -34,6 +37,9 @@ function App() {
             <Route path="/consultationss" element={<ConsultMain />} />
             <Route path='/consultation' element={<Consultation />} />
             <Route path="/patients/:patientId" element={<DocPatientManage />} />
+            
+<Route path="/consultations" element={<ConsultationList />} />
+<Route path="/consultation/view/:consultationId" element={<Consultation/>} />
             {/* Add more nested protected routes here */}
         </Route>
       </Routes>

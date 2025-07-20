@@ -5,6 +5,7 @@ import {
     Settings as SettingsIcon,
     Support as SupportIcon,
     Dashboard as DashboardIcon,
+    Route,
   } from '@mui/icons-material';
   
   export const rolePages = {
@@ -23,6 +24,7 @@ import {
       { label: 'Consultation', icon: <AssessmentIcon />, path: '/consultation'},
       { label: 'Settings', icon: <SettingsIcon />, path: '/settings' },
       { label: 'Support', icon: <SupportIcon />, path: '/support' },
+      { label: 'Consultations', icon: <AssessmentIcon />, path: '/consultations' },
       
     ],
   };
