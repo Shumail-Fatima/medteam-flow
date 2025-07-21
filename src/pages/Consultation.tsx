@@ -49,6 +49,8 @@ const ConsultationManagement: React.FC = () => {
   const { user } = useAuth();
   const [searchParams] = useSearchParams();
   
+
+
   // Get URL parameters for pre-filling form
   const appointmentId = searchParams.get('appointmentId');
   const patientId = searchParams.get('patientId');
@@ -60,7 +62,7 @@ const ConsultationManagement: React.FC = () => {
 
   // Inside your component:
   const { consultationId } = useParams();
-  //const isReadOnly = !!consultationId;
+  const isReadOnly = !!consultationId;
 
   const consultations = useSelector((state: RootState) => state.medical.consultations);
   const consultationRecord = consultationId
@@ -77,6 +79,9 @@ const ConsultationManagement: React.FC = () => {
 
   // Find pre-selected appointment and patient
   const preSelectedAppointment = useMemo(() => {
+    if (consultationRecord && consultationRecord.appointmentId) {
+      return appointments.find(apt => apt.id === consultationRecord.appointmentId) || null;
+    }
     return appointmentId ? appointments.find(apt => apt.id === appointmentId) : null;
   }, [appointments, appointmentId]);
   
@@ -228,6 +233,7 @@ const ConsultationManagement: React.FC = () => {
         reset({
           patientId: consultationRecord.patientId,
           appointmentId: consultationRecord.appointmentId,
+
           symptoms: consultationRecord.symptoms.join(', '),
           diagnosis: consultationRecord.diagnosis,
           notes: consultationRecord.notes,
@@ -278,7 +284,7 @@ const ConsultationManagement: React.FC = () => {
       <form onSubmit={handleSubmit(handleFormSubmit)}>
         <Grid container spacing={3}>
           {/* Patient Selection */}
-          <Grid>
+          <Grid size={12}>
             <Card sx={{ borderRadius: 3 }}>
               <CardContent>
                 <Typography variant="h6" fontWeight="bold" gutterBottom>
@@ -290,12 +296,18 @@ const ConsultationManagement: React.FC = () => {
                     <Typography variant="body2" color="text.secondary" gutterBottom>
                       Patient
                     </Typography>
-                    <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 2 }}>
-                      <Chip label={preSelectedPatient.name} color="primary" size="small" />
-                      <Chip label={`Age: ${preSelectedPatient.age}`} size="small" />
-                      {preSelectedPatient.bloodType && (
-                        <Chip label={`Blood: ${preSelectedPatient.bloodType}`} size="small" />
-                      )}
+                    <Box sx={{ display: 'flex', gap: 3, flexWrap: 'wrap', mb: 1 }}>
+                    <Typography variant="body1"  sx={{ fontWeight: 500 }}>
+                      Name: {preSelectedPatient.name}
+                    </Typography>
+                    <Typography variant="body2" lineHeight={1.7}>
+                      Age: {preSelectedPatient.age}
+                    </Typography>
+                    {preSelectedPatient.bloodType && (
+                      <Typography variant="body2" lineHeight={1.7}>
+                        Blood: {preSelectedPatient.bloodType}
+                      </Typography>
+                    )}
                     </Box>
                     {preSelectedPatient.allergies.length > 0 && (
                       <Box>
@@ -324,13 +336,21 @@ const ConsultationManagement: React.FC = () => {
             </Card>
           </Grid>
           {/* Consultation Details */}
-          <Grid>
+          <Grid size={12}>
             <Card sx={{ borderRadius: 3 }}>
               <CardContent>
                 <Typography variant="h6" fontWeight="bold" gutterBottom>
                   Consultation Details
                 </Typography>
 
+                <Typography variant="h6" fontWeight="bold" gutterBottom>
+                  Symptoms
+                </Typography>
+                {isReadOnly ? (
+                  <Typography sx={{ mb: 2 }}>
+                    {consultationRecord?.symptoms?.join(', ') || '-'}
+                  </Typography>
+                ) : (
                 <Controller
                   name="symptoms"
                   control={control}
@@ -344,11 +364,18 @@ const ConsultationManagement: React.FC = () => {
                       error={!!errors.symptoms}
                       helperText={errors.symptoms?.message || 'Separate multiple symptoms with commas'}
                       sx={{ mb: 2 }}
-                      InputProps={{ readOnly: !!consultationId }}
                     />
                   )}
                 />
-
+                )}
+                <Typography variant="h6" fontWeight="bold" gutterBottom>
+                  Diagnosis
+                </Typography>
+                {isReadOnly ? (
+                  <Typography sx={{ mb: 2 }}>
+                    {consultationRecord?.diagnosis || '-'}
+                  </Typography>
+                ) : (
                 <Controller
                   name="diagnosis"
                   control={control}
@@ -360,11 +387,19 @@ const ConsultationManagement: React.FC = () => {
                       error={!!errors.diagnosis}
                       helperText={errors.diagnosis?.message}
                       sx={{ mb: 2 }}
-                      InputProps={{ readOnly: !!consultationId }}
+                      InputProps={{ readOnly: isReadOnly }}
                       />
                   )}
                 />
-
+                )}
+                <Typography variant="h6" fontWeight="bold" gutterBottom>
+                  Consultation Notes
+                </Typography>
+                {isReadOnly ? (
+                  <Typography sx={{ mb: 2 }}>
+                    {consultationRecord?.notes || '-'}
+                  </Typography>
+                ) : (
                 <Controller
                   name="notes"
                   control={control}
@@ -377,10 +412,11 @@ const ConsultationManagement: React.FC = () => {
                       rows={4}
                       error={!!errors.notes}
                       helperText={errors.notes?.message}
-                      InputProps={{ readOnly: !!consultationId }}
+                      InputProps={{ readOnly: isReadOnly }}
                       />
                   )}
                 />
+                )}
               </CardContent>
             </Card>
           </Grid>
@@ -393,6 +429,7 @@ const ConsultationManagement: React.FC = () => {
                   <Typography variant="h6" fontWeight="bold">
                     Prescriptions
                   </Typography>
+                  {!isReadOnly && (
                   <Button
                     startIcon={<Add />}
                     onClick={addPrescription}
@@ -402,6 +439,7 @@ const ConsultationManagement: React.FC = () => {
                   >
                     Add Prescription
                   </Button>
+                )}
                 </Box>
 
                 {fields.map((field, index) => (
@@ -421,6 +459,28 @@ const ConsultationManagement: React.FC = () => {
                       )}
                     </Box>
 
+
+                    {isReadOnly ? (
+                      consultationRecord?.prescriptions?.length ? (
+                        consultationRecord.prescriptions.map((rx, idx) => (
+                          <Grid key={rx.id || idx}  size={12} sx={{ mb: 2, pl: 1 }}>
+                            <Typography variant="subtitle2" fontWeight="bold">
+                              {rx.medication}
+                            </Typography>
+                            <Typography variant="body2">
+                              Dosage: {rx.dosage} | Frequency: {rx.frequency} | Duration: {rx.duration}
+                            </Typography>
+                            {rx.instructions && (
+                              <Typography variant="body2" color="text.secondary">
+                                Instructions: {rx.instructions}
+                              </Typography>
+                            )}
+                          </Grid>
+                        ))
+                      ) : (
+                        <Typography variant="body2" color="text.secondary">No prescriptions</Typography>
+                      )
+                    ) : (
                     <Grid container spacing={2}>
                       <Grid>
                         <Controller
@@ -434,7 +494,7 @@ const ConsultationManagement: React.FC = () => {
                               size="small"
                               InputProps={{
                                 startAdornment: <Medication sx={{ mr: 1, color: 'action.active' }} />,
-                                readOnly: !!consultationId,
+                                readOnly: isReadOnly,
                               }}
                               />
                           )}
@@ -451,7 +511,7 @@ const ConsultationManagement: React.FC = () => {
                               fullWidth
                               size="small"
                               placeholder="e.g., 10mg"
-                              InputProps={{ readOnly: !!consultationId }}
+                              InputProps={{ readOnly: isReadOnly }}
                               />
                           )}
                         />
@@ -467,7 +527,7 @@ const ConsultationManagement: React.FC = () => {
                               fullWidth
                               size="small"
                               placeholder="e.g., Twice daily"
-                              InputProps={{ readOnly: !!consultationId }}
+                              InputProps={{ readOnly: isReadOnly }}
                               />
                           )}
                         />
@@ -483,7 +543,7 @@ const ConsultationManagement: React.FC = () => {
                               fullWidth
                               size="small"
                               placeholder="e.g., 7 days"
-                              InputProps={{ readOnly: !!consultationId }}
+                              InputProps={{ readOnly: isReadOnly }}
                               />
                           )}
                         />
@@ -499,12 +559,13 @@ const ConsultationManagement: React.FC = () => {
                               fullWidth
                               size="small"
                               placeholder="e.g., Take with food"
-                              InputProps={{ readOnly: !!consultationId }}
+                              InputProps={{ readOnly: isReadOnly }}
                               />
                           )}
                         />
                       </Grid>
                     </Grid>
+                  )}
                   </Paper>
                 ))}
               </CardContent>
@@ -533,7 +594,7 @@ const ConsultationManagement: React.FC = () => {
                           onChange={(e) => field.onChange(e.target.value === 'true')}
                           error={!!errors.followUpRequired}
                           helperText={errors.followUpRequired?.message}
-                          InputProps={{ readOnly: !!consultationId }}
+                          InputProps={{ readOnly: isReadOnly }}
                           >
                         <MenuItem value="false">No</MenuItem>
                         <MenuItem value="true">Yes</MenuItem>
@@ -557,7 +618,7 @@ const ConsultationManagement: React.FC = () => {
                             InputLabelProps={{ shrink: true }}
                             InputProps={{
                               startAdornment: <Schedule sx={{ mr: 1, color: 'action.active' }} />,
-                              readOnly: !!consultationId,
+                              readOnly: isReadOnly,
                             }}
                           />
                         )}
@@ -570,6 +631,7 @@ const ConsultationManagement: React.FC = () => {
           </Grid>
 
           {/* Submit Button */}
+          {!isReadOnly && (
           <Grid>
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
               <Button
@@ -593,6 +655,7 @@ const ConsultationManagement: React.FC = () => {
               </Button>
             </Box>
           </Grid>
+          )}
         </Grid>
       </form>
 
