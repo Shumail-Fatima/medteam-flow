@@ -283,6 +283,7 @@ const ConsultationManagement: React.FC = () => {
 
       <form onSubmit={handleSubmit(handleFormSubmit)}>
         <Grid container spacing={3}>
+          
           {/* Patient Selection */}
           <Grid size={12}>
             <Card sx={{ borderRadius: 3 }}>
@@ -293,29 +294,28 @@ const ConsultationManagement: React.FC = () => {
 
                 {preSelectedPatient ? (
                   <Paper sx={{ p: 2, mt: 2, bgcolor: 'grey.50', borderRadius: 2 }}>
-                    <Typography variant="body2" color="text.secondary" gutterBottom>
-                      Patient
-                    </Typography>
-                    <Box sx={{ display: 'flex', gap: 3, flexWrap: 'wrap', mb: 1 }}>
-                    <Typography variant="body1"  sx={{ fontWeight: 500 }}>
-                      Name: {preSelectedPatient.name}
-                    </Typography>
-                    <Typography variant="body2" lineHeight={1.7}>
-                      Age: {preSelectedPatient.age}
-                    </Typography>
-                    {preSelectedPatient.bloodType && (
-                      <Typography variant="body2" lineHeight={1.7}>
-                        Blood: {preSelectedPatient.bloodType}
-                      </Typography>
-                    )}
-                    </Box>
-                    {preSelectedPatient.allergies.length > 0 && (
-                      <Box>
-                        <Typography variant="caption" color="error.main" fontWeight="bold">
-                          Allergies: {preSelectedPatient.allergies.join(', ')}
-                        </Typography>
-                      </Box>
-                    )}
+                    <List dense>
+                      <ListItem>
+                        <ListItemText primary="Patient Name" secondary={preSelectedPatient.name} />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText primary="Age" secondary={preSelectedPatient.age} />
+                      </ListItem>
+                      {preSelectedPatient.bloodType && (
+                        <ListItem>
+                          <ListItemText primary="Blood Type" secondary={preSelectedPatient.bloodType} />
+                        </ListItem>
+                      )}
+                      {preSelectedPatient.allergies.length > 0 && (
+                        <ListItem>
+                          <ListItemText 
+                            primary="Allergies" 
+                            secondary={preSelectedPatient.allergies.join(', ')} 
+                            secondaryTypographyProps={{ color: 'error' }}
+                          />
+                        </ListItem>
+                      )}
+                    </List>
                   </Paper>
                 ) : (
                   <Typography color="error">No patient selected.</Typography>
@@ -335,6 +335,7 @@ const ConsultationManagement: React.FC = () => {
               </CardContent>
             </Card>
           </Grid>
+          
           {/* Consultation Details */}
           <Grid size={12}>
             <Card sx={{ borderRadius: 3 }}>
@@ -343,80 +344,65 @@ const ConsultationManagement: React.FC = () => {
                   Consultation Details
                 </Typography>
 
-                <Typography variant="h6" fontWeight="bold" gutterBottom>
-                  Symptoms
-                </Typography>
-                {isReadOnly ? (
-                  <Typography sx={{ mb: 2 }}>
-                    {consultationRecord?.symptoms?.join(', ') || '-'}
-                  </Typography>
-                ) : (
-                <Controller
-                  name="symptoms"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      label="Symptoms"
-                      fullWidth
-                      multiline
-                      rows={3}
-                      error={!!errors.symptoms}
-                      helperText={errors.symptoms?.message || 'Separate multiple symptoms with commas'}
-                      sx={{ mb: 2 }}
+                <List dense>
+                  <ListItem>
+                    <ListItemText primary="Symptoms" secondary={isReadOnly ? consultationRecord?.symptoms?.join(', ') || '-' : ''} />
+                  </ListItem>
+                  {!isReadOnly && (
+                    <Controller
+                      name="symptoms"
+                      control={control}
+                      render={({ field }) => (
+                        <TextField
+                          {...field}
+                          fullWidth
+                          multiline
+                          rows={3}
+                          error={!!errors.symptoms}
+                          helperText={errors.symptoms?.message || 'Separate multiple symptoms with commas'}
+                          sx={{ mb: 2 }}
+                        />
+                      )}
                     />
                   )}
-                />
-                )}
-                <Typography variant="h6" fontWeight="bold" gutterBottom>
-                  Diagnosis
-                </Typography>
-                {isReadOnly ? (
-                  <Typography sx={{ mb: 2 }}>
-                    {consultationRecord?.diagnosis || '-'}
-                  </Typography>
-                ) : (
-                <Controller
-                  name="diagnosis"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      label="Diagnosis"
-                      fullWidth
-                      error={!!errors.diagnosis}
-                      helperText={errors.diagnosis?.message}
-                      sx={{ mb: 2 }}
-                      InputProps={{ readOnly: isReadOnly }}
-                      />
+                  <ListItem>
+                    <ListItemText primary="Diagnosis" secondary={isReadOnly ? consultationRecord?.diagnosis || '-' : ''} />
+                  </ListItem>
+                  {!isReadOnly && (
+                    <Controller
+                      name="diagnosis"
+                      control={control}
+                      render={({ field }) => (
+                        <TextField
+                          {...field}
+                          fullWidth
+                          error={!!errors.diagnosis}
+                          helperText={errors.diagnosis?.message}
+                          sx={{ mb: 2 }}
+                        />
+                      )}
+                    />
                   )}
-                />
-                )}
-                <Typography variant="h6" fontWeight="bold" gutterBottom>
-                  Consultation Notes
-                </Typography>
-                {isReadOnly ? (
-                  <Typography sx={{ mb: 2 }}>
-                    {consultationRecord?.notes || '-'}
-                  </Typography>
-                ) : (
-                <Controller
-                  name="notes"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      label="Consultation Notes"
-                      fullWidth
-                      multiline
-                      rows={4}
-                      error={!!errors.notes}
-                      helperText={errors.notes?.message}
-                      InputProps={{ readOnly: isReadOnly }}
-                      />
+                  <ListItem>
+                    <ListItemText primary="Consultation Notes" secondary={isReadOnly ? consultationRecord?.notes || '-' : ''} />
+                  </ListItem>
+                  {!isReadOnly && (
+                    <Controller
+                      name="notes"
+                      control={control}
+                      render={({ field }) => (
+                        <TextField
+                          {...field}
+                          fullWidth
+                          multiline
+                          rows={4}
+                          error={!!errors.notes}
+                          helperText={errors.notes?.message}
+                        />
+                      )}
+                    />
                   )}
-                />
-                )}
+                </List>
               </CardContent>
             </Card>
           </Grid>
@@ -463,7 +449,7 @@ const ConsultationManagement: React.FC = () => {
                     {isReadOnly ? (
                       consultationRecord?.prescriptions?.length ? (
                         consultationRecord.prescriptions.map((rx, idx) => (
-                          <Grid key={rx.id || idx}  size={12} sx={{ mb: 2, pl: 1 }}>
+                          <Grid key={rx.id || idx} size={12} sx={{ mb: 2, pl: 1 }}>
                             <Typography variant="subtitle2" fontWeight="bold">
                               {rx.medication}
                             </Typography>

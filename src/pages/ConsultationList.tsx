@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import { Box, Typography, IconButton, Chip, TextField } from '@mui/material';
-import { ArrowForward } from '@mui/icons-material';
+import { Box, Typography, IconButton, Chip, TextField, Avatar } from '@mui/material';
+import { ArrowForward, CalendarToday } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Layout from '../components/sharedComponents/Layout';
@@ -8,6 +8,7 @@ import DataTable from '../components/sharedComponents/DataTable';
 import { useAuth } from '../context/AuthContext';
 import type { RootState } from '../store/Store';
 import type { Consultation } from '../types/medical';
+import { blue } from '@mui/material/colors';
 
 const ConsultationList: React.FC = () => {
   const { user } = useAuth();
@@ -84,31 +85,61 @@ const ConsultationList: React.FC = () => {
           {
             header: 'Patient Name',
             render: (consultation) => (
-              <Typography variant="body2" sx={{ fontWeight: 500 }}>
-                {consultation.patientName}
-              </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Avatar sx={{ mr: 2, bgcolor: 'primary.main' }}>
+                  {consultation.patientName.charAt(0).toUpperCase()}
+                </Avatar>
+                <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                  {consultation.patientName}
+                </Typography>
+              </Box>
             ),
           },
           {
             header: 'Patient Birth Date',
             render: (consultation) => (
-              <Typography variant="body2">
-                {getPatientBirthDate(consultation.patientId)}
-              </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <CalendarToday sx={{ fontSize: 16, mr: 1, color: 'action.active' }} />
+                <Typography variant="body2">
+                  {getPatientBirthDate(consultation.patientId)}
+                </Typography>
+              </Box>
             ),
+          },
+          {
+            header: 'Contact',
+            render: (consultation) => (
+              <Box>
+                <Typography variant="body2">{patients.find((p) => p.id === consultation.patientId)?.email}</Typography>
+                <Typography variant="caption" color="text.secondary">
+                  {patients.find((p) => p.id === consultation.patientId)?.phone}
+                </Typography>
+              </Box>
+            )
           },
           {
             header: 'Consultation Date',
             render: (consultation) => (
-              <Typography variant="body2">
-                {formatDate(consultation.date)}
-              </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <CalendarToday sx={{ fontSize: 16, mr: 1, color: 'action.active' }} />
+                <Typography variant="body2">
+                  {formatDate(consultation.date)}
+                </Typography>
+              </Box>
+            ),
+          },
+          {
+            header: 'Actions',
+            render: (consultation) => (
+              <IconButton
+                onClick={() => navigate(`/consultation/view/${consultation.id}`)}
+                color="primary"
+              >
+                <ArrowForward />
+              </IconButton>
             ),
           },
         ]}
-        onView={(consultation) =>
-          navigate(`/consultation/view/${consultation.id}`)
-        }
         showEdit={() => false}
         showDelete={() => false}
       />

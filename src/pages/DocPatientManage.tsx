@@ -193,47 +193,55 @@ const DoctorPatientManagement: React.FC = () => {
                       {currentPatient.name}
                     </Typography>
                     <Chip
-                      label={`Age: ${calculateAge(currentPatient.dateOfBirth)}`}
+                      label={`Date of Birth: ${currentPatient.dateOfBirth}`}
                       size="small"
                       color="primary"
                     />
                   </Box>
                 </Box>
 
-                <List dense>
-                  <ListItem sx={{ px: 0 }}>
-                    <ListItemIcon><Email fontSize="small" /></ListItemIcon>
-                    <ListItemText 
-                      primary="Email" 
-                      secondary={currentPatient.email}
-                    />
-                  </ListItem>
-                  <ListItem sx={{ px: 0 }}>
-                    <ListItemIcon><Phone fontSize="small" /></ListItemIcon>
-                    <ListItemText 
-                      primary="Phone" 
-                      secondary={currentPatient.phone}
-                    />
-                  </ListItem>
-                  {currentPatient.address && (
+                <Grid container spacing={12}>
+                  <Grid >
                     <ListItem sx={{ px: 0 }}>
-                      <ListItemIcon><Home fontSize="small" /></ListItemIcon>
+                      <ListItemIcon><Email fontSize="small" /></ListItemIcon>
                       <ListItemText 
-                        primary="Address" 
-                        secondary={currentPatient.address}
+                        primary="Email" 
+                        secondary={currentPatient.email}
                       />
                     </ListItem>
+                  </Grid>
+                  <Grid >
+                    <ListItem sx={{ px: 0 }}>
+                      <ListItemIcon><Phone fontSize="small" /></ListItemIcon>
+                      <ListItemText 
+                        primary="Phone" 
+                        secondary={currentPatient.phone}
+                      />
+                    </ListItem>
+                  </Grid>
+                  {currentPatient.address && (
+                    <Grid >
+                      <ListItem sx={{ px: 0 }}>
+                        <ListItemIcon><Home fontSize="small" /></ListItemIcon>
+                        <ListItemText 
+                          primary="Address" 
+                          secondary={currentPatient.address}
+                        />
+                      </ListItem>
+                    </Grid>
                   )}
                   {currentPatient.bloodType && (
-                    <ListItem sx={{ px: 0 }}>
-                      <ListItemIcon><Bloodtype fontSize="small" /></ListItemIcon>
-                      <ListItemText 
-                        primary="Blood Type" 
-                        secondary={currentPatient.bloodType}
-                      />
-                    </ListItem>
+                    <Grid >
+                      <ListItem sx={{ px: 0 }}>
+                        <ListItemIcon><Bloodtype fontSize="small" /></ListItemIcon>
+                        <ListItemText 
+                          primary="Blood Type" 
+                          secondary={currentPatient.bloodType}
+                        />
+                      </ListItem>
+                    </Grid>
                   )}
-                </List>
+                </Grid>
 
                 {/* Emergency Contact */}
                 {currentPatient.emergencyContact && (
