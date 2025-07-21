@@ -214,7 +214,7 @@ const ConsultationManagement: React.FC = () => {
       // Reset form and navigate back
       reset();
       setTimeout(() => {
-        navigate('/doc/dashboard');
+        navigate('/consultations-records');
       }, 1500);
 
     } catch (error) {
@@ -636,7 +636,7 @@ const ConsultationManagement: React.FC = () => {
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
               <Button
                 variant="outlined"
-                onClick={() => navigate('/doc/dashboard')}
+                onClick={() => navigate('/consultations-records')}
                 sx={{ borderRadius: 2 }}
               >
                 Cancel

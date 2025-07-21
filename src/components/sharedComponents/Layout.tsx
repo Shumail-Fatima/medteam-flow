@@ -84,6 +84,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     if (isMobile) {setMobileOpen(false)}
   };
 
+  function isSidebarSelected(itemPath: string, locationPath: string) {
+    if (itemPath === '/Appointment') return locationPath === '/Appointment' || (locationPath.startsWith('/consultation') && !locationPath.startsWith('/consultation-records') && !locationPath.startsWith('/consultations') && !locationPath.startsWith('/consultation/view'));
+    if (itemPath === '/consultations-records') return locationPath === '/consultations-records' || locationPath.startsWith('/consultation/view');
+    if (itemPath === '/patients') return locationPath === '/patients' || locationPath.startsWith('/patients/');
+    return locationPath === itemPath;
+  }
+
   const drawerWidth = 280;
   const drawerContent = (
     <Box sx={{ width: 280 }} role="presentation">
@@ -93,7 +100,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <ListItem key={item.label} disablePadding sx={{ px: 1, mb: 0.5 }}>
                 <ListItemButton
                   onClick={() => handleNavigation(item.path)}
-                  selected={location.pathname === item.path}
+                  selected={isSidebarSelected(item.path, location.pathname)}
                   sx={{
                     borderRadius: 2,
                     '&.Mui-selected': {

@@ -34,11 +34,10 @@ function App() {
             <Route path="/support" element={<AdminSupport />} />
             <Route path="/doc/dashboard" element={<DocDashboard />} />
             <Route path="/patients" element={<DocPatientManage />} />
-            <Route path="/consultationss" element={<ConsultMain />} />
             <Route path='/consultation' element={<Consultation />} />
             <Route path="/patients/:patientId" element={<DocPatientManage />} />
             
-<Route path="/consultations" element={<ConsultationList />} />
+<Route path="/consultations-records" element={<ConsultationList />} />
 <Route path="/consultation/view/:consultationId" element={<Consultation/>} />
             {/* Add more nested protected routes here */}
         </Route>
