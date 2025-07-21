@@ -297,9 +297,18 @@ const DoctorPatientManagement: React.FC = () => {
               <Grid size={12}>
                 <Card sx={{ borderRadius: 3 }}>
                   <CardContent>
-                    <Typography variant="h6" fontWeight="bold" gutterBottom>
-                      Recent Consultations
-                    </Typography>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                      <Typography variant="h6" fontWeight="bold">
+                        Recent Consultations
+                      </Typography>
+                      <Button
+                        size="small"
+                        onClick={() => navigate(`/consultations-records?patientId=${currentPatient.id}`)}
+                        sx={{ textTransform: 'none' }}
+                      >
+                        View All
+                      </Button>
+                    </Box>
                     {patientConsultations.length > 0 ? (
                       <List>
                         {patientConsultations.slice(0, 5).map((consultation, index) => (

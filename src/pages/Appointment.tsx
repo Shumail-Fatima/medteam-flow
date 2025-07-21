@@ -287,11 +287,11 @@ const AppointmentManagement: React.FC = () => {
           </Box>
 
           <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
-            <Badge color={filter === 'today' ? 'primary' : 'default'}>
+            <Badge color={filter === 'all' ? 'primary' : 'default'}>
               <Chip
-                label="Today"
-                color={filter === 'today' ? 'primary' : 'default'}
-                onClick={() => setFilter('today')}
+                label="All"
+                color={filter === 'all' ? 'primary' : 'default'}
+                onClick={() => setFilter('all')}
                 clickable
               />
             </Badge>
