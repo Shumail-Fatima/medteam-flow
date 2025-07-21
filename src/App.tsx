@@ -10,9 +10,9 @@ import DashboardPage from './pages/DashboardPage';
 import DocPatientManage from './pages/DocPatientManage';
 import DocDashboard from './pages/DocDashboard';
 import Consultation from './pages/Consultation';
-import ConsultMain from './pages/ConsultMain';
 import ConsultationList from './pages/ConsultationList';
 import ConsultationManagement from './pages/Consultation';
+import PatientDetails from './pages/PatientDetails';
 
 
 function App() {
@@ -35,10 +35,10 @@ function App() {
             <Route path="/doc/dashboard" element={<DocDashboard />} />
             <Route path="/patients" element={<DocPatientManage />} />
             <Route path='/consultation' element={<Consultation />} />
-            <Route path="/patients/:patientId" element={<DocPatientManage />} />
+            <Route path="/patients/:patientId" element={<PatientDetails />} />
             
 <Route path="/consultations-records" element={<ConsultationList />} />
-<Route path="/consultation/view/:consultationId" element={<Consultation/>} />
+<Route path="/consultation/view/:consultationId" element={<ConsultationManagement/>} />
             {/* Add more nested protected routes here */}
         </Route>
       </Routes>

@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Box, Typography, IconButton, Chip, TextField, Avatar } from '@mui/material';
+import { Box, Typography, IconButton, TextField, Avatar } from '@mui/material';
 import { ArrowForward, CalendarToday } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -8,7 +8,6 @@ import DataTable from '../components/sharedComponents/DataTable';
 import { useAuth } from '../context/AuthContext';
 import type { RootState } from '../store/Store';
 import type { Consultation } from '../types/medical';
-import { blue } from '@mui/material/colors';
 
 const ConsultationList: React.FC = () => {
   const { user } = useAuth();
