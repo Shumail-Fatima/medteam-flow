@@ -173,7 +173,7 @@ const DoctorPatientManagement: React.FC = () => {
 
         <Grid container spacing={3}>
           {/* Patient Information Card */}
-          <Grid >
+          <Grid size={12}>
             <Card sx={{ borderRadius: 3, height: 'fit-content' }}>
               <CardContent sx={{ p: 3 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
@@ -277,24 +277,11 @@ const DoctorPatientManagement: React.FC = () => {
 
                 <Box sx={{ mt: 3 }}>
                   <Button
-                    variant="contained"
-                    fullWidth
-                    startIcon={<LocalHospital />}
-                    onClick={() => handleStartConsultation(currentPatient)}
-                    sx={{ 
-                      mb: 1,
-                      borderRadius: 2,
-                      background: 'linear-gradient(135deg, #1976d2 0%, #115293 100%)',
-                    }}
-                  >
-                    Start Consultation
-                  </Button>
-                  <Button
                     variant="outlined"
                     fullWidth
                     startIcon={<Timeline />}
                     onClick={() => handleViewMedicalHistory(currentPatient)}
-                    sx={{ borderRadius: 2 }}
+                    sx={{ borderRadius: 2, mb: 1 }}
                   >
                     Medical Timeline
                   </Button>
@@ -304,10 +291,10 @@ const DoctorPatientManagement: React.FC = () => {
           </Grid>
 
           {/* Medical History and Consultations */}
-          <Grid >
+          <Grid size={12}>
             <Grid container spacing={3}>
               {/* Recent Consultations */}
-              <Grid >
+              <Grid size={12}>
                 <Card sx={{ borderRadius: 3 }}>
                   <CardContent>
                     <Typography variant="h6" fontWeight="bold" gutterBottom>
@@ -327,7 +314,7 @@ const DoctorPatientManagement: React.FC = () => {
                                     </Typography>
                                     <br />
                                     <Typography variant="body2" sx={{ mt: 0.5 }}>
-                                      {consultation.notes.substring(0, 100)}...
+                                      {consultation.notes.substring(0, 150)}...
                                     </Typography>
                                   </Box>
                                 }
@@ -346,7 +333,7 @@ const DoctorPatientManagement: React.FC = () => {
                 </Card>
               </Grid>
 
-              {/* Upcoming Appointments */}
+              {/* Upcoming Appointments 
               <Grid >
                 <Card sx={{ borderRadius: 3 }}>
                   <CardContent>
@@ -383,6 +370,7 @@ const DoctorPatientManagement: React.FC = () => {
                   </CardContent>
                 </Card>
               </Grid>
+          */}
             </Grid>
           </Grid>
         </Grid>
