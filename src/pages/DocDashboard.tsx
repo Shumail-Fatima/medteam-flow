@@ -60,8 +60,8 @@ const DoctorDashboard: React.FC = () => {
   const todaysAppointments = useMemo(() => {
     const today = new Date().toDateString();
     return doctorAppointments.filter(apt => 
-      new Date(apt.appointmentSlot).toDateString() === today &&
-      !apt.consultationCompleted // Only show if not completed
+      new Date(apt.appointmentSlot).toDateString() === today 
+      && !apt.consultationCompleted // Only show if not completed
     );
   }, [doctorAppointments]);
 

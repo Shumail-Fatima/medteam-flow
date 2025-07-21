@@ -91,29 +91,30 @@ const AppointmentManagement: React.FC = () => {
 
   const filteredAppointments = appointments.filter((appointment) => {
     const slotDate = new Date(appointment.appointmentSlot);
-    if (filter === 'today') {
-      return (
-        slotDate.getFullYear() === now.getFullYear() &&
-        slotDate.getMonth() === now.getMonth() &&
-        slotDate.getDate() === now.getDate()
-      );
-    }
     if (filter === 'upcoming') {
-      // After today
-      return slotDate > now && (
-        slotDate.getFullYear() !== now.getFullYear() ||
-        slotDate.getMonth() !== now.getMonth() ||
-        slotDate.getDate() !== now.getDate()
+      // Upcoming: scheduled and date >= today
+      return (
+        appointment.status === 'scheduled' &&
+        (
+          slotDate > now ||
+          (
+            slotDate.getFullYear() === now.getFullYear() &&
+            slotDate.getMonth() === now.getMonth() &&
+            slotDate.getDate() === now.getDate()
+          )
+        )
       );
     }
     if (filter === 'previous') {
       // Before today
       return (
+        appointment.status === 'completed' ||(
         slotDate < now &&
         (
           slotDate.getFullYear() !== now.getFullYear() ||
           slotDate.getMonth() !== now.getMonth() ||
           slotDate.getDate() !== now.getDate()
+        )
         )
       );
     }
@@ -286,14 +287,6 @@ const AppointmentManagement: React.FC = () => {
           </Box>
 
           <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
-            <Badge color={filter === 'all' ? 'primary' : 'default'}>
-              <Chip
-                label="All"
-                color={filter === 'all' ? 'primary' : 'default'}
-                onClick={() => setFilter('all')}
-                clickable
-              />
-            </Badge>
             <Badge color={filter === 'today' ? 'primary' : 'default'}>
               <Chip
                 label="Today"
