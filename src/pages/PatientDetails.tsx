@@ -146,7 +146,7 @@ const PatientDetails: React.FC = () => {
           </Button>
       <PageHeader
         title="Patient Details"
-        subtitle="Comprehensive medical record and consultation history"
+        subtitle="" //only for now, fix it by removing this prop from PageHeader.tsx
       />
 
 
@@ -177,10 +177,12 @@ const PatientDetails: React.FC = () => {
                   />
                 </Box>
               </Box>
-              {/* <PatientInfoCard patient={currentPatient} /> */}
               
+
+              {/* fix the grid sizing. make it responsive by varying xs=extra small, 
+              sm=small, md=medium, lg=large */}
               <Grid container spacing={12}>
-                <Grid>
+                <Grid size= {{xs: 12, sm:6, md:4, lg:3}}>
                   <ListItem sx={{ px: 0 }}>
                     <ListItemIcon><Email fontSize="small" /></ListItemIcon>
                     <ListItemText 
@@ -189,7 +191,7 @@ const PatientDetails: React.FC = () => {
                     />
                   </ListItem>
                 </Grid>
-                <Grid>
+                <Grid size= {{xs: 12, sm:6, md:4, lg:3}}>
                   <ListItem sx={{ px: 0 }}>
                     <ListItemIcon><Phone fontSize="small" /></ListItemIcon>
                     <ListItemText 
@@ -199,7 +201,7 @@ const PatientDetails: React.FC = () => {
                   </ListItem>
                 </Grid>
                 {currentPatient.address && (
-                  <Grid>
+                  <Grid size= {{xs: 12, sm:6, md:4, lg:3}}>
                     <ListItem sx={{ px: 0 }}>
                       <ListItemIcon><Home fontSize="small" /></ListItemIcon>
                       <ListItemText 
@@ -210,7 +212,7 @@ const PatientDetails: React.FC = () => {
                   </Grid>
                 )}
                 {currentPatient.bloodType && (
-                  <Grid>
+                  <Grid size= {{xs: 12, sm:6, md:4, lg:3}}>
                     <ListItem sx={{ px: 0 }}>
                       <ListItemIcon><Bloodtype fontSize="small" /></ListItemIcon>
                       <ListItemText 
