@@ -1,5 +1,5 @@
 import React from 'react';
-import { Paper, List, ListItem, ListItemText } from '@mui/material';
+import { Paper, List, ListItem, ListItemText, Grid } from '@mui/material';
 
 interface PatientInfoCardProps {
   name: string;
@@ -10,28 +10,36 @@ interface PatientInfoCardProps {
 
 const PatientInfoCard: React.FC<PatientInfoCardProps> = ({ name, age, bloodType, allergies = [] }) => (
   <Paper sx={{ p: 2, mt: 2, bgcolor: 'grey.50', borderRadius: 2 }}>
-    <List dense>
-      <ListItem>
+    <Grid container spacing={12}>
+      <Grid>
+      <ListItem sx={{ px: 0 }}>
         <ListItemText primary="Patient Name" secondary={name} />
       </ListItem>
-      <ListItem>
+      </Grid>
+      <Grid>
+      <ListItem sx={{ px: 0 }}>
         <ListItemText primary="Age" secondary={age} />
       </ListItem>
+      </Grid>
       {bloodType && (
-        <ListItem>
+        <Grid>
+        <ListItem sx={{ px: 0 }}>
           <ListItemText primary="Blood Type" secondary={bloodType} />
         </ListItem>
+        </Grid>
       )}
       {allergies.length > 0 && (
-        <ListItem>
+        <Grid>
+        <ListItem sx={{ px: 0 }}>
           <ListItemText
             primary="Allergies"
             secondary={allergies.join(', ')}
             secondaryTypographyProps={{ color: 'error' }}
           />
         </ListItem>
+        </Grid>
       )}
-    </List>
+    </Grid>
   </Paper>
 );
 

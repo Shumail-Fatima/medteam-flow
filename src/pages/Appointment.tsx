@@ -261,30 +261,26 @@ const AppointmentManagement: React.FC = () => {
         <Typography variant="h4" component="h1" sx={{ fontWeight: 600, mb: 1 }}>
           Appointment Management
         </Typography>
-        <Typography variant="body1" color="text.secondary">
+        {/* <Typography variant="body1" color="text.secondary">
           Schedule and manage patient appointments with healthcare professionals
-        </Typography>
+        </Typography> */}
       </Box>
 
       {/* Tabs for switching between list and create views */}
-      <CustomTabs value={activeTab} onChange={handleTabChange} tabs={tabOptions} />
+      {user?.roleName !== 'doctor' && (
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+          <CustomTabs value={activeTab} onChange={handleTabChange} tabs={tabOptions} />
+            <AddButton
+            onClick={handleCreateAppointment}
+            label='Create New Appointment'
+            startIcon= {<Add />}
+            ></AddButton></Box>
+      )}
 
       {/* Appointments List Tab */}
       {activeTab === 0 && (
         <Box>
           {/* Create Appointment Button */}
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-            <Typography variant="h5" sx={{ fontWeight: 600 }}>
-              All Appointments
-            </Typography>
-            {user?.roleName !== 'doctor' && (
-            <AddButton
-            onClick={handleCreateAppointment}
-            label='Create New Appointment'
-            startIcon= {<Add />}
-            ></AddButton>
-            )}
-          </Box>
 
           <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
             <Badge color={filter === 'all' ? 'primary' : 'default'}>

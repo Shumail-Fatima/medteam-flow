@@ -41,7 +41,6 @@ import type { RootState } from '../store/Store';
 import type { ExtendedPatient } from '../types/medical';
 import { useAuth } from '../context/AuthContext';
 import PageHeader from '../components/sharedComponents/PageHeader';
-import PatientInfoCard from '../components/patient/PatientInfoCard';
 
 const PatientDetails: React.FC = () => {
   const { patientId } = useParams<{ patientId: string }>();
@@ -74,10 +73,10 @@ const PatientDetails: React.FC = () => {
     );
   };
 
-  const handleViewMedicalHistory = (patient: ExtendedPatient) => {
-    setSelectedPatient(patient);
-    setMedicalHistoryDialogOpen(true);
-  };
+  // const handleViewMedicalHistory = (patient: ExtendedPatient) => {
+  //   setSelectedPatient(patient);
+  //   setMedicalHistoryDialogOpen(true);
+  // };
 
   const handleBackToPatients = () => {
     navigate('/patients');
@@ -225,6 +224,10 @@ const PatientDetails: React.FC = () => {
 
               {currentPatient.emergencyContact && (
                 <>
+                {/* <Grid container spacing={12}>
+                <Grid>
+                  <ListItem sx={{ px: 0 }}>
+                    <ListItemIcon><Email fontSize="small" /></ListItemIcon> */}
                   <Divider sx={{ my: 2 }} />
                   <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
                     Emergency Contact
@@ -238,6 +241,9 @@ const PatientDetails: React.FC = () => {
                       />
                     </ListItem>
                   </List>
+                  {/* </ListItem>
+                  </Grid>
+                  </Grid> */}
                 </>
               )}
 
@@ -262,7 +268,7 @@ const PatientDetails: React.FC = () => {
               )}
 
               <Box sx={{ mt: 3 }}>
-                <Button
+                {/* <Button
                   variant="outlined"
                   fullWidth
                   startIcon={<Timeline />}
@@ -270,7 +276,7 @@ const PatientDetails: React.FC = () => {
                   sx={{ borderRadius: 2, mb: 1 }}
                 >
                   Medical Timeline
-                </Button>
+                </Button> */}
               </Box>
             </CardContent>
           </Card>
