@@ -43,6 +43,7 @@ import type { RootState, AppDispatch } from '../store/Store';
 import type { ExtendedPatient, MedicalHistoryEntry } from '../types/medical';
 import { useAuth } from '../context/AuthContext';
 import PatientDetails from './PatientDetails';
+import PageHeader from '../components/sharedComponents/PageHeader';
 
 const DoctorPatientManagement: React.FC = () => {
   const { patientId } = useParams<{ patientId: string }>();
@@ -150,14 +151,10 @@ const DoctorPatientManagement: React.FC = () => {
   // Main patients list view
   return (
     <Layout>
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" component="h1" sx={{ fontWeight: 600, mb: 1 }}>
-          Patient Management
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          View and manage your patients' medical records and consultation history
-        </Typography>
-      </Box>
+      <PageHeader
+        title="Patient Management"
+        subtitle="View and manage your patients' medical records and consultation history"
+      />
 
       {/* Patients Table */}
       <DataTable<ExtendedPatient>

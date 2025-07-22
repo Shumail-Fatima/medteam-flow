@@ -40,6 +40,8 @@ import Layout from '../components/sharedComponents/Layout';
 import type { RootState } from '../store/Store';
 import type { ExtendedPatient } from '../types/medical';
 import { useAuth } from '../context/AuthContext';
+import PageHeader from '../components/sharedComponents/PageHeader';
+import PatientInfoCard from '../components/patient/PatientInfoCard';
 
 const PatientDetails: React.FC = () => {
   const { patientId } = useParams<{ patientId: string }>();
@@ -137,20 +139,17 @@ const PatientDetails: React.FC = () => {
 
   return (
     <Layout>
-      <Box sx={{ mb: 4 }}>
         <Button 
-          onClick={handleBackToPatients} 
-          sx={{ mb: 2, textTransform: 'none' }}
-        >
-          ← Back to Patients
-        </Button>
-        <Typography variant="h4" component="h1" sx={{ fontWeight: 600, mb: 1 }}>
-          Patient Details
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          Comprehensive medical record and consultation history
-        </Typography>
-      </Box>
+            onClick={handleBackToPatients} 
+            sx={{ mb: 2, textTransform: 'none' }}
+          >
+            ← Back to Patients
+          </Button>
+      <PageHeader
+        title="Patient Details"
+        subtitle="Comprehensive medical record and consultation history"
+      />
+
 
       <Grid container spacing={3}>
         <Grid size={12}>
@@ -179,6 +178,7 @@ const PatientDetails: React.FC = () => {
                   />
                 </Box>
               </Box>
+              {/* <PatientInfoCard patient={currentPatient} /> */}
               
               <Grid container spacing={12}>
                 <Grid>
@@ -304,6 +304,14 @@ const PatientDetails: React.FC = () => {
                                 <Box>
                                   <Typography variant="caption" color="text.secondary">
                                     {formatDate(consultation.date)}
+                                    {/* {new Date(consultation.date).toLocaleDateString('en-US', {
+                                      year: 'numeric',
+                                      month: 'short',
+                                      day: 'numeric',
+                                      hour: '2-digit',
+                                      minute: '2-digit',
+                                    })} */}
+
                                   </Typography>
                                   <br />
                                   <Typography variant="body2" sx={{ mt: 0.5 }}>
@@ -365,6 +373,7 @@ const PatientDetails: React.FC = () => {
                           <Chip
                             label={entry.type}
                             color={getHistoryTypeColor(entry.type) as "default" | "primary" | "secondary" | "error" | "info" | "success" | "warning"}
+                            
                             size="small"
                           />
                         </Box>

@@ -30,6 +30,8 @@ import { useAuth } from '../context/AuthContext';
 import type { RootState } from '../store/Store';
 import type { ExtendedAppointment } from '../types/medical';
 import { updateConsultation } from '../store/slices/MedicalSlice';
+import PageHeader from '../components/sharedComponents/PageHeader';
+import StatCard from '../components/dashboard/StatCard';
 
 const DoctorDashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -129,99 +131,49 @@ const DoctorDashboard: React.FC = () => {
 
   return (
     <Layout>
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" component="h1" sx={{ fontWeight: 600, mb: 1 }}>
-          Welcome back, {user?.name}!
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          Here's your medical practice overview for today.
-        </Typography>
-      </Box>
+      <PageHeader
+        title={`Welcome back, ${user?.name}!`}
+        subtitle="Here's your medical practice overview for today."
+      />
 
       {/* Stats Cards */}
       <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid size={3} >
-          <Card sx={{ borderRadius: 3 }}>
-            <CardContent>
-              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Box>
-                  <Typography variant="h4" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
-                    {todaysAppointments.length}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Today's Appointments
-                  </Typography>
-                </Box>
-                <Avatar sx={{ bgcolor: 'primary.main', width: 56, height: 56 }}>
-                  <Today />
-                </Avatar>
-              </Box>
-            </CardContent>
-          </Card>
+        <Grid size={3}>
+          <StatCard
+            title="Today's Appointments"
+            value={`${todaysAppointments.length}/${doctorAppointments.length}`}
+            icon={<Today />}
+            color="primary.main"
+          />
         </Grid>
         
         <Grid size={3}>
-          <Card sx={{ borderRadius: 3 }}>
-            <CardContent>
-              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Box>
-                  <Typography variant="h4" sx={{ fontWeight: 'bold', color: 'warning.main' }}>
-                    {pendingConsultations.length}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Pending Consultations
-                  </Typography>
-                </Box>
-                <Avatar sx={{ bgcolor: 'warning.main', width: 56, height: 56 }}>
-                  <Assignment />
-                </Avatar>
-              </Box>
-            </CardContent>
-          </Card>
+          <StatCard
+            title="Pending Consultations"
+            value={`${pendingConsultations.length}/${doctorAppointments.filter(a => a.status === 'scheduled').length}`}
+            icon={<Assignment />}
+            color="warning.main"
+          />
         </Grid>
 
         <Grid size={3}>
-          <Card sx={{ borderRadius: 3 }}>
-            <CardContent>
-              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Box>
-                  <Typography variant="h4" sx={{ fontWeight: 'bold', color: 'success.main' }}>
-                    {doctorConsultations.length}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Total Consultations
-                  </Typography>
-                </Box>
-                <Avatar sx={{ bgcolor: 'success.main', width: 56, height: 56 }}>
-                  <LocalHospital />
-                </Avatar>
-              </Box>
-            </CardContent>
-          </Card>
+          <StatCard
+            title="Total Consultations"
+            value={doctorConsultations.length}
+            icon={<LocalHospital />}
+            color="success.main"
+          />
         </Grid>
 
         <Grid size={3}>
-          <Card sx={{ borderRadius: 3 }}>
-            <CardContent>
-              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Box>
-                  <Typography variant="h4" sx={{ fontWeight: 'bold', color: 'info.main' }}>
-                    {doctorTasks.filter(t => t.status === 'Pending').length}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Pending Tasks
-                  </Typography>
-                </Box>
-                <Avatar sx={{ bgcolor: 'info.main', width: 56, height: 56 }}>
-                  <Assignment />
-                </Avatar>
-              </Box>
-            </CardContent>
-          </Card>
+          <StatCard
+            title="Pending Tasks"
+            value={`${doctorTasks.filter(t => t.status === 'Pending').length}/${doctorTasks.length}`}
+            icon={<Assignment />}
+            color="info.main"
+          />
         </Grid>
       </Grid>
-
-      
      
 
       <Grid container spacing={3}>

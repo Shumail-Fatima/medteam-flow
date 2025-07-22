@@ -42,6 +42,8 @@ import type { ConsultationFormData, Consultation, ExtendedAppointment } from '..
 import { consultationValidationSchema } from '../validation/MedValidation';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
+import PageHeader from '../components/sharedComponents/PageHeader';
+import PatientInfoCard from '../components/PatientInfoCard';
 
 const ConsultationManagement: React.FC = () => {
   const navigate = useNavigate();
@@ -272,14 +274,10 @@ const ConsultationManagement: React.FC = () => {
 
   return (
     <Layout>
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" component="h1" sx={{ fontWeight: 600, mb: 1 }}>
-          Consultation Management
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          Record patient consultations, diagnoses, and prescriptions
-        </Typography>
-      </Box>
+      <PageHeader
+        title="Consultation Management"
+        subtitle="Record patient consultations, diagnoses, and prescriptions"
+      />
 
       <form onSubmit={handleSubmit(handleFormSubmit)}>
         <Grid container spacing={3}>
@@ -293,30 +291,12 @@ const ConsultationManagement: React.FC = () => {
                 </Typography>
 
                 {preSelectedPatient ? (
-                  <Paper sx={{ p: 2, mt: 2, bgcolor: 'grey.50', borderRadius: 2 }}>
-                    <List dense>
-                      <ListItem>
-                        <ListItemText primary="Patient Name" secondary={preSelectedPatient.name} />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemText primary="Age" secondary={preSelectedPatient.age} />
-                      </ListItem>
-                      {preSelectedPatient.bloodType && (
-                        <ListItem>
-                          <ListItemText primary="Blood Type" secondary={preSelectedPatient.bloodType} />
-                        </ListItem>
-                      )}
-                      {preSelectedPatient.allergies.length > 0 && (
-                        <ListItem>
-                          <ListItemText 
-                            primary="Allergies" 
-                            secondary={preSelectedPatient.allergies.join(', ')} 
-                            secondaryTypographyProps={{ color: 'error' }}
-                          />
-                        </ListItem>
-                      )}
-                    </List>
-                  </Paper>
+                  <PatientInfoCard
+                  name={preSelectedPatient.name}
+                  age={preSelectedPatient.age}
+                  bloodType={preSelectedPatient.bloodType}
+                  allergies={preSelectedPatient.allergies}
+                />
                 ) : (
                   <Typography color="error">No patient selected.</Typography>
                 )}
@@ -343,7 +323,6 @@ const ConsultationManagement: React.FC = () => {
                 <Typography variant="h6" fontWeight="bold" gutterBottom>
                   Consultation Details
                 </Typography>
-
                 <List dense>
                   <ListItem>
                     <ListItemText primary="Symptoms" secondary={isReadOnly ? consultationRecord?.symptoms?.join(', ') || '-' : ''} />
@@ -559,7 +538,7 @@ const ConsultationManagement: React.FC = () => {
           </Grid>
 
           {/* Follow-up */}
-          <Grid>
+          <Grid size={2}>
             <Card sx={{ borderRadius: 3 }}>
               <CardContent>
                 <Typography variant="h6" fontWeight="bold" gutterBottom>

@@ -8,6 +8,7 @@ import DataTable from '../components/sharedComponents/DataTable';
 import { useAuth } from '../context/AuthContext';
 import type { RootState } from '../store/Store';
 import type { Consultation } from '../types/medical';
+import PageHeader from '../components/sharedComponents/PageHeader';
 
 const ConsultationList: React.FC = () => {
   const { user } = useAuth();
@@ -57,14 +58,10 @@ const ConsultationList: React.FC = () => {
 
   return (
     <Layout>
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" component="h1" sx={{ fontWeight: 600, mb: 1 }}>
-          {pageTitle}
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          View your completed consultations
-        </Typography>
-      </Box>
+      <PageHeader
+        title={pageTitle}
+        subtitle="View your completed consultations"
+      />
 
       <Box sx={{ mb: 3, p: 2, borderRadius: 2 }}>
         <Box sx={{  display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
