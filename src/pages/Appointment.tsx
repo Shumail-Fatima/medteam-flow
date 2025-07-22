@@ -26,6 +26,7 @@ import ViewDialog from '../components/sharedComponents/ViewDialog';
 import doctorSpecialtiesData from '../data/DoctorSpeciality.json';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { date } from 'yup';
 
 // Prepare doctors array from users data
 const doctors = usersData
@@ -255,6 +256,25 @@ const AppointmentManagement: React.FC = () => {
     });
   };
 
+  const slotDate = (appointment: Appointment) => {
+    const slotDate = new Date(appointment.appointmentSlot);
+    const now = new Date();
+    const isPast =
+        slotDate < now &&
+        (
+          slotDate.getFullYear() !== now.getFullYear() ||
+          slotDate.getMonth() !== now.getMonth() ||
+          slotDate.getDate() !== now.getDate()
+        );
+    // if (slotDate.getFullYear() === now.getFullYear() &&
+    //     slotDate.getMonth() === now.getMonth() &&
+    //     slotDate.getDate() === now.getDate()) {
+    //   return 'Today';
+    // }
+    //return new Date(appointment.appointmentSlot);
+    return isPast;
+  };
+
   return (
     <Layout>
       <Box sx={{ mb: 4 }}>
@@ -360,18 +380,20 @@ const AppointmentManagement: React.FC = () => {
                 render: (appointment) => (
                   <Box sx={{ display: 'flex', gap: 1 }}>
                     {user?.roleName === 'doctor' && (
-                      appointment.consultationCompleted ? (
+                      appointment.consultationCompleted || slotDate(appointment) === true  ? (
                         <Chip 
-                        label="Completed"
-                        color='success'
-                        size='small'
-                        sx={{ fontWeight: 600}}
+                          label={appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
+                          color='success'
+                          size='small'
+                          sx={{ fontWeight: 600 }}
                         />
                       ):(
+                        
                       <Button
                         size="small"
                         variant="outlined"
                         onClick={() => navigate(`/consultation?appointmentId=${appointment.id}&patientId=${appointment.patientId}`)}
+                        //onClick={() => console.log(slotDate(appointment))}
                         sx={{ textTransform: 'none' }}
                       >
                         Start
@@ -386,6 +408,7 @@ const AppointmentManagement: React.FC = () => {
             onDelete={handleDeleteAppointment}
             showEdit={() => user?.roleName !== 'doctor'}
             showDelete={() => true}
+            emptyMessage="No appointments found"
           />
         </Box>
       )}

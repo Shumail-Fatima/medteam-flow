@@ -19,9 +19,10 @@ interface DataTableProps<T> {
     onDelete?: (item: T) => void;
     showEdit?: (item: T) => boolean;
     showDelete?: (item: T) => boolean;
+    emptyMessage?: string;
 }
 
-function DataTable<T extends { id: string }>({ data, columns, onView, onEdit, onDelete, showEdit, showDelete }: DataTableProps<T>) {
+function DataTable<T extends { id: string }>({ data, columns, onView, onEdit, onDelete, showEdit, showDelete, emptyMessage }: DataTableProps<T>) {
   return (
     <Paper sx={{ borderRadius: 3, boxShadow: 3 }}>
       <TableContainer>
@@ -37,7 +38,14 @@ function DataTable<T extends { id: string }>({ data, columns, onView, onEdit, on
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((item) => (
+              {data.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={columns.length + ((onView || onEdit || onDelete) ? 1 : 0)} align="center">
+                    {emptyMessage || "No data"}
+                  </TableCell>
+                </TableRow>
+              ) : (
+            data.map((item) => (
               <TableRow key={item.id} hover>
                 {columns.map((col, idx) => (
                   <TableCell key={idx}>{col.render(item)}</TableCell>
@@ -56,7 +64,8 @@ function DataTable<T extends { id: string }>({ data, columns, onView, onEdit, on
                   </TableCell>
                 )}
               </TableRow>
-            ))}
+            ))
+            )}
           </TableBody>
         </Table>
       </TableContainer>

@@ -310,14 +310,6 @@ const PatientDetails: React.FC = () => {
                                 <Box>
                                   <Typography variant="caption" color="text.secondary">
                                     {formatDate(consultation.date)}
-                                    {/* {new Date(consultation.date).toLocaleDateString('en-US', {
-                                      year: 'numeric',
-                                      month: 'short',
-                                      day: 'numeric',
-                                      hour: '2-digit',
-                                      minute: '2-digit',
-                                    })} */}
-
                                   </Typography>
                                   <br />
                                   <Typography variant="body2" sx={{ mt: 0.5 }}>

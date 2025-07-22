@@ -55,6 +55,7 @@ const ConsultationList: React.FC = () => {
   const pageTitle = patientId
     ? `Consultation Records for ${patients.find((p) => p.id === patientId)?.name || 'Patient'}`
     : 'Consultation Records';
+  
 
   return (
     <Layout>
@@ -75,7 +76,9 @@ const ConsultationList: React.FC = () => {
       />
       </Box>
       </Box>
+
       <DataTable<Consultation>
+        
         data={filteredConsultations}
         columns={[
           {
@@ -138,6 +141,7 @@ const ConsultationList: React.FC = () => {
         ]}
         showEdit={() => false}
         showDelete={() => false}
+        emptyMessage="No consultations"
       />
     </Layout>
   );

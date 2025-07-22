@@ -324,6 +324,7 @@ const AdminTaskManagement: React.FC = () => {
         onDelete={handleDeleteTask}
         showEdit={canEditTask}
         showDelete={canDeleteTask}
+        emptyMessage="No tasks available"
       />
 
       {/* Task Form Modal */}

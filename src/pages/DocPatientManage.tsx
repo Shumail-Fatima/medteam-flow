@@ -239,6 +239,7 @@ const DoctorPatientManagement: React.FC = () => {
         onDelete={() => {}} // Doctors can't delete patients
         showEdit={() => false}
         showDelete={() => false}
+        emptyMessage="No patients found"
       />
 
       {/* Medical History Timeline Dialog */}

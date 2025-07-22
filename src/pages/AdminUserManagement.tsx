@@ -264,6 +264,7 @@ const AdminUserManagement: React.FC = () => {
         onDelete={handleDeleteUser}
         showEdit={(u) => u.roleName !== 'admin'}
         showDelete={(u) => u.roleName !== 'admin'}
+        emptyMessage="No users found"
       />
 
 

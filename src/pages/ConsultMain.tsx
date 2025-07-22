@@ -272,6 +272,7 @@ const ConsultMain: React.FC = () => {
             onDelete={handleDeleteConsultation}
             showEdit={() => true}
             showDelete={() => true}
+            emptyMessage="No consultations available"
           />
         </Box>
       )}
