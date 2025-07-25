@@ -183,27 +183,11 @@ const AdminUserManagement: React.FC = () => {
         <Typography variant="h4" component="h1" sx={{ fontWeight: 600, mb: 1 }}>
           User Management
         </Typography>
-        <Typography variant="body1" color="text.secondary">
-          Manage healthcare professionals and their access permissions
-        </Typography>
       </Box>
-    
-
       {/* Action Button */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h5" sx={{ fontWeight: 600 }}>
-          All Users ({filteredUsers.length})
-        </Typography>
-        <AddButton
-        onClick={handleAddUser} 
-        label='Add New User'
-        startIcon= {<Add />}
-        ></AddButton>
-      </Box>
-
       {/* Filter Section */}
-      <Box sx={{ mb: 3, p: 2, borderRadius: 2 }}>
-        <Box sx={{  display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+        <Box sx={{  display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'flex-start' }}>
           <TextField
             label="Filter by Name or Email"
             value={searchFilter}
@@ -226,6 +210,11 @@ const AdminUserManagement: React.FC = () => {
             </Select>
           </FormControl>
         </Box>
+        <AddButton
+        onClick={handleAddUser} 
+        label='Add New User'
+        startIcon= {<Add />}
+        ></AddButton>
       </Box>
 
       {/* Users Table in adminusermanagement*/}

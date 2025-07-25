@@ -34,6 +34,7 @@ import {
   Assignment,
   Close,
   Timeline,
+  CalendarToday,
 } from '@mui/icons-material';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -178,17 +179,32 @@ const DoctorPatientManagement: React.FC = () => {
               </Box>
             )
           },
-          {
-            header: 'Contact',
-            render: (patient) => (
-              <Box>
-                <Typography variant="body2">{patient.email}</Typography>
-                <Typography variant="caption" color="text.secondary">
-                  {patient.phone}
-                </Typography>
-              </Box>
-            )
-          },
+            {
+    header: 'Date of Birth',
+    render: (patient) => (
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <CalendarToday sx={{ fontSize: 16, mr: 1, color: 'action.active' }} />
+        <Typography variant="body2">
+          {new Date(patient.dateOfBirth).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+          day: 'numeric',
+        })}
+      </Typography>
+      </Box>
+    )
+  },
+          // {
+          //   header: 'Contact',
+          //   render: (patient) => (
+          //     <Box>
+          //       <Typography variant="body2">{patient.email}</Typography>
+          //       <Typography variant="caption" color="text.secondary">
+          //         {patient.phone}
+          //       </Typography>
+          //     </Box>
+          //   )
+          // },
           {
             header: 'Last Consultation',
             render: (patient) => {
@@ -211,28 +227,28 @@ const DoctorPatientManagement: React.FC = () => {
               );
             }
           },
-          {
-            header: 'Allergies',
-            render: (patient) => (
-              <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
-                {patient.allergies.slice(0, 2).map((allergy, index) => (
-                  <Chip
-                    key={index}
-                    label={allergy}
-                    color="error"
-                    size="small"
-                  />
-                ))}
-                {patient.allergies.length > 2 && (
-                  <Chip
-                    label={`+${patient.allergies.length - 2}`}
-                    size="small"
-                    variant="outlined"
-                  />
-                )}
-              </Box>
-            )
-          },
+          // {
+          //   header: 'Allergies',
+          //   render: (patient) => (
+          //     <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
+          //       {patient.allergies.slice(0, 2).map((allergy, index) => (
+          //         <Chip
+          //           key={index}
+          //           label={allergy}
+          //           color="error"
+          //           size="small"
+          //         />
+          //       ))}
+          //       {patient.allergies.length > 2 && (
+          //         <Chip
+          //           label={`+${patient.allergies.length - 2}`}
+          //           size="small"
+          //           variant="outlined"
+          //         />
+          //       )}
+          //     </Box>
+          //   )
+          // },
         ]}
         onView={handleViewPatient}
         onEdit={() => {}} // Doctors can't edit patient basic info
