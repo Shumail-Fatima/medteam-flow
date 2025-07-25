@@ -1,7 +1,7 @@
 // Redux slice for managing support tickets and responses
 import { createSlice,type PayloadAction } from '@reduxjs/toolkit';
 import type { SupportTicket, SupportResponse } from '../../types/settings';
-import supportTicketsData from '../../data/SupportTickets.json';
+import supportTicketsData from '../../../mockServer/data/SupportTickets.json';
 
 interface SupportState {
   tickets: SupportTicket[];

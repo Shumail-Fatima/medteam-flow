@@ -1,5 +1,5 @@
-import users from './data/Users.json';
-import roles from './data/Roles.json';
+import users from './../mockServer/data/Users.json';
+import roles from './../mockServer/data/Roles.json';
 
 export const getUserWithRole = (userEmail:string) => {
     

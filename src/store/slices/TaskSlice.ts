@@ -1,7 +1,7 @@
 // Redux slice for managing user state
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { Task } from '../../types/task';
-import tasksData from '../../data/Tasks.json'
+import tasksData from '../../../mockServer/data/Tasks.json'
 
 interface TaskState{
     tasks:Task[];

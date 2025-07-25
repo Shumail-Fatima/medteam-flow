@@ -1,7 +1,7 @@
 // Redux slice for managing appointment state
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { Appointment } from '../../types/appointment';
-import appointmentsData from '../../data/Appointments.json';
+import appointmentsData from '../../../mockServer/data/Appointments.json';
 
 interface AppointmentState {
   appointments: Appointment[];

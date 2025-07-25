@@ -59,13 +59,13 @@ const ConsultationList: React.FC = () => {
 
   return (
     <Layout>
+      <Box sx={{ mb: 3, p: 2, borderRadius: 2 }}>
+        <Box sx={{  display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'space-between' }}>
       <PageHeader
         title={pageTitle}
-        subtitle="View your completed consultations"
       />
 
-      <Box sx={{ mb: 3, p: 2, borderRadius: 2 }}>
-        <Box sx={{  display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+      
       <TextField
         label="Search by Patient Name"
         value={searchFilter}

@@ -154,7 +154,7 @@ const DoctorPatientManagement: React.FC = () => {
     <Layout>
       <PageHeader
         title="Patient Management"
-        subtitle="View and manage your patients' medical records and consultation history"
+        // subtitle="View and manage your patients' medical records and consultation history"
       />
 
       {/* Patients Table */}

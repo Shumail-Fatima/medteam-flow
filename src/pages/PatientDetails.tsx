@@ -146,7 +146,7 @@ const PatientDetails: React.FC = () => {
           </Button>
       <PageHeader
         title="Patient Details"
-        subtitle="" //only for now, fix it by removing this prop from PageHeader.tsx
+        // subtitle="" //only for now, fix it by removing this prop from PageHeader.tsx
       />
 
 

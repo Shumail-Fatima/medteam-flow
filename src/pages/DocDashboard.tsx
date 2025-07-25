@@ -133,7 +133,7 @@ const DoctorDashboard: React.FC = () => {
     <Layout>
       <PageHeader
         title={`Welcome back, ${user?.name}!`}
-        subtitle="Here's your medical practice overview for today."
+        // subtitle="Here's your medical practice overview for today."
       />
 
       {/* Stats Cards */}

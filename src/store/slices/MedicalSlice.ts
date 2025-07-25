@@ -1,8 +1,8 @@
 // Redux slice for managing medical data (consultations, medical history)
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { Consultation, ExtendedPatient, MedicalHistoryEntry } from '../../types/medical';
-import patient from '../../data/Patients.json';
-import consultation from '../../data/Consultations.json';
+import patient from '../../../mockServer/data/Patients.json';
+import consultation from '../../../mockServer/data/Consultations.json';
 
 interface MedicalState {
   consultations: Consultation[];

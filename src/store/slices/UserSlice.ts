@@ -1,8 +1,8 @@
 // Redux slice for managing user state
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import usersData from '../../data/Users.json'
+import usersData from '../../../mockServer/data/Users.json'
 import type { User } from '../../types/Auth';
-import rolesData from '../../data/Roles.json'
+import rolesData from '../../../mockServer/data/Roles.json'
 
 interface UserState{
     users: User[];

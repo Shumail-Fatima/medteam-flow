@@ -8,7 +8,7 @@ import {AddButton} from '../components/CustomButton';
 import Layout from '../components/sharedComponents/Layout';
 import UserFormModal from '../components//formModals/UserFormModal';
 import type { User, UserFormData } from '../types/Auth';
-import rolesData from '../data/Roles.json';
+import rolesData from '../../mockServer/data/Roles.json';
 import DataTable from '../components/sharedComponents/DataTable';
 import ConfirmDeleteDialog from '../components/sharedComponents/ConfirmDeleteDialog';
 import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';

@@ -16,10 +16,10 @@ import { addPatient } from '../store/slices/PatientSlice';
 import type { PatientFormData } from '../types/appointment';
 import type { Consultation } from '../types/medical';
 import { addConsultation, updateConsultation } from '../store/slices/MedicalSlice';
-import usersData from '../data/Users.json';
-import doctorSlots from '../data/DoctorSlots.json';
+import usersData from '../../mockServer/data/Users.json';
+import doctorSlots from '../../mockServer/data/DoctorSlots.json';
 import ViewDialog from '../components/sharedComponents/ViewDialog';
-import doctorSpecialtiesData from '../data/DoctorSpeciality.json';
+import doctorSpecialtiesData from '../../mockServer/data/DoctorSpeciality.json';
 import ConsultationManagement from './Consultation';
 import { useLocation, useNavigate } from 'react-router-dom';
 

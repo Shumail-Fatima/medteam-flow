@@ -1,7 +1,7 @@
 // Redux slice for managing user settings state
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { UserSettings } from '../../types/settings';
-import settingsData from '../../data/Settings.json';
+import settingsData from '../../../mockServer/data/Settings.json';
 
 interface SettingsState {
   userSettings: UserSettings[];

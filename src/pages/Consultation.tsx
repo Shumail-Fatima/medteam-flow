@@ -276,7 +276,7 @@ const ConsultationManagement: React.FC = () => {
     <Layout>
       <PageHeader
         title="Consultation Management"
-        subtitle="Record patient consultations, diagnoses, and prescriptions"
+        // subtitle="Record patient consultations, diagnoses, and prescriptions"
       />
 
       <form onSubmit={handleSubmit(handleFormSubmit)}>

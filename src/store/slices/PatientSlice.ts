@@ -1,7 +1,7 @@
 // Redux slice for managing patient state
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { Patient } from '../../types/appointment';
-import patientsData from '../../data/Patients.json';
+import patientsData from '../../../mockServer/data/Patients.json';
 
 interface PatientState {
   patients: Patient[];
