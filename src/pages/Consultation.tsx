@@ -35,8 +35,8 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import Layout from '../components/sharedComponents/Layout';
 import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';
 import type { RootState, AppDispatch } from '../store/Store';
-import { addConsultation, updateConsultation, addMedicalHistoryEntry, updatePatientMedicalInfo } from '../store/slices/MedicalSlice';
-import { updateAppointment } from '../store/slices/AppointmentSlice';
+import { addConsultation, updateConsultation, addMedicalHistoryEntry, updatePatientMedicalInfo, fetchConsultations, addConsultationAsync, updateConsultationAsync, deleteConsultationAsync } from '../store/slices/MedicalSlice';
+import { updateAppointment, updateAppointmentAsync } from '../store/slices/AppointmentSlice';
 import { useAuth } from '../context/AuthContext';
 import type { ConsultationFormData, Consultation, ExtendedAppointment } from '../types/medical';
 import { consultationValidationSchema } from '../validation/MedValidation';
@@ -157,6 +157,11 @@ const ConsultationManagement: React.FC = () => {
     return watchedPatientId ? getPatientAppointments(watchedPatientId) : [];
   }, [watchedPatientId, appointments, user?.id]);
 
+    // Fetch users from API on component mount
+    useEffect(() => {
+    dispatch(fetchConsultations()); // Load users from backend on mount
+  }, [dispatch]);
+
   // Handle form submission - Redux action to create consultation
   const handleFormSubmit = async (data: ConsultationFormData) => {
     if (!user?.id || !selectedPatient) return;
@@ -187,19 +192,37 @@ const ConsultationManagement: React.FC = () => {
       };
 
       // Redux action - Add consultation to store
-      dispatch(addConsultation(newConsultation));
+      // dispatch(addConsultation(newConsultation));
+      //dispatch(addConsultationAsync(newConsultation));
 
-      dispatch(updateConsultation({
-        ...newConsultation, // the consultation object you want to update
-        status: 'completed'
-      }));
+      const response = await dispatch(addConsultationAsync(newConsultation));
+
+// Make sure the consultation was successfully created
+if (addConsultationAsync.fulfilled.match(response)) {
+  const addedConsultation = response.payload;
+
+  // Update consultation status to 'completed'
+  await dispatch(updateConsultationAsync({
+    ...addedConsultation,
+    status: 'completed',
+  }));
+}
+
+      // dispatch(updateConsultation({
+      //   ...newConsultation, // the consultation object you want to update
+      //   status: 'completed'
+      // }));
+      // dispatch(updateConsultationAsync({
+      //   ...newConsultation, // the consultation object you want to update
+      //   status: 'completed'
+      // }));
 
       // If consultation is linked to an appointment, mark it as completed
       if (data.appointmentId) {
         const appointment = appointments.find(apt => apt.id === data.appointmentId);
         if (appointment) {
           // Redux action - Update appointment status
-          dispatch(updateAppointment({
+          dispatch(updateAppointmentAsync({
             ...appointment,
             status: 'completed' as any,
             consultationCompleted: true,
@@ -664,6 +687,7 @@ const ConsultationManagement: React.FC = () => {
               <Button
                 type="submit"
                 variant="contained"
+                onClick={() => navigate('/consultations-records')}
                 startIcon={<Save />}
                 sx={{ 
                   borderRadius: 2,

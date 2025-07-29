@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Typography,
@@ -17,7 +17,7 @@ import AppointmentForm from '../components/formModals/AppointmentForm';
 import ConfirmDeleteDialog from '../components/sharedComponents/ConfirmDeleteDialog';
 import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';
 import type { RootState, AppDispatch } from '../store/Store';
-import { addAppointment, updateAppointment, deleteAppointment } from '../store/slices/AppointmentSlice';
+import { addAppointment, updateAppointment, deleteAppointment, fetchAppointments, addAppointmentAsync, updateAppointmentAsync, deleteAppointmentAsync } from '../store/slices/AppointmentSlice';
 import { addPatient } from '../store/slices/PatientSlice';
 import type { Appointment, AppointmentFormData, PatientFormData } from '../types/appointment';
 import usersData from '../../mockServer/data/Users.json';
@@ -26,7 +26,6 @@ import ViewDialog from '../components/sharedComponents/ViewDialog';
 import doctorSpecialtiesData from '../../mockServer/data/DoctorSpeciality.json';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { date } from 'yup';
 
 // Prepare doctors array from users data
 const doctors = usersData
@@ -157,7 +156,8 @@ const AppointmentManagement: React.FC = () => {
   const confirmDelete = () => {
     if (appointmentToDelete) {
       // Dispatch Redux action to delete appointment
-      dispatch(deleteAppointment(appointmentToDelete.id));
+      // dispatch(deleteAppointment(appointmentToDelete.id));
+      dispatch(deleteAppointmentAsync(appointmentToDelete.id));
       setSnackbar({
         open: true,
         message: 'Appointment deleted successfully!',
@@ -167,6 +167,11 @@ const AppointmentManagement: React.FC = () => {
       setAppointmentToDelete(null);
     }
   };
+
+    // Fetch appointments from API on component mount
+    useEffect(() => {
+    dispatch(fetchAppointments()); // Load appointments from backend on mount
+  }, [dispatch]);
 
   // Handle appointment form submission (create or update)
   const handleAppointmentSubmit = (data: AppointmentFormData) => {
@@ -194,7 +199,8 @@ const AppointmentManagement: React.FC = () => {
         reason: data.reason,
         status: selectedAppointment.status,
       };
-      dispatch(updateAppointment(updatedAppointment));
+      // dispatch(updateAppointment(updatedAppointment));
+      dispatch(updateAppointmentAsync(updatedAppointment));
       setSnackbar({
         open: true,
         message: 'Appointment updated successfully!',
@@ -216,7 +222,8 @@ const AppointmentManagement: React.FC = () => {
         status: 'scheduled',
         consultationCompleted: false,
       };
-      dispatch(addAppointment(newAppointment));
+      // dispatch(addAppointment(newAppointment));
+      dispatch(addAppointmentAsync(newAppointment));
       setSnackbar({
         open: true,
         message: 'Appointment created successfully!',

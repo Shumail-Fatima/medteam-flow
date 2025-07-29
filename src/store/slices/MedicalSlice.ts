@@ -1,8 +1,12 @@
 // Redux slice for managing medical data (consultations, medical history)
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import type { Consultation, ExtendedPatient, MedicalHistoryEntry } from '../../types/medical';
 import patient from '../../../mockServer/data/Patients.json';
 import consultation from '../../../mockServer/data/Consultations.json';
+import patientData from '../../../mockServer/MockData.json';
+import consultationData from '../../../mockServer/MockData.json';
+
+const API_URL = 'http://localhost:8000/Consultations'; // Your REST API endpoint
 
 interface MedicalState {
   consultations: Consultation[];
@@ -10,6 +14,64 @@ interface MedicalState {
   loading: boolean;
   error: string | null;
 }
+
+// Async GET request
+export const fetchConsultations = createAsyncThunk('consultations/fetchConsultations', async () => {
+  const res = await fetch(API_URL);
+  return await res.json();
+});
+
+// Async POST request
+export const addConsultationAsync = createAsyncThunk(
+  'consultations/addConsultationAsync',
+  async (newConsultation: Consultation) => {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newConsultation),
+    });
+    return await res.json();
+  }
+);
+
+// userSlice.ts
+export const updateConsultationAsync = createAsyncThunk(
+  'consultations/updateConsultation',
+  async (consultation: Consultation) => {
+    const response = await fetch(`${API_URL}/${consultation.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(consultation),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update consultation');
+    }
+
+    return await response.json();
+  }
+);
+
+export const deleteConsultationAsync = createAsyncThunk(
+  'consultations/deleteConsultation',
+  async (consultationId: string) => {
+    const response = await fetch(`${API_URL}/${consultationId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete consultation');
+    }
+
+    return await response.json();
+  }
+);
+
 
 // Calculate age from date of birth
 const calculateAge = (dateOfBirth: string): number => {
@@ -27,8 +89,8 @@ const calculateAge = (dateOfBirth: string): number => {
 
 // Initial state with medical data loaded from JSON
 const initialState: MedicalState = {
-  consultations: (consultation.consultations || []) as Consultation[],
-  extendedPatients: patient.map((patient: any) => ({
+  consultations: (consultationData.Consultations || []) as Consultation[],
+  extendedPatients: patientData.Patients.map((patient: any) => ({
     ...patient,
     age: calculateAge(patient.dateOfBirth)
   })) as ExtendedPatient[],
@@ -133,6 +195,63 @@ const medicalSlice = createSlice({
       state.error = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(addConsultationAsync.fulfilled, (state, action: PayloadAction<Consultation>) => {
+        const consultation = action.payload;
+        state.consultations.push(consultation);
+
+        const patient = state.extendedPatients.find(p => p.id === consultation.patientId);
+        if (patient) {
+          // Add consultation entry to medical history
+          const historyEntry: MedicalHistoryEntry = {
+            id: `mh_${Date.now()}`,
+            date: consultation.date,
+            type: 'consultation',
+            doctorId: consultation.doctorId,
+            doctorName: consultation.doctorName,
+            title: consultation.diagnosis,
+            description: consultation.notes,
+            symptoms: consultation.symptoms,
+          };
+          patient.medicalHistory.push(historyEntry);
+
+          // Add each prescription to medical history
+          consultation.prescriptions.forEach(prescription => {
+            const prescriptionEntry: MedicalHistoryEntry = {
+              id: `mh_${Date.now()}_${prescription.id}`,
+              date: consultation.date,
+              type: 'prescription',
+              doctorId: consultation.doctorId,
+              doctorName: consultation.doctorName,
+              title: prescription.medication,
+              description: prescription.instructions || '',
+              dosage: `${prescription.dosage} ${prescription.frequency}`,
+            };
+            patient.medicalHistory.push(prescriptionEntry);
+          });
+        }
+      })
+
+      .addCase(updateConsultationAsync.fulfilled, (state, action: PayloadAction<Consultation>) => {
+        const updated = action.payload;
+        const index = state.consultations.findIndex(c => c.id === updated.id);
+        if (index !== -1) {
+          state.consultations[index] = updated;
+        }
+
+        // Optionally: update the medical history if consultation changes
+        // Not required unless you're showing/editing past notes/diagnosis
+      })
+
+      .addCase(fetchConsultations.fulfilled, (state, action: PayloadAction<Consultation[]>) => {
+        state.consultations = action.payload;
+      })
+
+      .addCase(deleteConsultationAsync.fulfilled, (state, action: PayloadAction<Consultation>) => {
+        state.consultations = state.consultations.filter(c => c.id !== action.payload.id);
+      });
+  }
 });
 
 // Export actions for use in components

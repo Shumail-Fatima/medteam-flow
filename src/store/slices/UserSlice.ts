@@ -150,8 +150,6 @@ const userSlice = createSlice({
     .addCase(deleteUserAsync.fulfilled, (state, action: PayloadAction<User>) => {
         state.users = state.users.filter(u => u.id !== action.payload.id);
     });
-;
-
   },
 });
 
