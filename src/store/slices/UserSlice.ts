@@ -39,6 +39,45 @@ const initialState: UserState = {
   error: null
 };
 
+// userSlice.ts
+export const updateUserAsync = createAsyncThunk(
+  'users/updateUser',
+  async (user: User) => {
+    const response = await fetch(`${API_URL}/${user.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update user');
+    }
+
+    return await response.json();
+  }
+);
+
+export const deleteUserAsync = createAsyncThunk(
+  'users/deleteUser',
+  async (user: User) => {
+    const response = await fetch(`${API_URL}/${user.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete user');
+    }
+
+    return await response.json();
+  }
+);
+
+
 
 // Initial state with users loaded from JSON data
 // const initialState: UserState = {
@@ -101,7 +140,18 @@ const userSlice = createSlice({
   const user = action.payload;
   const roleName = rolesData.find(r => r.id === user.roleId)?.name || 'unknown';
   state.users.push({ ...user, roleName });
-});
+})
+builder.addCase(updateUserAsync.fulfilled, (state, action: PayloadAction<User>) => {
+  const index = state.users.findIndex(u => u.id === action.payload.id);
+  if (index !== -1) {
+    state.users[index] = action.payload;
+  }
+})
+        .addCase(deleteUserAsync.fulfilled, (state, action: PayloadAction<User>) => {
+            state.users = state.users.filter(u => u.id !== action.payload.id);
+        });
+;
+
   },
 });
 

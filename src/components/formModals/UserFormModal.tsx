@@ -91,11 +91,11 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
   useEffect(() => {
     if (user) {
       reset({
-        name: user.name,
-        username: user.username,
-        email: user.email,
-        password: user.password,
-        roleId: user.roleId,
+        name: user.name ?? '',
+        username: user.username?? '',
+        email: user.email?? '',
+        password: user.password?? '',
+        roleId: user.roleId?? 2,
       });
     } else {
       reset({

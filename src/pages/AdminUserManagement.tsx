@@ -15,7 +15,7 @@ import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';
 import ViewDialog from '../components/sharedComponents/ViewDialog';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '../store/Store';
-import { addUser, updateUser, deleteUser, fetchUsers, addUserAsync } from '../store/slices/UserSlice';
+import { addUser, updateUser, deleteUser, fetchUsers, addUserAsync, updateUserAsync, deleteUserAsync } from '../store/slices/UserSlice';
 
 const AdminUserManagement: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -126,7 +126,8 @@ const AdminUserManagement: React.FC = () => {
         roleId: data.roleId,
         roleName,
       };
-      dispatch(updateUser(updatedUser));
+      // dispatch(updateUser(updatedUser));
+      dispatch(updateUserAsync(updatedUser));
       setSnackbar({
         open: true,
         message: 'User updated successfully!',
@@ -161,7 +162,7 @@ const AdminUserManagement: React.FC = () => {
   const confirmDelete = () => {
     if (userToDelete){
       // Dispatch Redux action to delete user
-      dispatch(deleteUser(userToDelete.id));
+      dispatch(deleteUserAsync(userToDelete));
       setSnackbar({
         open: true,
         message: 'User deleted successfully!',

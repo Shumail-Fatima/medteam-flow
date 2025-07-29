@@ -800,16 +800,6 @@
       "roleId": 3
     },
     {
-      "id": "apt_1753764599530",
-      "name": "Jane Doe",
-      "username": "Nurse Jane Doe",
-      "email": "jane.doe@example.com",
-      "password": "jane123",
-      "roleId": 3,
-      "createdAt": "2025-07-29T04:49:59.530Z",
-      "roleName": "nurse"
-    },
-    {
       "id": "apt_1753765295252",
       "name": "Helen Wright",
       "username": "Helen_Wright",
@@ -818,6 +808,16 @@
       "roleId": 1,
       "createdAt": "2025-07-29T05:01:35.252Z",
       "roleName": "admin"
+    },
+    {
+      "id": "apt_1753768305319",
+      "name": "Jane Doe",
+      "username": "Nurse Jane Doe",
+      "email": "jane.doe@example.com",
+      "password": "jane123",
+      "roleId": 3,
+      "createdAt": "2025-07-29T05:51:45.319Z",
+      "roleName": "nurse"
     }
   ]
 }
