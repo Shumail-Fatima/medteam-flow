@@ -67,24 +67,6 @@ const LoginFormPage: React.FC = () => {
       }
     };
 
-//   const onSubmit = async (data: LoginFormData) => {
-//   setIsLoading(true);
-//   const success = await login(data.email, data.password); // ✅ await here
-//   setIsLoading(false);
-
-//   if (success) {
-//     console.log('Login successful');
-
-//     if (user?.roleId === 1) {
-//       navigate('/admin/user-management');
-//     } else if (user?.roleId === 2) {
-//       navigate('/doc/dashboard');
-//     }
-//   } else {
-//     console.error('Login failed');
-//   }
-// };
-
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
