@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   Box,Typography,Chip,Avatar,TextField,MenuItem,FormControl,
   InputLabel,Select,
@@ -15,7 +15,7 @@ import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';
 import ViewDialog from '../components/sharedComponents/ViewDialog';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '../store/Store';
-import { addUser, updateUser, deleteUser } from '../store/slices/UserSlice';
+import { addUser, updateUser, deleteUser, fetchUsers, addUserAsync } from '../store/slices/UserSlice';
 
 const AdminUserManagement: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -107,6 +107,11 @@ const AdminUserManagement: React.FC = () => {
     setDeleteDialogOpen(true);
   };
 
+  // Fetch users from API on component mount
+  useEffect(() => {
+  dispatch(fetchUsers()); // Load users from backend on mount
+}, [dispatch]);
+
   // Handle user form submission (create or update)
   const handleUserSubmit = (data:UserFormData) => {
     const roleName = rolesData.find(role => role.id === data.roleId)?.name || 'unknown';
@@ -139,7 +144,8 @@ const AdminUserManagement: React.FC = () => {
       createdAt: new Date().toISOString(),
       roleName,
     };
-    dispatch(addUser(newUser));
+    // dispatch(addUser(newUser));
+    dispatch(addUserAsync(newUser)); // Async POST request
     setSnackbar({
       open: true,
       message: 'User created successfully!',

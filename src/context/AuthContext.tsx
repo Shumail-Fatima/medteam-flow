@@ -22,18 +22,30 @@ interface AuthContextType{
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<AuthUser | null>(null);
+  // const [user, setUser] = useState<AuthUser | null>(null);
+
+  const [user, setUser] = useState<AuthUser | null>(() => {
+  const storedUser = localStorage.getItem('authUser');
+  return storedUser ? JSON.parse(storedUser) : null;
+});
+
 
   const login = (email: string, password: string) => {
     const foundUser = getUserWithRole(email);
     if (foundUser && foundUser.password === password) {
         setUser({ ...foundUser });
+        localStorage.setItem('authUser', JSON.stringify(foundUser)); // ✅ save to localStorage
       return true;
     }
     return false;
   };
 
-  const logout = () => setUser(null);
+  // const logout = () => setUser(null);
+  const logout = () => {
+  setUser(null);
+  localStorage.removeItem('authUser'); // ✅ clear persisted user
+};
+
 
   return (
     <AuthContext.Provider

@@ -1,0 +1,823 @@
+{
+  "Appointments": [
+    {
+      "id": "apt_1",
+      "patientId": "patient_1",
+      "patientName": "John Doe",
+      "patientAge": 65,
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentSlot": "2025-07-05T09:00:00Z",
+      "reason": "Regular checkup",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-01T08:30:00Z"
+    },
+    {
+      "id": "apt_2",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "patientAge": 72,
+      "doctorId": "3",
+      "doctorName": "Dr. Michael Chen",
+      "appointmentSlot": "2025-07-05T08:00:00Z",
+      "reason": "Follow-up consultation",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-01T09:15:00Z"
+    },
+    {
+      "id": "apt_3",
+      "patientId": "patient_1",
+      "patientName": "John Doe",
+      "patientAge": 65,
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentSlot": "2025-07-07T10:00:00Z",
+      "reason": "Blood pressure follow-up",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-02T10:00:00Z"
+    },
+    {
+      "id": "apt_4",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "patientAge": 48,
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentSlot": "2025-07-09T11:00:00Z",
+      "reason": "Annual physical",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-03T14:00:00Z"
+    },
+    {
+      "id": "apt_5",
+      "patientId": "patient_4",
+      "patientName": "Alice Brown",
+      "patientAge": 55,
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentSlot": "2025-07-11T14:00:00Z",
+      "reason": "Diabetes check",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-04T09:00:00Z"
+    },
+    {
+      "id": "apt_6",
+      "patientId": "patient_5",
+      "patientName": "Mark Evans",
+      "patientAge": 60,
+      "doctorId": "3",
+      "doctorName": "Dr. Michael Chen",
+      "appointmentSlot": "2025-07-07T09:30:00Z",
+      "reason": "Heart checkup",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-02T11:00:00Z"
+    },
+    {
+      "id": "apt_7",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "patientAge": 72,
+      "doctorId": "3",
+      "doctorName": "Dr. Michael Chen",
+      "appointmentSlot": "2025-07-09T11:00:00Z",
+      "reason": "Medication review",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-03T12:00:00Z"
+    },
+    {
+      "id": "apt_8",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "patientAge": 48,
+      "doctorId": "3",
+      "doctorName": "Dr. Michael Chen",
+      "appointmentSlot": "2025-07-11T13:00:00Z",
+      "reason": "Cholesterol test",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-04T13:00:00Z"
+    },
+    {
+      "id": "apt_9",
+      "patientId": "patient_4",
+      "patientName": "Alice Brown",
+      "patientAge": 55,
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Carter",
+      "appointmentSlot": "2025-07-06T10:00:00Z",
+      "reason": "Routine exam",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-02T10:30:00Z"
+    },
+    {
+      "id": "apt_10",
+      "patientId": "patient_5",
+      "patientName": "Mark Evans",
+      "patientAge": 60,
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Carter",
+      "appointmentSlot": "2025-07-08T11:30:00Z",
+      "reason": "Back pain",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-03T11:30:00Z"
+    },
+    {
+      "id": "apt_11",
+      "patientId": "patient_1",
+      "patientName": "John Doe",
+      "patientAge": 65,
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Carter",
+      "appointmentSlot": "2025-07-10T14:00:00Z",
+      "reason": "Migraine follow-up",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-04T14:00:00Z"
+    },
+    {
+      "id": "apt_12",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "patientAge": 72,
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Carter",
+      "appointmentSlot": "2025-07-12T16:00:00Z",
+      "reason": "Arthritis check",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-05T15:00:00Z"
+    },
+    {
+      "id": "apt_13",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "patientAge": 48,
+      "doctorId": "5",
+      "doctorName": "Dr. David Lee",
+      "appointmentSlot": "2025-07-07T07:30:00Z",
+      "reason": "Skin rash",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-03T08:00:00Z"
+    },
+    {
+      "id": "apt_14",
+      "patientId": "patient_4",
+      "patientName": "Alice Brown",
+      "patientAge": 55,
+      "doctorId": "5",
+      "doctorName": "Dr. David Lee",
+      "appointmentSlot": "2025-07-09T09:00:00Z",
+      "reason": "Allergy test",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-04T09:30:00Z"
+    },
+    {
+      "id": "apt_15",
+      "patientId": "patient_5",
+      "patientName": "Mark Evans",
+      "patientAge": 60,
+      "doctorId": "5",
+      "doctorName": "Dr. David Lee",
+      "appointmentSlot": "2025-07-11T10:30:00Z",
+      "reason": "Asthma review",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-05T10:00:00Z"
+    },
+    {
+      "id": "apt_16",
+      "patientId": "patient_1",
+      "patientName": "John Doe",
+      "patientAge": 65,
+      "doctorId": "5",
+      "doctorName": "Dr. David Lee",
+      "appointmentSlot": "2025-07-13T13:30:00Z",
+      "reason": "Diet consultation",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-06T13:00:00Z"
+    },
+    {
+      "id": "apt_17",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "patientAge": 72,
+      "doctorId": "6",
+      "doctorName": "Dr. Priya Patel",
+      "appointmentSlot": "2025-07-08T09:30:00Z",
+      "reason": "Thyroid check",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-04T09:00:00Z"
+    },
+    {
+      "id": "apt_18",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "patientAge": 48,
+      "doctorId": "6",
+      "doctorName": "Dr. Priya Patel",
+      "appointmentSlot": "2025-07-10T11:00:00Z",
+      "reason": "Vision test",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-05T10:30:00Z"
+    },
+    {
+      "id": "apt_19",
+      "patientId": "patient_4",
+      "patientName": "Alice Brown",
+      "patientAge": 55,
+      "doctorId": "6",
+      "doctorName": "Dr. Priya Patel",
+      "appointmentSlot": "2025-07-12T14:30:00Z",
+      "reason": "Hearing test",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-06T14:00:00Z"
+    },
+    {
+      "id": "apt_20",
+      "patientId": "patient_5",
+      "patientName": "Mark Evans",
+      "patientAge": 60,
+      "doctorId": "6",
+      "doctorName": "Dr. Priya Patel",
+      "appointmentSlot": "2025-07-14T16:00:00Z",
+      "reason": "General checkup",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-07T16:00:00Z"
+    },
+    {
+      "id": "apt_21",
+      "patientId": "patient_1",
+      "patientName": "John Doe",
+      "patientAge": 65,
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "specialtyName": "Cardiology",
+      "appointmentSlot": "2025-07-15T09:00:00Z",
+      "reason": "Post-surgery follow-up",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-13T10:00:00Z"
+    },
+    {
+      "id": "apt_22",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "patientAge": 72,
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "specialtyName": "Cardiology",
+      "appointmentSlot": "2025-07-17T10:00:00Z",
+      "reason": "Medication adjustment",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-15T11:00:00Z"
+    },
+    {
+      "id": "apt_23",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "patientAge": 48,
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "specialtyName": "Cardiology",
+      "appointmentSlot": "2025-07-19T14:30:00Z",
+      "reason": "Routine ECG",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-17T12:00:00Z"
+    },
+    {
+      "id": "apt_24",
+      "patientId": "patient_1",
+      "patientName": "John Doe",
+      "patientAge": 65,
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "specialtyName": "Cardiology",
+      "appointmentSlot": "2025-07-21T15:30:00Z",
+      "reason": "Blood pressure review",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-19T13:00:00Z"
+    },
+    {
+      "id": "apt_25",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "patientAge": 72,
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "specialtyName": "Cardiology",
+      "appointmentSlot": "2025-07-22T09:00:00Z",
+      "reason": "Cholesterol check",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-20T10:00:00Z"
+    },
+    {
+      "id": "apt_26",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "patientAge": 48,
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "specialtyName": "Cardiology",
+      "appointmentSlot": "2025-07-23T10:00:00Z",
+      "reason": "Heart medication review",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-21T11:00:00Z"
+    },
+    {
+      "id": "apt_27",
+      "patientId": "patient_1",
+      "patientName": "John Doe",
+      "patientAge": 65,
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "specialtyName": "Cardiology",
+      "appointmentSlot": "2025-07-25T11:00:00Z",
+      "reason": "Annual heart check",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-23T12:00:00Z"
+    },
+    {
+      "id": "apt_28",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "patientAge": 72,
+      "doctorId": "3",
+      "doctorName": "Dr. Michael Chen",
+      "specialtyName": "Neurology",
+      "appointmentSlot": "2025-07-15T08:00:00Z",
+      "reason": "Migraine management",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-13T09:00:00Z"
+    },
+    {
+      "id": "apt_29",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "patientAge": 48,
+      "doctorId": "3",
+      "doctorName": "Dr. Michael Chen",
+      "specialtyName": "Neurology",
+      "appointmentSlot": "2025-07-17T10:30:00Z",
+      "reason": "Seizure follow-up",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-15T10:00:00Z"
+    },
+    {
+      "id": "apt_30",
+      "patientId": "patient_1",
+      "patientName": "John Doe",
+      "patientAge": 65,
+      "doctorId": "3",
+      "doctorName": "Dr. Michael Chen",
+      "specialtyName": "Neurology",
+      "appointmentSlot": "2025-07-19T13:00:00Z",
+      "reason": "Nerve pain assessment",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-17T11:00:00Z"
+    },
+    {
+      "id": "apt_31",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "patientAge": 72,
+      "doctorId": "3",
+      "doctorName": "Dr. Michael Chen",
+      "specialtyName": "Neurology",
+      "appointmentSlot": "2025-07-21T16:00:00Z",
+      "reason": "Dizziness evaluation",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-19T12:00:00Z"
+    }
+  ],
+  "Consultations": [
+    {
+      "id": "cons_1",
+      "patientId": "patient_1",
+      "patientName": "John Doe",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentId": "apt_1",
+      "date": "2024-01-10T10:00:00Z",
+      "symptoms": [
+        "Chest pain",
+        "Shortness of breath"
+      ],
+      "diagnosis": "Hypertension Stage 1",
+      "notes": "Patient presents with elevated blood pressure readings. Lifestyle modifications recommended along with medication.",
+      "prescriptions": [
+        {
+          "id": "rx_1",
+          "medication": "Lisinopril",
+          "dosage": "10mg",
+          "frequency": "Once daily",
+          "duration": "30 days",
+          "instructions": "Take with food, monitor blood pressure"
+        }
+      ],
+      "followUpRequired": true,
+      "followUpDate": "2024-02-10T10:00:00Z",
+      "createdAt": "2024-01-10T10:00:00Z",
+      "status": "completed"
+    }
+  ],
+  "DoctorsSlots": [
+    {
+      "doctorId": "2",
+      "slots": [
+        "2025-07-05T09:00:00Z",
+        "2025-07-07T10:00:00Z",
+        "2025-07-09T11:00:00Z",
+        "2025-07-11T14:00:00Z",
+        "2025-07-13T15:00:00Z",
+        "2025-07-15T09:00:00Z",
+        "2025-07-17T10:00:00Z",
+        "2025-07-19T14:30:00Z",
+        "2025-07-21T15:30:00Z",
+        "2025-07-22T09:00:00Z",
+        "2025-07-23T10:00:00Z",
+        "2025-07-25T11:00:00Z"
+      ],
+      "id": "5a00"
+    },
+    {
+      "doctorId": "3",
+      "slots": [
+        "2025-07-05T08:00:00Z",
+        "2025-07-07T09:30:00Z",
+        "2025-07-09T11:00:00Z",
+        "2025-07-11T13:00:00Z",
+        "2025-07-13T15:30:00Z",
+        "2025-07-15T08:00:00Z",
+        "2025-07-17T10:30:00Z",
+        "2025-07-19T13:00:00Z",
+        "2025-07-21T16:00:00Z"
+      ],
+      "id": "4db1"
+    },
+    {
+      "doctorId": "4",
+      "slots": [
+        "2025-07-06T10:00:00Z",
+        "2025-07-08T11:30:00Z",
+        "2025-07-10T14:00:00Z",
+        "2025-07-12T16:00:00Z",
+        "2025-07-14T09:00:00Z",
+        "2025-07-16T11:00:00Z",
+        "2025-07-18T14:30:00Z",
+        "2025-07-20T16:30:00Z"
+      ],
+      "id": "fc5d"
+    },
+    {
+      "doctorId": "5",
+      "slots": [
+        "2025-07-07T07:30:00Z",
+        "2025-07-09T09:00:00Z",
+        "2025-07-11T10:30:00Z",
+        "2025-07-13T13:30:00Z",
+        "2025-07-15T15:00:00Z",
+        "2025-07-17T08:30:00Z",
+        "2025-07-19T10:00:00Z",
+        "2025-07-21T13:30:00Z"
+      ],
+      "id": "918c"
+    },
+    {
+      "doctorId": "6",
+      "slots": [
+        "2025-07-08T09:30:00Z",
+        "2025-07-10T11:00:00Z",
+        "2025-07-12T14:30:00Z",
+        "2025-07-14T16:00:00Z",
+        "2025-07-16T09:30:00Z",
+        "2025-07-18T11:30:00Z",
+        "2025-07-20T15:00:00Z",
+        "2025-07-22T17:00:00Z"
+      ],
+      "id": "07ea"
+    }
+  ],
+  "DoctorSpecialties": [
+    {
+      "id": "cardiology",
+      "name": "Cardiology",
+      "description": "Heart and cardiovascular system"
+    },
+    {
+      "id": "dermatology",
+      "name": "Dermatology",
+      "description": "Skin, hair, and nail conditions"
+    },
+    {
+      "id": "endocrinology",
+      "name": "Endocrinology",
+      "description": "Hormones and metabolic disorders"
+    },
+    {
+      "id": "gastroenterology",
+      "name": "Gastroenterology",
+      "description": "Digestive system disorders"
+    },
+    {
+      "id": "neurology",
+      "name": "Neurology",
+      "description": "Nervous system and brain disorders"
+    },
+    {
+      "id": "orthopedics",
+      "name": "Orthopedics",
+      "description": "Bones, joints, and musculoskeletal system"
+    },
+    {
+      "id": "pediatrics",
+      "name": "Pediatrics",
+      "description": "Medical care for infants, children, and adolescents"
+    },
+    {
+      "id": "psychiatry",
+      "name": "Psychiatry",
+      "description": "Mental health and behavioral disorders"
+    },
+    {
+      "id": "general",
+      "name": "General Medicine",
+      "description": "Primary care and general health"
+    }
+  ],
+  "Patients": [
+    {
+      "id": "patient_1",
+      "name": "John Doe",
+      "dateOfBirth": "1958-03-15",
+      "email": "john.doe@email.com",
+      "phone": "+1-555-0123",
+      "address": "123 Main St, City, State 12345",
+      "emergencyContact": {
+        "name": "Jane Doe",
+        "phone": "+1-555-0124",
+        "relationship": "Spouse"
+      },
+      "medicalHistory": [
+        {
+          "id": "mh_1",
+          "date": "2024-01-10T10:00:00Z",
+          "type": "diagnosis",
+          "doctorId": "2",
+          "doctorName": "Dr. Sarah Wilson",
+          "title": "Hypertension",
+          "description": "Patient diagnosed with stage 1 hypertension",
+          "severity": "moderate"
+        },
+        {
+          "id": "mh_2",
+          "date": "2024-01-15T14:30:00Z",
+          "type": "prescription",
+          "doctorId": "2",
+          "doctorName": "Dr. Sarah Wilson",
+          "title": "Lisinopril 10mg",
+          "description": "Take once daily for blood pressure control",
+          "dosage": "10mg daily"
+        }
+      ],
+      "allergies": [
+        "Penicillin",
+        "Shellfish"
+      ],
+      "bloodType": "A+",
+      "createdAt": "2024-01-01T08:00:00Z"
+    },
+    {
+      "id": "patient_2",
+      "name": "Jane Smith",
+      "dateOfBirth": "1951-07-22",
+      "email": "jane.smith@email.com",
+      "phone": "+1-555-0456",
+      "address": "456 Oak Ave, City, State 12345",
+      "emergencyContact": {
+        "name": "Robert Smith",
+        "phone": "+1-555-0457",
+        "relationship": "Son"
+      },
+      "medicalHistory": [
+        {
+          "id": "mh_3",
+          "date": "2024-01-12T09:00:00Z",
+          "type": "consultation",
+          "doctorId": "3",
+          "doctorName": "Dr. Michael Chen",
+          "title": "Neurological Assessment",
+          "description": "Routine neurological examination - all normal",
+          "symptoms": [
+            "Mild headaches",
+            "Occasional dizziness"
+          ]
+        }
+      ],
+      "allergies": [
+        "Aspirin"
+      ],
+      "bloodType": "O-",
+      "createdAt": "2024-01-02T09:00:00Z"
+    },
+    {
+      "id": "patient_3",
+      "name": "Robert Johnson",
+      "dateOfBirth": "1975-11-08",
+      "email": "robert.j@email.com",
+      "phone": "+1-555-0789",
+      "address": "789 Pine St, City, State 12345",
+      "emergencyContact": {
+        "name": "Mary Johnson",
+        "phone": "+1-555-0790",
+        "relationship": "Wife"
+      },
+      "medicalHistory": [],
+      "allergies": [],
+      "bloodType": "B+",
+      "createdAt": "2024-01-03T10:00:00Z"
+    }
+  ],
+  "Roles": [
+    {
+      "id": "1",
+      "name": "admin"
+    },
+    {
+      "id": "2",
+      "name": "doctor"
+    },
+    {
+      "id": "3",
+      "name": "nurse"
+    }
+  ],
+  "Tasks": [
+    {
+      "id": "task_1",
+      "title": "Administer Morning Medication",
+      "type": "Medication",
+      "status": "Pending",
+      "notes": "Give 5mg of Atorvastatin",
+      "patientId": "patient_1",
+      "assigneeId": 7,
+      "dueAt": "2025-06-23T09:00:00Z",
+      "createdBy": 1,
+      "createdAt": "2025-06-13T09:00:00Z"
+    },
+    {
+      "id": "task_2",
+      "title": "Check Blood Pressure",
+      "type": "Vitals Check",
+      "status": "In Progress",
+      "notes": "Record systolic and diastolic values",
+      "patientId": "patient_2",
+      "assigneeId": 7,
+      "dueAt": "2025-06-23T10:30:00Z",
+      "createdBy": 2,
+      "createdAt": "2025-06-14T09:00:00Z"
+    },
+    {
+      "id": "task_3",
+      "title": "Prep for Knee Surgery",
+      "type": "Procedure Prep",
+      "status": "Pending",
+      "notes": "Ensure patient is fasting and gown is ready",
+      "patientId": "patient_1",
+      "assigneeId": 7,
+      "dueAt": "2025-06-23T13:00:00Z",
+      "createdBy": 3,
+      "createdAt": "2025-06-15T09:00:00Z"
+    },
+    {
+      "id": "task_4",
+      "title": "Consultation Follow-up: Diabetes",
+      "type": "Consultation Follow-up",
+      "status": "Done",
+      "notes": "Review insulin dosage and dietary habits",
+      "patientId": "patient_2",
+      "assigneeId": 2,
+      "dueAt": "2025-06-22T15:00:00Z",
+      "createdBy": 2,
+      "createdAt": "2025-06-16T09:00:00Z"
+    }
+  ],
+  "Users": [
+    {
+      "id": "1",
+      "name": "john",
+      "username": "john123",
+      "email": "admin@example.com",
+      "password": "admin123",
+      "roleId": 1
+    },
+    {
+      "id": "2",
+      "name": "Dr. Sarah Wilson",
+      "username": "sarahdoc",
+      "email": "doctor@example.com",
+      "password": "doctor123",
+      "roleId": 2,
+      "roleName": "doctor",
+      "specialtyId": "cardiology",
+      "createdAt": "2024-01-16T14:20:00Z"
+    },
+    {
+      "id": "3",
+      "name": "Dr. Michael Chen",
+      "username": "michaeldoc",
+      "email": "michael.chen@example.com",
+      "password": "doctor123",
+      "roleId": 2,
+      "roleName": "doctor",
+      "specialtyId": "neurology",
+      "createdAt": "2024-01-17T09:15:00Z"
+    },
+    {
+      "id": "4",
+      "name": "Dr. Emily Rodriguez",
+      "username": "emilydoc",
+      "email": "emily.rodriguez@example.com",
+      "password": "doctor123",
+      "roleId": 2,
+      "roleName": "doctor",
+      "specialtyId": "pediatrics",
+      "createdAt": "2024-01-18T11:30:00Z"
+    },
+    {
+      "id": "5",
+      "name": "Dr. James Thompson",
+      "username": "jamesdoc",
+      "email": "james.thompson@example.com",
+      "password": "doctor123",
+      "roleId": 2,
+      "roleName": "doctor",
+      "specialtyId": "orthopedics",
+      "createdAt": "2024-01-19T16:45:00Z"
+    },
+    {
+      "id": "6",
+      "name": "Dr. Lisa Anderson",
+      "username": "lisadoc",
+      "email": "lisa.anderson@example.com",
+      "password": "doctor123",
+      "roleId": 2,
+      "roleName": "doctor",
+      "specialtyId": "dermatology",
+      "createdAt": "2024-01-20T13:20:00Z"
+    },
+    {
+      "id": "7",
+      "name": "Nurse Robert House",
+      "username": "Robert House",
+      "email": "robert.house@hospital.com",
+      "password": "robert123",
+      "roleId": 3
+    },
+    {
+      "id": "apt_1753764599530",
+      "name": "Jane Doe",
+      "username": "Nurse Jane Doe",
+      "email": "jane.doe@example.com",
+      "password": "jane123",
+      "roleId": 3,
+      "createdAt": "2025-07-29T04:49:59.530Z",
+      "roleName": "nurse"
+    },
+    {
+      "id": "apt_1753765295252",
+      "name": "Helen Wright",
+      "username": "Helen_Wright",
+      "email": "helen.wright@example.com",
+      "password": "helen123",
+      "roleId": 1,
+      "createdAt": "2025-07-29T05:01:35.252Z",
+      "roleName": "admin"
+    }
+  ]
+}

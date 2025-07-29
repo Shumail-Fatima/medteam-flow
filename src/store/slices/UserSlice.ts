@@ -1,8 +1,11 @@
 // Redux slice for managing user state
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction, createAsyncThunk, } from '@reduxjs/toolkit';
 import usersData from '../../../mockServer/data/Users.json'
 import type { User } from '../../types/Auth';
 import rolesData from '../../../mockServer/data/Roles.json'
+
+const API_URL = 'http://localhost:8000/Users'; // Your REST API endpoint
+
 
 interface UserState{
     users: User[];
@@ -10,17 +13,44 @@ interface UserState{
     error: string | null;
 }
 
-// Initial state with users loaded from JSON data
+
+// Async GET request
+export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
+  const res = await fetch(API_URL);
+  return await res.json();
+});
+
+// Async POST request
+export const addUserAsync = createAsyncThunk(
+  'users/addUserAsync',
+  async (newUser: User) => {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newUser),
+    });
+    return await res.json();
+  }
+);
+
 const initialState: UserState = {
-    users: usersData.map((user: any) => ({
-    ...user,
-    id: String(user.id), // convert number to string if needed
-    roleName: rolesData.find((r) => r.id === user.roleId)?.name || 'unknown',
-    createdAt: user.createdAt ?? new Date().toISOString(),
-  })),
-    loading: false,
-    error: null,
-}
+  users: [], // start with empty array
+  loading: false,
+  error: null
+};
+
+
+// Initial state with users loaded from JSON data
+// const initialState: UserState = {
+//     users: usersData.map((user: any) => ({
+//     ...user,
+//     id: String(user.id), // convert number to string if needed
+//     roleName: rolesData.find((r) => r.id === user.roleId)?.name || 'unknown',
+//     createdAt: user.createdAt ?? new Date().toISOString(),
+//   })),
+//     loading: false,
+//     error: null,
+// }
 
 // Create user slice with reducers for CRUD operations
 const userSlice = createSlice({
@@ -51,15 +81,37 @@ const userSlice = createSlice({
             state.error = action.payload;
         },
     },
+    extraReducers: (builder) => {
+    builder
+      .addCase(fetchUsers.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<User[]>) => {
+  state.users = action.payload.map((user) => ({
+    ...user,
+    roleName: rolesData.find((r) => r.id === user.roleId)?.name || 'unknown',
+  }));
+  state.loading = false;
+})
+      .addCase(fetchUsers.rejected, (state, action) => {
+        state.error = action.error.message || 'Failed to fetch users';
+        state.loading = false;
+      })
+      .addCase(addUserAsync.fulfilled, (state, action) => {
+  const user = action.payload;
+  const roleName = rolesData.find(r => r.id === user.roleId)?.name || 'unknown';
+  state.users.push({ ...user, roleName });
+});
+  },
 });
 
 // Export actions for use in components
-export const{
+export const {
     addUser,
     updateUser,
     deleteUser,
     setLoading,
-    setError
+    setError,
 } = userSlice.actions;
 
 // Export reducer for store configuration
