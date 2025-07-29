@@ -685,10 +685,11 @@
       "status": "Pending",
       "notes": "Give 5mg of Atorvastatin",
       "patientId": "patient_1",
-      "assigneeId": 7,
-      "dueAt": "2025-06-23T09:00:00Z",
+      "assigneeId": "7",
+      "dueAt": "2025-06-23T09:00",
       "createdBy": 1,
-      "createdAt": "2025-06-13T09:00:00Z"
+      "createdAt": "2025-06-13T09:00:00Z",
+      "assigneeName": "unknown"
     },
     {
       "id": "task_2",

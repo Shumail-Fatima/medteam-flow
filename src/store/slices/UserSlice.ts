@@ -126,30 +126,30 @@ const userSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<User[]>) => {
-  state.users = action.payload.map((user) => ({
-    ...user,
-    roleName: rolesData.find((r) => r.id === user.roleId)?.name || 'unknown',
-  }));
-  state.loading = false;
-})
-      .addCase(fetchUsers.rejected, (state, action) => {
+            state.users = action.payload.map((user) => ({
+                ...user,
+                roleName: rolesData.find((r) => r.id === user.roleId)?.name || 'unknown',
+            }));
+            state.loading = false;
+            })
+    .addCase(fetchUsers.rejected, (state, action) => {
         state.error = action.error.message || 'Failed to fetch users';
         state.loading = false;
-      })
-      .addCase(addUserAsync.fulfilled, (state, action) => {
-  const user = action.payload;
-  const roleName = rolesData.find(r => r.id === user.roleId)?.name || 'unknown';
-  state.users.push({ ...user, roleName });
-})
-builder.addCase(updateUserAsync.fulfilled, (state, action: PayloadAction<User>) => {
-  const index = state.users.findIndex(u => u.id === action.payload.id);
-  if (index !== -1) {
-    state.users[index] = action.payload;
-  }
-})
-        .addCase(deleteUserAsync.fulfilled, (state, action: PayloadAction<User>) => {
-            state.users = state.users.filter(u => u.id !== action.payload.id);
-        });
+    })
+    .addCase(addUserAsync.fulfilled, (state, action) => {
+        const user = action.payload;
+        const roleName = rolesData.find(r => r.id === user.roleId)?.name || 'unknown';
+        state.users.push({ ...user, roleName });
+        })
+    builder.addCase(updateUserAsync.fulfilled, (state, action: PayloadAction<User>) => {
+    const index = state.users.findIndex(u => u.id === action.payload.id);
+    if (index !== -1) {
+        state.users[index] = action.payload;
+    }
+    })
+    .addCase(deleteUserAsync.fulfilled, (state, action: PayloadAction<User>) => {
+        state.users = state.users.filter(u => u.id !== action.payload.id);
+    });
 ;
 
   },

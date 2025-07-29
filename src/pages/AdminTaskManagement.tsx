@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box,Typography, Chip, Avatar, Grid, Card, CardContent, } from '@mui/material';
 import { Add, Schedule, CheckCircle, Pending, PlayArrow, } from '@mui/icons-material';
 import {AddButton} from '../components/CustomButton';
@@ -12,7 +12,7 @@ import { useAuth } from '../context/AuthContext';
 import ViewDialog from '../components/sharedComponents/ViewDialog';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '../store/Store';
-import { addTask, updateTask, deleteTask } from '../store/slices/TaskSlice';
+import { addTask, updateTask, deleteTask, fetchTasks, addTaskAsync, updateTaskAsync, deleteTaskAsync } from '../store/slices/TaskSlice';
 
 
 const AdminTaskManagement: React.FC = () => {
@@ -170,10 +170,16 @@ const AdminTaskManagement: React.FC = () => {
     setDeleteDialogOpen(true);
   };
 
+  // Fetch tasks from API on component mount
+    useEffect(() => {
+    dispatch(fetchTasks()); // Load tasks from backend on mount
+  }, [dispatch]);
+
   const handleTaskSave = (taskData: TaskFormData) => {
     if (selectedTask) {
       // Edit existing task
-      dispatch(updateTask({...selectedTask, ...taskData}));
+      // dispatch(updateTask({...selectedTask, ...taskData}));
+      dispatch(updateTaskAsync({ ...selectedTask, ...taskData }));
       /*
       setTasks(prev => prev.map(task => 
         task.id === selectedTask.id 
@@ -193,7 +199,8 @@ const AdminTaskManagement: React.FC = () => {
         createdBy: user?.id?.toString() || 'unknown',
         createdAt: new Date().toISOString(),
       };
-      dispatch(addTask(newTask));
+      // dispatch(addTask(newTask));
+      dispatch(addTaskAsync(newTask));
       //setTasks(prev => [...prev, newTask]);
       setSnackbar({ 
         open: true, 
@@ -207,7 +214,8 @@ const AdminTaskManagement: React.FC = () => {
   };
 
   const handleTaskDelete = (taskId: string) => {
-    dispatch(deleteTask(taskId));
+    // dispatch(deleteTask(taskId));
+    dispatch(deleteTaskAsync(taskId));
     //setTasks(prev => prev.filter(task => task.id !== taskId));
     setSnackbar({ 
       open: true, 
