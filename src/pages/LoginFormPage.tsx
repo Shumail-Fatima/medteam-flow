@@ -48,10 +48,8 @@ const LoginFormPage: React.FC = () => {
 
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true);
-
-    setTimeout(() => {
+    const success = await login(data.email, data.password);  // ✅ await here
       setIsLoading(false);
-      const success = login(data.email, data.password);
       if (success ) {
         // Redirect or show success
         console.log('Login successful');
@@ -67,8 +65,26 @@ const LoginFormPage: React.FC = () => {
         // Show error
         console.error('Login failed');
       }
-    }, 2000);
-  };
+    };
+
+//   const onSubmit = async (data: LoginFormData) => {
+//   setIsLoading(true);
+//   const success = await login(data.email, data.password); // ✅ await here
+//   setIsLoading(false);
+
+//   if (success) {
+//     console.log('Login successful');
+
+//     if (user?.roleId === 1) {
+//       navigate('/admin/user-management');
+//     } else if (user?.roleId === 2) {
+//       navigate('/doc/dashboard');
+//     }
+//   } else {
+//     console.error('Login failed');
+//   }
+// };
+
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);

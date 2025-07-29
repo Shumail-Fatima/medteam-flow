@@ -12,7 +12,7 @@ interface AuthUser{
 interface AuthContextType{
     user: AuthUser | null;
     isAuthenticated: boolean;
-    login: (email: string , password: string) => boolean;
+    login: (email: string , password: string) => Promise<boolean>;
     logout: () => void;
     isAdmin: boolean;
     isDoctor: boolean;
@@ -30,8 +30,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 });
 
 
-  const login = (email: string, password: string) => {
-    const foundUser = getUserWithRole(email);
+  const login = async (email: string, password: string) => {
+    const foundUser = await getUserWithRole(email);
     if (foundUser && foundUser.password === password) {
         setUser({ ...foundUser });
         localStorage.setItem('authUser', JSON.stringify(foundUser)); // ✅ save to localStorage
@@ -39,6 +39,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
     return false;
   };
+
 
   // const logout = () => setUser(null);
   const logout = () => {
