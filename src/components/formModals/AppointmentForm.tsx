@@ -40,7 +40,6 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
 
     const [patientModalOpen, setPatientModalOpen] = useState(false);
 
-
     //React hook form setup with yup validation
     const {
         control, handleSubmit, watch, reset, setValue, formState: {errors},
