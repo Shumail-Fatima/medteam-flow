@@ -44,6 +44,9 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import PageHeader from '../components/sharedComponents/PageHeader';
 import PatientInfoCard from '../components/PatientInfoCard';
+import AppointmentSection from '../components/AppointmentSection';
+import ConsultationDetailsSection from '../components/ConsultDetails';
+import PrescriptionsSection from '../components/PrescriptionSection';
 
 
 const ConsultationManagement: React.FC = () => {
@@ -323,131 +326,23 @@ const ConsultationManagement: React.FC = () => {
           
           {/* Appointment Section */}
           <Grid size={12}>
-            <Card sx={{ borderRadius: 3 }}>
-              <CardContent>
-                <Typography variant="h6" fontWeight="bold" gutterBottom>
-                  Appointment
-                </Typography>
-                <Grid size={{xs: 12}}>
-                  <Card sx={{ borderRadius: 3 }}>
-                    <CardContent>
-                      {preSelectedAppointment ? (
-                        <Grid container spacing={2}>
-                          <Grid size={{xs: 12, sm: 6, md: 4 }}>
-                            <Typography variant="subtitle2" color="text.secondary">
-                              Date & Time
-                            </Typography>
-                            <Typography variant="body1" color="text.primary">
-                              {formatDate(preSelectedAppointment.appointmentSlot)}
-                            </Typography>
-                          </Grid>
-                          <Grid size={{xs: 12, sm: 6, md: 4 }}>
-                            <Typography variant="subtitle2" color="text.secondary">
-                              Reason
-                            </Typography>
-                            <Typography variant="body1" color="text.primary">
-                              {preSelectedAppointment.reason}
-                            </Typography>
-                          </Grid>
-                          {/* Follow-up fields moved here */}
-                          <Grid size={{xs: 12, sm: 6, md: 4 }}>
-                            <Typography variant="subtitle2" color="text.secondary">
-                              Follow-up Required
-                            </Typography>
-                            <Typography variant="body1" color="text.primary">
-                              {watchedFollowUpRequired ? "Yes" : "No"}
-                            </Typography>
-                          </Grid>
-                          {watchedFollowUpRequired && (
-                            <Grid size={{xs: 12, sm: 6, md: 4 }}>
-                              <Typography variant="subtitle2" color="text.secondary">
-                                Follow-up Date
-                              </Typography>
-                              <Typography variant="body1" color="text.primary">
-                                {watch('followUpDate') ? formatDate(watch('followUpDate') || '') : '-'}
-                              </Typography>
-                            </Grid>
-                          )}
-                        </Grid>
-                      ) : (
-                        <Typography color="error">No appointment selected.</Typography>
-                      )}
-                    </CardContent>
-                  </Card>
-                </Grid>
-              </CardContent>
-            </Card>
+            <AppointmentSection
+            preSelectedAppointment={preSelectedAppointment}
+            watchedFollowUpRequired={watchedFollowUpRequired}
+            watch={watch}
+            formatDate={formatDate}
+            ></AppointmentSection>
           </Grid>
 
           
           {/* Consultation Details */}
           <Grid size={12}>
-            <Card sx={{ borderRadius: 3 }}>
-              <CardContent>
-                <Typography variant="h6" fontWeight="bold" gutterBottom>
-                  Consultation Details
-                </Typography>
-                <List dense>
-                  <ListItem>
-                    <ListItemText primary="Symptoms" secondary={isReadOnly ? consultationRecord?.symptoms?.join(', ') || '-' : ''} />
-                  </ListItem>
-                  {!isReadOnly && (
-                    <Controller
-                      name="symptoms"
-                      control={control}
-                      render={({ field }) => (
-                        <TextField
-                          {...field}
-                          fullWidth
-                          multiline
-                          rows={3}
-                          error={!!errors.symptoms}
-                          helperText={errors.symptoms?.message || 'Separate multiple symptoms with commas'}
-                          sx={{ mb: 2 }}
-                        />
-                      )}
-                    />
-                  )}
-                  <ListItem>
-                    <ListItemText primary="Diagnosis" secondary={isReadOnly ? consultationRecord?.diagnosis || '-' : ''} />
-                  </ListItem>
-                  {!isReadOnly && (
-                    <Controller
-                      name="diagnosis"
-                      control={control}
-                      render={({ field }) => (
-                        <TextField
-                          {...field}
-                          fullWidth
-                          error={!!errors.diagnosis}
-                          helperText={errors.diagnosis?.message}
-                          sx={{ mb: 2 }}
-                        />
-                      )}
-                    />
-                  )}
-                  <ListItem>
-                    <ListItemText primary="Consultation Notes" secondary={isReadOnly ? consultationRecord?.notes || '-' : ''} />
-                  </ListItem>
-                  {!isReadOnly && (
-                    <Controller
-                      name="notes"
-                      control={control}
-                      render={({ field }) => (
-                        <TextField
-                          {...field}
-                          fullWidth
-                          multiline
-                          rows={4}
-                          error={!!errors.notes}
-                          helperText={errors.notes?.message}
-                        />
-                      )}
-                    />
-                  )}
-                </List>
-              </CardContent>
-            </Card>
+            <ConsultationDetailsSection
+              isReadOnly={isReadOnly}
+              consultationRecord={consultationRecord}
+              control={control}
+              errors={errors}
+            ></ConsultationDetailsSection>
           </Grid>
 
           {/* Prescriptions */}

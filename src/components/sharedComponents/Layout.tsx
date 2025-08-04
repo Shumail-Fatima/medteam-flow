@@ -27,6 +27,7 @@ import {
   Support as SupportIcon,
   LocalHospital,
   Dashboard as DashboardIcon,
+  Notifications as NotificationsIcon,
 } from '@mui/icons-material';
 import {Menu, MenuItem} from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -214,6 +215,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           {/* from here till toolbar tag is for adding a dropdown/menu from the user 
           icon on header. also has logout as a menu option */}
           <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
+              <NotificationsIcon sx={{ mr: 1 }} />
+            </Box>
             <IconButton onClick={handleMenuOpen} sx={{ p: 0 }}>
               <Avatar sx={{ width: 32, height: 32, bgcolor: 'rgba(255,255,255,0.2)' }}>
                 {user?.name.charAt(0).toUpperCase()}

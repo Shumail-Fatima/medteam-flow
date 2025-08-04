@@ -567,6 +567,34 @@
       "createdAt": "2025-08-04T05:39:24.017Z",
       "status": "completed",
       "consultationCompleted": true
+    },
+    {
+      "id": "apt_1754295358944",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "patientAge": 74,
+      "specialtyName": "Dermatology",
+      "doctorId": "6",
+      "doctorName": "Dr. Lisa Anderson",
+      "appointmentSlot": "2025-08-04T09:30:00Z",
+      "reason": "Follow-up for Mild Atopic Dermatitis (Eczema)",
+      "createdAt": "2025-08-04T08:15:58.944Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1754296664444",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "patientAge": 49,
+      "specialtyName": "Pediatrics",
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Rodriguez",
+      "appointmentSlot": "2025-08-04T11:30:00Z",
+      "reason": "Follow-up for Viral Fever and Sore Throat in Child",
+      "createdAt": "2025-08-04T08:37:44.444Z",
+      "status": "completed",
+      "consultationCompleted": true
     }
   ],
   "Consultations": [
@@ -965,6 +993,67 @@
       "followUpRequired": false,
       "createdAt": "2025-08-04T05:41:09.626Z",
       "status": "completed"
+    },
+    {
+      "id": "cons_1754295483869",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "doctorId": "6",
+      "doctorName": "Dr. Lisa Anderson",
+      "appointmentId": "apt_1754295358944",
+      "date": "2025-08-04T08:18:03.869Z",
+      "symptoms": [
+        "Itchy skin",
+        "dry patches on elbows and behind knees",
+        "mild redness",
+        "occasional flare-ups"
+      ],
+      "diagnosis": "Atopic Dermatitis – Mild Chronic Case",
+      "notes": "Patient reports intermittent flare-ups of eczema, primarily during weather changes or after exposure to dust. The current flare is mild with localized dryness and itching. Skin examination shows dry, scaly patches on flexural areas (elbows and behind knees), with no signs of infection or weeping lesions. The patient has been compliant with emollient use but inconsistently applies topical medication during flare-ups. Educated on importance of regular moisturization and avoiding known triggers (wool, harsh soaps, dust). Emphasis placed on routine skin care maintenance to prevent recurrence.",
+      "prescriptions": [
+        {
+          "id": "rx_1754295483869_0",
+          "medication": "Hydrocortisone 1% cream",
+          "dosage": "Apply a thin layer",
+          "frequency": "Twice daily to affected areas",
+          "duration": "7 days",
+          "instructions": "Use during flare-up only. Avoid prolonged use."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-08-04T08:18:03.869Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1754296753042",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Rodriguez",
+      "appointmentId": "apt_1754296664444",
+      "date": "2025-08-04T08:39:13.042Z",
+      "symptoms": [
+        "Low-grade fever",
+        "sore throat",
+        "fatigue",
+        "mild cough",
+        "decreased appetite"
+      ],
+      "diagnosis": "Viral upper respiratory tract infection (URTI)",
+      "notes": "Child presented with a 3-day history of low-grade fever and sore throat. Parent reports improvement in fever after administering paracetamol. Cough is mild, mostly dry. Appetite is slightly reduced, but hydration is adequate. On examination, throat appears erythematous with no pus or swelling. Chest is clear on auscultation, and there are no signs of ear infection. Vitals are stable. Diagnosis is consistent with a viral infection. No need for antibiotics at this stage. Advised supportive care and monitoring for worsening symptoms.",
+      "prescriptions": [
+        {
+          "id": "rx_1754296753042_0",
+          "medication": "Paracetamol 250 mg syrup",
+          "dosage": "5 ml",
+          "frequency": "Every 6–8 hours as needed for fever",
+          "duration": "3 days",
+          "instructions": "Administer only if temperature is above 100°F. Maintain hydration."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-08-04T08:39:13.042Z",
+      "status": "completed"
     }
   ],
   "DoctorsSlots": [
@@ -1004,14 +1093,14 @@
     {
       "doctorId": "4",
       "slots": [
-        "2025-07-06T10:00:00Z",
-        "2025-07-08T11:30:00Z",
-        "2025-07-10T14:00:00Z",
-        "2025-07-12T16:00:00Z",
-        "2025-07-14T09:00:00Z",
-        "2025-07-16T11:00:00Z",
-        "2025-07-18T14:30:00Z",
-        "2025-07-20T16:30:00Z"
+        "2025-08-04T10:00:00Z",
+        "2025-08-04T11:30:00Z",
+        "2025-08-10T14:00:00Z",
+        "2025-08-12T16:00:00Z",
+        "2025-08-14T09:00:00Z",
+        "2025-08-16T11:00:00Z",
+        "2025-08-18T14:30:00Z",
+        "2025-08-20T16:30:00Z"
       ],
       "id": "fc5d"
     },
@@ -1035,15 +1124,15 @@
     {
       "doctorId": "6",
       "slots": [
-        "2025-07-08T09:30:00Z",
-        "2025-07-10T11:00:00Z",
-        "2025-07-12T14:30:00Z",
-        "2025-07-14T16:00:00Z",
-        "2025-07-16T09:30:00Z",
-        "2025-07-18T11:30:00Z",
-        "2025-07-20T15:00:00Z",
-        "2025-07-31T17:00:00Z",
-        "2025-07-31T15:00:00Z",
+        "2025-08-04T09:30:00Z",
+        "2025-08-04T11:00:00Z",
+        "2025-08-12T14:30:00Z",
+        "2025-08-14T16:00:00Z",
+        "2025-08-16T09:30:00Z",
+        "2025-08-18T11:30:00Z",
+        "2025-08-20T15:00:00Z",
+        "2025-08-31T17:00:00Z",
+        "2025-08-31T15:00:00Z",
         "2025-08-01T15:00:00Z"
       ],
       "id": "07ea"
