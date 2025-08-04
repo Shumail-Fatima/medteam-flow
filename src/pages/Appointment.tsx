@@ -21,7 +21,8 @@ import { addAppointment, updateAppointment, deleteAppointment, fetchAppointments
 import { addPatient } from '../store/slices/PatientSlice';
 import type { Appointment, AppointmentFormData, PatientFormData } from '../types/appointment';
 import usersData from '../../mockServer/data/Users.json';
-import doctorSlots from '../../mockServer/data/DoctorSlots.json';
+//import doctorSlots from '../../mockServer/data/DoctorSlots.json';
+import doctorSlots from '../../mockServer/MockData.json';
 import ViewDialog from '../components/sharedComponents/ViewDialog';
 import doctorSpecialtiesData from '../../mockServer/data/DoctorSpeciality.json';
 import { useAuth } from '../context/AuthContext';
@@ -31,7 +32,7 @@ import { useNavigate } from 'react-router-dom';
 const doctors = usersData
   .filter((user: any) => user.roleId === 2)
   .map((user: any) => {
-    const slotObj = doctorSlots.find((s: any) => String(s.doctorId) === String(user.id));
+    const slotObj = doctorSlots.DoctorsSlots.find((s: any) => String(s.doctorId) === String(user.id));
     const specialty = doctorSpecialtiesData.find((spec: any) => spec.id === user.specialtyId);
     return {
       label: user.name,

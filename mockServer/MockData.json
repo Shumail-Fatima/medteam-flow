@@ -455,6 +455,118 @@
       "createdAt": "2025-07-29T11:55:53.151Z",
       "status": "completed",
       "consultationCompleted": true
+    },
+    {
+      "id": "apt_1753874396769",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "patientAge": 74,
+      "specialtyName": "Orthopedics",
+      "doctorId": "5",
+      "doctorName": "Dr. James Thompson",
+      "appointmentSlot": "2025-07-30T19:00:00Z",
+      "reason": "visit",
+      "createdAt": "2025-07-30T11:19:56.769Z",
+      "status": "scheduled",
+      "consultationCompleted": false
+    },
+    {
+      "id": "apt_1753989987444",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "patientAge": 74,
+      "specialtyName": "Dermatology",
+      "doctorId": "6",
+      "doctorName": "Dr. Lisa Anderson",
+      "appointmentSlot": "2025-07-31T17:00:00Z",
+      "reason": "Acne Vulgaris – Initial Consultation",
+      "createdAt": "2025-07-31T19:26:27.444Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1754281909331",
+      "patientId": "patient_1",
+      "patientName": "John Doe",
+      "patientAge": 67,
+      "specialtyName": "Cardiology",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentSlot": "2025-08-03T09:00:00Z",
+      "reason": "Hypertension – Routine Follow-Up",
+      "createdAt": "2025-08-04T04:31:49.331Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1754282175898",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "patientAge": 74,
+      "specialtyName": "Cardiology",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentSlot": "2025-08-03T10:00:00Z",
+      "reason": "Stable Angina – Follow-Up After Initial Diagnosis",
+      "createdAt": "2025-08-04T04:36:15.898Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1754282670395",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "patientAge": 74,
+      "specialtyName": "Neurology",
+      "doctorId": "3",
+      "doctorName": "Dr. Michael Chen",
+      "appointmentSlot": "2025-08-03T08:00:00Z",
+      "reason": "Migraine Evaluation – First-Time Episode",
+      "createdAt": "2025-08-04T04:44:30.395Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1754283359314",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "patientAge": 49,
+      "specialtyName": "Cardiology",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentSlot": "2025-08-03T10:00:00Z",
+      "reason": "Hypertension Follow-Up – Medication Adjustment",
+      "createdAt": "2025-08-04T04:55:59.314Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1754285670979",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "patientAge": 49,
+      "specialtyName": "Neurology",
+      "doctorId": "3",
+      "doctorName": "Dr. Michael Chen",
+      "appointmentSlot": "2025-08-03T09:30:00Z",
+      "reason": "Chronic Tension-Type Headache – Follow-up",
+      "createdAt": "2025-08-04T05:34:30.979Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1754285964017",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "patientAge": 49,
+      "specialtyName": "Orthopedics",
+      "doctorId": "5",
+      "doctorName": "Dr. James Thompson",
+      "appointmentSlot": "2025-08-03T07:30:00Z",
+      "reason": "Follow-up for Post-Operative Knee Arthroscopy Recovery",
+      "createdAt": "2025-08-04T05:39:24.017Z",
+      "status": "completed",
+      "consultationCompleted": true
     }
   ],
   "Consultations": [
@@ -575,39 +687,317 @@
       "followUpRequired": false,
       "createdAt": "2025-07-29T12:02:08.507Z",
       "status": "completed"
+    },
+    {
+      "id": "cons_1753875384223",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "doctorId": "5",
+      "doctorName": "Dr. James Thompson",
+      "appointmentId": "apt_1753874396769",
+      "date": "2025-07-30T11:36:24.223Z",
+      "symptoms": [
+        "Mild pain during movement",
+        "reduced strength in the affected limb",
+        "minor limping",
+        "stiffness after rest."
+      ],
+      "diagnosis": "Healing distal radius fracture – stable alignment, good callus formation, early functional recovery observed.",
+      "notes": "The patient is in the recovery phase post-cast removal for a distal radius fracture sustained 6 weeks ago. They report reduced pain but some weakness and stiffness remain. No signs of neurovascular compromise. On examination, there is mild tenderness at the fracture site and limited grip strength, but range of motion is improving. Patient is advised to continue physiotherapy focused on strength and flexibility. X-ray confirms proper healing. No complications noted.",
+      "prescriptions": [
+        {
+          "id": "rx_1753875384224_0",
+          "medication": "Calcium + Vitamin D3 Supplement",
+          "dosage": " 1 tablet",
+          "frequency": "Once daily after meals",
+          "duration": "30 days",
+          "instructions": "Continue supplementation to support bone healing."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-07-30T11:36:24.224Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1753990110342",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "doctorId": "6",
+      "doctorName": "Dr. Lisa Anderson",
+      "appointmentId": "apt_1753989987444",
+      "date": "2025-07-31T19:28:30.342Z",
+      "symptoms": [
+        "Red inflamed pimples",
+        "whiteheads",
+        "blackheads",
+        "occasional tenderness on touch",
+        "increased oiliness on the face",
+        "primarily on the forehead and cheeks."
+      ],
+      "diagnosis": "Mild to moderate Acne Vulgaris – comedonal and inflammatory type.",
+      "notes": "Patient presents with a 3-month history of persistent acne, worsened recently due to stress and possible dietary triggers. Lesions are most prominent on the forehead and upper cheeks, with a mix of open and closed comedones, along with a few pustules. No scarring or nodules observed at this stage. Patient reports no prior treatment. Skin type is oily. Emphasized importance of consistent skincare routine and avoiding squeezing pimples. Advised on gentle cleansing and non-comedogenic products. Follow-up scheduled in 4 weeks to monitor response.",
+      "prescriptions": [
+        {
+          "id": "rx_1753990110342_0",
+          "medication": "Benzoyl Peroxide 2.5% gel",
+          "dosage": "Apply thin layer to affected areas",
+          "frequency": "Once daily at night",
+          "duration": "4 weeks",
+          "instructions": "Start every other night to reduce irritation; avoid eye and mouth areas."
+        }
+      ],
+      "followUpRequired": true,
+      "followUpDate": "2025-08-04T12:30",
+      "createdAt": "2025-07-31T19:28:30.342Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1754282072280",
+      "patientId": "patient_1",
+      "patientName": "John Doe",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentId": "apt_1754281909331",
+      "date": "2025-08-04T04:34:32.280Z",
+      "symptoms": [
+        "Occasional headaches",
+        "mild dizziness on standing",
+        "fatigue",
+        "no chest pain or palpitations."
+      ],
+      "diagnosis": "Essential Hypertension – Stage 1 (controlled with medication)",
+      "notes": "Patient is a known case of hypertension, diagnosed 6 months ago. Currently on regular antihypertensive therapy. Reports good medication adherence with occasional missed doses. BP on examination: 132/86 mmHg. Pulse: 78 bpm, regular. No abnormal heart sounds or peripheral edema. Patient denies any recent episodes of chest discomfort or palpitations. Lifestyle changes have been moderately followed, with some improvement in diet and reduced salt intake. Advised to continue monitoring BP at home and encouraged further weight management and physical activity.",
+      "prescriptions": [
+        {
+          "id": "rx_1754282072280_0",
+          "medication": "Amlodipine",
+          "dosage": "5 mg",
+          "frequency": "Once daily in the morning",
+          "duration": "30 days",
+          "instructions": "Take at the same time daily, preferably with breakfast. Monitor blood pressure weekly."
+        },
+        {
+          "id": "rx_1754282072280_1",
+          "medication": "Atorvastatin",
+          "dosage": "10 mg",
+          "frequency": "Once daily at night",
+          "duration": "30 days",
+          "instructions": "Take after dinner. Recheck lipid profile in 3 months."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-08-04T04:34:32.280Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1754282389243",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentId": "apt_1754282175898",
+      "date": "2025-08-04T04:39:49.243Z",
+      "symptoms": [
+        "Chest tightness during exertion",
+        "occasional shortness of breath",
+        "symptoms relieved by rest",
+        "no dizziness or syncope."
+      ],
+      "diagnosis": "Stable Angina (NYHA Class II) – Under Medical Management",
+      "notes": "Patient presents for follow-up after being diagnosed with stable angina 4 weeks ago. Reports chest discomfort when climbing stairs or walking briskly, which resolves with rest. No episodes at rest or during sleep. Adherence to medication has been good. ECG shows no new changes; vitals are stable. Pulse: 74 bpm, BP: 128/80 mmHg. Weight slightly reduced since last visit. No signs of fluid overload or heart failure. Advised to continue medications, monitor symptoms, and avoid physical overexertion. Referred for a stress test in the coming week to assess exercise tolerance.",
+      "prescriptions": [
+        {
+          "id": "rx_1754282389243_0",
+          "medication": "Nitroglycerin",
+          "dosage": "0.5 mg (sublingual)",
+          "frequency": "As needed during chest pain",
+          "duration": "As required",
+          "instructions": "Place under the tongue at onset of chest pain. Repeat once after 5 minutes if pain persists, up to 3 doses. Seek immediate care if no relief."
+        },
+        {
+          "id": "rx_1754282389243_1",
+          "medication": "Metoprolol",
+          "dosage": "25 mg",
+          "frequency": "Twice daily",
+          "duration": "30 days",
+          "instructions": "Take with meals. Do not skip or double dose."
+        },
+        {
+          "id": "rx_1754282389243_2",
+          "medication": "Aspirin",
+          "dosage": "75 mg",
+          "frequency": "Once daily",
+          "duration": "30 days",
+          "instructions": "Take after breakfast to minimize gastric irritation."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-08-04T04:39:49.243Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1754282950548",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "doctorId": "3",
+      "doctorName": "Dr. Michael Chen",
+      "appointmentId": "apt_1754282670395",
+      "date": "2025-08-04T04:49:10.548Z",
+      "symptoms": [
+        "Throbbing headache on one side",
+        "light sensitivity",
+        "nausea",
+        "visual aura (zigzag lines)",
+        "lasted 6 hours"
+      ],
+      "diagnosis": "Migraine with Aura – First Episode",
+      "notes": "Patient presents with a first-time episode of a severe, unilateral throbbing headache accompanied by nausea, photophobia, and visual aura. The episode lasted around 6 hours and resolved spontaneously after rest in a dark room. No prior history of similar symptoms. No neurological deficits on examination. No family history of migraines or seizures. Brain imaging is not warranted at this stage due to normal clinical exam and classic presentation. Educated patient about migraine triggers and non-pharmacological management. Prescribed abortive medication and advised to maintain a headache diary.",
+      "prescriptions": [
+        {
+          "id": "rx_1754282950549_0",
+          "medication": "Sumatriptan",
+          "dosage": "50 mg",
+          "frequency": "At onset of migraine",
+          "duration": "As needed, maximum 2 tablets in 24 hours",
+          "instructions": "Take at the first sign of migraine. Avoid driving after taking. Do not exceed the dose."
+        },
+        {
+          "id": "rx_1754282950549_1",
+          "medication": "Paracetamol",
+          "dosage": "500 mg",
+          "frequency": "Every 6 hours if needed",
+          "duration": "3–5 days",
+          "instructions": "Use for mild headache or fever. Do not exceed 8 tablets/day."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-08-04T04:49:10.549Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1754283467704",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentId": "apt_1754283359314",
+      "date": "2025-08-04T04:57:47.704Z",
+      "symptoms": [
+        "Mild headaches in the morning",
+        "occasional dizziness when standing",
+        "no chest pain or shortness of breath",
+        "no vision disturbances."
+      ],
+      "diagnosis": "Essential Hypertension – Suboptimal Control on Current Regimen",
+      "notes": "Patient reports mild morning headaches and occasional light-headedness. No recent medication changes. Blood pressure today is 152/96 mmHg, slightly elevated despite adherence to current antihypertensive therapy. No signs of hypertensive retinopathy or cardiac complications. Physical exam is otherwise unremarkable. Discussed lifestyle modifications and importance of salt restriction and weight management. Current medication regimen appears insufficient for optimal BP control. Plan to adjust medications and monitor closely.",
+      "prescriptions": [
+        {
+          "id": "rx_1754283467704_0",
+          "medication": "Losartan",
+          "dosage": "50 mg",
+          "frequency": "Once daily",
+          "duration": "30 days",
+          "instructions": "Take at the same time each day. Avoid potassium-rich foods or supplements."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-08-04T04:57:47.704Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1754285736486",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "doctorId": "3",
+      "doctorName": "Dr. Michael Chen",
+      "appointmentId": "apt_1754285670979",
+      "date": "2025-08-04T05:35:36.486Z",
+      "symptoms": [
+        "Dull",
+        "bilateral headache",
+        "tight pressure around the head",
+        "worsens with stress",
+        "no nausea or aura",
+        "present for several months"
+      ],
+      "diagnosis": "Chronic Tension-Type Headache",
+      "notes": "Patient reports a long-standing history of dull, non-throbbing headaches occurring bilaterally with a sensation of tightness or pressure. Symptoms are more frequent during workdays and periods of emotional stress. No associated nausea, vomiting, photophobia, or aura. Headaches are relieved with rest and over-the-counter analgesics. Neurological examination is normal. No red flag symptoms to suggest secondary causes. Patient was counseled on lifestyle changes, stress management techniques, posture correction, and regular exercise. Non-pharmacological management emphasized.",
+      "prescriptions": [
+        {
+          "id": "rx_1754285736486_0",
+          "medication": "Amitriptyline",
+          "dosage": "10 mg",
+          "frequency": "At bedtime",
+          "duration": "30 days",
+          "instructions": "Take daily at bedtime to reduce headache frequency. May cause drowsiness."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-08-04T05:35:36.486Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1754286069626",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "doctorId": "5",
+      "doctorName": "Dr. James Thompson",
+      "appointmentId": "apt_1754285964017",
+      "date": "2025-08-04T05:41:09.626Z",
+      "symptoms": [
+        "Mild knee pain",
+        "occasional clicking sensation",
+        "stiffness after prolonged sitting",
+        "slight limp"
+      ],
+      "diagnosis": "Post-operative recovery following arthroscopic meniscectomy – healing as expected",
+      "notes": "Patient is 4 weeks post knee arthroscopy for medial meniscus tear. Reports progressive improvement in mobility. Occasional clicking sounds noted during flexion but no locking or instability. Pain has reduced significantly and is mostly activity-related. Slight stiffness experienced after sitting for long durations. Gait shows mild limp, improving with physiotherapy. Wound site healed with no signs of infection. Advised to continue strengthening exercises and increase activity level gradually.",
+      "prescriptions": [
+        {
+          "id": "rx_1754286069626_0",
+          "medication": "Paracetamol",
+          "dosage": "500 mg",
+          "frequency": "Thrice daily after meals",
+          "duration": "5 days",
+          "instructions": "Take after meals to relieve residual pain during activity."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-08-04T05:41:09.626Z",
+      "status": "completed"
     }
   ],
   "DoctorsSlots": [
     {
       "doctorId": "2",
       "slots": [
-        "2025-07-05T09:00:00Z",
-        "2025-07-07T10:00:00Z",
-        "2025-07-09T11:00:00Z",
-        "2025-07-11T14:00:00Z",
-        "2025-07-13T15:00:00Z",
-        "2025-07-15T09:00:00Z",
-        "2025-07-17T10:00:00Z",
-        "2025-07-19T14:30:00Z",
-        "2025-07-21T15:30:00Z",
-        "2025-07-22T09:00:00Z",
-        "2025-07-23T10:00:00Z",
-        "2025-07-25T11:00:00Z"
+        "2025-08-03T09:00:00Z",
+        "2025-08-03T10:00:00Z",
+        "2025-08-09T11:00:00Z",
+        "2025-08-11T14:00:00Z",
+        "2025-08-13T15:00:00Z",
+        "2025-08-15T09:00:00Z",
+        "2025-08-17T10:00:00Z",
+        "2025-08-19T14:30:00Z",
+        "2025-08-21T15:30:00Z",
+        "2025-08-22T09:00:00Z",
+        "2025-08-23T10:00:00Z",
+        "2025-08-25T11:00:00Z"
       ],
       "id": "5a00"
     },
     {
       "doctorId": "3",
       "slots": [
-        "2025-07-05T08:00:00Z",
-        "2025-07-07T09:30:00Z",
-        "2025-07-09T11:00:00Z",
-        "2025-07-11T13:00:00Z",
-        "2025-07-13T15:30:00Z",
-        "2025-07-15T08:00:00Z",
-        "2025-07-17T10:30:00Z",
-        "2025-07-19T13:00:00Z",
-        "2025-07-21T16:00:00Z"
+        "2025-08-03T08:00:00Z",
+        "2025-08-03T09:30:00Z",
+        "2025-08-09T11:00:00Z",
+        "2025-08-11T13:00:00Z",
+        "2025-08-13T15:30:00Z",
+        "2025-08-15T08:00:00Z",
+        "2025-08-17T10:30:00Z",
+        "2025-08-19T13:00:00Z",
+        "2025-08-21T16:00:00Z"
       ],
       "id": "4db1"
     },
@@ -628,17 +1018,17 @@
     {
       "doctorId": "5",
       "slots": [
-        "2025-07-07T07:30:00Z",
-        "2025-07-09T09:00:00Z",
-        "2025-07-11T10:30:00Z",
-        "2025-07-13T13:30:00Z",
-        "2025-07-15T15:00:00Z",
-        "2025-07-17T08:30:00Z",
-        "2025-07-19T10:00:00Z",
-        "2025-07-21T13:30:00Z",
-        "2025-07-29T19:00:00Z",
-        "2025-07-29T21:00:00Z",
-        "2025-07-30T19:00:00Z"
+        "2025-08-03T07:30:00Z",
+        "2025-08-03T09:00:00Z",
+        "2025-08-11T10:30:00Z",
+        "2025-08-13T13:30:00Z",
+        "2025-08-15T15:00:00Z",
+        "2025-08-17T08:30:00Z",
+        "2025-08-19T10:00:00Z",
+        "2025-08-21T13:30:00Z",
+        "2025-08-29T19:00:00Z",
+        "2025-08-29T21:00:00Z",
+        "2025-08-30T19:00:00Z"
       ],
       "id": "918c"
     },
@@ -652,7 +1042,9 @@
         "2025-07-16T09:30:00Z",
         "2025-07-18T11:30:00Z",
         "2025-07-20T15:00:00Z",
-        "2025-07-22T17:00:00Z"
+        "2025-07-31T17:00:00Z",
+        "2025-07-31T15:00:00Z",
+        "2025-08-01T15:00:00Z"
       ],
       "id": "07ea"
     }

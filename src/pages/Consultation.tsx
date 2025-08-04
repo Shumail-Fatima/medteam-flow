@@ -36,7 +36,7 @@ import Layout from '../components/sharedComponents/Layout';
 import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';
 import type { RootState, AppDispatch } from '../store/Store';
 import { addConsultation, updateConsultation, addMedicalHistoryEntry, updatePatientMedicalInfo, fetchConsultations, addConsultationAsync, updateConsultationAsync, deleteConsultationAsync } from '../store/slices/MedicalSlice';
-import { updateAppointment, updateAppointmentAsync } from '../store/slices/AppointmentSlice';
+import { updateAppointment, fetchAppointments, updateAppointmentAsync } from '../store/slices/AppointmentSlice';
 import { useAuth } from '../context/AuthContext';
 import type { ConsultationFormData, Consultation, ExtendedAppointment } from '../types/medical';
 import { consultationValidationSchema } from '../validation/MedValidation';
@@ -44,6 +44,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import PageHeader from '../components/sharedComponents/PageHeader';
 import PatientInfoCard from '../components/PatientInfoCard';
+
 
 const ConsultationManagement: React.FC = () => {
   const navigate = useNavigate();
@@ -79,13 +80,16 @@ const ConsultationManagement: React.FC = () => {
     severity: 'success' as 'success' | 'error' 
   });
 
+  useEffect(() => {
+    dispatch(fetchAppointments());
+  }, [dispatch]);
   // Find pre-selected appointment and patient
   const preSelectedAppointment = useMemo(() => {
     if (consultationRecord && consultationRecord.appointmentId) {
       return appointments.find(apt => apt.id === consultationRecord.appointmentId) || null;
     }
     return appointmentId ? appointments.find(apt => apt.id === appointmentId) : null;
-  }, [appointments, appointmentId]);
+  }, [appointments, appointmentId, consultationRecord]);
   
   const preSelectedPatient = useMemo(() => {
     if (consultationRecord) {
@@ -193,29 +197,18 @@ const ConsultationManagement: React.FC = () => {
 
       // Redux action - Add consultation to store
       // dispatch(addConsultation(newConsultation));
-      //dispatch(addConsultationAsync(newConsultation));
+      dispatch(addConsultationAsync(newConsultation));
 
-      const response = await dispatch(addConsultationAsync(newConsultation));
-
-// Make sure the consultation was successfully created
-if (addConsultationAsync.fulfilled.match(response)) {
-  const addedConsultation = response.payload;
-
-  // Update consultation status to 'completed'
-  await dispatch(updateConsultationAsync({
-    ...addedConsultation,
-    status: 'completed',
-  }));
-}
+      
 
       // dispatch(updateConsultation({
       //   ...newConsultation, // the consultation object you want to update
       //   status: 'completed'
       // }));
-      // dispatch(updateConsultationAsync({
-      //   ...newConsultation, // the consultation object you want to update
-      //   status: 'completed'
-      // }));
+      dispatch(updateConsultationAsync({
+        ...newConsultation, // the consultation object you want to update
+        status: 'completed'
+      }));
 
       // If consultation is linked to an appointment, mark it as completed
       if (data.appointmentId) {
