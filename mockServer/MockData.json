@@ -1435,5 +1435,43 @@
       "createdAt": "2025-07-29T05:51:45.319Z",
       "roleName": "nurse"
     }
+  ],
+  "Notifications": [
+    {
+      "id": "notif_1",
+      "userId": "2",
+      "title": "New Appointment Scheduled",
+      "message": "You have a new appointment with John Doe on 2025-08-05 at 09:00 AM.",
+      "type": "appointment",
+      "isRead": true,
+      "createdAt": "2025-08-04T10:00:00Z"
+    },
+    {
+      "id": "notif_2",
+      "userId": "3",
+      "title": "Consultation Completed",
+      "message": "Consultation for Jane Smith has been marked as completed.",
+      "type": "consultation",
+      "isRead": false,
+      "createdAt": "2025-08-04T11:30:00Z"
+    },
+    {
+      "id": "notif_3",
+      "userId": "4",
+      "title": "Task Reminder",
+      "message": "Don't forget to check Robert Johnson's blood pressure today.",
+      "type": "task",
+      "isRead": true,
+      "createdAt": "2025-08-03T08:00:00Z"
+    },
+    {
+      "id": "notif_4",
+      "userId": "2",
+      "title": "Follow-up Required",
+      "message": "A follow-up is required for patient Jane Smith on 2025-08-10.",
+      "type": "followup",
+      "isRead": false,
+      "createdAt": "2025-08-04T12:00:00Z"
+    }
   ]
 }

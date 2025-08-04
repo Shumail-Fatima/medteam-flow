@@ -16,6 +16,7 @@ import {
   Divider,
   useTheme,
   useMediaQuery,
+  Badge,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -33,6 +34,7 @@ import {Menu, MenuItem} from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { rolePages } from '../RolePages';
+import { useState } from 'react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -60,6 +62,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [notifAnchorEl, setNotifAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [notifications, setNotifications] = useState<any[]>([]);
+  const notifOpen = Boolean(notifAnchorEl);
+
 
   const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
@@ -69,6 +75,35 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const handleMenuClose = () => {
     setAnchorE1(null);
   }
+
+  const handleNotifClick = (event: React.MouseEvent<HTMLElement>) => {
+    setNotifAnchorEl(event.currentTarget);
+    fetch('http://localhost:8000/Notifications')
+    .then(res => res.json())
+    .then(data => setNotifications(data))
+  }
+
+  const handleNotifClose = () => {
+    setNotifAnchorEl(null);
+  }
+
+  const unreadCount = notifications.filter(n => !n.isRead).length;
+
+  const getNotificationPath = (notif: any) => {
+
+  switch (notif.type) {
+    case 'appointment':
+      return notif.appointmentId ? `/Appointment/${notif.appointmentId}` : '/Appointment';
+    case 'consultation':
+      return notif.consultationId ? `/consultation/view/${notif.consultationId}` : '/consultations-records';
+    case 'task':
+      return '/task-management';
+    case 'followup':
+      return notif.patientId ? `/patients/${notif.patientId}` : '/patients';
+    default:
+      return '/';
+  }
+};
 
   //const toggleDrawer = () => setDrawerOpen(!drawerOpen);
   const toggleDrawer = () => setMobileOpen(!mobileOpen);
@@ -216,8 +251,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           icon on header. also has logout as a menu option */}
           <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
-              <NotificationsIcon sx={{ mr: 1 }} />
-            </Box>
+              {/* {unreadCount > 0 && ( */}
+            <IconButton onClick={handleNotifClick}>
+                <Badge badgeContent={unreadCount} color="error" >
+                  <NotificationsIcon />
+                </Badge>
+            </IconButton>
+          {/* )} */}
+          </Box>
             <IconButton onClick={handleMenuOpen} sx={{ p: 0 }}>
               <Avatar sx={{ width: 32, height: 32, bgcolor: 'rgba(255,255,255,0.2)' }}>
                 {user?.name.charAt(0).toUpperCase()}
@@ -254,6 +295,51 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 Logout
               </MenuItem>
             </Menu>
+
+<Menu
+  anchorEl={notifAnchorEl}
+  open={notifOpen}
+  onClose={handleNotifClose}
+  anchorOrigin={{
+    vertical: 'bottom',
+    horizontal: 'right',
+  }}
+  transformOrigin={{
+    vertical: 'top',
+    horizontal: 'right',
+  }}
+>
+  {notifications.length === 0 ? (
+    <MenuItem disabled>No notifications</MenuItem>
+  ) : (
+    notifications.map((notif) => (
+      <MenuItem key={notif.id} onClick={() => {
+        handleNotifClose();
+        // Mark as read in UI
+          setNotifications((prev) =>
+            prev.map((n) =>
+              n.id === notif.id ? { ...n, isRead: true } : n
+            )
+          );
+
+          // Optionally, persist to mock server
+          fetch(`http://localhost:8000/Notifications/${notif.id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ isRead: true }),
+          });
+        navigate(getNotificationPath(notif));
+      }}>
+        <Box>
+          <Typography variant="subtitle2">{notif.title}</Typography>
+          <Typography variant="body2" color="text.secondary">{notif.message}</Typography>
+          <Typography variant="caption" color="text.disabled">{new Date(notif.createdAt).toLocaleString()}</Typography>
+        </Box>
+      </MenuItem>
+    ))
+  )}
+</Menu>
+
           </Box>
         </Toolbar>
       </AppBar>
