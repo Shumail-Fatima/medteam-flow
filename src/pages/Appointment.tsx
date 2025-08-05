@@ -27,6 +27,7 @@ import doctorSpecialtiesData from '../../mockServer/MockData.json';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { fetchPatients } from '../store/slices/PatientSlice';
+// import { useNotificationSocket } from '../context/NotifSocketContext';
 
 // Prepare doctors array from users data
 const doctors = usersData.Users
@@ -123,6 +124,9 @@ const AppointmentManagement: React.FC = () => {
     return true; // 'all'
   });
 
+  
+  // In your appointment creation logic/component
+  // const ws = useNotificationSocket();
 
   // Create new appointment button handler
   const handleCreateAppointment = () => {
@@ -231,6 +235,21 @@ const AppointmentManagement: React.FC = () => {
         message: 'Appointment created successfully!',
         severity: 'success'
       });
+      // Notify the doctor user
+  // if (ws && ws.readyState === WebSocket.OPEN) {
+  //   ws.send(JSON.stringify({
+  //     type: 'notification',
+  //     toUserId: newAppointment.doctorId, // doctor user id
+  //     payload: {
+  //       title: 'New Appointment Scheduled',
+  //       message: `You have a new appointment with ${newAppointment.patientName} on ${newAppointment.appointmentSlot}.`,
+  //       type: 'appointment',
+  //       appointmentId: newAppointment.id,
+  //       isRead: false,
+  //       createdAt: new Date().toISOString()
+  //     }
+  //   }));
+  // }
     }
 
     // Switch back to appointments list tab

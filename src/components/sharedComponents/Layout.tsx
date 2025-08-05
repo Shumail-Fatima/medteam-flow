@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   Drawer,
@@ -35,6 +35,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { rolePages } from '../RolePages';
 import { useState } from 'react';
+// import { useNotificationSocket } from '../../context/NotifSocketContext';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -86,6 +87,19 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const handleNotifClose = () => {
     setNotifAnchorEl(null);
   }
+
+  // In your Layout or Notification component
+// const ws = useNotificationSocket();
+// useEffect(() => {
+//   if (!ws) return;
+//   ws.onmessage = (event) => {
+//     const data = JSON.parse(event.data);
+//     if (user && data.type === 'notification' && data.toUserId === user.id) {
+//       setNotifications((prev) => [data.payload, ...prev]);
+//     }
+//   };
+// }, [ws, user]);
+  
 
   const unreadCount = notifications.filter(n => !n.isRead).length;
 
@@ -254,13 +268,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               {/* {unreadCount > 0 && ( */}
             <IconButton onClick={handleNotifClick}>
                 <Badge badgeContent={unreadCount} color="error" >
-                  <NotificationsIcon />
+                  <NotificationsIcon htmlColor='rgb(254 254 254 / 87%)' />
                 </Badge>
             </IconButton>
           {/* )} */}
           </Box>
             <IconButton onClick={handleMenuOpen} sx={{ p: 0 }}>
-              <Avatar sx={{ width: 32, height: 32, bgcolor: 'rgba(255,255,255,0.2)' }}>
+              <Avatar sx={{ width: 32, height: 32, bgcolor: 'rgba(255, 255, 255, 0.2)' }}>
                 {user?.name.charAt(0).toUpperCase()}
               </Avatar>
             </IconButton>
@@ -313,7 +327,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <MenuItem disabled>No notifications</MenuItem>
   ) : (
     notifications.map((notif) => (
-      <MenuItem key={notif.id} onClick={() => {
+      <MenuItem key={notif.id} onClick={(e) => {e.stopPropagation();
+        
         handleNotifClose();
         // Mark as read in UI
           setNotifications((prev) =>

@@ -236,6 +236,20 @@
       "createdAt": "2025-08-05T05:37:40.851Z",
       "status": "scheduled",
       "consultationCompleted": false
+    },
+    {
+      "id": "apt_1754396564307",
+      "patientId": "patient_4",
+      "patientName": "Emily Carter",
+      "patientAge": 7,
+      "specialtyName": "Pediatrics",
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Rodriguez",
+      "appointmentSlot": "2025-08-05T10:00:00Z",
+      "reason": "Mild Dehydration Due to Acute Gastroenteritis",
+      "createdAt": "2025-08-05T12:22:44.307Z",
+      "status": "scheduled",
+      "consultationCompleted": false
     }
   ],
   "Consultations": [
@@ -794,8 +808,8 @@
     {
       "doctorId": "4",
       "slots": [
-        "2025-08-04T10:00:00Z",
-        "2025-08-04T11:30:00Z",
+        "2025-08-05T10:00:00Z",
+        "2025-08-05T11:30:00Z",
         "2025-08-10T14:00:00Z",
         "2025-08-12T16:00:00Z",
         "2025-08-14T09:00:00Z",
@@ -1112,15 +1126,15 @@
   ],
   "Roles": [
     {
-      "id": 1,
+      "id": "1",
       "name": "admin"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "doctor"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "nurse"
     }
   ],
@@ -1284,7 +1298,7 @@
       "title": "Consultation Completed",
       "message": "Consultation for Jane Smith has been marked as completed.",
       "type": "consultation",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-04T11:30:00Z"
     },
     {
