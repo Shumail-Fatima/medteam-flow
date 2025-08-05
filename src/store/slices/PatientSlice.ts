@@ -1,13 +1,52 @@
 // Redux slice for managing patient state
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { Patient } from '../../types/appointment';
-import patientsData from '../../../mockServer/data/Patients.json';
+import type { ExtendedPatient } from '../../types/medical';
+import patientsData from '../../../mockServer/MockData.json';
+
+const API_URL = 'http://localhost:8000/Patients'; // Your REST API endpoint
 
 interface PatientState {
-  patients: Patient[];
+  // patients: Patient[];
+  patients: ExtendedPatient[];
   loading: boolean;
   error: string | null;
 }
+
+export const fetchPatients = createAsyncThunk('patients/fetchPatients', async () => {
+  const res = await fetch(API_URL);
+  return await res.json();
+});
+
+export const addPatientAsync = createAsyncThunk(
+  'patients/addPatient',
+  async (patient: Patient) => {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(patient),
+    });
+    return await res.json();
+  }
+);
+
+export const deletePatientAsync = createAsyncThunk(
+  'patients/deletePatient',
+  async (patientId: string) => {
+    const res = await fetch(`${API_URL}/${patientId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!res.ok) {
+      throw new Error('Failed to delete patient');
+    }
+    return await res.json();
+  }
+);
 
 // Calculate age from date of birth
 const calculateAge = (dateOfBirth: string): number => {
@@ -25,10 +64,10 @@ const calculateAge = (dateOfBirth: string): number => {
 
 // Initial state with patients loaded from JSON data and age calculated
 const initialState: PatientState = {
-  patients: patientsData.map(patient => ({
+  patients: patientsData.Patients.map(patient => ({
     ...patient,
     age: calculateAge(patient.dateOfBirth)
-  })) as Patient[],
+  })) as ExtendedPatient[],
   loading: false,
   error: null,
 };
@@ -40,9 +79,16 @@ const patientSlice = createSlice({
   reducers: {
     // Add a new patient to the state
     addPatient: (state, action: PayloadAction<Patient>) => {
-      const patientWithAge = {
+      // const patientWithAge = {
+      //   ...action.payload,
+      //   age: calculateAge(action.payload.dateOfBirth)
+      // };
+      const patientWithAge: ExtendedPatient = {
         ...action.payload,
-        age: calculateAge(action.payload.dateOfBirth)
+        age: calculateAge(action.payload.dateOfBirth),
+        medicalHistory: [],
+        allergies: [],
+        createdAt: new Date().toISOString(),
       };
       state.patients.push(patientWithAge);
     },
@@ -50,9 +96,13 @@ const patientSlice = createSlice({
     updatePatient: (state, action: PayloadAction<Patient>) => {
       const index = state.patients.findIndex(patient => patient.id === action.payload.id);
       if (index !== -1) {
-        const patientWithAge = {
+        const patientWithAge: ExtendedPatient = {
           ...action.payload,
-          age: calculateAge(action.payload.dateOfBirth)
+          age: calculateAge(action.payload.dateOfBirth),
+
+          medicalHistory: [],
+          allergies: [],
+          createdAt: new Date().toISOString(),
         };
         state.patients[index] = patientWithAge;
       }
@@ -69,6 +119,32 @@ const patientSlice = createSlice({
     setError: (state, action: PayloadAction<string | null>) => {
       state.error = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchPatients.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchPatients.fulfilled, (state, action: PayloadAction<Patient[]>) => {
+        state.patients = action.payload.map(patient => ({
+          ...patient,
+          age: calculateAge(patient.dateOfBirth),
+          medicalHistory: [],
+          allergies: [],
+          createdAt: new Date().toISOString(),
+        }));
+        state.loading = false;
+      })
+      .addCase(fetchPatients.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to fetch patients';
+      });
+    builder
+      .addCase(addPatientAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
   },
 });
 

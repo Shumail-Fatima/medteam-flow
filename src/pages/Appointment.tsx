@@ -20,20 +20,20 @@ import type { RootState, AppDispatch } from '../store/Store';
 import { addAppointment, updateAppointment, deleteAppointment, fetchAppointments, addAppointmentAsync, updateAppointmentAsync, deleteAppointmentAsync } from '../store/slices/AppointmentSlice';
 import { addPatient } from '../store/slices/PatientSlice';
 import type { Appointment, AppointmentFormData, PatientFormData } from '../types/appointment';
-import usersData from '../../mockServer/data/Users.json';
-//import doctorSlots from '../../mockServer/data/DoctorSlots.json';
+import usersData from '../../mockServer/MockData.json';
 import doctorSlots from '../../mockServer/MockData.json';
 import ViewDialog from '../components/sharedComponents/ViewDialog';
-import doctorSpecialtiesData from '../../mockServer/data/DoctorSpeciality.json';
+import doctorSpecialtiesData from '../../mockServer/MockData.json';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { fetchPatients } from '../store/slices/PatientSlice';
 
 // Prepare doctors array from users data
-const doctors = usersData
+const doctors = usersData.Users
   .filter((user: any) => user.roleId === 2)
   .map((user: any) => {
     const slotObj = doctorSlots.DoctorsSlots.find((s: any) => String(s.doctorId) === String(user.id));
-    const specialty = doctorSpecialtiesData.find((spec: any) => spec.id === user.specialtyId);
+    const specialty = doctorSpecialtiesData.DoctorSpecialties.find((spec: any) => spec.id === user.specialtyId);
     return {
       label: user.name,
       value: String(user.id),
@@ -42,9 +42,6 @@ const doctors = usersData
       specialtyName: specialty?.name || 'General Medicine',
     };
   });
-
-
-
 
 
 const AppointmentManagement: React.FC = () => {
@@ -56,6 +53,10 @@ const AppointmentManagement: React.FC = () => {
   const appointments = user && user.roleName === 'doctor'
     ? allAppointments.filter((a) => a.doctorId === user.id)
     : allAppointments;
+
+  useEffect(() => {
+    dispatch(fetchPatients());
+  }, [dispatch]);
   const patients = useSelector((state: RootState) => state.patients.patients);
 
   const navigate = useNavigate();
@@ -178,7 +179,7 @@ const AppointmentManagement: React.FC = () => {
   const handleAppointmentSubmit = (data: AppointmentFormData) => {
     const selectedPatient = patients.find(p => p.id === data.patientId);
     const selectedDoctor = doctors.find(d => d.value === data.doctorId);
-    const selectedSpecialty = doctorSpecialtiesData.find(s => s.id === selectedDoctor?.specialtyId);
+    const selectedSpecialty = doctorSpecialtiesData.DoctorSpecialties.find(s => s.id === selectedDoctor?.specialtyId);
 
     if (!selectedPatient || !selectedDoctor) {
       setSnackbar({

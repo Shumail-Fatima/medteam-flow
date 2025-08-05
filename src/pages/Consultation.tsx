@@ -35,10 +35,10 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import Layout from '../components/sharedComponents/Layout';
 import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';
 import type { RootState, AppDispatch } from '../store/Store';
-import { addConsultation, updateConsultation, addMedicalHistoryEntry, updatePatientMedicalInfo, fetchConsultations, addConsultationAsync, updateConsultationAsync, deleteConsultationAsync } from '../store/slices/MedicalSlice';
+import { fetchConsultations, addConsultationAsync, updateConsultationAsync } from '../store/slices/MedicalSlice';
 import { updateAppointment, fetchAppointments, updateAppointmentAsync } from '../store/slices/AppointmentSlice';
 import { useAuth } from '../context/AuthContext';
-import type { ConsultationFormData, Consultation, ExtendedAppointment } from '../types/medical';
+import type { ConsultationFormData, Consultation } from '../types/medical';
 import { consultationValidationSchema } from '../validation/MedValidation';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -62,7 +62,8 @@ const ConsultationManagement: React.FC = () => {
   const patientId = searchParams.get('patientId');
 
   // Redux state - Get patients, appointments, and consultations
-  const patients = useSelector((state: RootState) => state.medical.extendedPatients);
+  //const patients = useSelector((state: RootState) => state.medical.extendedPatients);
+  const patients = useSelector((state: RootState) => state.patients.patients);
   const appointments = useSelector((state: RootState) => state.appointments.appointments);
   //const consultations = useSelector((state: RootState) => state.medical.consultations);
 
@@ -201,7 +202,7 @@ const ConsultationManagement: React.FC = () => {
       // Redux action - Add consultation to store
       // dispatch(addConsultation(newConsultation));
       dispatch(addConsultationAsync(newConsultation));
-
+      
       
 
       // dispatch(updateConsultation({

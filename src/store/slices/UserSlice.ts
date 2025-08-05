@@ -1,8 +1,7 @@
 // Redux slice for managing user state
 import { createSlice, type PayloadAction, createAsyncThunk, } from '@reduxjs/toolkit';
-import usersData from '../../../mockServer/data/Users.json'
 import type { User } from '../../types/Auth';
-import rolesData from '../../../mockServer/data/Roles.json'
+import rolesData from '../../../mockServer/MockData.json'
 
 const API_URL = 'http://localhost:8000/Users'; // Your REST API endpoint
 
@@ -128,7 +127,7 @@ const userSlice = createSlice({
       .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<User[]>) => {
             state.users = action.payload.map((user) => ({
                 ...user,
-                roleName: rolesData.find((r) => r.id === user.roleId)?.name || 'unknown',
+                roleName: rolesData.Roles.find((r) => r.id === user.roleId)?.name || 'unknown',
             }));
             state.loading = false;
             })
@@ -138,7 +137,7 @@ const userSlice = createSlice({
     })
     .addCase(addUserAsync.fulfilled, (state, action) => {
         const user = action.payload;
-        const roleName = rolesData.find(r => r.id === user.roleId)?.name || 'unknown';
+        const roleName = rolesData.Roles.find(r => r.id === user.roleId)?.name || 'unknown';
         state.users.push({ ...user, roleName });
         })
     builder.addCase(updateUserAsync.fulfilled, (state, action: PayloadAction<User>) => {

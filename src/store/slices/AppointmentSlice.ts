@@ -1,7 +1,7 @@
 // Redux slice for managing appointment state
 import { createSlice, type PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import type { Appointment } from '../../types/appointment';
-import appointmentsData from '../../../mockServer/data/Appointments.json';
+import appointmentsData from '../../../mockServer/MockData.json';
 
 const API_URL = 'http://localhost:8000/Appointments'; // Your REST API endpoint
 
@@ -74,7 +74,7 @@ export const deleteAppointmentAsync = createAsyncThunk(
 
 // Initial state with appointments loaded from JSON data
 const initialState: AppointmentState = {
-  appointments: appointmentsData as Appointment[],
+  appointments: appointmentsData.Appointments as Appointment[],
   loading: false,
   error: null,
 };

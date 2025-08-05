@@ -53,11 +53,13 @@ const DoctorPatientManagement: React.FC = () => {
   const { user } = useAuth();
 
   // Redux state - Get extended patients with medical history
-  const patients = useSelector((state: RootState) => state.medical.extendedPatients);
+  //const patients = useSelector((state: RootState) => state.medical.extendedPatients);
+  const patients = useSelector((state: RootState) => state.patients.patients);
   const consultations = useSelector((state: RootState) => state.medical.consultations);
   const appointments = useSelector((state: RootState) => state.appointments.appointments);
 
   const [selectedPatient, setSelectedPatient] = useState<ExtendedPatient | null>(null);
+  //const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   const [medicalHistoryDialogOpen, setMedicalHistoryDialogOpen] = useState(false);
 
   // Filter patients that have had consultations or appointments with current doctor
@@ -278,7 +280,7 @@ const DoctorPatientManagement: React.FC = () => {
             <Close />
           </IconButton>
         </DialogTitle>
-        <DialogContent>
+        {/* <DialogContent>
           {selectedPatient && selectedPatient.medicalHistory.length > 0 ? (
             <Box sx={{ mt: 2 }}>
               {selectedPatient.medicalHistory
@@ -326,7 +328,7 @@ const DoctorPatientManagement: React.FC = () => {
               No medical history recorded
             </Typography>
           )}
-        </DialogContent>
+        </DialogContent> */}
         <DialogActions>
           <Button onClick={() => setMedicalHistoryDialogOpen(false)}>
             Close

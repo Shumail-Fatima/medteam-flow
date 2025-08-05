@@ -8,7 +8,7 @@ import {AddButton} from '../components/CustomButton';
 import Layout from '../components/sharedComponents/Layout';
 import UserFormModal from '../components//formModals/UserFormModal';
 import type { User, UserFormData } from '../types/Auth';
-import rolesData from '../../mockServer/data/Roles.json';
+import roleData from '../../mockServer/MockData.json';
 import DataTable from '../components/sharedComponents/DataTable';
 import ConfirmDeleteDialog from '../components/sharedComponents/ConfirmDeleteDialog';
 import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';
@@ -114,7 +114,7 @@ const AdminUserManagement: React.FC = () => {
 
   // Handle user form submission (create or update)
   const handleUserSubmit = (data:UserFormData) => {
-    const roleName = rolesData.find(role => role.id === data.roleId)?.name || 'unknown';
+    const roleName = roleData.Roles.find(role => role.id === data.roleId)?.name || 'unknown';
     if (selectedUser) {
       // Update existing user using Redux action
       const updatedUser: User = {

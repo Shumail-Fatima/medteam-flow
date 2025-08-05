@@ -47,7 +47,8 @@ const PatientDetails: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  const patients = useSelector((state: RootState) => state.medical.extendedPatients);
+  //const patients = useSelector((state: RootState) => state.medical.extendedPatients);
+  const patients = useSelector((state: RootState) => state.patients.patients);
   const consultations = useSelector((state: RootState) => state.medical.consultations);
   const appointments = useSelector((state: RootState) => state.appointments.appointments);
 

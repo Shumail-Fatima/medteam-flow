@@ -12,7 +12,8 @@ import { useAuth } from '../context/AuthContext';
 import ViewDialog from '../components/sharedComponents/ViewDialog';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '../store/Store';
-import { addTask, updateTask, deleteTask, fetchTasks, addTaskAsync, updateTaskAsync, deleteTaskAsync } from '../store/slices/TaskSlice';
+import { fetchTasks, addTaskAsync, updateTaskAsync, deleteTaskAsync } from '../store/slices/TaskSlice';
+import { fetchPatients } from '../store/slices/PatientSlice';
 
 
 const AdminTaskManagement: React.FC = () => {
@@ -34,6 +35,10 @@ const AdminTaskManagement: React.FC = () => {
   });
 
   // Helper functions
+  useEffect(() => {
+    dispatch(fetchPatients());
+  }, [dispatch]);
+  
   const patients = useSelector((state: RootState) => state.patients.patients);
   const getPatientName = (patientId: string) => {
     const patient = patients?.find(p => p.id === patientId);

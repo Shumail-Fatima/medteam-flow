@@ -29,7 +29,7 @@ import {
 import InputAdornment from '@mui/material/InputAdornment';
 import type { UserFormData } from '../../types/Auth';
 import type { User } from '../../types/Auth';
-import rolesData from '../../../mockServer/data/Roles.json';
+import rolesData from '../../../mockServer/MockData.json';
 import { DailogButton } from '../CustomButton';
 import { userSchema } from '../../validation/UserFormValidation';
 
@@ -68,7 +68,7 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
   });
 
   const selectedRoleId = watch('roleId') ?? 2;
-  const selectedRole = rolesData.find(role => role.id === selectedRoleId);
+  const selectedRole = rolesData.Roles.find(role => role.id === selectedRoleId);
 
   const getRoleIcon = (roleId: number) => {
     switch (roleId) {
@@ -248,7 +248,7 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
               error={!!errors.roleId}
               helperText={errors.roleId?.message || 'Select the user\'s role and permissions'}
             >
-              {rolesData.map((role) => (
+              {rolesData.Roles.map((role) => (
                 <MenuItem key={role.id} value={role.id}>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                     {getRoleIcon(role.id)}

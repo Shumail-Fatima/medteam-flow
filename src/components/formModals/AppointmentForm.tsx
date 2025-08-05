@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   Box,
   TextField,
@@ -18,6 +18,7 @@ import type { AppointmentFormData, DoctorOption, Patient } from '../../types/app
 import { setSelectedSpecialty, clearSpecialtyFilter } from '../../store/slices/DoctorSlice';
 import PatientFormModal from './PatientFormModal';
 import { appointmentValidationSchema } from '../../validation/AppointmentValid';
+import { fetchPatients, addPatientAsync } from '../../store/slices/PatientSlice';
 
 interface AppointmentFormProps {
     onSubmit: (data: AppointmentFormData) => void;
@@ -34,6 +35,11 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
 }) => {
     //Get patients from Redux store
     const dispatch = useDispatch<AppDispatch>();
+
+    useEffect(() => {
+      dispatch(fetchPatients());
+    }, [dispatch]);
+
     const patients = useSelector((state: RootState) => state.patients.patients);
     const specialties = useSelector((state: RootState) => state.doctors.specialties);
     const selectedSpecialtyId = useSelector((state: RootState) => state.doctors.selectedSpecialtyId);
@@ -100,7 +106,8 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
     };
 
     const handlePatientAdd = (patientData: any) => {
-        onAddPatient(patientData);
+        //onAddPatient(patientData);
+        dispatch(addPatientAsync(patientData));
         setPatientModalOpen(false);
     };
 

@@ -16,7 +16,8 @@ const ConsultationList: React.FC = () => {
   const [searchParams] = useSearchParams();
   const patientId = searchParams.get('patientId');
   const consultations = useSelector((state: RootState) => state.medical.consultations);
-  const patients = useSelector((state: RootState) => state.medical.extendedPatients);
+  //const patients = useSelector((state: RootState) => state.medical.extendedPatients);
+  const patients = useSelector((state: RootState) => state.patients.patients);
 
   // Only show completed consultations for the logged-in doctor
   const doctorConsultations = useMemo(

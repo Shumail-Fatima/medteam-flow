@@ -1,5 +1,5 @@
 // utils.ts
-import roles from './../mockServer/data/Roles.json';
+import roles from './../mockServer/MockData.json';
 
 export const getUserWithRole = async (userEmail: string) => {
   try {
@@ -9,7 +9,7 @@ export const getUserWithRole = async (userEmail: string) => {
     const user = users.find((u: any) => u.email === userEmail);
     if (!user) return null;
 
-    const role = roles.find(r => r.id === user.roleId);
+    const role = roles.Roles.find(r => r.id === user.roleId);
     return {
       ...user,
       roleName: role ? role.name : 'Unknown Role'

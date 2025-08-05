@@ -43,7 +43,8 @@ const DoctorDashboard: React.FC = () => {
   const appointments = useSelector((state: RootState) => state.appointments.appointments);
   const tasks = useSelector((state: RootState) => state.task.tasks);
   const consultations = useSelector((state: RootState) => state.medical.consultations);
-  const patients = useSelector((state: RootState) => state.medical.extendedPatients);
+  //const patients = useSelector((state: RootState) => state.medical.extendedPatients);
+  const patients = useSelector((state: RootState) => state.patients.patients);
 
   // Filter data for current doctor
   const doctorAppointments = useMemo(() => {

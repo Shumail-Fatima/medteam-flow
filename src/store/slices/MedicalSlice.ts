@@ -8,7 +8,7 @@ const API_URL = 'http://localhost:8000/Consultations'; // Your REST API endpoint
 
 interface MedicalState {
   consultations: Consultation[];
-  extendedPatients: ExtendedPatient[];
+  //extendedPatients: ExtendedPatient[];
   loading: boolean;
   error: string | null;
 }
@@ -88,10 +88,10 @@ const calculateAge = (dateOfBirth: string): number => {
 // Initial state with medical data loaded from JSON
 const initialState: MedicalState = {
   consultations: (consultationData.Consultations || []) as Consultation[],
-  extendedPatients: patientData.Patients.map((patient: any) => ({
-    ...patient,
-    age: calculateAge(patient.dateOfBirth)
-  })) as ExtendedPatient[],
+  // extendedPatients: patientData.Patients.map((patient: any) => ({
+  //   ...patient,
+  //   age: calculateAge(patient.dateOfBirth)
+  // })) as ExtendedPatient[],
   loading: false,
   error: null,
 };
@@ -106,35 +106,35 @@ const medicalSlice = createSlice({
       state.consultations.push(action.payload);
       
       // Also add to patient's medical history
-      const patient = state.extendedPatients.find(p => p.id === action.payload.patientId);
-      if (patient) {
-        const historyEntry: MedicalHistoryEntry = {
-          id: `mh_${Date.now()}`,
-          date: action.payload.date,
-          type: 'consultation',
-          doctorId: action.payload.doctorId,
-          doctorName: action.payload.doctorName,
-          title: action.payload.diagnosis,
-          description: action.payload.notes,
-          symptoms: action.payload.symptoms,
-        };
-        patient.medicalHistory.push(historyEntry);
+      //const patient = state.extendedPatients.find(p => p.id === action.payload.patientId);
+      // if (patient) {
+      //   const historyEntry: MedicalHistoryEntry = {
+      //     id: `mh_${Date.now()}`,
+      //     date: action.payload.date,
+      //     type: 'consultation',
+      //     doctorId: action.payload.doctorId,
+      //     doctorName: action.payload.doctorName,
+      //     title: action.payload.diagnosis,
+      //     description: action.payload.notes,
+      //     symptoms: action.payload.symptoms,
+      //   };
+      //   patient.medicalHistory.push(historyEntry);
         
-        // Add prescriptions to medical history
-        action.payload.prescriptions.forEach(prescription => {
-          const prescriptionEntry: MedicalHistoryEntry = {
-            id: `mh_${Date.now()}_${prescription.id}`,
-            date: action.payload.date,
-            type: 'prescription',
-            doctorId: action.payload.doctorId,
-            doctorName: action.payload.doctorName,
-            title: prescription.medication,
-            description: prescription.instructions || '',
-            dosage: `${prescription.dosage} ${prescription.frequency}`,
-          };
-          patient.medicalHistory.push(prescriptionEntry);
-        });
-      }
+      //   // Add prescriptions to medical history
+      //   action.payload.prescriptions.forEach(prescription => {
+      //     const prescriptionEntry: MedicalHistoryEntry = {
+      //       id: `mh_${Date.now()}_${prescription.id}`,
+      //       date: action.payload.date,
+      //       type: 'prescription',
+      //       doctorId: action.payload.doctorId,
+      //       doctorName: action.payload.doctorName,
+      //       title: prescription.medication,
+      //       description: prescription.instructions || '',
+      //       dosage: `${prescription.dosage} ${prescription.frequency}`,
+      //     };
+      //     patient.medicalHistory.push(prescriptionEntry);
+      //   });
+      // }
     },
     
     // Update an existing consultation
@@ -146,32 +146,32 @@ const medicalSlice = createSlice({
     },
     
     // Add medical history entry to a patient
-    addMedicalHistoryEntry: (state, action: PayloadAction<{
-      patientId: string;
-      entry: MedicalHistoryEntry;
-    }>) => {
-      const patient = state.extendedPatients.find(p => p.id === action.payload.patientId);
-      if (patient) {
-        patient.medicalHistory.push(action.payload.entry);
-      }
-    },
+    // addMedicalHistoryEntry: (state, action: PayloadAction<{
+    //   patientId: string;
+    //   entry: MedicalHistoryEntry;
+    // }>) => {
+    //   const patient = state.extendedPatients.find(p => p.id === action.payload.patientId);
+    //   if (patient) {
+    //     patient.medicalHistory.push(action.payload.entry);
+    //   }
+    // },
     
     // Update patient medical information (allergies, blood type, etc.)
-    updatePatientMedicalInfo: (state, action: PayloadAction<{
-      patientId: string;
-      allergies?: string[];
-      bloodType?: string;
-    }>) => {
-      const patient = state.extendedPatients.find(p => p.id === action.payload.patientId);
-      if (patient) {
-        if (action.payload.allergies) {
-          patient.allergies = action.payload.allergies;
-        }
-        if (action.payload.bloodType) {
-          patient.bloodType = action.payload.bloodType;
-        }
-      }
-    },
+    // updatePatientMedicalInfo: (state, action: PayloadAction<{
+    //   patientId: string;
+    //   allergies?: string[];
+    //   bloodType?: string;
+    // }>) => {
+    //   const patient = state.extendedPatients.find(p => p.id === action.payload.patientId);
+    //   if (patient) {
+    //     if (action.payload.allergies) {
+    //       patient.allergies = action.payload.allergies;
+    //     }
+    //     if (action.payload.bloodType) {
+    //       patient.bloodType = action.payload.bloodType;
+    //     }
+    //   }
+    // },
     
     // Get consultations by doctor ID
     getConsultationsByDoctor: (state, action: PayloadAction<string>) => {
@@ -199,36 +199,36 @@ const medicalSlice = createSlice({
         const consultation = action.payload;
         state.consultations.push(consultation);
 
-        const patient = state.extendedPatients.find(p => p.id === consultation.patientId);
-        if (patient) {
-          // Add consultation entry to medical history
-          const historyEntry: MedicalHistoryEntry = {
-            id: `mh_${Date.now()}`,
-            date: consultation.date,
-            type: 'consultation',
-            doctorId: consultation.doctorId,
-            doctorName: consultation.doctorName,
-            title: consultation.diagnosis,
-            description: consultation.notes,
-            symptoms: consultation.symptoms,
-          };
-          patient.medicalHistory.push(historyEntry);
+        // const patient = state.extendedPatients.find(p => p.id === consultation.patientId);
+        // if (patient) {
+        //   // Add consultation entry to medical history
+        //   const historyEntry: MedicalHistoryEntry = {
+        //     id: `mh_${Date.now()}`,
+        //     date: consultation.date,
+        //     type: 'consultation',
+        //     doctorId: consultation.doctorId,
+        //     doctorName: consultation.doctorName,
+        //     title: consultation.diagnosis,
+        //     description: consultation.notes,
+        //     symptoms: consultation.symptoms,
+        //   };
+        //   patient.medicalHistory.push(historyEntry);
 
-          // Add each prescription to medical history
-          consultation.prescriptions.forEach(prescription => {
-            const prescriptionEntry: MedicalHistoryEntry = {
-              id: `mh_${Date.now()}_${prescription.id}`,
-              date: consultation.date,
-              type: 'prescription',
-              doctorId: consultation.doctorId,
-              doctorName: consultation.doctorName,
-              title: prescription.medication,
-              description: prescription.instructions || '',
-              dosage: `${prescription.dosage} ${prescription.frequency}`,
-            };
-            patient.medicalHistory.push(prescriptionEntry);
-          });
-        }
+        //   // Add each prescription to medical history
+        //   consultation.prescriptions.forEach(prescription => {
+        //     const prescriptionEntry: MedicalHistoryEntry = {
+        //       id: `mh_${Date.now()}_${prescription.id}`,
+        //       date: consultation.date,
+        //       type: 'prescription',
+        //       doctorId: consultation.doctorId,
+        //       doctorName: consultation.doctorName,
+        //       title: prescription.medication,
+        //       description: prescription.instructions || '',
+        //       dosage: `${prescription.dosage} ${prescription.frequency}`,
+        //     };
+        //     patient.medicalHistory.push(prescriptionEntry);
+        //   });
+        // }
       })
 
       .addCase(updateConsultationAsync.fulfilled, (state, action: PayloadAction<Consultation>) => {
@@ -256,8 +256,8 @@ const medicalSlice = createSlice({
 export const {
   addConsultation,
   updateConsultation,
-  addMedicalHistoryEntry,
-  updatePatientMedicalInfo,
+  // addMedicalHistoryEntry,
+  // updatePatientMedicalInfo,
   getConsultationsByDoctor,
   getConsultationsByPatient,
   setMedicalLoading,

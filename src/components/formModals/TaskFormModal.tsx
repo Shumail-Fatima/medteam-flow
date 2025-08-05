@@ -12,14 +12,14 @@ import type { TaskFormValues, Role } from '../../types/task';
 
 
 // -------- import dummy data --------
-import tasksData from '../../../mockServer/data/Tasks.json';
-import usersData from '../../../mockServer/data/Users.json'
-import patientsData from '../../../mockServer/data/Patients.json'
+import tasksData from '../../../mockServer/MockData.json';
+import usersData from '../../../mockServer/MockData.json'
+import patientsData from '../../../mockServer/MockData.json'
 
 const data = {
-  tasks: tasksData.tasks,
-  users: usersData,
-  patients: patientsData
+  tasks: tasksData.Tasks,
+  users: usersData.Users,
+  patients: patientsData.Patients
 };
 
 interface Option {
