@@ -30,6 +30,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import type { UserFormData } from '../../types/Auth';
 import type { User } from '../../types/Auth';
 import rolesData from '../../../mockServer/MockData.json';
+import  DoctorSpecialties from '../../../mockServer/MockData.json';
 import { DailogButton } from '../CustomButton';
 import { userSchema } from '../../validation/UserFormValidation';
 
@@ -64,11 +65,13 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
       email: '',
       password: '',
       roleId: 2 as number, // Default to doctor
+      specialtyId: '', // Optional, will be set based on role
     },
   });
 
   const selectedRoleId = watch('roleId') ?? 2;
   const selectedRole = rolesData.Roles.find(role => role.id === selectedRoleId);
+  const specialties = DoctorSpecialties.DoctorSpecialties || [];
 
   const getRoleIcon = (roleId: number) => {
     switch (roleId) {
@@ -96,6 +99,7 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
         email: user.email?? '',
         password: user.password?? '',
         roleId: user.roleId?? 2,
+        specialtyId: user.specialtyId?? '',
       });
     } else {
       reset({
@@ -104,6 +108,7 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
         email: '',
         password: '',
         roleId: 2,
+        specialtyId: '',
       });
     }
   }, [user, reset]);
@@ -222,7 +227,7 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
                   ),
               }}
             />
-
+          
             <TextField
               {...register('password')}
               label="Password"
@@ -259,6 +264,29 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
                 </MenuItem>
               ))}
             </TextField>
+
+            { selectedRoleId === 2 && (
+            <TextField
+              {...register('specialtyId')}
+              select
+              label="Specialty"
+              fullWidth
+              error={!!errors.specialtyId}
+              helperText={errors.specialtyId?.message || 'Select the user\'s specialty'}
+            >
+              {DoctorSpecialties.DoctorSpecialties.map((specialty) => (
+                <MenuItem key={specialty.id} value={specialty.id}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    {/* {getRoleIcon(specialty.id)} */}
+                    <Typography>
+                      {specialty.name.charAt(0).toUpperCase() + specialty.name.slice(1)}
+                    </Typography>
+                  </Box>
+                </MenuItem>
+              ))}
+            </TextField>)}
+
+
           </Box>
         </DialogContent>
 

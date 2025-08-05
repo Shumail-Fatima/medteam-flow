@@ -41,17 +41,6 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-/*const drawerItems = [
-  { text: 'User Management', icon: <PeopleIcon />, path: '/admin/user-management' },
-  { text: 'Task Management', icon: <AssignmentIcon />, path: '/task-management' },
-  { text: 'Appointment', icon: <AssessmentIcon />, path: '/Appointment' },
-  { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
-  { text: 'Support', icon: <SupportIcon />, path: '/support' },
-  { text: 'Patient Management', icon: <PeopleIcon />, path: '/patients' },
-  { text: 'Consultation', icon: <AssessmentIcon />, path: '/consultation' },
-  { text: 'Dashboard', icon: <DashboardIcon />, path: '/doc/dashboard' },
-];*/
-
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   //const [drawerOpen, setDrawerOpen] = React.useState(false);
   const navigate = useNavigate();

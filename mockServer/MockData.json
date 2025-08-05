@@ -238,7 +238,7 @@
       "consultationCompleted": false
     },
     {
-      "id": "apt_1754396564307",
+      "id": "apt_1754398548666",
       "patientId": "patient_4",
       "patientName": "Emily Carter",
       "patientAge": 7,
@@ -247,7 +247,7 @@
       "doctorName": "Dr. Emily Rodriguez",
       "appointmentSlot": "2025-08-05T10:00:00Z",
       "reason": "Mild Dehydration Due to Acute Gastroenteritis",
-      "createdAt": "2025-08-05T12:22:44.307Z",
+      "createdAt": "2025-08-05T12:55:48.666Z",
       "status": "scheduled",
       "consultationCompleted": false
     }
@@ -855,47 +855,47 @@
   ],
   "DoctorSpecialties": [
     {
-      "id": "cardiology",
+      "id": "1",
       "name": "Cardiology",
       "description": "Heart and cardiovascular system"
     },
     {
-      "id": "dermatology",
+      "id": "2",
       "name": "Dermatology",
       "description": "Skin, hair, and nail conditions"
     },
     {
-      "id": "endocrinology",
+      "id": "3",
       "name": "Endocrinology",
       "description": "Hormones and metabolic disorders"
     },
     {
-      "id": "gastroenterology",
+      "id": "4",
       "name": "Gastroenterology",
       "description": "Digestive system disorders"
     },
     {
-      "id": "neurology",
+      "id": "5",
       "name": "Neurology",
       "description": "Nervous system and brain disorders"
     },
     {
-      "id": "orthopedics",
+      "id": "6",
       "name": "Orthopedics",
       "description": "Bones, joints, and musculoskeletal system"
     },
     {
-      "id": "pediatrics",
+      "id": "7",
       "name": "Pediatrics",
       "description": "Medical care for infants, children, and adolescents"
     },
     {
-      "id": "psychiatry",
+      "id": "8",
       "name": "Psychiatry",
       "description": "Mental health and behavioral disorders"
     },
     {
-      "id": "general",
+      "id": "9",
       "name": "General Medicine",
       "description": "Primary care and general health"
     }
@@ -1126,15 +1126,15 @@
   ],
   "Roles": [
     {
-      "id": "1",
+      "id": 1,
       "name": "admin"
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "doctor"
     },
     {
-      "id": "3",
+      "id": 3,
       "name": "nurse"
     }
   ],
@@ -1280,6 +1280,16 @@
       "roleId": 3,
       "createdAt": "2025-07-29T05:51:45.319Z",
       "roleName": "nurse"
+    },
+    {
+      "id": "apt_1754401859360",
+      "name": "Dr. Ayesha Siddiqui",
+      "username": "Ayesha Siddiqui",
+      "email": "ayesha.siddiqui@hospital.com",
+      "password": "doctor123",
+      "roleId": 2,
+      "createdAt": "2025-08-05T13:50:59.360Z",
+      "roleName": "doctor"
     }
   ],
   "Notifications": [
