@@ -28,8 +28,8 @@ import doctorSpecialtiesData from '../../mockServer/MockData.json';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { fetchPatients } from '../store/slices/PatientSlice';
-// import { useNotificationSocket } from '../context/NotifSocketContext';
-import { createNotificationChannel } from '../utils/NotificationChannel';
+import { useNotification } from '../context/NotifSocketContext';
+import { NotificationService } from '../utils/NotificationService';
 
 // Prepare doctors array from users data
 const doctors = usersData.Users
@@ -84,7 +84,7 @@ const AppointmentManagement: React.FC = () => {
   { label: 'Create Appointment' },
 ];
 
-  const channel = createNotificationChannel();
+  const { sendNotification } = useNotification();
 
   // Tab change handler
   const handleTabChange = (_: any, newValue: number) => {
@@ -235,28 +235,25 @@ const AppointmentManagement: React.FC = () => {
         status: 'scheduled',
         consultationCompleted: false,
       };
-      // dispatch(addAppointment(newAppointment));
-      dispatch(addAppointmentAsync(newAppointment));
-      setSnackbar({
-        open: true,
-        message: 'Appointment created successfully!',
-        severity: 'success'
-      });
-      // Notify the doctor user
-  // if (ws && ws.readyState === WebSocket.OPEN) {
-  //   ws.send(JSON.stringify({
-  //     type: 'notification',
-  //     toUserId: newAppointment.doctorId, // doctor user id
-  //     payload: {
-  //       title: 'New Appointment Scheduled',
-  //       message: `You have a new appointment with ${newAppointment.patientName} on ${newAppointment.appointmentSlot}.`,
-  //       type: 'appointment',
-  //       appointmentId: newAppointment.id,
-  //       isRead: false,
-  //       createdAt: new Date().toISOString()
-  //     }
-  //   }));
-  // }
+             // dispatch(addAppointment(newAppointment));
+       dispatch(addAppointmentAsync(newAppointment));
+       setSnackbar({
+         open: true,
+         message: 'Appointment created successfully!',
+         severity: 'success'
+       });
+       
+       // Send notification to the doctor
+       const notification = NotificationService.createAppointmentNotification(
+         newAppointment.doctorId,
+         user?.id || '',
+         newAppointment.id,
+         newAppointment.patientName,
+         newAppointment.doctorName,
+         newAppointment.appointmentSlot,
+         'created'
+       );
+       sendNotification(notification);
     }
 
    

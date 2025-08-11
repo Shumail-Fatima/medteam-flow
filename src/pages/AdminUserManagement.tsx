@@ -16,9 +16,14 @@ import ViewDialog from '../components/sharedComponents/ViewDialog';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '../store/Store';
 import { addUser, updateUser, deleteUser, fetchUsers, addUserAsync, updateUserAsync, deleteUserAsync } from '../store/slices/UserSlice';
+import { useNotification } from '../context/NotifSocketContext';
+import { NotificationService } from '../utils/NotificationService';
+import { useAuth } from '../context/AuthContext';
 
 const AdminUserManagement: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { user: currentUser } = useAuth();
+  const { sendNotification } = useNotification();
   const users = useSelector((state: RootState) => state.user.users);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
@@ -151,7 +156,16 @@ const AdminUserManagement: React.FC = () => {
       open: true,
       message: 'User created successfully!',
       severity: 'success'
-    })
+    });
+    
+    // Send notification to admin about new user creation
+    const notification = NotificationService.createUserNotification(
+      currentUser?.id || '',
+      currentUser?.id || '',
+      newUser.name,
+      'created'
+    );
+    sendNotification(notification);
   }
   //close form modal
     setIsModalOpen(false);

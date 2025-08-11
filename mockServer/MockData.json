@@ -263,6 +263,34 @@
       "createdAt": "2025-08-10T17:01:50.817Z",
       "status": "scheduled",
       "consultationCompleted": false
+    },
+    {
+      "id": "apt_1754890420558",
+      "patientId": "patient_4",
+      "patientName": "Emily Carter",
+      "patientAge": 7,
+      "specialtyName": "Pediatrics",
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Rodriguez",
+      "appointmentSlot": "2025-08-10T14:00:00Z",
+      "reason": "Recurrent Wheezing in a Child",
+      "createdAt": "2025-08-11T05:33:40.558Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1754892011765",
+      "patientId": "patient_7",
+      "patientName": "Oliver Brown",
+      "patientAge": 37,
+      "specialtyName": "Orthopedics",
+      "doctorId": "5",
+      "doctorName": "Dr. James Thompson",
+      "appointmentSlot": "2025-08-11T10:30:00Z",
+      "reason": "Post-Operative Knee Replacement Follow-Up",
+      "createdAt": "2025-08-11T06:00:11.765Z",
+      "status": "scheduled",
+      "consultationCompleted": false
     }
   ],
   "Consultations": [
@@ -781,6 +809,36 @@
       ],
       "followUpRequired": false,
       "createdAt": "2025-08-04T13:18:23.188Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1754890536433",
+      "patientId": "patient_4",
+      "patientName": "Emily Carter",
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Rodriguez",
+      "appointmentId": "apt_1754890420558",
+      "date": "2025-08-11T05:35:36.433Z",
+      "symptoms": [
+        "Persistent cough",
+        "recurrent wheezing",
+        "shortness of breath during physical activity",
+        "occasional night-time coughing"
+      ],
+      "diagnosis": "Mild intermittent asthma – currently stable with inhaler therapy",
+      "notes": "The patient, a 7-year-old girl, presents for follow-up after an asthma diagnosis 3 months ago. The mother reports significant improvement since starting salbutamol inhaler therapy, with only two mild wheezing episodes in the past month, both triggered by outdoor play. No hospital visits or oral steroid use reported. Examination shows clear breath sounds and no respiratory distress. Oxygen saturation is 98%. Advised on inhaler technique review, continued trigger avoidance, and monitoring symptoms. Parents were educated on when to seek urgent care. Follow-up in 3 months or sooner if symptoms worsen.",
+      "prescriptions": [
+        {
+          "id": "rx_1754890536434_0",
+          "medication": "Salbutamol Inhaler",
+          "dosage": "100 mcg",
+          "frequency": "Up to 4 times daily if wheezing occurs",
+          "duration": "As required for symptom control",
+          "instructions": "Use with spacer, rinse mouth after use, avoid overuse."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-08-11T05:35:36.434Z",
       "status": "completed"
     }
   ],
@@ -1343,6 +1401,29 @@
       "type": "followup",
       "isRead": false,
       "createdAt": "2025-08-04T12:00:00Z"
+    },
+    {
+      "id": "notif_1754892011766_5imc7q9h1",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with Oliver Brown on 8/11/2025",
+      "type": "appointment",
+      "toUserId": "5",
+      "fromUserId": "apt_1753765295252",
+      "appointmentId": "apt_1754892011765",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-11T06:00:11.766Z"
+    },
+    {
+      "id": "notif_1754893430358_5iekd6tr0",
+      "title": "New User Account Created",
+      "message": "New user account has been created for Dr Mishal Fatima",
+      "type": "user",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-11T06:23:50.358Z"
     }
   ]
 }

@@ -36,7 +36,7 @@ import { useAuth } from '../../context/AuthContext';
 import { rolePages } from '../RolePages';
 import { useState } from 'react';
 // import { useNotificationSocket } from '../../context/NotifSocketContext';
-import { createNotificationChannel } from '../../utils/NotificationChannel';
+import { useNotification } from '../../context/NotifSocketContext';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -55,10 +55,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [notifAnchorEl, setNotifAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [notifications, setNotifications] = useState<any[]>([]);
   const notifOpen = Boolean(notifAnchorEl);
+  //const { notifications, markAsRead, getUnreadCount } = useNotification();
+  const [notifications, setNotifications] = useState<any[]>([]);
 
-  //const channel = createNotificationChannel();
+
   const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -92,6 +93,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 // }, [ws, user]);
   
 
+  //const unreadCount = getUnreadCount();
   const unreadCount = notifications.filter(n => !n.isRead).length;
 
   const getNotificationPath = (notif: any) => {
@@ -322,19 +324,21 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <MenuItem key={notif.id} onClick={(e) => {e.stopPropagation();
         
         handleNotifClose();
-        // Mark as read in UI
-          setNotifications((prev) =>
-            prev.map((n) =>
-              n.id === notif.id ? { ...n, isRead: true } : n
-            )
-          );
+        // // Mark as read in UI
+        // setNotifications((prev) =>
+        //   prev.map((n) =>
+        //     n.id === notif.id ? { ...n, isRead: true } : n
+        //   )
+        // );
 
-          // Optionally, persist to mock server
-          fetch(`http://localhost:8000/Notifications/${notif.id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ isRead: true }),
-          });
+        // Optionally, persist to mock server
+        fetch(`http://localhost:8000/Notifications/${notif.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ isRead: true }),
+        });
+        // Mark as read
+        //markAsRead(notif.id);
         navigate(getNotificationPath(notif));
       }}>
         <Box>
