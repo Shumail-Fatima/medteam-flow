@@ -25,4 +25,12 @@ import {
       { label: 'Settings', icon: <SettingsIcon />, path: '/settings' },
       { label: 'Support', icon: <SupportIcon />, path: '/support' },
     ],
+    nurse: [
+      { label: 'Dashboard', icon: <DashboardIcon />, path: '/doc/dashboard' },
+      { label: 'Patient Management', icon: <PeopleIcon />, path: '/patients'},
+      { label: 'Appointment', icon: <AssessmentIcon />, path: '/Appointment'},
+      { label: 'Task Management', icon: <AssignmentIcon />, path: '/task-management'},
+      { label: 'Settings', icon: <SettingsIcon />, path: '/settings' },
+      { label: 'Support', icon: <SupportIcon />, path: '/support' },
+    ],
   };

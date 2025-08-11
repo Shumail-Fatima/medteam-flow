@@ -114,7 +114,7 @@ const AdminUserManagement: React.FC = () => {
 
   // Handle user form submission (create or update)
   const handleUserSubmit = (data:UserFormData) => {
-    const roleName = roleData.Roles.find(role => role.id === data.roleId)?.name || 'unknown';
+    const roleName = roleData.Roles.find(role => role.id === String(data.roleId))?.name || 'unknown';
     if (selectedUser) {
       // Update existing user using Redux action
       const updatedUser: User = {

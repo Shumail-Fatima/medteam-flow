@@ -64,13 +64,13 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
       username: '',
       email: '',
       password: '',
-      roleId: 2 as number, // Default to doctor
+      roleId: 2, // Default to doctor
       specialtyId: '', // Optional, will be set based on role
     },
   });
 
-  const selectedRoleId = watch('roleId') ?? 2;
-  const selectedRole = rolesData.Roles.find(role => role.id === selectedRoleId);
+  const selectedRoleId = Number(watch('roleId')) || 2;
+  const selectedRole = rolesData.Roles.find(role => Number(role.id) === selectedRoleId);
   const specialties = DoctorSpecialties.DoctorSpecialties || [];
 
   const getRoleIcon = (roleId: number) => {
@@ -98,7 +98,7 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
         username: user.username?? '',
         email: user.email?? '',
         password: user.password?? '',
-        roleId: user.roleId?? 2,
+        roleId: user.roleId?? '2',
         specialtyId: user.specialtyId?? '',
       });
     } else {
@@ -256,7 +256,7 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
               {rolesData.Roles.map((role) => (
                 <MenuItem key={role.id} value={role.id}>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    {getRoleIcon(role.id)}
+                    {getRoleIcon(Number(role.id))}
                     <Typography>
                       {role.name.charAt(0).toUpperCase() + role.name.slice(1)}
                     </Typography>

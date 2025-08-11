@@ -1,5 +1,5 @@
 // utils.ts
-import roles from './../mockServer/MockData.json';
+import roles from './../mockServer/MockData.json'
 
 export const getUserWithRole = async (userEmail: string) => {
   try {
@@ -9,10 +9,16 @@ export const getUserWithRole = async (userEmail: string) => {
     const user = users.find((u: any) => u.email === userEmail);
     if (!user) return null;
 
-    const role = roles.Roles.find(r => r.id === user.roleId);
+    // If user already has roleName, use it; otherwise look it up
+    let roleName = user.roleName;
+    if (!roleName) {
+      const role = roles.Roles.find(r => r.id === user.roleId);
+      roleName = role ? role.name : 'Unknown Role';
+    }
+
     return {
       ...user,
-      roleName: role ? role.name : 'Unknown Role'
+      roleName: roleName
     };
   } catch (error) {
     console.error("Error fetching users:", error);

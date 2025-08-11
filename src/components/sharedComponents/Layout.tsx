@@ -36,6 +36,7 @@ import { useAuth } from '../../context/AuthContext';
 import { rolePages } from '../RolePages';
 import { useState } from 'react';
 // import { useNotificationSocket } from '../../context/NotifSocketContext';
+import { createNotificationChannel } from '../../utils/NotificationChannel';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -46,6 +47,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useAuth();
+  //const drawerItems = user ? rolePages[user.roleName as keyof typeof rolePages] || [] : [];
   const drawerItems = user ? rolePages[user.roleName as keyof typeof rolePages] || [] : [];
   const [anchorE1, setAnchorE1] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorE1);
@@ -56,7 +58,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [notifications, setNotifications] = useState<any[]>([]);
   const notifOpen = Boolean(notifAnchorEl);
 
-
+  //const channel = createNotificationChannel();
   const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -132,9 +134,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   const drawerWidth = 280;
   const drawerContent = (
-    <Box sx={{ width: 280 }} role="presentation">
+    <Box sx={{ width: 280, display: 'flex', flexDirection: 'column', height: '100%' }} role="presentation">
           
-          <List sx={{ pt: 5 }}>
+          <List sx={{ pt: 5, flexGrow: 1 }}>
             {drawerItems.map((item) => (
               <ListItem key={item.label} disablePadding sx={{ px: 1, mb: 0.5 }}>
                 <ListItemButton
@@ -170,8 +172,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             ))}
           </List>
 
-          {/* Sticky Logout at bottom
-          tried to move the logout to the bottom of sidebar */}
+          {/* Sticky Logout at bottom */}
           <Box sx={{ mt: 'auto' }}>
             <List>
               <ListItem disablePadding>
@@ -201,7 +202,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         open={mobileOpen}
         onClose={toggleDrawer}
         ModalProps={{ keepMounted: true }}
-        sx={{ '& .MuiDrawer-paper': { width: drawerWidth, paddingTop: '80px' } }}
+        sx={{ '& .MuiDrawer-paper': { width: drawerWidth, paddingTop: '80px', display: 'flex', flexDirection: 'column' } }}
       >
         {drawerContent}
       </Drawer>
@@ -216,6 +217,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             width: drawerWidth,
             top: 64,
             height: 'calc(100% - 64px)',
+            display: 'flex',
+            flexDirection: 'column',
           },
         }}
       >

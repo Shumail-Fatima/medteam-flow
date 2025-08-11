@@ -250,6 +250,19 @@
       "createdAt": "2025-08-05T12:55:48.666Z",
       "status": "scheduled",
       "consultationCompleted": false
+    },
+    {
+      "id": "apt_1754845310817",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "patientAge": 74,
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentSlot": "2025-08-11T14:00:00Z",
+      "reason": "visit follow up",
+      "createdAt": "2025-08-10T17:01:50.817Z",
+      "status": "scheduled",
+      "consultationCompleted": false
     }
   ],
   "Consultations": [
@@ -1126,15 +1139,15 @@
   ],
   "Roles": [
     {
-      "id": 1,
+      "id": "1",
       "name": "admin"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "doctor"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "nurse"
     }
   ],
@@ -1196,7 +1209,8 @@
       "username": "john123",
       "email": "admin@example.com",
       "password": "admin123",
-      "roleId": 1
+      "roleId": 1,
+      "roleName": "admin"
     },
     {
       "id": "2",

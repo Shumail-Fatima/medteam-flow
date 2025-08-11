@@ -127,7 +127,7 @@ const userSlice = createSlice({
       .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<User[]>) => {
             state.users = action.payload.map((user) => ({
                 ...user,
-                roleName: rolesData.Roles.find((r) => r.id === user.roleId)?.name || 'unknown',
+                roleName: rolesData.Roles.find((r) => r.id === String(user.roleId))?.name || 'unknown',
             }));
             state.loading = false;
             })
@@ -137,7 +137,7 @@ const userSlice = createSlice({
     })
     .addCase(addUserAsync.fulfilled, (state, action) => {
         const user = action.payload;
-        const roleName = rolesData.Roles.find(r => r.id === user.roleId)?.name || 'unknown';
+        const roleName = rolesData.Roles.find(r => r.id === String(user.roleId))?.name || 'unknown';
         state.users.push({ ...user, roleName });
         })
     builder.addCase(updateUserAsync.fulfilled, (state, action: PayloadAction<User>) => {

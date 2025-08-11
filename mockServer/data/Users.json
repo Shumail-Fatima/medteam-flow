@@ -5,7 +5,8 @@
     "username":"john123",
     "email": "admin@example.com",
     "password": "admin123",
-    "roleId": 1
+    "roleId": 1,
+    "roleName": "admin"
   },
   {
     "id": "2",
@@ -68,7 +69,8 @@
     "username":"Robert House",
     "email": "robert.house@hospital.com",
     "password": "robert123",
-    "roleId": 3
+    "roleId": 3,
+    "roleName": "nurse"
   }
 
 ]

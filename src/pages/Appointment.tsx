@@ -28,6 +28,7 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { fetchPatients } from '../store/slices/PatientSlice';
 // import { useNotificationSocket } from '../context/NotifSocketContext';
+import { createNotificationChannel } from '../utils/NotificationChannel';
 
 // Prepare doctors array from users data
 const doctors = usersData.Users
@@ -79,6 +80,8 @@ const AppointmentManagement: React.FC = () => {
   { label: 'Appointments List' },
   { label: 'Create Appointment' },
 ];
+
+  const channel = createNotificationChannel();
 
   // Tab change handler
   const handleTabChange = (_: any, newValue: number) => {
@@ -251,6 +254,8 @@ const AppointmentManagement: React.FC = () => {
   //   }));
   // }
     }
+
+   
 
     // Switch back to appointments list tab
     setActiveTab(0);
