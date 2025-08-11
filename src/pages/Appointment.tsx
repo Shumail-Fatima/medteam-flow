@@ -23,6 +23,7 @@ import type { Appointment, AppointmentFormData, PatientFormData } from '../types
 import usersData from '../../mockServer/MockData.json';
 import doctorSlots from '../../mockServer/MockData.json';
 import ViewDialog from '../components/sharedComponents/ViewDialog';
+//import doctorSpecialtiesData from '../../mockServer/data/DoctorSpeciality.json';
 import doctorSpecialtiesData from '../../mockServer/MockData.json';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -36,6 +37,8 @@ const doctors = usersData.Users
   .map((user: any) => {
     const slotObj = doctorSlots.DoctorsSlots.find((s: any) => String(s.doctorId) === String(user.id));
     const specialty = doctorSpecialtiesData.DoctorSpecialties.find((spec: any) => spec.id === user.specialtyId);
+    // Use the correct data source that matches the specialtyId format
+    //const specialty = doctorSpecialtiesData.find((spec: any) => spec.id === user.specialtyId);
     return {
       label: user.name,
       value: String(user.id),
@@ -186,6 +189,7 @@ const AppointmentManagement: React.FC = () => {
   const handleAppointmentSubmit = (data: AppointmentFormData) => {
     const selectedPatient = patients.find(p => p.id === data.patientId);
     const selectedDoctor = doctors.find(d => d.value === data.doctorId);
+    //const selectedSpecialty = doctorSpecialtiesData.find((s: any) => s.id === selectedDoctor?.specialtyId);
     const selectedSpecialty = doctorSpecialtiesData.DoctorSpecialties.find(s => s.id === selectedDoctor?.specialtyId);
 
     if (!selectedPatient || !selectedDoctor) {

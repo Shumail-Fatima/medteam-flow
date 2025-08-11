@@ -30,6 +30,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import type { UserFormData } from '../../types/Auth';
 import type { User } from '../../types/Auth';
 import rolesData from '../../../mockServer/MockData.json';
+//import  DoctorSpecialties from '../../../mockServer/data/DoctorSpeciality.json';
 import  DoctorSpecialties from '../../../mockServer/MockData.json';
 import { DailogButton } from '../CustomButton';
 import { userSchema } from '../../validation/UserFormValidation';
@@ -71,6 +72,7 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
 
   const selectedRoleId = Number(watch('roleId')) || 2;
   const selectedRole = rolesData.Roles.find(role => Number(role.id) === selectedRoleId);
+  //const specialties = DoctorSpecialties || [];
   const specialties = DoctorSpecialties.DoctorSpecialties || [];
 
   const getRoleIcon = (roleId: number) => {

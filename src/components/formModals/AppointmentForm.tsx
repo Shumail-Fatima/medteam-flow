@@ -238,11 +238,11 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
                       <Typography variant="body2" fontWeight={specialty.value === '' ? 'bold' : 'normal'}>
                         {specialty.label}
                       </Typography>
-                      {/*specialty. && (
+                      {/* specialty. && (
                         <Typography variant="caption" color="text.secondary">
                           {specialty.description}
                         </Typography>
-                      )*/}
+                      ) */}
                     </Box>
                   </MenuItem>
                 ))}

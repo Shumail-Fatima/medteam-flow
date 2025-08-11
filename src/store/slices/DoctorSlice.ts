@@ -1,6 +1,7 @@
 // Redux slice for managing doctor specialties and filtering
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { DoctorSpecialty } from '../../types/appointment';
+//import doctorSpecialtiesData from '../../../mockServer/data/DoctorSpeciality.json';
 import doctorSpecialtiesData from '../../../mockServer/MockData.json';
 
 interface DoctorState {
@@ -12,6 +13,7 @@ interface DoctorState {
 
 // Initial state with doctor specialties loaded from JSON data
 const initialState: DoctorState = {
+  //specialties: doctorSpecialtiesData as DoctorSpecialty[],
   specialties: doctorSpecialtiesData.DoctorSpecialties as DoctorSpecialty[],
   selectedSpecialtyId: null,
   loading: false,
