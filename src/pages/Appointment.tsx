@@ -86,6 +86,36 @@ const AppointmentManagement: React.FC = () => {
 
   const { sendNotification } = useNotification();
 
+  // useEffect(() => {
+  //   if (!appointments.length || !user) return;
+  
+  //   const reminderInterval = setInterval(() => {
+  //     const now = new Date();
+  //     const oneDayLater = new Date();
+  //     oneDayLater.setDate(oneDayLater.getDate() + 1);
+  
+  //     const upcomingAppointments = appointments.filter(apt => {
+  //       const aptTime = new Date(apt.appointmentSlot).getTime();
+  //       return (aptTime > now.getTime() && aptTime <= oneDayLater.getTime() , console.log(aptTime > now.getTime() && aptTime <= oneDayLater.getTime()));
+  //     });
+  
+  //     upcomingAppointments.forEach(apt => {
+  //       const reminderNotification = NotificationService.createAppointmentNotification(
+  //         apt.doctorId,       // toUserId
+  //         user.id,            // fromUserId
+  //         apt.patientName,
+  //         apt.doctorName,
+  //         apt.appointmentSlot,
+  //         'reminder'
+  //       );
+  //       sendNotification(reminderNotification);
+  //     });
+  //   }, 60 * 1000); // check every 1 hour
+  
+  //   return () => clearInterval(reminderInterval);
+  // }, [appointments, user, sendNotification]);
+  
+
   // Tab change handler
   const handleTabChange = (_: any, newValue: number) => {
     setActiveTab(newValue);

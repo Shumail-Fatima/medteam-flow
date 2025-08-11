@@ -303,6 +303,20 @@
       "appointmentSlot": "2025-08-11T13:00:00Z",
       "reason": "Cognitive Decline with Early Signs of Dementia",
       "createdAt": "2025-08-11T08:52:24.064Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1754905108172",
+      "patientId": "patient_6",
+      "patientName": "Sophia Lee",
+      "patientAge": 19,
+      "specialtyName": "Dermatology",
+      "doctorId": "6",
+      "doctorName": "Dr. Lisa Anderson",
+      "appointmentSlot": "2025-08-12T14:30:00Z",
+      "reason": "Acne Vulgaris – Moderate Inflammatory Type",
+      "createdAt": "2025-08-11T09:38:28.172Z",
       "status": "scheduled",
       "consultationCompleted": false
     }
@@ -882,6 +896,39 @@
       ],
       "followUpRequired": false,
       "createdAt": "2025-08-11T08:00:26.537Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1754906198961",
+      "patientId": "patient_5",
+      "patientName": "George Miller",
+      "doctorId": "3",
+      "doctorName": "Dr. Michael Chen",
+      "appointmentId": "apt_1754902344064",
+      "date": "2025-08-11T09:56:38.961Z",
+      "symptoms": [
+        "Gradual memory loss",
+        "difficulty recalling recent events",
+        "mild confusion about time and place",
+        "occasional word-finding difficulty",
+        "slower problem-solving",
+        "slight imbalance while walking."
+      ],
+      "diagnosis": "Mild Cognitive Impairment (MCI) – probable early Alzheimer’s disease.",
+      "notes": "The patient’s family reports increasing forgetfulness over the past year, including misplacing items and repeating questions. He remains independent in daily activities but occasionally forgets appointments. No major mood or behavioral changes noted. On examination, Mini-Mental State Examination (MMSE) score was 24/30, showing deficits in recall and orientation. Motor exam revealed mild gait instability without tremor. No focal neurological deficits. MRI brain shows mild cortical atrophy consistent with age and early Alzheimer’s pathology. Recommend further neuropsychological assessment and close follow-up. Discussed cognitive stimulation activities, safe home modifications, and possible initiation of cholinesterase inhibitor therapy.",
+      "prescriptions": [
+        {
+          "id": "rx_1754906198961_0",
+          "medication": "Donepezil",
+          "dosage": "5 mg",
+          "frequency": "Once daily at bedtime",
+          "duration": "Ongoing",
+          "instructions": "Take with water at night; monitor for nausea, dizziness, or vivid dreams."
+        }
+      ],
+      "followUpRequired": true,
+      "followUpDate": "2025-08-13T13:00",
+      "createdAt": "2025-08-11T09:56:38.961Z",
       "status": "completed"
     }
   ],
@@ -1526,6 +1573,77 @@
       "priority": "medium",
       "isRead": true,
       "createdAt": "2025-08-11T08:52:24.068Z"
+    },
+    {
+      "id": "notif_1754905108173_u04m85oz7",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with Sophia Lee on 8/12/2025",
+      "type": "appointment",
+      "toUserId": "6",
+      "fromUserId": "1",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-11T09:38:28.173Z"
+    },
+    {
+      "id": "notif_1754906009627_jd991zvfw",
+      "title": "Consultation Started",
+      "message": "Consultation with George Miller has started",
+      "type": "consultation",
+      "toUserId": "3",
+      "fromUserId": "3",
+      "consultationId": "apt_1754902344064",
+      "patientId": "apt_1754902344064",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-11T09:53:29.627Z"
+    },
+    {
+      "id": "notif_1754906198964_aeo7rl19r",
+      "title": "Consultation Completed",
+      "message": "Consultation with George Miller has been completed",
+      "type": "consultation",
+      "toUserId": "3",
+      "fromUserId": "3",
+      "consultationId": "cons_1754906198961",
+      "patientId": "cons_1754906198961",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-11T09:56:38.965Z"
+    },
+    {
+      "id": "notif_1754906198963_5d0drxkif",
+      "title": "Follow-up Required",
+      "message": "Follow-up consultation required for George Miller",
+      "type": "followup",
+      "toUserId": "3",
+      "fromUserId": "3",
+      "consultationId": "cons_1754906198961",
+      "priority": "high",
+      "isRead": true,
+      "createdAt": "2025-08-11T09:56:38.963Z"
+    },
+    {
+      "id": "notif_1754908431187_fjj5s57cl",
+      "title": "User Account Updated",
+      "message": "User account for Jane Doe has been updated",
+      "type": "user",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-11T10:33:51.187Z"
+    },
+    {
+      "id": "notif_1754908451011_98ckm1hq1",
+      "title": "User Account Updated",
+      "message": "User account for Jane Doe has been updated",
+      "type": "user",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-11T10:34:11.011Z"
     }
   ]
 }

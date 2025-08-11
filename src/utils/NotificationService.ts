@@ -95,7 +95,7 @@ export class NotificationService {
       toUserId,
       fromUserId,
       consultationId,
-      patientId: consultationId, // You might want to extract patientId from consultation
+      //patientId: consultationId, // You might want to extract patientId from consultation
       priority: template.priority,
     };
   }

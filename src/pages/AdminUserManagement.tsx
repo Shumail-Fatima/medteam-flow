@@ -138,6 +138,15 @@ const AdminUserManagement: React.FC = () => {
         message: 'User updated successfully!',
         severity: 'success'
       });
+      // Send notification to admin about new user creation
+    const notification = NotificationService.createUserNotification(
+      currentUser?.id || '',
+      currentUser?.id || '',
+      updatedUser.name,
+      'updated'
+    );
+    sendNotification(notification);
+
   } else {
     // Create new user using Redux action
     const newUser: User ={

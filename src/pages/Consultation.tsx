@@ -214,6 +214,19 @@ const ConsultationManagement: React.FC = () => {
         status: 'completed'
       }));
 
+      if (newConsultation.followUpRequired === true){
+        const notification = NotificationService.createConsultationNotification(
+          newConsultation.doctorId,
+          //user?.id ,
+          user?.id || '',
+          newConsultation.id,
+          newConsultation.patientName,
+          'followup_required'
+        );
+        sendNotification(notification);
+      };
+      
+      
       // Send notification to the doctor
       const notification = NotificationService.createConsultationNotification(
         newConsultation.doctorId,
@@ -223,6 +236,7 @@ const ConsultationManagement: React.FC = () => {
         'completed'
       );
       sendNotification(notification);
+    
 
       // If consultation is linked to an appointment, mark it as completed
       if (data.appointmentId) {
