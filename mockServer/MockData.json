@@ -262,7 +262,8 @@
       "reason": "visit follow up",
       "createdAt": "2025-08-10T17:01:50.817Z",
       "status": "scheduled",
-      "consultationCompleted": false
+      "consultationCompleted": false,
+      "specialtyName": "Cardiology"
     },
     {
       "id": "apt_1754890420558",

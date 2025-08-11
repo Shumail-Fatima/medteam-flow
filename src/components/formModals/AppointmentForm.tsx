@@ -9,7 +9,7 @@ import {
   Paper,
   Chip,
 } from '@mui/material';
-import { Add, Person, LocalHospital, Category } from '@mui/icons-material';
+import { Add, Person, LocalHospital, Category, Label } from '@mui/icons-material';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import type { RootState, AppDispatch } from '../../store/Store';
@@ -57,6 +57,7 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
             doctorId: '',
             appointmentSlot: '',
             reason: '',
+            status: 'scheduled',
             ...initialValues,
         },
     });
@@ -85,6 +86,8 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
         patient: patient,
     }));
 
+    const statusOptions = ["scheduled" , "completed" , "cancelled" , "no-show"];
+
     const specialtyOptions = [
       {label: 'All Specialties', value: ''},
       ...specialties.map(specialty => ({
@@ -110,6 +113,8 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
         dispatch(addPatientAsync(patientData));
         setPatientModalOpen(false);
     };
+
+
 
     // Handle specialty selection and filter doctors using Redux
     const handleSpecialtyChange = (specialtyId: string) => {
@@ -362,6 +367,58 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
                     {selectedDoctor ? 'No slots available' : 'Select a doctor first'}
                   </MenuItem>
                 )}
+              </TextField>
+            )}
+          />
+          
+          {/* Appointment Status */}
+          <Controller
+            name="status"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                select
+                label="Appointment Status"
+                fullWidth
+                error={!!errors.status}
+                helperText={errors.status?.message || "Select the current status of the appointment"}
+                value={field.value}
+                onChange={field.onChange}
+                InputProps={{
+                  startAdornment: <Label sx={{ mr: 1, color: 'action.active' }} />,
+                }}
+                sx={{
+                  '& .MuiSelect-select': {
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 1,
+                  }
+                }}
+              >
+                <MenuItem value="scheduled">
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: 'primary.main' }} />
+                    Scheduled
+                  </Box>
+                </MenuItem>
+                <MenuItem value="completed">
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: 'success.main' }} />
+                    Completed
+                  </Box>
+                </MenuItem>
+                <MenuItem value="cancelled">
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: 'error.main' }} />
+                    Cancelled
+                  </Box>
+                </MenuItem>
+                <MenuItem value="no-show">
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: 'warning.main' }} />
+                    No Show
+                  </Box>
+                </MenuItem>
               </TextField>
             )}
           />

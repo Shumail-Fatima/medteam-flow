@@ -240,7 +240,7 @@ const AppointmentManagement: React.FC = () => {
         doctorName: selectedDoctor.label,
         appointmentSlot: data.appointmentSlot,
         reason: data.reason,
-        status: selectedAppointment.status,
+        status: data.status, // Use the status from form data instead of existing status
       };
       // dispatch(updateAppointment(updatedAppointment));
       dispatch(updateAppointmentAsync(updatedAppointment));
@@ -262,7 +262,7 @@ const AppointmentManagement: React.FC = () => {
         appointmentSlot: data.appointmentSlot,
         reason: data.reason,
         createdAt: new Date().toISOString(),
-        status: 'scheduled',
+        status: data.status,
         consultationCompleted: false,
       };
              // dispatch(addAppointment(newAppointment));
@@ -441,6 +441,29 @@ const AppointmentManagement: React.FC = () => {
                 )
               },
               {
+                header: 'Status',
+                render: (appointment) => {
+                  const getStatusColor = (status: string) => {
+                    switch (status) {
+                      case 'scheduled': return 'primary';
+                      case 'completed': return 'success';
+                      case 'cancelled': return 'error';
+                      case 'no-show': return 'warning';
+                      default: return 'default';
+                    }
+                  };
+                  
+                  return (
+                    <Chip 
+                      label={appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
+                      color={getStatusColor(appointment.status) as any}
+                      size="small"
+                      sx={{ fontWeight: 600 }}
+                    />
+                  );
+                }
+              },
+              {
                 header: 'Created',
                 render: (appointment) => (
                   <Typography variant="body2" color="text.secondary">
@@ -449,13 +472,13 @@ const AppointmentManagement: React.FC = () => {
                 )
               },
               {
-                header: '',
+                header: 'Actions',
                 render: (appointment) => (
                   <Box sx={{ display: 'flex', gap: 1 }}>
                     {user?.roleName === 'doctor' && (
                       appointment.consultationCompleted || slotDate(appointment) === true  ? (
                         <Chip 
-                          label={appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
+                          label="Completed"
                           color='success'
                           size='small'
                           sx={{ fontWeight: 600 }}
@@ -466,7 +489,6 @@ const AppointmentManagement: React.FC = () => {
                         size="small"
                         variant="outlined"
                         onClick={() => appointmentNotification(appointment)}
-                        //onClick={() => console.log(slotDate(appointment))}
                         sx={{ textTransform: 'none' }}
                       >
                         Start
@@ -496,6 +518,7 @@ const AppointmentManagement: React.FC = () => {
             doctorId: selectedAppointment.doctorId,
             appointmentSlot: selectedAppointment.appointmentSlot,
             reason: selectedAppointment.reason,
+            status: selectedAppointment.status, // Include status in initial values
           } : {}}
           mode={selectedAppointment ? 'edit' : 'create'}
           onAddPatient={handleAddPatient}
@@ -515,6 +538,7 @@ const AppointmentManagement: React.FC = () => {
                 { label: 'Doctor', value: selectedAppointment.doctorName },
                 { label: 'Doctor specialty', value: selectedAppointment.specialtyName },
                 { label: 'Appointment slot', value: formatDate(selectedAppointment.appointmentSlot)},
+                { label: 'Status', value: selectedAppointment.status.charAt(0).toUpperCase() + selectedAppointment.status.slice(1)},
                 { label: 'Created at', value: formatDate(selectedAppointment.createdAt)},
                 { label: 'Reason', value: selectedAppointment.reason}
               ]

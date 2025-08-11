@@ -37,12 +37,15 @@ export interface DoctorOption {
   description?: string;
 }
 
+export type AppointmentStatus = "scheduled" | "completed" | "cancelled" | "no-show";
+
 export interface AppointmentFormData {
   patientId: string;
   doctorId: string;
   appointmentSlot: string;
   reason?: string;
   specialtyId?: string;
+  status: "scheduled" | "completed" | "cancelled" | "no-show";
 }
 
 export interface PatientFormData {
