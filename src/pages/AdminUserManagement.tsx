@@ -182,6 +182,14 @@ const AdminUserManagement: React.FC = () => {
         message: 'User deleted successfully!',
         severity: 'success'
       });
+      // Send notification to admin about user deletion
+    const notification = NotificationService.createUserNotification(
+      currentUser?.id || '',
+      currentUser?.id || '',
+      userToDelete.name,
+      'deleted'
+    );
+    sendNotification(notification);
       setDeleteDialogOpen(false);
       setUserToDelete(null);
     }

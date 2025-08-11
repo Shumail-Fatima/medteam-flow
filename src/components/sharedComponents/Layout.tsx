@@ -71,7 +71,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   const handleNotifClick = (event: React.MouseEvent<HTMLElement>) => {
     setNotifAnchorEl(event.currentTarget);
-    fetch('http://localhost:8000/Notifications')
+    fetch(`http://localhost:8000/Notifications?toUserId=${user?.id}`)
     .then(res => res.json())
     .then(data => setNotifications(data))
   }
@@ -332,6 +332,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         // );
 
         // Optionally, persist to mock server
+        
         fetch(`http://localhost:8000/Notifications/${notif.id}`, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },

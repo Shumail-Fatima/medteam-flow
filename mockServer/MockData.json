@@ -289,6 +289,20 @@
       "appointmentSlot": "2025-08-11T10:30:00Z",
       "reason": "Post-Operative Knee Replacement Follow-Up",
       "createdAt": "2025-08-11T06:00:11.765Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1754902344064",
+      "patientId": "patient_5",
+      "patientName": "George Miller",
+      "patientAge": 82,
+      "specialtyName": "Neurology",
+      "doctorId": "3",
+      "doctorName": "Dr. Michael Chen",
+      "appointmentSlot": "2025-08-11T13:00:00Z",
+      "reason": "Cognitive Decline with Early Signs of Dementia",
+      "createdAt": "2025-08-11T08:52:24.064Z",
       "status": "scheduled",
       "consultationCompleted": false
     }
@@ -840,6 +854,35 @@
       "followUpRequired": false,
       "createdAt": "2025-08-11T05:35:36.434Z",
       "status": "completed"
+    },
+    {
+      "id": "cons_1754899226537",
+      "patientId": "patient_7",
+      "patientName": "Oliver Brown",
+      "doctorId": "5",
+      "doctorName": "Dr. James Thompson",
+      "appointmentId": "apt_1754892011765",
+      "date": "2025-08-11T08:00:26.537Z",
+      "symptoms": [
+        "Mild knee stiffness in the morning",
+        "slight swelling after walking",
+        "occasional dull pain at the surgical site"
+      ],
+      "diagnosis": "Post-total knee arthroplasty recovery – progressing well",
+      "notes": "The patient, a 37-year-old male, is seen 6 weeks post left total knee replacement. She reports steady improvement in mobility, with only mild stiffness in the mornings and occasional swelling after extended walking. Pain is mild and does not require daily analgesics. Surgical incision is well-healed with no redness or discharge. Range of motion is now 0–110 degrees. Physiotherapy attendance has been regular and beneficial. Recommended continuing physiotherapy with gradual increase in activity. Follow-up in 6 weeks to assess further range of motion improvement.",
+      "prescriptions": [
+        {
+          "id": "rx_1754899226537_0",
+          "medication": "Paracetamol",
+          "dosage": "500 mg",
+          "frequency": "Twice daily as needed for pain",
+          "duration": "7 days",
+          "instructions": "Take after meals, do not exceed 4 grams in 24 hours."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-08-11T08:00:26.537Z",
+      "status": "completed"
     }
   ],
   "DoctorsSlots": [
@@ -1331,7 +1374,8 @@
       "username": "Robert House",
       "email": "robert.house@hospital.com",
       "password": "robert123",
-      "roleId": 3
+      "roleId": 3,
+      "roleName": "nurse"
     },
     {
       "id": "apt_1753765295252",
@@ -1399,7 +1443,7 @@
       "title": "Follow-up Required",
       "message": "A follow-up is required for patient Jane Smith on 2025-08-10.",
       "type": "followup",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-04T12:00:00Z"
     },
     {
@@ -1409,7 +1453,6 @@
       "type": "appointment",
       "toUserId": "5",
       "fromUserId": "apt_1753765295252",
-      "appointmentId": "apt_1754892011765",
       "priority": "medium",
       "isRead": true,
       "createdAt": "2025-08-11T06:00:11.766Z"
@@ -1424,6 +1467,65 @@
       "priority": "medium",
       "isRead": true,
       "createdAt": "2025-08-11T06:23:50.358Z"
+    },
+    {
+      "id": "notif_1754898852099_v6i1byb6a",
+      "title": "Consultation Started",
+      "message": "Consultation with Oliver Brown has started",
+      "type": "consultation",
+      "toUserId": "5",
+      "fromUserId": "5",
+      "consultationId": "apt_1754892011765",
+      "patientId": "apt_1754892011765",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-11T07:54:12.099Z"
+    },
+    {
+      "id": "notif_1754899226540_cu0by5syi",
+      "title": "Consultation Completed",
+      "message": "Consultation with Oliver Brown has been completed",
+      "type": "consultation",
+      "toUserId": "5",
+      "fromUserId": "5",
+      "consultationId": "cons_1754899226537",
+      "patientId": "cons_1754899226537",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-11T08:00:26.540Z"
+    },
+    {
+      "id": "notif_1754899707833_svmdvchwr",
+      "title": "New User Account Created",
+      "message": "New user account has been created for Dr Mishal Fatima",
+      "type": "user",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-11T08:08:27.833Z"
+    },
+    {
+      "id": "notif_1754899733328_71e2clsgb",
+      "title": "User Account Deleted",
+      "message": "User account for Dr Mishal Fatima has been deleted",
+      "type": "user",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "apt_1753765295252",
+      "priority": "high",
+      "isRead": true,
+      "createdAt": "2025-08-11T08:08:53.328Z"
+    },
+    {
+      "id": "notif_1754902344068_n37xw70ia",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with George Miller on 8/11/2025",
+      "type": "appointment",
+      "toUserId": "3",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-11T08:52:24.068Z"
     }
   ]
 }

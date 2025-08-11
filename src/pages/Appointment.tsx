@@ -247,7 +247,7 @@ const AppointmentManagement: React.FC = () => {
        const notification = NotificationService.createAppointmentNotification(
          newAppointment.doctorId,
          user?.id || '',
-         newAppointment.id,
+         //newAppointment.id,
          newAppointment.patientName,
          newAppointment.doctorName,
          newAppointment.appointmentSlot,
@@ -255,13 +255,22 @@ const AppointmentManagement: React.FC = () => {
        );
        sendNotification(notification);
     }
-
-   
-
     // Switch back to appointments list tab
     setActiveTab(0);
     setSelectedAppointment(null);
   };
+
+  const appointmentNotification = (appointment: Appointment) => {
+    const notification = NotificationService.createConsultationNotification(
+      appointment.doctorId,
+         user?.id || '',
+         appointment.id,
+         appointment.patientName,
+         'started'
+    );
+    sendNotification(notification);
+    navigate(`/consultation?appointmentId=${appointment.id}&patientId=${appointment.patientId}`)
+  }
 
   // Handle new patient registration from appointment form
   const handleAddPatient = (patientData: PatientFormData) => {
@@ -426,7 +435,7 @@ const AppointmentManagement: React.FC = () => {
                       <Button
                         size="small"
                         variant="outlined"
-                        onClick={() => navigate(`/consultation?appointmentId=${appointment.id}&patientId=${appointment.patientId}`)}
+                        onClick={() => appointmentNotification(appointment)}
                         //onClick={() => console.log(slotDate(appointment))}
                         sx={{ textTransform: 'none' }}
                       >

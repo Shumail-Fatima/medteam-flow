@@ -47,6 +47,8 @@ import PatientInfoCard from '../components/PatientInfoCard';
 import AppointmentSection from '../components/AppointmentSection';
 import ConsultationDetailsSection from '../components/ConsultDetails';
 import PrescriptionsSection from '../components/PrescriptionSection';
+import { useNotification } from '../context/NotifSocketContext';
+import { NotificationService } from '../utils/NotificationService';
 
 
 const ConsultationManagement: React.FC = () => {
@@ -54,7 +56,7 @@ const ConsultationManagement: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useAuth();
   const [searchParams] = useSearchParams();
-  
+  const { sendNotification } = useNotification();
 
 
   // Get URL parameters for pre-filling form
@@ -202,8 +204,6 @@ const ConsultationManagement: React.FC = () => {
       // Redux action - Add consultation to store
       // dispatch(addConsultation(newConsultation));
       dispatch(addConsultationAsync(newConsultation));
-      
-      
 
       // dispatch(updateConsultation({
       //   ...newConsultation, // the consultation object you want to update
@@ -213,6 +213,16 @@ const ConsultationManagement: React.FC = () => {
         ...newConsultation, // the consultation object you want to update
         status: 'completed'
       }));
+
+      // Send notification to the doctor
+      const notification = NotificationService.createConsultationNotification(
+        newConsultation.doctorId,
+        user?.id || '',
+        newConsultation.id,
+        newConsultation.patientName,
+        'completed'
+      );
+      sendNotification(notification);
 
       // If consultation is linked to an appointment, mark it as completed
       if (data.appointmentId) {
