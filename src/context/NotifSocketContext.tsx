@@ -3,7 +3,7 @@ import React, { createContext, useContext, useEffect, useRef, useState } from 'r
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, RootState } from '../store/Store';
 import { addNotification, markNotificationAsRead } from '../store/slices/NotificationSlice';
-
+import { createNotificationChannel } from '../utils/NotificationChannel';
 
 export interface Notification {
   id: string;
@@ -39,6 +39,7 @@ export const NotificationProvider: React.FC<{children: React.ReactNode}> = ({ ch
   const notifications = useSelector((state: RootState) => state.notifications.notifications);
   const [isLoading, setIsLoading] = useState(false);
   const ws = useRef<WebSocket | null>(null);
+  const channel = createNotificationChannel();
 
   // Initialize WebSocket connection
   // useEffect(() => {
@@ -96,6 +97,9 @@ export const NotificationProvider: React.FC<{children: React.ReactNode}> = ({ ch
           payload: newNotification
         }));
       }
+      // Send notification to doctor
+    channel.postMessage(notification);
+    alert('Appointment created and notification sent!');
 
       // Also save to mock server (for persistence)
       await fetch('http://localhost:8000/Notifications', {

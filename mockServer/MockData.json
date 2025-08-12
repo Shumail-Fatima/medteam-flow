@@ -321,6 +321,20 @@
       "createdAt": "2025-08-11T09:38:28.172Z",
       "status": "scheduled",
       "consultationCompleted": false
+    },
+    {
+      "id": "apt_1754998608608",
+      "patientId": "patient_7",
+      "patientName": "Oliver Brown",
+      "patientAge": 37,
+      "specialtyName": "Neurology",
+      "doctorId": "3",
+      "doctorName": "Dr. Michael Chen",
+      "appointmentSlot": "2025-08-13T15:30:00Z",
+      "reason": "visit",
+      "createdAt": "2025-08-12T11:36:48.608Z",
+      "status": "cancelled",
+      "consultationCompleted": false
     }
   ],
   "Consultations": [
@@ -1967,6 +1981,50 @@
       "priority": "medium",
       "isRead": false,
       "createdAt": "2025-08-12T11:05:10.695Z"
+    },
+    {
+      "id": "notif_1754998608609_a26a61037",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with Oliver Brown on 8/13/2025",
+      "type": "appointment",
+      "toUserId": "3",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-12T11:36:48.609Z"
+    },
+    {
+      "id": "notif_1754998721262_y2k6i665k",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with Oliver Brown has been cancelled",
+      "type": "appointment",
+      "toUserId": "3",
+      "fromUserId": "apt_1753765295252",
+      "priority": "high",
+      "isRead": false,
+      "createdAt": "2025-08-12T11:38:41.262Z"
+    },
+    {
+      "id": "notif_1754998761162_dalpk4j0i",
+      "title": "Appointment Updated",
+      "message": "Appointment with Oliver Brown has been updated",
+      "type": "appointment",
+      "toUserId": "3",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-12T11:39:21.162Z"
+    },
+    {
+      "id": "notif_1754998872740_r7uhq8k1n",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with Oliver Brown has been cancelled",
+      "type": "appointment",
+      "toUserId": "3",
+      "fromUserId": "apt_1753765295252",
+      "priority": "high",
+      "isRead": false,
+      "createdAt": "2025-08-12T11:41:12.740Z"
     }
   ]
 }

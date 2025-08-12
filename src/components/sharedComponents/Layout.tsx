@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import {
   Box,
   Drawer,
@@ -37,6 +37,8 @@ import { rolePages } from '../RolePages';
 import { useState } from 'react';
 // import { useNotificationSocket } from '../../context/NotifSocketContext';
 import { useNotification } from '../../context/NotifSocketContext';
+import { createNotificationChannel } from '../../utils/NotificationChannel';
+import { useNotificationListener } from '../../hooks/useNotifListen';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -69,12 +71,24 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     setAnchorE1(null);
   }
 
+    
+
+
   const handleNotifClick = (event: React.MouseEvent<HTMLElement>) => {
     setNotifAnchorEl(event.currentTarget);
     fetch(`http://localhost:8000/Notifications?toUserId=${user?.id}`)
     .then(res => res.json())
     .then(data => setNotifications(data))
+
+    // Listen for notifications from BroadcastChannel
+    // useNotificationListener(
+    //   useCallback((newNotif: any) => {
+    //     setNotifications((prev) => [newNotif, ...prev]);
+    //   }, [])
+    // );
   }
+
+  //const handleNotifClick = (e: React.MouseEvent<HTMLElement>) => setNotifAnchorEl(e.currentTarget);
 
   const handleNotifClose = () => {
     setNotifAnchorEl(null);
@@ -230,8 +244,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   }
 };
 
-  return (
-    <Box sx={{ display: 'flex' }}>
+  const headerBar = () => {
+    return(
       <AppBar 
         position="fixed" 
         sx={{ 
@@ -260,11 +274,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
               {/* {unreadCount > 0 && ( */}
+              <Badge badgeContent={unreadCount} color="error" >
             <IconButton onClick={handleNotifClick}>
-                <Badge badgeContent={unreadCount} color="error" >
                   <NotificationsIcon htmlColor='rgb(254 254 254 / 87%)' />
-                </Badge>
-            </IconButton>
+            </IconButton></Badge>
           {/* )} */}
           </Box>
             <IconButton onClick={handleMenuOpen} sx={{ p: 0 }}>
@@ -306,7 +319,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
 <Menu
   anchorEl={notifAnchorEl}
-  open={notifOpen}
+  open={Boolean(notifAnchorEl)}
   onClose={handleNotifClose}
   anchorOrigin={{
     vertical: 'bottom',
@@ -355,6 +368,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </Box>
         </Toolbar>
       </AppBar>
+    );
+  };
+
+  return (
+    <Box sx={{ display: 'flex' }}>
+      
+      {headerBar()}
 
       {/* Drawer – Responsive */}
       <Box
