@@ -14,7 +14,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import type { RootState, AppDispatch } from '../../store/Store';
 import { useSelector, useDispatch } from 'react-redux';
-import type { AppointmentFormData, DoctorOption, Patient } from '../../types/appointment';
+import type { Appointment, AppointmentFormData, DoctorOption, Patient } from '../../types/appointment';
 import { setSelectedSpecialty, clearSpecialtyFilter } from '../../store/slices/DoctorSlice';
 import PatientFormModal from './PatientFormModal';
 import { appointmentValidationSchema } from '../../validation/AppointmentValid';
@@ -114,7 +114,22 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
         setPatientModalOpen(false);
     };
 
+    const slotDate = (appointment: Appointment) => {
+      const slotDate = new Date(appointment.appointmentSlot);
+      const now = new Date();
+      const isPast =
+          slotDate < now &&
+          (
+            slotDate.getFullYear() !== now.getFullYear() ||
+            slotDate.getMonth() !== now.getMonth() ||
+            slotDate.getDate() !== now.getDate()
+          );
+      return isPast;
+    };
 
+    const handleStatusChange = (status: string) => {
+
+    };
 
     // Handle specialty selection and filter doctors using Redux
     const handleSpecialtyChange = (specialtyId: string) => {

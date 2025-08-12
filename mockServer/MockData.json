@@ -9,9 +9,10 @@
       "doctorName": "Dr. Sarah Wilson",
       "appointmentSlot": "2025-07-05T09:00:00Z",
       "reason": "Regular checkup",
-      "status": "scheduled",
+      "status": "no-show",
       "consultationCompleted": false,
-      "createdAt": "2025-07-01T08:30:00Z"
+      "createdAt": "2025-07-01T08:30:00Z",
+      "specialtyName": "Cardiology"
     },
     {
       "id": "apt_1753788388045",
@@ -1305,7 +1306,7 @@
       "id": "task_1",
       "title": "Administer Morning Medication",
       "type": "Medication",
-      "status": "Pending",
+      "status": "In Progress",
       "notes": "Give 5mg of Atorvastatin",
       "patientId": "patient_1",
       "assigneeId": "7",
@@ -1321,7 +1322,7 @@
       "status": "In Progress",
       "notes": "Record systolic and diastolic values",
       "patientId": "patient_2",
-      "assigneeId": 7,
+      "assigneeId": "7",
       "dueAt": "2025-06-23T10:30:00Z",
       "createdBy": 2,
       "createdAt": "2025-06-14T09:00:00Z"
@@ -1333,7 +1334,7 @@
       "status": "Pending",
       "notes": "Ensure patient is fasting and gown is ready",
       "patientId": "patient_1",
-      "assigneeId": 7,
+      "assigneeId": "7",
       "dueAt": "2025-06-23T13:00:00Z",
       "createdBy": 3,
       "createdAt": "2025-06-15T09:00:00Z"
@@ -1345,10 +1346,36 @@
       "status": "Done",
       "notes": "Review insulin dosage and dietary habits",
       "patientId": "patient_2",
-      "assigneeId": 2,
+      "assigneeId": "2",
       "dueAt": "2025-06-22T15:00:00Z",
       "createdBy": 2,
       "createdAt": "2025-06-16T09:00:00Z"
+    },
+    {
+      "id": "task_1754980819999",
+      "title": "Administer Morning Antibiotic Dose",
+      "type": "Medication",
+      "patientId": "patient_3",
+      "assigneeId": "7",
+      "dueAt": "2025-08-12T13:37",
+      "status": "Pending",
+      "notes": "Give 500 mg IV ceftriaxone at 08:00 for patient in Room 204; monitor for allergic reactions.",
+      "createdBy": "apt_1753765295252",
+      "createdAt": "2025-08-12T06:40:19.999Z",
+      "assigneeName": "unknown"
+    },
+    {
+      "id": "task_1754983332013",
+      "title": "Administer Morning Antibiotic Dose",
+      "type": "Medication",
+      "patientId": "patient_3",
+      "assigneeId": "2",
+      "dueAt": "2025-08-12T07:12",
+      "status": "In Progress",
+      "notes": "notes",
+      "createdBy": "apt_1753765295252",
+      "createdAt": "2025-08-12T07:22:12.013Z",
+      "assigneeName": "unknown"
     }
   ],
   "Users": [
@@ -1645,6 +1672,229 @@
       "priority": "medium",
       "isRead": false,
       "createdAt": "2025-08-11T10:34:11.011Z"
+    },
+    {
+      "id": "notif_1754979398819_fdx2aidry",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-12T06:16:38.819Z"
+    },
+    {
+      "id": "notif_1754979429825_vnwp336i9",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with John Doe has been cancelled",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "high",
+      "isRead": false,
+      "createdAt": "2025-08-12T06:17:09.825Z"
+    },
+    {
+      "id": "notif_1754979480715_mh6a9yzti",
+      "title": "Appointment Updated",
+      "message": "Appointment with Jane Smith has been updated",
+      "type": "appointment",
+      "toUserId": "5",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-12T06:18:00.715Z"
+    },
+    {
+      "id": "notif_1754979583320_vcvrwt41l",
+      "title": "Appointment Updated",
+      "message": "Appointment with Jane Smith has been updated",
+      "type": "appointment",
+      "toUserId": "5",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-12T06:19:43.320Z"
+    },
+    {
+      "id": "notif_1754979596276_r3gwdn579",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-12T06:19:56.276Z"
+    },
+    {
+      "id": "notif_1754979618555_7km4g4ayz",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-12T06:20:18.555Z"
+    },
+    {
+      "id": "notif_1754979644845_exopy4e4t",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with John Doe has been cancelled",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "high",
+      "isRead": false,
+      "createdAt": "2025-08-12T06:20:44.845Z"
+    },
+    {
+      "id": "notif_1754979709604_3x8q0sozp",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-12T06:21:49.604Z"
+    },
+    {
+      "id": "notif_1754979794504_lroa44wvn",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with John Doe has been cancelled",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "high",
+      "isRead": false,
+      "createdAt": "2025-08-12T06:23:14.504Z"
+    },
+    {
+      "id": "notif_1754979813960_fkijhk1ks",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-12T06:23:33.960Z"
+    },
+    {
+      "id": "notif_1754979833419_3w60yoea1",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-12T06:23:53.419Z"
+    },
+    {
+      "id": "notif_1754979848307_h9sms6re8",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-12T06:24:08.307Z"
+    },
+    {
+      "id": "notif_1754979882707_3j42fahkf",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-12T06:24:42.707Z"
+    },
+    {
+      "id": "notif_1754979901442_ydiz9gvx5",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with John Doe has been cancelled",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "high",
+      "isRead": false,
+      "createdAt": "2025-08-12T06:25:01.442Z"
+    },
+    {
+      "id": "notif_1754979990115_1om5jyb5u",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-12T06:26:30.115Z"
+    },
+    {
+      "id": "notif_1754980022994_hhuzvbg0n",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with John Doe has been cancelled",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "high",
+      "isRead": false,
+      "createdAt": "2025-08-12T06:27:02.994Z"
+    },
+    {
+      "id": "notif_1754980044436_bfxio9x3g",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-12T06:27:24.436Z"
+    },
+    {
+      "id": "notif_1754983332015_0uub31as8",
+      "title": "New Task Assigned",
+      "message": "You have been assigned a new task: Administer Morning Antibiotic Dose",
+      "type": "task",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "taskId": "task_1754983332013",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-12T07:22:12.015Z"
+    },
+    {
+      "id": "notif_1754983372373_2dp0jvv5t",
+      "title": "Task Completed",
+      "message": "Task \"Administer Morning Antibiotic Dose\" has been completed",
+      "type": "task",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "taskId": "task_1754983332013",
+      "priority": "low",
+      "isRead": false,
+      "createdAt": "2025-08-12T07:22:52.373Z"
+    },
+    {
+      "id": "notif_1754983393253_jwshwc7i2",
+      "title": "Task Updated",
+      "message": "Task \"Administer Morning Antibiotic Dose\" has been updated",
+      "type": "task",
+      "toUserId": "2",
+      "fromUserId": "2",
+      "taskId": "task_1754983332013",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-12T07:23:13.253Z"
     }
   ]
 }

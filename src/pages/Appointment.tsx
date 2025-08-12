@@ -230,7 +230,6 @@ const AppointmentManagement: React.FC = () => {
       });
       return;
     }
-
     if (selectedAppointment) {
       // Update existing appointment using Redux action
       const updatedAppointment: Appointment = {
@@ -249,6 +248,35 @@ const AppointmentManagement: React.FC = () => {
         message: 'Appointment updated successfully!',
         severity: 'success'
       });
+
+      if (data.status == 'cancelled'){
+        const notification = NotificationService.createAppointmentNotification(
+          selectedAppointment.doctorId,
+          user?.id || '',
+          //newAppointment.id,
+          selectedAppointment.patientName,
+          selectedAppointment.doctorName,
+          selectedAppointment.appointmentSlot,
+          'cancelled'
+        );
+        // Send notification to the doctor
+      sendNotification(notification);
+      }
+      else{
+        const notification = NotificationService.createAppointmentNotification(
+          selectedAppointment.doctorId,
+          user?.id || '',
+          //newAppointment.id,
+          selectedAppointment.patientName,
+          selectedAppointment.doctorName,
+          selectedAppointment.appointmentSlot,
+          'updated'
+        );
+        // Send notification to the doctor
+      sendNotification(notification);
+      }
+      
+
     } else {
       // Create new appointment using Redux action
       const newAppointment: Appointment = {
@@ -339,12 +367,6 @@ const AppointmentManagement: React.FC = () => {
           slotDate.getMonth() !== now.getMonth() ||
           slotDate.getDate() !== now.getDate()
         );
-    // if (slotDate.getFullYear() === now.getFullYear() &&
-    //     slotDate.getMonth() === now.getMonth() &&
-    //     slotDate.getDate() === now.getDate()) {
-    //   return 'Today';
-    // }
-    //return new Date(appointment.appointmentSlot);
     return isPast;
   };
 
@@ -452,15 +474,26 @@ const AppointmentManagement: React.FC = () => {
                       default: return 'default';
                     }
                   };
-                  
-                  return (
-                    <Chip 
+                  if (slotDate(appointment) == true || user?.roleName === 'admin'){
+                    return(
+                      <Chip 
                       label={appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
                       color={getStatusColor(appointment.status) as any}
                       size="small"
                       sx={{ fontWeight: 600 }}
                     />
-                  );
+                    )
+                  } else if (slotDate(appointment) == false){
+                    return(
+                    <Button
+                        size="small"
+                        variant="outlined"
+                        onClick={() => appointmentNotification(appointment)}
+                        sx={{ textTransform: 'none' }}
+                      >
+                        Start
+                      </Button>
+                    )}
                 }
               },
               {
@@ -469,32 +502,6 @@ const AppointmentManagement: React.FC = () => {
                   <Typography variant="body2" color="text.secondary">
                     {formatDate(appointment.createdAt)}
                   </Typography>
-                )
-              },
-              {
-                header: 'Actions',
-                render: (appointment) => (
-                  <Box sx={{ display: 'flex', gap: 1 }}>
-                    {user?.roleName === 'doctor' && (
-                      appointment.consultationCompleted || slotDate(appointment) === true  ? (
-                        <Chip 
-                          label="Completed"
-                          color='success'
-                          size='small'
-                          sx={{ fontWeight: 600 }}
-                        />
-                      ):(
-                        
-                      <Button
-                        size="small"
-                        variant="outlined"
-                        onClick={() => appointmentNotification(appointment)}
-                        sx={{ textTransform: 'none' }}
-                      >
-                        Start
-                      </Button>
-      ))}
-                  </Box>
                 )
               },
             ]}

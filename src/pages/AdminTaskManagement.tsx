@@ -14,6 +14,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '../store/Store';
 import { fetchTasks, addTaskAsync, updateTaskAsync, deleteTaskAsync } from '../store/slices/TaskSlice';
 import { fetchPatients } from '../store/slices/PatientSlice';
+import { useNotification } from '../context/NotifSocketContext';
+import { NotificationService } from '../utils/NotificationService';
 
 
 const AdminTaskManagement: React.FC = () => {
@@ -33,6 +35,7 @@ const AdminTaskManagement: React.FC = () => {
     message: '', 
     severity: 'success' as 'success' | 'error' 
   });
+  const { sendNotification } = useNotification();
 
   // Helper functions
   useEffect(() => {
@@ -47,7 +50,7 @@ const AdminTaskManagement: React.FC = () => {
 
   const users = useSelector((state: RootState) => state.user.users);
   const getAssigneeName = (assigneeId: string) => {
-    const user = users?.find(u => String(u.id) === String(assigneeId));
+    const user = users?.find(u => u.id === assigneeId);
     return user?.name || 'Unknown User';
   }
 
@@ -184,7 +187,13 @@ const AdminTaskManagement: React.FC = () => {
     if (selectedTask) {
       // Edit existing task
       // dispatch(updateTask({...selectedTask, ...taskData}));
-      dispatch(updateTaskAsync({ ...selectedTask, ...taskData }));
+      const updatedTask: Task = {
+        ...selectedTask,
+        type: taskData.type, 
+        assigneeId: taskData.assigneeId,
+        status: taskData.status
+      }
+      dispatch(updateTaskAsync(updatedTask));
       /*
       setTasks(prev => prev.map(task => 
         task.id === selectedTask.id 
@@ -196,6 +205,26 @@ const AdminTaskManagement: React.FC = () => {
         message: 'Task updated successfully!', 
         severity: 'success' 
       });
+      if (taskData.status == 'Done'){
+      const notification = NotificationService.createTaskNotification(
+        selectedTask.assigneeId,
+        user?.id || '',
+        selectedTask.id,
+        selectedTask.title,
+        'completed'
+      )
+      sendNotification(notification);
+    } else {
+      const notification = NotificationService.createTaskNotification(
+        selectedTask.assigneeId,
+        user?.id || '',
+        selectedTask.id,
+        selectedTask.title,
+        'updated'
+      )
+      sendNotification(notification);
+    }
+
     } else {
       // Add new task
       const newTask: Task = {
@@ -212,6 +241,14 @@ const AdminTaskManagement: React.FC = () => {
         message: 'Task created successfully!', 
         severity: 'success' 
       });
+      const notification = NotificationService.createTaskNotification(
+        newTask.assigneeId,
+        user?.id || '',
+        newTask.id,
+        newTask.title,
+        'assigned'
+      )
+      sendNotification(notification);
     }
     
     setIsModalOpen(false);
