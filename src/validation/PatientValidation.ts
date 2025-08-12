@@ -5,5 +5,13 @@ export const patientSchema = yup.object({
     dateOfBirth:yup.string().required('Date of birth is required'),
     email:yup.string().email('Invalid email').required('Email is required'),
     phone:yup.string().required('Phone number is required'),
+    address: yup.string().required(),
+    emergencyContact: yup.array().of(
+      yup.object({
+        name: yup.string().required(),
+        phone: yup.string().required(),
+        relationship: yup.string().required(),
+      })
+    ).required(),
   });
   

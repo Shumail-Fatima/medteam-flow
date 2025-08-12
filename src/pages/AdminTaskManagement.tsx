@@ -14,6 +14,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '../store/Store';
 import { fetchTasks, addTaskAsync, updateTaskAsync, deleteTaskAsync } from '../store/slices/TaskSlice';
 import { fetchPatients } from '../store/slices/PatientSlice';
+import { fetchUsers } from '../store/slices/UserSlice';
 import { useNotification } from '../context/NotifSocketContext';
 import { NotificationService } from '../utils/NotificationService';
 
@@ -40,6 +41,10 @@ const AdminTaskManagement: React.FC = () => {
   // Helper functions
   useEffect(() => {
     dispatch(fetchPatients());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchUsers());
   }, [dispatch]);
   
   const patients = useSelector((state: RootState) => state.patients.patients);

@@ -42,6 +42,34 @@ export interface Prescription {
   instructions?: string;
 }
 
+export interface PatientFormData{
+  name: string;
+  dateOfBirth: string;
+  email: string;
+  phone: string;
+  address: string;
+  emergencyContact: {
+    name: string;
+    phone: string;
+    relationship: string;
+  }[];
+}
+
+export interface Patient {
+  id: string;
+  name: string;
+  dateOfBirth: string;
+  email: string;
+  phone: string;
+  age?: number;
+  address: string;
+  emergencyContact: {
+    name: string;
+    phone: string;
+    relationship: string;
+  }[];
+}
+
 export interface Consultation {
   id: string;
   patientId: string;

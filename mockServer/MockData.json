@@ -262,7 +262,7 @@
       "appointmentSlot": "2025-08-11T14:00:00Z",
       "reason": "visit follow up",
       "createdAt": "2025-08-10T17:01:50.817Z",
-      "status": "scheduled",
+      "status": "no-show",
       "consultationCompleted": false,
       "specialtyName": "Cardiology"
     },
@@ -1285,6 +1285,21 @@
       ],
       "bloodType": "B+",
       "createdAt": "2024-02-20T11:00:00Z"
+    },
+    {
+      "id": "79cf",
+      "name": "Ayesha Khan",
+      "dateOfBirth": "2006-03-15",
+      "email": "ayesha.khan@example.com",
+      "phone": "+92-331-4567890",
+      "address": "House #25, Street 12, Gulberg, Lahore, Pakistan",
+      "emergencyContact": [
+        {
+          "name": "Sara Khan",
+          "phone": "+92-300-1234567",
+          "relationship": "Mother"
+        }
+      ]
     }
   ],
   "Roles": [
@@ -1334,10 +1349,11 @@
       "status": "Pending",
       "notes": "Ensure patient is fasting and gown is ready",
       "patientId": "patient_1",
-      "assigneeId": "7",
+      "assigneeId": "apt_1753768305319",
       "dueAt": "2025-06-23T13:00:00Z",
       "createdBy": 3,
-      "createdAt": "2025-06-15T09:00:00Z"
+      "createdAt": "2025-06-15T09:00:00Z",
+      "assigneeName": "unknown"
     },
     {
       "id": "task_4",
@@ -1464,7 +1480,7 @@
     },
     {
       "id": "apt_1753768305319",
-      "name": "Jane Doe",
+      "name": "Nurse Jane Doe",
       "username": "Nurse Jane Doe",
       "email": "jane.doe@example.com",
       "password": "jane123",
@@ -1758,7 +1774,7 @@
       "toUserId": "2",
       "fromUserId": "apt_1753765295252",
       "priority": "medium",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-12T06:21:49.604Z"
     },
     {
@@ -1881,7 +1897,7 @@
       "fromUserId": "apt_1753765295252",
       "taskId": "task_1754983332013",
       "priority": "low",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-12T07:22:52.373Z"
     },
     {
@@ -1895,6 +1911,62 @@
       "priority": "medium",
       "isRead": false,
       "createdAt": "2025-08-12T07:23:13.253Z"
+    },
+    {
+      "id": "notif_1754990382002_t7abdxr7i",
+      "title": "User Account Updated",
+      "message": "User account for Nurse Jane Doe has been updated",
+      "type": "user",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-12T09:19:42.002Z"
+    },
+    {
+      "id": "notif_1754990404007_ybd46qvdl",
+      "title": "Task Updated",
+      "message": "Task \"Prep for Knee Surgery\" has been updated",
+      "type": "task",
+      "toUserId": "7",
+      "fromUserId": "apt_1753765295252",
+      "taskId": "task_3",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-12T09:20:04.007Z"
+    },
+    {
+      "id": "notif_1754990467383_udzlkq0oh",
+      "title": "Appointment Updated",
+      "message": "Appointment with Jane Smith has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-12T09:21:07.383Z"
+    },
+    {
+      "id": "notif_1754993842863_oxp4tofdy",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-12T10:17:22.863Z"
+    },
+    {
+      "id": "notif_1754996710695_81oeh4yia",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-12T11:05:10.695Z"
     }
   ]
 }

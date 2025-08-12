@@ -6,7 +6,9 @@ import {
 import { DailogButton } from '../CustomButton';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import type { PatientFormData, Patient } from '../../types/appointment';
+// import type {  Patient } from '../../types/appointment';
+import type {  Patient } from '../../types/medical';
+import type { PatientFormData } from '../../types/medical';
 import { Close } from '@mui/icons-material';
 import { patientSchema } from '../../validation/PatientValidation';
 
@@ -37,6 +39,13 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
       dateOfBirth: '',
       email: '',
       phone: '',
+      address:'',
+      emergencyContact:[
+        {
+          name: '',
+          phone: '',
+          relationship: ''
+        }]
     },
   });
 
@@ -44,10 +53,7 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
   useEffect(() => {
     if (patient){
       reset({
-        name: patient.name,
-        dateOfBirth: patient.dateOfBirth,
-        email: patient.email,
-        phone: patient.phone,
+        ...patient
       });
     } else {
       reset({
@@ -55,6 +61,13 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
         dateOfBirth: '',
         email: '',
         phone: '',
+        address:'',
+      emergencyContact:[
+        {
+          name: '',
+          phone: '',
+          relationship: ''
+        }]
       });
     }
   }, [patient, reset, open]);
@@ -136,6 +149,43 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
               error={!!errors.phone}
               helperText={errors.phone?.message}
             />
+
+            <TextField
+              {...register('address')}
+              label="Address"
+              fullWidth
+              disabled={isView}
+              error={!!errors.address}
+              helperText={errors.address?.message}
+            />
+
+            <TextField
+              {...register('emergencyContact.0.name')}
+              label="Emergency contact Full Name"
+              fullWidth
+              disabled={isView}
+              error={!!errors.emergencyContact?.[0]?.name}
+              helperText={errors.emergencyContact?.[0]?.name?.message}
+            />
+
+            <TextField
+              {...register('emergencyContact.0.phone')}
+              label="Emergency contact Phone number"
+              fullWidth
+              disabled={isView}
+              error={!!errors.emergencyContact?.[0]?.name}
+              helperText={errors.emergencyContact?.[0]?.name?.message}
+            />
+
+            <TextField
+              {...register('emergencyContact.0.relationship')}
+              label="Emergency contact relationship with patient"
+              fullWidth
+              disabled={isView}
+              error={!!errors.emergencyContact?.[0]?.name}
+              helperText={errors.emergencyContact?.[0]?.name?.message}
+            />
+
           </Box>
         </DialogContent>
 
