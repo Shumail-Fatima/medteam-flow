@@ -61,6 +61,33 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   //const { notifications, markAsRead, getUnreadCount } = useNotification();
   const [notifications, setNotifications] = useState<any[]>([]);
 
+  // Real-time notification receiving logic
+  useEffect(() => {
+    const channel = createNotificationChannel();
+
+    channel.onmessage = (event) => {
+      setNotifications((prev) => [event.data, ...prev]);
+      
+      // Optional: Play notification sound for new notifications
+      // You can uncomment this if you want audio feedback
+      // const audio = new Audio('/notification-sound.mp3');
+      // audio.play().catch(e => console.log('Audio play failed:', e));
+    };
+
+    return () => {
+      channel.close();
+    };
+  }, []);
+
+  // Fetch initial notifications when user is available
+  useEffect(() => {
+    if (user?.id) {
+      fetch(`http://localhost:8000/Notifications?toUserId=${user.id}`)
+        .then(res => res.json())
+        .then(data => setNotifications(data))
+        .catch(error => console.error('Error fetching initial notifications:', error));
+    }
+  }, [user?.id]);
 
   const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
@@ -76,16 +103,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   const handleNotifClick = (event: React.MouseEvent<HTMLElement>) => {
     setNotifAnchorEl(event.currentTarget);
-    fetch(`http://localhost:8000/Notifications?toUserId=${user?.id}`)
-    .then(res => res.json())
-    .then(data => setNotifications(data))
-
-    // Listen for notifications from BroadcastChannel
-    // useNotificationListener(
-    //   useCallback((newNotif: any) => {
-    //     setNotifications((prev) => [newNotif, ...prev]);
-    //   }, [])
-    // );
+    
+    // Fetch existing notifications from server
+    if (user?.id) {
+      fetch(`http://localhost:8000/Notifications?toUserId=${user.id}`)
+        .then(res => res.json())
+        .then(data => setNotifications(data))
+        .catch(error => console.error('Error fetching notifications:', error));
+    }
   }
 
   //const handleNotifClick = (e: React.MouseEvent<HTMLElement>) => setNotifAnchorEl(e.currentTarget);
@@ -93,6 +118,27 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const handleNotifClose = () => {
     setNotifAnchorEl(null);
   }
+
+  const handleMarkAllAsRead = () => {
+    const unreadNotifications = notifications.filter(n => !n.isRead);
+    if (unreadNotifications.length === 0) return;
+
+    // Update UI immediately
+    setNotifications(prev => 
+      prev.map(n => ({ ...n, isRead: true }))
+    );
+
+    // Update server
+    Promise.all(
+      unreadNotifications.map(n =>
+        fetch(`http://localhost:8000/Notifications/${n.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ isRead: true }),
+        })
+      )
+    ).catch(error => console.error('Error marking all notifications as read:', error));
+  };
 
   // In your Layout or Notification component
 // const ws = useNotificationSocket();
@@ -275,9 +321,28 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
               {/* {unreadCount > 0 && ( */}
               <Badge badgeContent={unreadCount} color="error" >
-            <IconButton onClick={handleNotifClick}>
+                <IconButton 
+                  onClick={handleNotifClick}
+                  sx={{
+                    ...(unreadCount > 0 && {
+                      animation: 'pulse 2s infinite',
+                      '@keyframes pulse': {
+                        '0%': {
+                          transform: 'scale(1)',
+                        },
+                        '50%': {
+                          transform: 'scale(1.1)',
+                        },
+                        '100%': {
+                          transform: 'scale(1)',
+                        },
+                      },
+                    }),
+                  }}
+                >
                   <NotificationsIcon htmlColor='rgb(254 254 254 / 87%)' />
-            </IconButton></Badge>
+                </IconButton>
+              </Badge>
           {/* )} */}
           </Box>
             <IconButton onClick={handleMenuOpen} sx={{ p: 0 }}>
@@ -329,39 +394,74 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     vertical: 'top',
     horizontal: 'right',
   }}
+  PaperProps={{
+    sx: {
+      maxHeight: 400,
+      width: 350,
+    }
+  }}
 >
   {notifications.length === 0 ? (
     <MenuItem disabled>No notifications</MenuItem>
   ) : (
-    notifications.map((notif) => (
-      <MenuItem key={notif.id} onClick={(e) => {e.stopPropagation();
-        
-        handleNotifClose();
-        // // Mark as read in UI
-        // setNotifications((prev) =>
-        //   prev.map((n) =>
-        //     n.id === notif.id ? { ...n, isRead: true } : n
-        //   )
-        // );
+    <>
+      {unreadCount > 0 && (
+        <MenuItem onClick={handleMarkAllAsRead} sx={{ justifyContent: 'center', borderBottom: 1, borderColor: 'divider' }}>
+          <Typography variant="body2" color="primary">Mark all as read</Typography>
+        </MenuItem>
+      )}
+      {notifications.map((notif) => (
+        <MenuItem 
+          key={notif.id} 
+          onClick={(e) => {e.stopPropagation();
+            
+            handleNotifClose();
+            
+            // Mark as read in UI
+            setNotifications((prev) =>
+              prev.map((n) =>
+                n.id === notif.id ? { ...n, isRead: true } : n
+              )
+            );
 
-        // Optionally, persist to mock server
-        
-        fetch(`http://localhost:8000/Notifications/${notif.id}`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ isRead: true }),
-        });
-        // Mark as read
-        //markAsRead(notif.id);
-        navigate(getNotificationPath(notif));
-      }}>
-        <Box>
-          <Typography variant="subtitle2">{notif.title}</Typography>
-          <Typography variant="body2" color="text.secondary">{notif.message}</Typography>
-          <Typography variant="caption" color="text.disabled">{new Date(notif.createdAt).toLocaleString()}</Typography>
-        </Box>
-      </MenuItem>
-    ))
+            // Persist to mock server
+            fetch(`http://localhost:8000/Notifications/${notif.id}`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ isRead: true }),
+            }).catch(error => console.error('Error marking notification as read:', error));
+            
+            navigate(getNotificationPath(notif));
+          }}
+          sx={{
+            bgcolor: !notif.isRead ? 'action.hover' : 'transparent',
+            borderLeft: !notif.isRead ? 3 : 0,
+            borderColor: 'primary.main',
+            '&:hover': {
+              bgcolor: 'action.hover',
+            }
+          }}
+        >
+          <Box sx={{ width: '100%' }}>
+            <Typography 
+              variant="subtitle2" 
+              sx={{ 
+                fontWeight: !notif.isRead ? 'bold' : 'normal',
+                color: !notif.isRead ? 'text.primary' : 'text.secondary'
+              }}
+            >
+              {notif.title}
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
+              {notif.message}
+            </Typography>
+            <Typography variant="caption" color="text.disabled">
+              {new Date(notif.createdAt).toLocaleString()}
+            </Typography>
+          </Box>
+        </MenuItem>
+      ))}
+    </>
   )}
 </Menu>
 

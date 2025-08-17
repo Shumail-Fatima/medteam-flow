@@ -1607,7 +1607,7 @@
       "toUserId": "apt_1753765295252",
       "fromUserId": "apt_1753765295252",
       "priority": "medium",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-11T08:08:27.833Z"
     },
     {
@@ -1653,7 +1653,7 @@
       "consultationId": "apt_1754902344064",
       "patientId": "apt_1754902344064",
       "priority": "medium",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-11T09:53:29.627Z"
     },
     {
@@ -1689,7 +1689,7 @@
       "toUserId": "apt_1753765295252",
       "fromUserId": "apt_1753765295252",
       "priority": "medium",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-11T10:33:51.187Z"
     },
     {
@@ -1700,7 +1700,7 @@
       "toUserId": "apt_1753765295252",
       "fromUserId": "apt_1753765295252",
       "priority": "medium",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-11T10:34:11.011Z"
     },
     {
@@ -1979,7 +1979,7 @@
       "toUserId": "2",
       "fromUserId": "apt_1753765295252",
       "priority": "medium",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-12T11:05:10.695Z"
     },
     {
@@ -1990,7 +1990,7 @@
       "toUserId": "3",
       "fromUserId": "apt_1753765295252",
       "priority": "medium",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-12T11:36:48.609Z"
     },
     {
@@ -2001,7 +2001,7 @@
       "toUserId": "3",
       "fromUserId": "apt_1753765295252",
       "priority": "high",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-12T11:38:41.262Z"
     },
     {
@@ -2012,7 +2012,7 @@
       "toUserId": "3",
       "fromUserId": "apt_1753765295252",
       "priority": "medium",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-12T11:39:21.162Z"
     },
     {
@@ -2023,7 +2023,7 @@
       "toUserId": "3",
       "fromUserId": "apt_1753765295252",
       "priority": "high",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-12T11:41:12.740Z"
     }
   ]
