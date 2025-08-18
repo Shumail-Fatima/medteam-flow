@@ -58,7 +58,7 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
     reset,
     watch,
     formState: { errors },
-  } = useForm<UserFormData>({
+  } = useForm({
     resolver: yupResolver(userSchema),
     defaultValues: {
       name: '',

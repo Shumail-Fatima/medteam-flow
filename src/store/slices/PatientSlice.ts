@@ -1,6 +1,6 @@
 // Redux slice for managing patient state
 import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { Patient } from '../../types/appointment';
+import type { Patient } from '../../types/medical';
 import type { ExtendedPatient } from '../../types/medical';
 import patientsData from '../../../mockServer/MockData.json';
 
@@ -66,7 +66,11 @@ const calculateAge = (dateOfBirth: string): number => {
 const initialState: PatientState = {
   patients: patientsData.Patients.map(patient => ({
     ...patient,
-    age: calculateAge(patient.dateOfBirth)
+    age: calculateAge(patient.dateOfBirth),
+    // Normalize emergencyContact to object if array with one element exists
+    emergencyContact: Array.isArray((patient as any).emergencyContact)
+      ? ((patient as any).emergencyContact[0] ?? undefined)
+      : (patient as any).emergencyContact,
   })) as ExtendedPatient[],
   loading: false,
   error: null,
@@ -83,27 +87,34 @@ const patientSlice = createSlice({
       //   ...action.payload,
       //   age: calculateAge(action.payload.dateOfBirth)
       // };
+      const normalizedEmergency = Array.isArray(action.payload.emergencyContact)
+        ? action.payload.emergencyContact[0]
+        : (action.payload as any).emergencyContact;
       const patientWithAge: ExtendedPatient = {
         ...action.payload,
+        emergencyContact: normalizedEmergency as any,
         age: calculateAge(action.payload.dateOfBirth),
         medicalHistory: [],
-        allergies: [],
+        allergies: action.payload.allergies ?? [],
         createdAt: new Date().toISOString(),
-      };
+      } as any;
       state.patients.push(patientWithAge);
     },
     // Update an existing patient by ID
     updatePatient: (state, action: PayloadAction<Patient>) => {
       const index = state.patients.findIndex(patient => patient.id === action.payload.id);
       if (index !== -1) {
+        const normalizedEmergency = Array.isArray(action.payload.emergencyContact)
+          ? action.payload.emergencyContact[0]
+          : (action.payload as any).emergencyContact;
         const patientWithAge: ExtendedPatient = {
           ...action.payload,
+          emergencyContact: normalizedEmergency as any,
           age: calculateAge(action.payload.dateOfBirth),
-
-          medicalHistory: [],
-          allergies: [],
-          createdAt: new Date().toISOString(),
-        };
+          medicalHistory: state.patients[index].medicalHistory ?? [],
+          allergies: action.payload.allergies ?? state.patients[index].allergies ?? [],
+          createdAt: state.patients[index].createdAt ?? new Date().toISOString(),
+        } as any;
         state.patients[index] = patientWithAge;
       }
     },
@@ -129,11 +140,14 @@ const patientSlice = createSlice({
       .addCase(fetchPatients.fulfilled, (state, action: PayloadAction<Patient[]>) => {
         state.patients = action.payload.map(patient => ({
           ...patient,
+          emergencyContact: Array.isArray((patient as any).emergencyContact)
+            ? ((patient as any).emergencyContact[0] ?? undefined)
+            : (patient as any).emergencyContact,
           age: calculateAge(patient.dateOfBirth),
           medicalHistory: [],
-          allergies: [],
-          createdAt: new Date().toISOString(),
-        }));
+          allergies: (patient as any).allergies ?? [],
+          createdAt: (patient as any).createdAt ?? new Date().toISOString(),
+        })) as any;
         state.loading = false;
       })
       .addCase(fetchPatients.rejected, (state, action) => {

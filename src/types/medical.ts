@@ -53,6 +53,9 @@ export interface PatientFormData{
     phone: string;
     relationship: string;
   }[];
+  allergies: string[];
+  bloodType?: string;
+  createdAt?: string;
 }
 
 export interface Patient {
@@ -68,6 +71,9 @@ export interface Patient {
     phone: string;
     relationship: string;
   }[];
+  allergies: string[];
+  bloodType?: string;
+  createdAt: string;
 }
 
 export interface Consultation {

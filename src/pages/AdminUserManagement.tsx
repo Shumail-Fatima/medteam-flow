@@ -130,6 +130,7 @@ const AdminUserManagement: React.FC = () => {
         password: data.password,
         roleId: data.roleId,
         roleName,
+        specialtyId: data.specialtyId,
       };
       // dispatch(updateUser(updatedUser));
       dispatch(updateUserAsync(updatedUser));
@@ -158,6 +159,7 @@ const AdminUserManagement: React.FC = () => {
       roleId: data.roleId,
       createdAt: new Date().toISOString(),
       roleName,
+      specialtyId: data.specialtyId,
     };
     // dispatch(addUser(newUser));
     dispatch(addUserAsync(newUser)); // Async POST request

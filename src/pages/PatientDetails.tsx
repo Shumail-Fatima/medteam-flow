@@ -236,13 +236,25 @@ const PatientDetails: React.FC = () => {
                     Emergency Contact
                   </Typography>
                   <List dense>
-                    <ListItem sx={{ px: 0 }}>
-                      <ListItemIcon><ContactEmergency fontSize="small" /></ListItemIcon>
-                      <ListItemText 
-                        primary={currentPatient.emergencyContact.name}
-                        secondary={`${currentPatient.emergencyContact.relationship} • ${currentPatient.emergencyContact.phone}`}
-                      />
-                    </ListItem>
+                    {Array.isArray((currentPatient as any).emergencyContact)
+                      ? ((currentPatient as any).emergencyContact as any[]).slice(0,1).map((ec, idx) => (
+                          <ListItem sx={{ px: 0 }} key={idx}>
+                            <ListItemIcon><ContactEmergency fontSize="small" /></ListItemIcon>
+                            <ListItemText 
+                              primary={ec?.name}
+                              secondary={`${ec?.relationship ?? ''}${ec?.relationship && ec?.phone ? ' • ' : ''}${ec?.phone ?? ''}`}
+                            />
+                          </ListItem>
+                        ))
+                      : (
+                        <ListItem sx={{ px: 0 }}>
+                          <ListItemIcon><ContactEmergency fontSize="small" /></ListItemIcon>
+                          <ListItemText 
+                            primary={(currentPatient as any).emergencyContact?.name}
+                            secondary={`${(currentPatient as any).emergencyContact?.relationship ?? ''}${(currentPatient as any).emergencyContact?.relationship && (currentPatient as any).emergencyContact?.phone ? ' • ' : ''}${(currentPatient as any).emergencyContact?.phone ?? ''}`}
+                          />
+                        </ListItem>
+                      )}
                   </List>
                   {/* </ListItem>
                   </Grid>
