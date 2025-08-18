@@ -67,11 +67,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
     channel.onmessage = (event) => {
       setNotifications((prev) => [event.data, ...prev]);
-      
-      // Optional: Play notification sound for new notifications
-      // You can uncomment this if you want audio feedback
-      // const audio = new Audio('/notification-sound.mp3');
-      // audio.play().catch(e => console.log('Audio play failed:', e));
     };
 
     return () => {
@@ -97,9 +92,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const handleMenuClose = () => {
     setAnchorE1(null);
   }
-
-    
-
 
   const handleNotifClick = (event: React.MouseEvent<HTMLElement>) => {
     setNotifAnchorEl(event.currentTarget);
@@ -140,19 +132,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     ).catch(error => console.error('Error marking all notifications as read:', error));
   };
 
-  // In your Layout or Notification component
-// const ws = useNotificationSocket();
-// useEffect(() => {
-//   if (!ws) return;
-//   ws.onmessage = (event) => {
-//     const data = JSON.parse(event.data);
-//     if (user && data.type === 'notification' && data.toUserId === user.id) {
-//       setNotifications((prev) => [data.payload, ...prev]);
-//     }
-//   };
-// }, [ws, user]);
-  
-
   //const unreadCount = getUnreadCount();
   const unreadCount = notifications.filter(n => !n.isRead).length;
 
@@ -160,7 +139,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   switch (notif.type) {
     case 'appointment':
-      return notif.appointmentId ? `/Appointment/${notif.appointmentId}` : '/Appointment';
+      return notif.patientId ? `/patients/${notif.patientId}` : '/patients';
     case 'consultation':
       return notif.consultationId ? `/consultation/view/${notif.consultationId}` : '/consultations-records';
     case 'task':

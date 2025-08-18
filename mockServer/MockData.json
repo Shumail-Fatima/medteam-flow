@@ -238,7 +238,7 @@
       "appointmentSlot": "2025-08-04T10:00:00Z",
       "reason": "Mild Dehydration Due to Acute Gastroenteritis",
       "createdAt": "2025-08-05T05:37:40.851Z",
-      "status": "scheduled",
+      "status": "no-show",
       "consultationCompleted": false
     },
     {
@@ -352,6 +352,21 @@
       "appointmentSlot": "2025-08-19T14:30:00Z",
       "reason": "visit",
       "createdAt": "2025-08-18T04:30:04.231Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1755502658611",
+      "patientId": "patient_4",
+      "patientName": "Emily Carter",
+      "patientAge": 7,
+      "specialtyName": "Pediatrics",
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Rodriguez",
+      "createdById": "apt_1753765295252",
+      "appointmentSlot": "2025-08-18T14:30:00Z",
+      "reason": "visit",
+      "createdAt": "2025-08-18T07:37:38.611Z",
       "status": "scheduled",
       "consultationCompleted": false
     }
@@ -964,6 +979,53 @@
       "followUpRequired": true,
       "followUpDate": "2025-08-13T13:00",
       "createdAt": "2025-08-11T09:56:38.961Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1755501965313",
+      "patientId": "patient_5",
+      "patientName": "George Miller",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentId": "apt_1755491404231",
+      "date": "2025-08-18T07:26:05.313Z",
+      "symptoms": [
+        "Shortness of breath (worsening over 1 week)",
+        "fatigue",
+        "swelling in legs",
+        "difficulty sleeping flat",
+        "occasional chest discomfort"
+      ],
+      "diagnosis": "Congestive Heart Failure (CHF) exacerbation, NYHA Class III",
+      "notes": "Patient is an 82-year-old male with a known history of ischemic heart disease and hypertension. Presents with progressive dyspnea and pedal edema. Blood pressure is borderline low, lungs reveal bilateral basal crepitations, and mild jugular venous distention noted. ECG shows old infarct changes; echocardiogram reveals reduced ejection fraction (~35%). Discussed lifestyle modifications, medication adherence, and close monitoring.",
+      "prescriptions": [
+        {
+          "id": "rx_1755501965313_0",
+          "medication": "Furosemide ",
+          "dosage": "40mg",
+          "frequency": "Once daily (morning)",
+          "duration": "14 days",
+          "instructions": "Take with water, monitor urine output, avoid taking at night"
+        },
+        {
+          "id": "rx_1755501965313_1",
+          "medication": "Carvedilol ",
+          "dosage": "6.25mg",
+          "frequency": "Twice daily",
+          "duration": "Ongoing",
+          "instructions": "Take with meals, do not stop abruptly"
+        },
+        {
+          "id": "rx_1755501965313_2",
+          "medication": "Ramipril ",
+          "dosage": "2.5mg",
+          "frequency": "Once daily",
+          "duration": "Ongoing",
+          "instructions": "Take at night, monitor blood pressure regularly"
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-08-18T07:26:05.313Z",
       "status": "completed"
     }
   ],
@@ -2063,6 +2125,7 @@
       "type": "appointment",
       "toUserId": "2",
       "fromUserId": "1",
+      "patientId": "patient_5",
       "priority": "medium",
       "isRead": true,
       "createdAt": "2025-08-18T04:30:04.233Z"
@@ -2154,6 +2217,102 @@
       "priority": "medium",
       "isRead": true,
       "createdAt": "2025-08-18T06:53:31.981Z"
+    },
+    {
+      "id": "notif_1755501105745_kk6tk4ydl",
+      "title": "Appointment Updated",
+      "message": "Appointment with Jane Smith has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "patient_2",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T07:11:45.745Z"
+    },
+    {
+      "id": "notif_1755501122224_bfxdex8pv",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with Jane Smith has been cancelled",
+      "type": "appointment",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "2",
+      "patientId": "patient_2",
+      "priority": "high",
+      "isRead": false,
+      "createdAt": "2025-08-18T07:12:02.224Z"
+    },
+    {
+      "id": "notif_1755501666913_heoedwi8g",
+      "title": "Consultation Started",
+      "message": "Consultation with George Miller has started",
+      "type": "consultation",
+      "toUserId": "2",
+      "fromUserId": "2",
+      "consultationId": "apt_1755491404231",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T07:21:06.913Z"
+    },
+    {
+      "id": "notif_1755501965315_5l5wrf5jl",
+      "title": "Consultation Completed",
+      "message": "Consultation with George Miller has been completed",
+      "type": "consultation",
+      "toUserId": "2",
+      "fromUserId": "2",
+      "consultationId": "cons_1755501965313",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T07:26:05.315Z"
+    },
+    {
+      "id": "notif_1755502658614_gfqw9xnrv",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with Emily Carter on 8/18/2025",
+      "type": "appointment",
+      "toUserId": "4",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "patient_4",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T07:37:38.614Z"
+    },
+    {
+      "id": "notif_1755502761113_jhaymos9w",
+      "title": "Appointment Updated",
+      "message": "Appointment with Emily Carter has been updated",
+      "type": "appointment",
+      "toUserId": "4",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "patient_4",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T07:39:21.114Z"
+    },
+    {
+      "id": "notif_1755502792606_upriq5ya2",
+      "title": "Appointment Updated",
+      "message": "Appointment with Emily Carter has been updated",
+      "type": "appointment",
+      "toUserId": "4",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "patient_4",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T07:39:52.606Z"
+    },
+    {
+      "id": "notif_1755502850379_d1i4kb7q1",
+      "title": "Appointment Updated",
+      "message": "Appointment with Lucas Martinez has been updated",
+      "type": "appointment",
+      "toUserId": "4",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "patient_8",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T07:40:50.379Z"
     }
   ]
 }

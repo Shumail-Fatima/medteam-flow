@@ -14,6 +14,7 @@ export class NotificationService {
     toUserId: string,
     fromUserId: string,
     //appointmentId: string,
+    patientId: string,
     patientName: string,
     doctorName: string,
     appointmentSlot: string,
@@ -54,6 +55,7 @@ export class NotificationService {
       toUserId,
       fromUserId,
       //appointmentId,
+      patientId,
       priority: template.priority,
     };
   }
