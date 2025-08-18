@@ -6,9 +6,12 @@ import {
   Badge,
   Stack ,
   Button,
+  Menu,
+  MenuItem,
+  IconButton,
 } from '@mui/material';
 import {AddButton} from '../components/CustomButton';
-import { Add, CalendarToday, } from '@mui/icons-material';
+import { Add, CalendarToday, MoreVert } from '@mui/icons-material';
 import { useSelector, useDispatch } from 'react-redux';
 import Layout from '../components/sharedComponents/Layout';
 import CustomTabs, { type TabOption } from '../components/GeneralizedTabs';
@@ -76,6 +79,8 @@ const AppointmentManagement: React.FC = () => {
     message: '', 
     severity: 'success' as 'success' | 'error' 
   });
+  const [statusMenuAnchor, setStatusMenuAnchor] = useState<null | HTMLElement>(null);
+  const [selectedAppointmentForStatus, setSelectedAppointmentForStatus] = useState<Appointment | null>(null);
 
   const tabOptions: TabOption[] = user && user.roleName === 'doctor'
 ? [{ label: 'Appointments List' }]
@@ -85,35 +90,6 @@ const AppointmentManagement: React.FC = () => {
 ];
 
   const { sendNotification } = useNotification();
-
-  // useEffect(() => {
-  //   if (!appointments.length || !user) return;
-  
-  //   const reminderInterval = setInterval(() => {
-  //     const now = new Date();
-  //     const oneDayLater = new Date();
-  //     oneDayLater.setDate(oneDayLater.getDate() + 1);
-  
-  //     const upcomingAppointments = appointments.filter(apt => {
-  //       const aptTime = new Date(apt.appointmentSlot).getTime();
-  //       return (aptTime > now.getTime() && aptTime <= oneDayLater.getTime() , console.log(aptTime > now.getTime() && aptTime <= oneDayLater.getTime()));
-  //     });
-  
-  //     upcomingAppointments.forEach(apt => {
-  //       const reminderNotification = NotificationService.createAppointmentNotification(
-  //         apt.doctorId,       // toUserId
-  //         user.id,            // fromUserId
-  //         apt.patientName,
-  //         apt.doctorName,
-  //         apt.appointmentSlot,
-  //         'reminder'
-  //       );
-  //       sendNotification(reminderNotification);
-  //     });
-  //   }, 60 * 1000); // check every 1 hour
-  
-  //   return () => clearInterval(reminderInterval);
-  // }, [appointments, user, sendNotification]);
   
 
   // Tab change handler
@@ -162,7 +138,6 @@ const AppointmentManagement: React.FC = () => {
 
   
   // In your appointment creation logic/component
-  // const ws = useNotificationSocket();
 
   // Create new appointment button handler
   const handleCreateAppointment = () => {
@@ -208,6 +183,69 @@ const AppointmentManagement: React.FC = () => {
       setDeleteDialogOpen(false);
       setAppointmentToDelete(null);
     }
+  };
+
+  // Handle status change
+  const handleStatusChange = (appointment: Appointment, newStatus: "scheduled" | "completed" | "cancelled" | "no-show") => {
+    const updatedAppointment: Appointment = {
+      ...appointment,
+      status: newStatus,
+    };
+    
+    dispatch(updateAppointmentAsync(updatedAppointment));
+    
+    let recieveId = ''
+    if (user?.id === '1'){
+      recieveId = appointment.doctorId;
+    }else if (user?.id === '2'){
+      recieveId = appointment.createdById || '';
+    }
+
+    // Send notification based on status change
+    if (newStatus === 'cancelled') {
+      const notification = NotificationService.createAppointmentNotification(
+        recieveId,
+        user?.id || '',
+        appointment.patientName,
+        appointment.doctorName,
+        appointment.appointmentSlot,
+        'cancelled'
+      );
+      sendNotification(notification);
+    } else if (newStatus === 'no-show') {
+      // For completed status, use 'updated' notification type
+      const notification = NotificationService.createAppointmentNotification(
+        recieveId,
+        user?.id || '',
+        appointment.patientName,
+        appointment.doctorName,
+        appointment.appointmentSlot,
+        'updated'
+      );
+      sendNotification(notification);
+    }
+    
+    setSnackbar({
+      open: true,
+      message: `Appointment status changed to ${newStatus} successfully!`,
+      severity: 'success'
+    });
+    
+    // Close the status menu
+    setStatusMenuAnchor(null);
+    setSelectedAppointmentForStatus(null);
+  };
+
+  // Handle status menu open
+  const handleStatusMenuOpen = (event: React.MouseEvent<HTMLElement>, appointment: Appointment) => {
+    setStatusMenuAnchor(event.currentTarget);
+    setSelectedAppointmentForStatus(appointment);
+  };
+
+  // Handle status menu close
+  const handleStatusMenuClose = () => {
+    setStatusMenuAnchor(null);
+    setSelectedAppointmentForStatus(null);
   };
 
     // Fetch appointments from API on component mount
@@ -287,6 +325,7 @@ const AppointmentManagement: React.FC = () => {
         specialtyName: selectedSpecialty?.name,
         doctorId: data.doctorId,
         doctorName: selectedDoctor.label,
+        createdById: user?.id,
         appointmentSlot: data.appointmentSlot,
         reason: data.reason,
         createdAt: new Date().toISOString(),
@@ -474,25 +513,31 @@ const AppointmentManagement: React.FC = () => {
                       default: return 'default';
                     }
                   };
+                  
                   if (slotDate(appointment) == true || user?.roleName === 'admin'){
                     return(
-                      <Chip 
-                      label={appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
-                      color={getStatusColor(appointment.status) as any}
-                      size="small"
-                      sx={{ fontWeight: 600 }}
-                    />
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Chip 
+                          label={appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
+                          color={getStatusColor(appointment.status) as any}
+                          size="small"
+                          sx={{ fontWeight: 600 }}
+                        />
+                      </Box>
                     )
                   } else if (slotDate(appointment) == false){
                     return(
-                    <Button
-                        size="small"
-                        variant="outlined"
-                        onClick={() => appointmentNotification(appointment)}
-                        sx={{ textTransform: 'none' }}
-                      >
-                        Start
-                      </Button>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Button
+                          size="small"
+                          variant="outlined"
+                          onClick={() => appointmentNotification(appointment)}
+                          sx={{ textTransform: 'none' }}
+                        >
+                          Start
+                        </Button>
+                        
+                      </Box>
                     )}
                 }
               },
@@ -502,6 +547,20 @@ const AppointmentManagement: React.FC = () => {
                   <Typography variant="body2" color="text.secondary">
                     {formatDate(appointment.createdAt)}
                   </Typography>
+                )
+              },
+              {
+                header: '',
+                render: (appointment) => (
+                  <Box sx={{ display: 'flex', gap: 1 }}>
+                    <IconButton
+                            size="small"
+                            onClick={(e) => handleStatusMenuOpen(e, appointment)}
+                            sx={{ p: 0.5 }}
+                          >
+                            <MoreVert fontSize="small" />
+                          </IconButton>
+                  </Box>
                 )
               },
             ]}
@@ -514,6 +573,34 @@ const AppointmentManagement: React.FC = () => {
           />
         </Box>
       )}
+
+      {/* Status Change Menu */}
+      <Menu
+        anchorEl={statusMenuAnchor}
+        open={Boolean(statusMenuAnchor)}
+        onClose={handleStatusMenuClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+      >
+        <MenuItem 
+          onClick={() => selectedAppointmentForStatus && handleStatusChange(selectedAppointmentForStatus, 'cancelled')}
+          disabled={selectedAppointmentForStatus?.status === 'cancelled'}
+        >
+          Mark as Cancelled
+        </MenuItem>
+        <MenuItem 
+          onClick={() => selectedAppointmentForStatus && handleStatusChange(selectedAppointmentForStatus, 'no-show')}
+          disabled={selectedAppointmentForStatus?.status === 'no-show'}
+        >
+          Mark as No-Show
+        </MenuItem>
+      </Menu>
 
       {/* Create/Edit Appointment Tab */}
       {activeTab === 1 && user?.roleName !== 'doctor' &&(

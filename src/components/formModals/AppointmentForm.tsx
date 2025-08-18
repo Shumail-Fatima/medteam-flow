@@ -114,22 +114,6 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
         setPatientModalOpen(false);
     };
 
-    const slotDate = (appointment: Appointment) => {
-      const slotDate = new Date(appointment.appointmentSlot);
-      const now = new Date();
-      const isPast =
-          slotDate < now &&
-          (
-            slotDate.getFullYear() !== now.getFullYear() ||
-            slotDate.getMonth() !== now.getMonth() ||
-            slotDate.getDate() !== now.getDate()
-          );
-      return isPast;
-    };
-
-    const handleStatusChange = (status: string) => {
-
-    };
 
     // Handle specialty selection and filter doctors using Redux
     const handleSpecialtyChange = (specialtyId: string) => {

@@ -12,7 +12,8 @@
       "status": "no-show",
       "consultationCompleted": false,
       "createdAt": "2025-07-01T08:30:00Z",
-      "specialtyName": "Cardiology"
+      "specialtyName": "Cardiology",
+      "createdById": "1"
     },
     {
       "id": "apt_1753788388045",
@@ -26,7 +27,8 @@
       "reason": "follow up: soft tissue injury",
       "createdAt": "2025-07-29T11:26:28.045Z",
       "status": "completed",
-      "consultationCompleted": true
+      "consultationCompleted": true,
+      "createdById": "1"
     },
     {
       "id": "apt_1753790122836",
@@ -40,7 +42,8 @@
       "reason": "Lumbar Strain Due to Postural Overuse",
       "createdAt": "2025-07-29T11:55:22.836Z",
       "status": "completed",
-      "consultationCompleted": true
+      "consultationCompleted": true,
+      "createdById": "1"
     },
     {
       "id": "apt_1753790153151",
@@ -262,7 +265,8 @@
       "appointmentSlot": "2025-08-11T14:00:00Z",
       "reason": "visit follow up",
       "createdAt": "2025-08-10T17:01:50.817Z",
-      "status": "no-show",
+      "createdById": "apt_1753765295252",
+      "status": "cancelled",
       "consultationCompleted": false,
       "specialtyName": "Cardiology"
     },
@@ -334,6 +338,21 @@
       "reason": "visit",
       "createdAt": "2025-08-12T11:36:48.608Z",
       "status": "cancelled",
+      "consultationCompleted": false
+    },
+    {
+      "id": "apt_1755491404231",
+      "patientId": "patient_5",
+      "patientName": "George Miller",
+      "patientAge": 82,
+      "specialtyName": "Cardiology",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "createdById": "apt_1753765295252",
+      "appointmentSlot": "2025-08-19T14:30:00Z",
+      "reason": "visit",
+      "createdAt": "2025-08-18T04:30:04.231Z",
+      "status": "scheduled",
       "consultationCompleted": false
     }
   ],
@@ -1711,7 +1730,7 @@
       "toUserId": "2",
       "fromUserId": "apt_1753765295252",
       "priority": "medium",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-12T06:16:38.819Z"
     },
     {
@@ -1722,7 +1741,7 @@
       "toUserId": "2",
       "fromUserId": "apt_1753765295252",
       "priority": "high",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-12T06:17:09.825Z"
     },
     {
@@ -1755,7 +1774,7 @@
       "toUserId": "2",
       "fromUserId": "apt_1753765295252",
       "priority": "medium",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-12T06:19:56.276Z"
     },
     {
@@ -1766,7 +1785,7 @@
       "toUserId": "2",
       "fromUserId": "apt_1753765295252",
       "priority": "medium",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-12T06:20:18.555Z"
     },
     {
@@ -1777,7 +1796,7 @@
       "toUserId": "2",
       "fromUserId": "apt_1753765295252",
       "priority": "high",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-12T06:20:44.845Z"
     },
     {
@@ -1799,7 +1818,7 @@
       "toUserId": "2",
       "fromUserId": "apt_1753765295252",
       "priority": "high",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-12T06:23:14.504Z"
     },
     {
@@ -1810,7 +1829,7 @@
       "toUserId": "2",
       "fromUserId": "apt_1753765295252",
       "priority": "medium",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-12T06:23:33.960Z"
     },
     {
@@ -1821,7 +1840,7 @@
       "toUserId": "2",
       "fromUserId": "apt_1753765295252",
       "priority": "medium",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-12T06:23:53.419Z"
     },
     {
@@ -1832,7 +1851,7 @@
       "toUserId": "2",
       "fromUserId": "apt_1753765295252",
       "priority": "medium",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-12T06:24:08.307Z"
     },
     {
@@ -1843,7 +1862,7 @@
       "toUserId": "2",
       "fromUserId": "apt_1753765295252",
       "priority": "medium",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-12T06:24:42.707Z"
     },
     {
@@ -1854,7 +1873,7 @@
       "toUserId": "2",
       "fromUserId": "apt_1753765295252",
       "priority": "high",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-12T06:25:01.442Z"
     },
     {
@@ -1865,7 +1884,7 @@
       "toUserId": "2",
       "fromUserId": "apt_1753765295252",
       "priority": "medium",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-12T06:26:30.115Z"
     },
     {
@@ -1876,7 +1895,7 @@
       "toUserId": "2",
       "fromUserId": "apt_1753765295252",
       "priority": "high",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-12T06:27:02.994Z"
     },
     {
@@ -1887,7 +1906,7 @@
       "toUserId": "2",
       "fromUserId": "apt_1753765295252",
       "priority": "medium",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-12T06:27:24.436Z"
     },
     {
@@ -1923,7 +1942,7 @@
       "fromUserId": "2",
       "taskId": "task_1754983332013",
       "priority": "medium",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-12T07:23:13.253Z"
     },
     {
@@ -1957,7 +1976,7 @@
       "toUserId": "2",
       "fromUserId": "apt_1753765295252",
       "priority": "medium",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-12T09:21:07.383Z"
     },
     {
@@ -2025,6 +2044,116 @@
       "priority": "high",
       "isRead": true,
       "createdAt": "2025-08-12T11:41:12.740Z"
+    },
+    {
+      "id": "notif_1755491154294_yy89bqu5i",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with George Miller on 8/17/2025",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "1",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T04:25:54.295Z"
+    },
+    {
+      "id": "notif_1755491404233_6uf2syj2v",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with George Miller on 8/17/2025",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "1",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T04:30:04.233Z"
+    },
+    {
+      "id": "notif_1755491435947_70dww4tp3",
+      "title": "Appointment Updated",
+      "message": "Appointment with George Miller has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "1",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T04:30:35.947Z"
+    },
+    {
+      "id": "notif_1755499213910_3xr5gm2mx",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with John Doe has been cancelled",
+      "type": "appointment",
+      "toUserId": "1",
+      "fromUserId": "2",
+      "priority": "high",
+      "isRead": false,
+      "createdAt": "2025-08-18T06:40:13.910Z"
+    },
+    {
+      "id": "notif_1755499239698_okkye6m42",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "1",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T06:40:39.698Z"
+    },
+    {
+      "id": "notif_1755499287805_yppvq0zvg",
+      "title": "Appointment Updated",
+      "message": "Appointment with Jane Smith has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "1",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T06:41:27.805Z"
+    },
+    {
+      "id": "notif_1755499414364_zpyzngjjz",
+      "title": "Appointment Updated",
+      "message": "Appointment with Jane Smith has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "1",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T06:43:34.364Z"
+    },
+    {
+      "id": "notif_1755499806785_n9uce5i5u",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with Jane Smith has been cancelled",
+      "type": "appointment",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "2",
+      "priority": "high",
+      "isRead": false,
+      "createdAt": "2025-08-18T06:50:06.785Z"
+    },
+    {
+      "id": "notif_1755499989488_dkdq8tcq3",
+      "title": "Appointment Updated",
+      "message": "Appointment with George Miller has been updated",
+      "type": "appointment",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "2",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-18T06:53:09.488Z"
+    },
+    {
+      "id": "notif_1755500011981_u3fowhjps",
+      "title": "Appointment Updated",
+      "message": "Appointment with George Miller has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T06:53:31.981Z"
     }
   ]
 }

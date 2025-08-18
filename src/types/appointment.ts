@@ -14,6 +14,7 @@ export interface Appointment {
   patientAge: number;
   doctorId: string;
   doctorName: string;
+  createdById?: string;
   appointmentSlot: string;
   reason?: string;
   createdAt: string;
