@@ -399,6 +399,21 @@
       "createdAt": "2025-08-19T04:42:58.160Z",
       "status": "no-show",
       "consultationCompleted": false
+    },
+    {
+      "id": "apt_1755584374637",
+      "patientId": "patient_8",
+      "patientName": "Lucas Martinez",
+      "patientAge": 13,
+      "specialtyName": "Pediatrics",
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Rodriguez",
+      "createdById": "apt_1753765295252",
+      "appointmentSlot": "2025-08-18T14:30:00Z",
+      "reason": "visit",
+      "createdAt": "2025-08-19T06:19:34.637Z",
+      "status": "scheduled",
+      "consultationCompleted": false
     }
   ],
   "Consultations": [
@@ -2515,7 +2530,7 @@
       "fromUserId": "4",
       "patientId": "559e",
       "priority": "high",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-19T05:09:22.982Z"
     },
     {
@@ -2563,7 +2578,7 @@
       "fromUserId": "apt_1753765295252",
       "patientId": "559e",
       "priority": "high",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-19T05:19:41.508Z"
     },
     {
@@ -2577,6 +2592,102 @@
       "priority": "medium",
       "isRead": false,
       "createdAt": "2025-08-19T05:19:55.957Z"
+    },
+    {
+      "id": "notif_1755583898740_o6dj3ij6w",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with Ayaan Ali has been cancelled",
+      "type": "appointment",
+      "toUserId": "4",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "559e",
+      "priority": "high",
+      "isRead": true,
+      "createdAt": "2025-08-19T06:11:38.740Z"
+    },
+    {
+      "id": "notif_1755583907872_2s821zvoe",
+      "title": "Appointment Updated",
+      "message": "Appointment with Ayaan Ali has been updated",
+      "type": "appointment",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "4",
+      "patientId": "559e",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-19T06:11:47.872Z"
+    },
+    {
+      "id": "notif_1755583938797_3ra93z0ul",
+      "title": "Consultation Started",
+      "message": "Consultation with Emily Carter has started",
+      "type": "consultation",
+      "toUserId": "4",
+      "fromUserId": "4",
+      "consultationId": "apt_1755502658611",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-19T06:12:18.797Z"
+    },
+    {
+      "id": "notif_1755583988190_ntmoa1vlm",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with Lucas Martinez on 8/18/2025",
+      "type": "appointment",
+      "toUserId": "4",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "patient_8",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-19T06:13:08.190Z"
+    },
+    {
+      "id": "notif_1755584374784_0sb85bs1t",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with Lucas Martinez on 8/18/2025",
+      "type": "appointment",
+      "toUserId": "4",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "patient_8",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-19T06:19:34.784Z"
+    },
+    {
+      "id": "notif_1755584420796_7sqt797l3",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with Lucas Martinez has been cancelled",
+      "type": "appointment",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "4",
+      "patientId": "patient_8",
+      "priority": "high",
+      "isRead": false,
+      "createdAt": "2025-08-19T06:20:20.797Z"
+    },
+    {
+      "id": "notif_1755584442793_fdzr4kslu",
+      "title": "Appointment Updated",
+      "message": "Appointment with Lucas Martinez has been updated",
+      "type": "appointment",
+      "toUserId": "4",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "patient_8",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-19T06:20:42.793Z"
+    },
+    {
+      "id": "notif_1755584457609_nzo9j42wa",
+      "title": "Consultation Started",
+      "message": "Consultation with Lucas Martinez has started",
+      "type": "consultation",
+      "toUserId": "4",
+      "fromUserId": "4",
+      "consultationId": "apt_1755584374637",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-19T06:20:57.609Z"
     }
   ]
 }

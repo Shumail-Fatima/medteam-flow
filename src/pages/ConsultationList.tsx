@@ -9,6 +9,7 @@ import { useAuth } from '../context/AuthContext';
 import type { RootState } from '../store/Store';
 import type { Consultation } from '../types/medical';
 import PageHeader from '../components/sharedComponents/PageHeader';
+import { SearchFilterbox } from '../components/SearchFilterbox';
 
 const ConsultationList: React.FC = () => {
   const { user } = useAuth();
@@ -65,16 +66,7 @@ const ConsultationList: React.FC = () => {
       <PageHeader
         title={pageTitle}
       />
-
-      
-      <TextField
-        label="Search by Patient Name"
-        value={searchFilter}
-        onChange={(e) => setSearchFilter(e.target.value)}
-        size="small"
-        placeholder="Enter name to search..."
-        sx={{ minWidth: 200, width: 250 }}
-      />
+        <SearchFilterbox value={searchFilter} onChange={setSearchFilter}/>
       </Box>
       
 

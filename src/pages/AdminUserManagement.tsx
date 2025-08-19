@@ -19,6 +19,7 @@ import { addUser, updateUser, deleteUser, fetchUsers, addUserAsync, updateUserAs
 import { useNotification } from '../context/NotifSocketContext';
 import { NotificationService } from '../utils/NotificationService';
 import { useAuth } from '../context/AuthContext';
+import { SearchFilterbox } from '../components/SearchFilterbox';
 
 const AdminUserManagement: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -228,13 +229,9 @@ const AdminUserManagement: React.FC = () => {
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
       {/* Filter Section */}
         <Box sx={{  display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'flex-start' }}>
-          <TextField
-            label="Filter by Name or Email"
-            value={searchFilter}
-            onChange={(e) => setSearchFilter(e.target.value)}
-            size="small"
-            placeholder="Enter name to search..."
-            sx={{ minWidth: 200, width: 250 }}
+          <SearchFilterbox
+          value={searchFilter}
+          onChange={setSearchFilter}
           />
           <FormControl size="small" sx={{ minWidth: 200, width: 250 }}>
             <InputLabel>Filter by Role</InputLabel>
