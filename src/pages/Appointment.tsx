@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Box,
-  Typography,
-  Chip,
-  Badge,
-  Stack ,
-  Button,
-  Menu,
-  MenuItem,
-  IconButton,
-} from '@mui/material';
+  Box, Typography, Chip, Button, Menu, MenuItem, IconButton, TextField, } from '@mui/material';
 import {AddButton} from '../components/CustomButton';
 import { Add, CalendarToday, MoreVert } from '@mui/icons-material';
 import { useSelector, useDispatch } from 'react-redux';
@@ -20,9 +11,9 @@ import AppointmentForm from '../components/formModals/AppointmentForm';
 import ConfirmDeleteDialog from '../components/sharedComponents/ConfirmDeleteDialog';
 import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';
 import type { RootState, AppDispatch } from '../store/Store';
-import { addAppointment, updateAppointment, deleteAppointment, fetchAppointments, addAppointmentAsync, updateAppointmentAsync, deleteAppointmentAsync } from '../store/slices/AppointmentSlice';
-import { addPatient } from '../store/slices/PatientSlice';
-import type { Appointment, AppointmentFormData, PatientFormData } from '../types/appointment';
+import { fetchAppointments, addAppointmentAsync, updateAppointmentAsync, deleteAppointmentAsync } from '../store/slices/AppointmentSlice';
+import type { Appointment, AppointmentFormData } from '../types/appointment';
+import type { PatientFormData } from '../types/medical';
 import usersData from '../../mockServer/MockData.json';
 import doctorSlots from '../../mockServer/MockData.json';
 import ViewDialog from '../components/sharedComponents/ViewDialog';
@@ -33,6 +24,11 @@ import { useNavigate } from 'react-router-dom';
 import { fetchPatients } from '../store/slices/PatientSlice';
 import { useNotification } from '../context/NotifSocketContext';
 import { NotificationService } from '../utils/NotificationService';
+import PageHeader from '../components/sharedComponents/PageHeader';
+import { useDoctors } from '../hooks/useDoctors';
+import { useFilteredAppointments } from '../hooks/useFilteredAppoint';
+import { formatDate, slotDate } from '../utils/DateUtils';
+import { AppointmentFilterChips } from '../components/AppointStatFilterBadge';
 
 // Prepare doctors array from users data
 const doctors = usersData.Users
@@ -50,6 +46,8 @@ const doctors = usersData.Users
       specialtyName: specialty?.name || 'General Medicine',
     };
   });
+
+
 
 
 const AppointmentManagement: React.FC = () => {
@@ -81,6 +79,7 @@ const AppointmentManagement: React.FC = () => {
   });
   const [statusMenuAnchor, setStatusMenuAnchor] = useState<null | HTMLElement>(null);
   const [selectedAppointmentForStatus, setSelectedAppointmentForStatus] = useState<Appointment | null>(null);
+  const [searchFilter, setSearchFilter] = useState('');
 
   const tabOptions: TabOption[] = user && user.roleName === 'doctor'
 ? [{ label: 'Appointments List' }]
@@ -102,39 +101,43 @@ const AppointmentManagement: React.FC = () => {
   };
 
   //filter appointments based on the filter state (date)
-  const now = new Date();
+  //const now = new Date();
+  const filteredAppointments = useFilteredAppointments(appointments, patients, filter, searchFilter);
 
-  const filteredAppointments = appointments.filter((appointment) => {
-    const slotDate = new Date(appointment.appointmentSlot);
-    if (filter === 'upcoming') {
-      // Upcoming: scheduled and date >= today
-      return (
-        appointment.status === 'scheduled' &&
-        (
-          slotDate > now ||
-          (
-            slotDate.getFullYear() === now.getFullYear() &&
-            slotDate.getMonth() === now.getMonth() &&
-            slotDate.getDate() === now.getDate()
-          )
-        )
-      );
-    }
-    if (filter === 'previous') {
-      // Before today
-      return (
-        appointment.status === 'completed' ||(
-        slotDate < now &&
-        (
-          slotDate.getFullYear() !== now.getFullYear() ||
-          slotDate.getMonth() !== now.getMonth() ||
-          slotDate.getDate() !== now.getDate()
-        )
-        )
-      );
-    }
-    return true; // 'all'
-  });
+  // const filteredAppointments = appointments.filter((appointment) => {
+  //   const slotDate = new Date(appointment.appointmentSlot);
+  //   if (filter === 'upcoming') {
+  //     // Upcoming: scheduled and date >= today
+  //     return (
+  //       appointment.status === 'scheduled' &&
+  //       (
+  //         slotDate > now ||
+  //         (
+  //           slotDate.getFullYear() === now.getFullYear() &&
+  //           slotDate.getMonth() === now.getMonth() &&
+  //           slotDate.getDate() === now.getDate()
+  //         )
+  //       )
+  //     );
+  //   }
+  //   if (filter === 'previous') {
+  //     // Before today
+  //     return (
+  //       appointment.status === 'completed' ||(
+  //       slotDate < now &&
+  //       (
+  //         slotDate.getFullYear() !== now.getFullYear() ||
+  //         slotDate.getMonth() !== now.getMonth() ||
+  //         slotDate.getDate() !== now.getDate()
+  //       )
+  //       )
+  //     );
+  //   }
+
+  //   const patient = patients.find((p) => p.id === appointment.patientId);
+  //   return patient ? patient.name.toLowerCase().includes(searchFilter.toLowerCase()) : false;
+  //   //return true; // 'all'
+  // });
 
   
   // In your appointment creation logic/component
@@ -194,17 +197,17 @@ const AppointmentManagement: React.FC = () => {
     
     dispatch(updateAppointmentAsync(updatedAppointment));
     
-    let recieveId = ''
-    if (user?.id === '1'){
-      recieveId = appointment.doctorId;
-    }else if (user?.id === '2'){
-      recieveId = appointment.createdById || '';
+    let receiveId: string;
+    if (user?.roleId === 1){
+      receiveId = appointment.doctorId;
+    }else{
+      receiveId = appointment.createdById || "";
     }
-
-    // Send notification based on status change
+    
+    
     if (newStatus === 'cancelled') {
       const notification = NotificationService.createAppointmentNotification(
-        recieveId,
+        receiveId,
         user?.id || '',
         appointment.patientId,
         appointment.patientName,
@@ -216,7 +219,7 @@ const AppointmentManagement: React.FC = () => {
     } else if (newStatus === 'no-show') {
       // For completed status, use 'updated' notification type
       const notification = NotificationService.createAppointmentNotification(
-        recieveId,
+        receiveId,
         user?.id || '',
         appointment.patientId,
         appointment.patientName,
@@ -374,55 +377,28 @@ const AppointmentManagement: React.FC = () => {
     navigate(`/consultation?appointmentId=${appointment.id}&patientId=${appointment.patientId}`)
   }
 
-  // Handle new patient registration from appointment form
-  const handleAddPatient = (patientData: PatientFormData) => {
-    const newPatient = {
-      id: `patient_${Date.now()}`,
-      ...patientData,
-    };
-    
-    // Dispatch Redux action to add new patient
-    dispatch(addPatient(newPatient));
-    setSnackbar({
-      open: true,
-      message: 'Patient registered successfully!',
-      severity: 'success'
-    });
-  };
+  // Patient registration is handled within AppointmentForm; no-op here
+  const handleAddPatient = () => {};
 
-  // Format date for display
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  };
-
-  const slotDate = (appointment: Appointment) => {
-    const slotDate = new Date(appointment.appointmentSlot);
-    const now = new Date();
-    const isPast =
-        slotDate < now &&
-        (
-          slotDate.getFullYear() !== now.getFullYear() ||
-          slotDate.getMonth() !== now.getMonth() ||
-          slotDate.getDate() !== now.getDate()
-        );
-    return isPast;
-  };
+  const pageTitle = searchFilter
+    ? `Appointments for ${patients.find((p) => p.id === searchFilter)?.name || 'Patient'}`
+    : 'Appointments';
 
   return (
     <Layout>
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" component="h1" sx={{ fontWeight: 600, mb: 1 }}>
+      <Box sx={{ borderRadius: 2, display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'space-between' }}>
+        {/* <Typography variant="h4" component="h1" sx={{ fontWeight: 600, mb: 1 }}>
           Appointment Management
-        </Typography>
-        {/* <Typography variant="body1" color="text.secondary">
-          Schedule and manage patient appointments with healthcare professionals
         </Typography> */}
+        <PageHeader title={pageTitle} />
+        <TextField
+        label="Search by Patient Name"
+        value={searchFilter}
+        onChange={(e) => setSearchFilter(e.target.value)}
+        size="small"
+        placeholder="Enter name to search..."
+        sx={{ minWidth: 200, width: 250 }}
+      />
       </Box>
 
       {/* Tabs for switching between list and create views */}
@@ -440,37 +416,12 @@ const AppointmentManagement: React.FC = () => {
       {activeTab === 0 && (
         <Box>
           {/* Create Appointment Button */}
-
-          <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
-            <Badge color={filter === 'all' ? 'primary' : 'default'}>
-              <Chip
-                label="All"
-                color={filter === 'all' ? 'primary' : 'default'}
-                onClick={() => setFilter('all')}
-                clickable
-              />
-            </Badge>
-            <Badge color={filter === 'upcoming' ? 'primary' : 'default'}>
-              <Chip
-                label="Upcoming"
-                color={filter === 'upcoming' ? 'primary' : 'default'}
-                onClick={() => setFilter('upcoming')}
-                clickable
-              />
-            </Badge>
-            <Badge color={filter === 'previous' ? 'primary' : 'default'}>
-              <Chip
-                label="Previous"
-                color={filter === 'previous' ? 'primary' : 'default'}
-                onClick={() => setFilter('previous')}
-                clickable
-              />
-            </Badge>
-          </Stack>
+          <AppointmentFilterChips filter={filter as any} onChange={setFilter as any} />
 
           {/* Appointments Table */}
           <DataTable<Appointment>
             data={filteredAppointments}
+            sortByDate={(a) => a.appointmentSlot}
             columns={[
               {
                 header: 'Patient',

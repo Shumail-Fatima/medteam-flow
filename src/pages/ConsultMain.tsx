@@ -164,21 +164,7 @@ const ConsultMain: React.FC = () => {
     setSelectedConsultation(null);
   };
 
-  // Handle new patient registration from appointment form
-  const handleAddPatient = (patientData: PatientFormData) => {
-    const newPatient = {
-      id: `patient_${Date.now()}`,
-      ...patientData,
-    };
-    
-    // Dispatch Redux action to add new patient
-    dispatch(addPatient(newPatient));
-    setSnackbar({
-      open: true,
-      message: 'Patient registered successfully!',
-      severity: 'success'
-    });
-  };
+  
 
   // Format date for display
   const formatDate = (dateString: string) => {
@@ -223,6 +209,7 @@ const ConsultMain: React.FC = () => {
           {/* Appointments Table */}
           <DataTable<Consultation>
             data={consultations}
+            sortByDate={(c) => c.date}
             columns={[
               {
                 header: 'Patient',

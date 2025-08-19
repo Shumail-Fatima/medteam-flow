@@ -60,8 +60,8 @@ const ConsultationList: React.FC = () => {
 
   return (
     <Layout>
-      <Box sx={{ mb: 3, p: 2, borderRadius: 2 }}>
-        <Box sx={{  display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'space-between' }}>
+      <Box sx={{ borderRadius: 2, display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'space-between' }}>
+      
       <PageHeader
         title={pageTitle}
       />
@@ -76,11 +76,12 @@ const ConsultationList: React.FC = () => {
         sx={{ minWidth: 200, width: 250 }}
       />
       </Box>
-      </Box>
+      
 
       <DataTable<Consultation>
         
         data={filteredConsultations}
+        sortByDate={(c) => c.date}
         columns={[
           {
             header: 'Patient Name',

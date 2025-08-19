@@ -20,9 +20,20 @@ interface DataTableProps<T> {
     showEdit?: (item: T) => boolean;
     showDelete?: (item: T) => boolean;
     emptyMessage?: string;
+    sortByDate?: (item: T) => string | number | Date;
 }
 
-function DataTable<T extends { id: string }>({ data, columns, onView, onEdit, onDelete, showEdit, showDelete, emptyMessage }: DataTableProps<T>) {
+function DataTable<T extends { id: string }>({ data, columns, onView, onEdit, onDelete, showEdit, showDelete, emptyMessage, sortByDate }: DataTableProps<T>) {
+  const sortedData = React.useMemo(() => {
+    if (!sortByDate) return data;
+    return [...data].sort((a, b) => {
+      const av = sortByDate(a);
+      const bv = sortByDate(b);
+      const at = av instanceof Date ? av.getTime() : new Date(av as any).getTime();
+      const bt = bv instanceof Date ? bv.getTime() : new Date(bv as any).getTime();
+      return bt - at; // Descending (most recent first)
+    });
+  }, [data, sortByDate]);
   return (
     <Paper sx={{ borderRadius: 3, boxShadow: 3 }}>
       <TableContainer>
@@ -38,14 +49,14 @@ function DataTable<T extends { id: string }>({ data, columns, onView, onEdit, on
             </TableRow>
           </TableHead>
           <TableBody>
-              {data.length === 0 ? (
+              {sortedData.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={columns.length + ((onView || onEdit || onDelete) ? 1 : 0)} align="center">
                     {emptyMessage || "No data"}
                   </TableCell>
                 </TableRow>
               ) : (
-            data.map((item) => (
+            sortedData.map((item) => (
               <TableRow key={item.id} hover>
                 {columns.map((col, idx) => (
                   <TableCell key={idx}>{col.render(item)}</TableCell>

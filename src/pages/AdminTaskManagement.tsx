@@ -320,6 +320,7 @@ const AdminTaskManagement: React.FC = () => {
       {/* Tasks Table */}
       <DataTable<Task>
         data={filteredTasks}
+        sortByDate={(t) => t.dueAt}
         columns={[
           {
             header: 'Task',

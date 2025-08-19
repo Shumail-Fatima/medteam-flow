@@ -384,6 +384,21 @@
       "createdAt": "2025-08-18T09:57:04.831Z",
       "status": "scheduled",
       "consultationCompleted": false
+    },
+    {
+      "id": "apt_1755578578160",
+      "patientId": "559e",
+      "patientName": "Ayaan Ali",
+      "patientAge": 7,
+      "specialtyName": "Pediatrics",
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Rodriguez",
+      "createdById": "apt_1753765295252",
+      "appointmentSlot": "2025-08-16T11:00:00Z",
+      "reason": "visit",
+      "createdAt": "2025-08-19T04:42:58.160Z",
+      "status": "no-show",
+      "consultationCompleted": false
     }
   ],
   "Consultations": [
@@ -1138,7 +1153,8 @@
         "2025-08-31T17:00:00Z",
         "2025-08-31T15:00:00Z",
         "2025-08-01T15:00:00Z"
-      ]
+      ],
+      "id": "a4dd"
     }
   ],
   "DoctorSpecialties": [
@@ -1445,6 +1461,27 @@
         "Penicillin",
         "nuts",
         "dust"
+      ]
+    },
+    {
+      "id": "559e",
+      "name": "Ayaan Ali",
+      "dateOfBirth": "2018-03-25",
+      "email": "ayaan.ali.parent@example.com",
+      "phone": "03214567890",
+      "address": "45 Garden Town, Lahore, Pakistan",
+      "emergencyContact": [
+        {
+          "name": "Farah Ali",
+          "phone": "03219876543",
+          "relationship": "Mother"
+        }
+      ],
+      "bloodType": "O-",
+      "allergies": [
+        "Amoxicillin (rash reaction reported)",
+        "Peanuts",
+        "Pollen (seasonal)"
       ]
     }
   ],
@@ -2255,7 +2292,7 @@
       "toUserId": "apt_1753765295252",
       "fromUserId": "2",
       "priority": "high",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-18T06:50:06.785Z"
     },
     {
@@ -2266,7 +2303,7 @@
       "toUserId": "apt_1753765295252",
       "fromUserId": "2",
       "priority": "medium",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-18T06:53:09.488Z"
     },
     {
@@ -2301,7 +2338,7 @@
       "fromUserId": "2",
       "patientId": "patient_2",
       "priority": "high",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-18T07:12:02.224Z"
     },
     {
@@ -2384,7 +2421,7 @@
       "toUserId": "apt_1753765295252",
       "fromUserId": "apt_1753765295252",
       "priority": "medium",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-18T07:50:46.665Z"
     },
     {
@@ -2395,7 +2432,7 @@
       "toUserId": "apt_1753765295252",
       "fromUserId": "apt_1753765295252",
       "priority": "medium",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-18T08:11:14.348Z"
     },
     {
@@ -2433,6 +2470,113 @@
       "priority": "medium",
       "isRead": true,
       "createdAt": "2025-08-18T09:57:04.833Z"
+    },
+    {
+      "id": "notif_1755578578166_6o69f1dwt",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with Ayaan Ali on 8/16/2025",
+      "type": "appointment",
+      "toUserId": "4",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "559e",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-19T04:42:58.166Z"
+    },
+    {
+      "id": "notif_1755578628159_l5ox6c5wz",
+      "title": "Appointment Updated",
+      "message": "Appointment with Ayaan Ali has been updated",
+      "type": "appointment",
+      "toUserId": "",
+      "fromUserId": "4",
+      "patientId": "559e",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-19T04:43:48.159Z"
+    },
+    {
+      "id": "notif_1755579962116_gjhchtdln",
+      "title": "Appointment Updated",
+      "message": "Appointment with Ayaan Ali has been updated",
+      "type": "appointment",
+      "toUserId": "",
+      "fromUserId": "4",
+      "patientId": "559e",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-19T05:06:02.116Z"
+    },
+    {
+      "id": "notif_1755580162982_vlsnj9mw1",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with Ayaan Ali has been cancelled",
+      "type": "appointment",
+      "fromUserId": "4",
+      "patientId": "559e",
+      "priority": "high",
+      "isRead": false,
+      "createdAt": "2025-08-19T05:09:22.982Z"
+    },
+    {
+      "id": "notif_1755580272246_ypsvpy3hv",
+      "title": "Appointment Updated",
+      "message": "Appointment with Ayaan Ali has been updated",
+      "type": "appointment",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "4",
+      "patientId": "559e",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-19T05:11:12.246Z"
+    },
+    {
+      "id": "notif_1755580614231_53qhc77om",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with Ayaan Ali has been cancelled",
+      "type": "appointment",
+      "toUserId": "4",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "559e",
+      "priority": "high",
+      "isRead": true,
+      "createdAt": "2025-08-19T05:16:54.231Z"
+    },
+    {
+      "id": "notif_1755580629168_k5s9fmbyp",
+      "title": "Appointment Updated",
+      "message": "Appointment with Ayaan Ali has been updated",
+      "type": "appointment",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "4",
+      "patientId": "559e",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-19T05:17:09.168Z"
+    },
+    {
+      "id": "notif_1755580781508_8deo1iq63",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with Ayaan Ali has been cancelled",
+      "type": "appointment",
+      "toUserId": "4",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "559e",
+      "priority": "high",
+      "isRead": false,
+      "createdAt": "2025-08-19T05:19:41.508Z"
+    },
+    {
+      "id": "notif_1755580795957_tw5ek8qlm",
+      "title": "Appointment Updated",
+      "message": "Appointment with Ayaan Ali has been updated",
+      "type": "appointment",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "4",
+      "patientId": "559e",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-19T05:19:55.957Z"
     }
   ]
 }

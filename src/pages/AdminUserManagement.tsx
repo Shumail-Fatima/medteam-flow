@@ -260,6 +260,7 @@ const AdminUserManagement: React.FC = () => {
       {/* Users Table in adminusermanagement*/}
       <DataTable<User>
         data={filteredUsers}
+        sortByDate={(u) => u.createdAt}
         columns={[
           {
             header: 'User',
