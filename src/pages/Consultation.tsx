@@ -216,7 +216,8 @@ const ConsultationManagement: React.FC = () => {
 
       if (newConsultation.followUpRequired === true){
         const notification = NotificationService.createConsultationNotification(
-          newConsultation.doctorId,
+          //newConsultation.doctorId,
+          preSelectedAppointment?.createdById || '',
           //user?.id ,
           user?.id || '',
           newConsultation.id,
@@ -371,13 +372,12 @@ const ConsultationManagement: React.FC = () => {
           </Grid>
 
           {/* Prescriptions */}
-          <Grid>
+          <Grid size={12}>
             <PrescriptionsSection
               isReadOnly={isReadOnly}
               consultationRecord={consultationRecord}
               fields={fields}
               control={control}
-              errors={errors}
               addPrescription={addPrescription}
               removePrescription={removePrescription}
             />

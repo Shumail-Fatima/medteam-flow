@@ -412,6 +412,21 @@
       "appointmentSlot": "2025-08-18T14:30:00Z",
       "reason": "visit",
       "createdAt": "2025-08-19T06:19:34.637Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1755588384263",
+      "patientId": "65a5",
+      "patientName": "Ahmed Raza",
+      "patientAge": 55,
+      "specialtyName": "Cardiology",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "createdById": "apt_1753765295252",
+      "appointmentSlot": "2025-08-19T14:30:00Z",
+      "reason": "visit",
+      "createdAt": "2025-08-19T07:26:24.263Z",
       "status": "scheduled",
       "consultationCompleted": false
     }
@@ -1071,6 +1086,37 @@
       ],
       "followUpRequired": false,
       "createdAt": "2025-08-18T07:26:05.313Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1755585519636",
+      "patientId": "patient_8",
+      "patientName": "Lucas Martinez",
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Rodriguez",
+      "appointmentId": "apt_1755584374637",
+      "date": "2025-08-19T06:38:39.636Z",
+      "symptoms": [
+        "Recurrent dry cough",
+        "wheezing",
+        "occasional shortness of breath (especially at night and during physical activity)",
+        "nasal congestion."
+      ],
+      "diagnosis": "Suspected childhood asthma (differential: allergic rhinitis, viral-induced wheeze).",
+      "notes": "Child has experienced multiple episodes of cough and wheezing over the past 3 months. Symptoms are worse at night and after playing outdoors. Family history of asthma (father). Known food and environmental allergies (peanuts, dust mites, pollen) may be exacerbating symptoms. No recent hospitalizations, but has required nebulizer use during one acute episode. Examination revealed mild expiratory wheeze on auscultation. Oxygen saturation normal.",
+      "prescriptions": [
+        {
+          "id": "rx_1755585519636_0",
+          "medication": "Cetirizine Syrup",
+          "dosage": " 5 mg",
+          "frequency": "Once daily at night",
+          "duration": "14 days",
+          "instructions": "Helps with allergy-related triggers."
+        }
+      ],
+      "followUpRequired": true,
+      "followUpDate": "2025-08-22T23:38",
+      "createdAt": "2025-08-19T06:38:39.636Z",
       "status": "completed"
     }
   ],
@@ -2688,6 +2734,66 @@
       "priority": "medium",
       "isRead": true,
       "createdAt": "2025-08-19T06:20:57.609Z"
+    },
+    {
+      "id": "notif_1755585385378_f62qn037w",
+      "title": "Consultation Started",
+      "message": "Consultation with Lucas Martinez has started",
+      "type": "consultation",
+      "toUserId": "4",
+      "fromUserId": "4",
+      "consultationId": "apt_1755584374637",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-19T06:36:25.378Z"
+    },
+    {
+      "id": "notif_1755585519638_mn9sn3rkg",
+      "title": "Follow-up Required",
+      "message": "Follow-up consultation required for Lucas Martinez",
+      "type": "followup",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "4",
+      "consultationId": "cons_1755585519636",
+      "priority": "high",
+      "isRead": false,
+      "createdAt": "2025-08-19T06:38:39.638Z"
+    },
+    {
+      "id": "notif_1755585521188_2etjdfeqr",
+      "title": "Consultation Completed",
+      "message": "Consultation with Lucas Martinez has been completed",
+      "type": "consultation",
+      "toUserId": "4",
+      "fromUserId": "4",
+      "consultationId": "cons_1755585519636",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-19T06:38:41.188Z"
+    },
+    {
+      "id": "notif_1755588384396_heo6if6y7",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with Ahmed Raza on 8/19/2025",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "65a5",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-19T07:26:24.396Z"
+    },
+    {
+      "id": "notif_1755588411502_s36lgsdvz",
+      "title": "Consultation Started",
+      "message": "Consultation with Ahmed Raza has started",
+      "type": "consultation",
+      "toUserId": "2",
+      "fromUserId": "2",
+      "consultationId": "apt_1755588384263",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-19T07:26:51.502Z"
     }
   ]
 }

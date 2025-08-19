@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import {
   Box, Typography, Chip, Button, Menu, MenuItem, IconButton,
+  TextField,
 } from '@mui/material';
-import { Add, CalendarToday, MoreVert } from '@mui/icons-material';
+import { Add, CalendarToday, MoreVert, Schedule } from '@mui/icons-material';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -117,6 +118,7 @@ const AppointmentManagement: React.FC = () => {
   const [statusMenuAnchor, setStatusMenuAnchor] = useState<null | HTMLElement>(null);
   const [selectedAppointmentForStatus, setSelectedAppointmentForStatus] = useState<Appointment | null>(null);
   const [searchFilter, setSearchFilter] = useState('');
+  const [dateFilter, setDateFilter] = useState('');
 
   // Selectors
   const allAppointments = useSelector((state: RootState) => state.appointments.appointments);
@@ -130,7 +132,7 @@ const AppointmentManagement: React.FC = () => {
     return allAppointments.filter((a) => a.doctorId === user.id);
   }, [allAppointments, user]);
 
-  const filteredAppointments = useFilteredAppointments(appointments, patients, filter, searchFilter);
+  const filteredAppointments = useFilteredAppointments(appointments, patients, filter, searchFilter, dateFilter);
 
   const tabOptions: TabOption[] = useMemo(() => {
     if (user?.roleName === 'doctor') {
@@ -544,6 +546,17 @@ const AppointmentManagement: React.FC = () => {
       {activeTab === 0 && (
         <Box>
           <AppointmentFilterChips filter={filter} onChange={setFilter} />
+          <TextField
+            label="Follow-up Date"
+            type="datetime-local"
+            fullWidth
+            value={dateFilter}
+            onChange={(e) => setDateFilter(e.target.value)}
+            InputLabelProps={{ shrink: true }}
+            InputProps={{
+              startAdornment: <Schedule sx={{ mr: 1, color: 'action.active' }} />,
+            }}
+          />
           
           <DataTable<Appointment>
             data={filteredAppointments}
