@@ -2858,8 +2858,20 @@
       "appointmentId": "apt_1755758878905",
       "patientId": "65a5",
       "priority": "medium",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2025-08-21T07:04:14.192Z"
+    },
+    {
+      "id": "notif_1755761818975_cyjepf29s",
+      "title": "Consultation Started",
+      "message": "Consultation with Ahmed Raza has started",
+      "type": "consultation",
+      "toUserId": "2",
+      "fromUserId": "2",
+      "consultationId": "apt_1755758878905",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-21T07:36:58.975Z"
     }
   ]
 }

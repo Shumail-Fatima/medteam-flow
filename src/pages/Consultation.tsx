@@ -49,6 +49,7 @@ import ConsultationDetailsSection from '../components/ConsultDetails';
 import PrescriptionsSection from '../components/PrescriptionSection';
 import { useNotification } from '../context/NotifSocketContext';
 import { NotificationService } from '../utils/NotificationService';
+import FileUploader from '../components/FileUploader';
 
 
 const ConsultationManagement: React.FC = () => {
@@ -442,6 +443,7 @@ const ConsultationManagement: React.FC = () => {
             </Card>
           </Grid>
           )}
+          <FileUploader></FileUploader>
 
           {/* Submit Button */}
           {!isReadOnly && (
