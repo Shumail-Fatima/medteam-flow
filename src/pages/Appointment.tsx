@@ -18,6 +18,7 @@ import { SearchFilterbox } from '../components/SearchFilterbox';
 import { AppointmentFilterChips } from '../components/AppointStatFilterBadge';
 import PageHeader from '../components/sharedComponents/PageHeader';
 import ViewDialog from '../components/sharedComponents/ViewDialog';
+import { useLocation } from "react-router-dom";
 
 import type { RootState, AppDispatch } from '../store/Store';
 import { 
@@ -102,6 +103,7 @@ const AppointmentManagement: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { sendNotification } = useNotification();
+  const location = useLocation();
 
   // State
   const [activeTab, setActiveTab] = useState(0);
@@ -155,6 +157,20 @@ const AppointmentManagement: React.FC = () => {
     dispatch(fetchPatients());
     dispatch(fetchAppointments());
   }, [dispatch]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get("showModal") === "appointment") {
+      const targetId = params.get("appointmentId");
+      if (targetId) {
+        const targetAppointment = allAppointments.find(a => a.id === targetId);
+        if (targetAppointment) {
+          setSelectedAppointment(targetAppointment);
+        }
+      }
+      setViewDialogOpen(true);
+    }
+  }, [location.search, allAppointments]);  
 
   // Callbacks
   const handleTabChange = useCallback((_: any, newValue: number) => {
@@ -236,6 +252,7 @@ const AppointmentManagement: React.FC = () => {
       const notification = NotificationService.createAppointmentNotification(
         receiveId,
         user?.id || '',
+        appointment.id,
         appointment.patientId,
         appointment.patientName,
         appointment.doctorName,
@@ -311,6 +328,7 @@ const AppointmentManagement: React.FC = () => {
         const notification = NotificationService.createAppointmentNotification(
           selectedAppointment.doctorId,
           user?.id || '',
+          selectedAppointment.id,
           selectedAppointment.patientId,
           selectedAppointment.patientName,
           selectedAppointment.doctorName,
@@ -348,6 +366,7 @@ const AppointmentManagement: React.FC = () => {
         const notification = NotificationService.createAppointmentNotification(
           newAppointment.doctorId,
           user?.id || '',
+          newAppointment.id,
           newAppointment.patientId,
           newAppointment.patientName,
           newAppointment.doctorName,

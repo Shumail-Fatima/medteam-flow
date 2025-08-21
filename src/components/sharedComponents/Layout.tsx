@@ -31,7 +31,7 @@ import {
   Notifications as NotificationsIcon,
 } from '@mui/icons-material';
 import {Menu, MenuItem} from '@mui/material';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation} from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { rolePages } from '../RolePages';
 import { useState } from 'react';
@@ -139,7 +139,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   switch (notif.type) {
     case 'appointment':
-      return notif.patientId ? `/patients/${notif.patientId}` : '/patients';
+      // route with query so page can open the correct dialog
+      return notif.appointmentId 
+        ? `/Appointment?showModal=appointment&appointmentId=${encodeURIComponent(notif.appointmentId)}` 
+        : '/Appointment?showModal=appointment';
     case 'consultation':
       return notif.consultationId ? `/consultation/view/${notif.consultationId}` : '/consultations-records';
     case 'task':
@@ -150,6 +153,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       return '/';
   }
 };
+
+// sort notifications by createdAt. most recent notifs at top
+const sortedNotifications = React.useMemo(() => {
+  return [...notifications].sort((a, b) => {
+    const at = new Date(a.createdAt).getTime();
+    const bt = new Date(b.createdAt).getTime();
+    return bt - at; // most recent first
+  });
+}, [notifications]);
 
   //const toggleDrawer = () => setDrawerOpen(!drawerOpen);
   const toggleDrawer = () => setMobileOpen(!mobileOpen);
@@ -380,7 +392,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     }
   }}
 >
-  {notifications.length === 0 ? (
+  {sortedNotifications.length === 0 ? (
     <MenuItem disabled>No notifications</MenuItem>
   ) : (
     <>
@@ -389,7 +401,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <Typography variant="body2" color="primary">Mark all as read</Typography>
         </MenuItem>
       )}
-      {notifications.map((notif) => (
+      {sortedNotifications.map((notif) => (
         <MenuItem 
           key={notif.id} 
           onClick={(e) => {e.stopPropagation();

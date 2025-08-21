@@ -427,6 +427,21 @@
       "appointmentSlot": "2025-08-19T14:30:00Z",
       "reason": "visit",
       "createdAt": "2025-08-19T07:26:24.263Z",
+      "status": "cancelled",
+      "consultationCompleted": false
+    },
+    {
+      "id": "apt_1755758878905",
+      "patientId": "65a5",
+      "patientName": "Ahmed Raza",
+      "patientAge": 55,
+      "specialtyName": "Cardiology",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "createdById": "apt_1753765295252",
+      "appointmentSlot": "2025-08-21T15:30:00Z",
+      "reason": "visit",
+      "createdAt": "2025-08-21T06:47:58.905Z",
       "status": "scheduled",
       "consultationCompleted": false
     }
@@ -2794,6 +2809,57 @@
       "priority": "medium",
       "isRead": false,
       "createdAt": "2025-08-19T07:26:51.502Z"
+    },
+    {
+      "id": "notif_1755684978145_wobp625n0",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with Ahmed Raza has been cancelled",
+      "type": "appointment",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "2",
+      "patientId": "65a5",
+      "priority": "high",
+      "isRead": false,
+      "createdAt": "2025-08-20T10:16:18.146Z"
+    },
+    {
+      "id": "notif_1755758879202_kkqxvkw22",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with Ahmed Raza on 8/21/2025",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "appointmentId": "apt_1755758878905",
+      "patientId": "65a5",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-21T06:47:59.202Z"
+    },
+    {
+      "id": "notif_1755759253746_ol7f094k2",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with Ahmed Raza has been cancelled",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "appointmentId": "apt_1755758878905",
+      "patientId": "65a5",
+      "priority": "high",
+      "isRead": true,
+      "createdAt": "2025-08-21T06:54:13.746Z"
+    },
+    {
+      "id": "notif_1755759854192_98c515b6n",
+      "title": "Appointment Updated",
+      "message": "Appointment with Ahmed Raza has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "appointmentId": "apt_1755758878905",
+      "patientId": "65a5",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-21T07:04:14.192Z"
     }
   ]
 }
