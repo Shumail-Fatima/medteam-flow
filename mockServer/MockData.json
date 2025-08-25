@@ -444,6 +444,21 @@
       "createdAt": "2025-08-21T06:47:58.905Z",
       "status": "scheduled",
       "consultationCompleted": false
+    },
+    {
+      "id": "apt_1755860871593",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "patientAge": 49,
+      "specialtyName": "Cardiology",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "createdById": "apt_1753765295252",
+      "appointmentSlot": "2025-08-25T11:00:00Z",
+      "reason": "visit",
+      "createdAt": "2025-08-22T11:07:51.593Z",
+      "status": "scheduled",
+      "consultationCompleted": false
     }
   ],
   "Consultations": [
@@ -2872,6 +2887,69 @@
       "priority": "medium",
       "isRead": true,
       "createdAt": "2025-08-21T07:36:58.975Z"
+    },
+    {
+      "id": "notif_1755772917158_gl5bm0t82",
+      "title": "Consultation Started",
+      "message": "Consultation with Ahmed Raza has started",
+      "type": "consultation",
+      "toUserId": "2",
+      "fromUserId": "2",
+      "consultationId": "apt_1755758878905",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-21T10:41:57.158Z"
+    },
+    {
+      "id": "notif_1755860871745_ob4s0rd5a",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with Robert Johnson on 8/22/2025",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "appointmentId": "apt_1755860871593",
+      "patientId": "patient_3",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-22T11:07:51.746Z"
+    },
+    {
+      "id": "notif_1755860990448_c07rkyl2u",
+      "title": "Consultation Started",
+      "message": "Consultation with Robert Johnson has started",
+      "type": "consultation",
+      "toUserId": "2",
+      "fromUserId": "2",
+      "consultationId": "apt_1755860871593",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-22T11:09:50.448Z"
+    },
+    {
+      "id": "notif_1756096407279_srucf8nlp",
+      "title": "Appointment Updated",
+      "message": "Appointment with Robert Johnson has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "appointmentId": "apt_1755860871593",
+      "patientId": "patient_3",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-25T04:33:27.279Z"
+    },
+    {
+      "id": "notif_1756096420630_tdiyf1p17",
+      "title": "Consultation Started",
+      "message": "Consultation with Robert Johnson has started",
+      "type": "consultation",
+      "toUserId": "2",
+      "fromUserId": "2",
+      "consultationId": "apt_1755860871593",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-25T04:33:40.630Z"
     }
-  ]
+  ],
+  "uploads": []
 }

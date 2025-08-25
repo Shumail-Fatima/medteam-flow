@@ -1,118 +1,466 @@
-import React, { useState, type DragEvent, type ChangeEvent } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
+import axios, { type AxiosProgressEvent } from "axios";
+import {
+  Box,
+  Button,
+  Typography,
+  Paper,
+  IconButton,
+  LinearProgress,
+  Alert,
+  Chip,
+  Card,
+  CardContent,
+  CardMedia,
+  Stack,
+  Container,
+} from "@mui/material";
+import {
+  CloudUpload,
+  Close,
+  PictureAsPdf,
+  CheckCircle,
+  Error as ErrorIcon,
+} from "@mui/icons-material";
+import { styled } from "@mui/material/styles";
 
-interface UploadedFile {
-  id: string;
+/**
+ * This component provides a drag & drop + click-to-select uploader
+ * with validation, previews, removal, and submission to a mock JSON server.
+ *
+ * Works with json-server (MockData.json / db.json). Ensure your db.json has:
+ * {
+ *   "uploads": []
+ * }
+ * Run: json-server --watch db.json --port 3001
+ *
+ * On submit, each file is converted to Base64 and POSTed as a JSON record to
+ *   POST http://localhost:3001/uploads
+ * Example record saved in MockData.json:
+ * {
+ *   "id": 1,
+ *   "name": "report.pdf",
+ *   "type": "application/pdf",
+ *   "size": 12345,
+ *   "createdAt": "2025-08-21T00:00:00.000Z",
+ *   "contentBase64": "<base64 string>"
+ * }
+ *
+ * If later you switch to a real backend, replace `uploadToMockServer` with
+ * a FormData upload endpoint (kept below for reference).
+ */
+
+// ---- Config ---------------------------------------------------------------
+const API_BASE_URL = (import.meta as any)?.env?.VITE_API_URL || "http://localhost:8000";
+const MAX_SIZE_BYTES = 10 * 1024 * 1024; // 10MB
+const ACCEPTED = ["application/pdf", "image/jpeg", "image/png"] as const;
+
+// ---- Styled Components ---------------------------------------------------
+const DropzoneContainer = styled(Paper)(({ theme }) => ({
+  border: `2px dashed ${theme.palette.grey[300]}`,
+  borderRadius: theme.spacing(2),
+  padding: theme.spacing(6),
+  textAlign: "center",
+  cursor: "pointer",
+  transition: "all 0.3s ease",
+  backgroundColor: theme.palette.grey[50],
+  "&:hover": {
+    borderColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.primary.light + "08",
+  },
+  "&:focus": {
+    outline: `2px solid ${theme.palette.primary.main}`,
+    outlineOffset: "2px",
+  },
+}));
+
+const FilePreviewCard = styled(Card)(({ theme }) => ({
+  position: "relative",
+  width: 160,
+  height: 160,
+  display: "flex",
+  flexDirection: "column",
+  overflow: "hidden",
+  transition: "transform 0.2s ease",
+  "&:hover": {
+    transform: "translateY(-2px)",
+    boxShadow: theme.shadows[4],
+  },
+}));
+
+const RemoveButton = styled(IconButton)(({ theme }) => ({
+  position: "absolute",
+  top: -8,
+  right: -8,
+  backgroundColor: theme.palette.background.paper,
+  border: `1px solid ${theme.palette.grey[300]}`,
+  width: 24,
+  height: 24,
+  zIndex: 1,
+  "&:hover": {
+    backgroundColor: theme.palette.error.light,
+    color: theme.palette.error.contrastText,
+  },
+}));
+
+const ProgressOverlay = styled(Box)({
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  right: 0,
+  height: 4,
+});
+
+// ---- Types ----------------------------------------------------------------
+interface UploadCandidate {
+  id: string; // stable per selected file
   file: File;
-  preview?: string;
+  preview?: string; // for images only
 }
 
-const FileUploader: React.FC = () => {
-  const [files, setFiles] = useState<UploadedFile[]>([]);
+type UploadStatus = "idle" | "uploading" | "success" | "error";
 
-  const handleFileSelect = (event: ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files) return;
-    handleFiles(Array.from(event.target.files));
+interface UploadRecord {
+  id?: number | string;
+  name: string;
+  type: string;
+  size: number;
+  createdAt: string; // ISO
+  contentBase64: string; // base64 without data: prefix
+}
+
+// ---- Utilities ------------------------------------------------------------
+const toBase64 = (file: File) =>
+  new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = String(reader.result || "");
+      const commaIdx = result.indexOf(",");
+      resolve(commaIdx >= 0 ? result.slice(commaIdx + 1) : result);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+
+const isAcceptedType = (type: string) => ACCEPTED.includes(type as (typeof ACCEPTED)[number]);
+
+const prettyBytes = (n: number) => {
+  if (n < 1024) return `${n} B`;
+  const kb = n / 1024;
+  if (kb < 1024) return `${kb.toFixed(1)} KB`;
+  const mb = kb / 1024;
+  return `${mb.toFixed(1)} MB`;
+};
+
+// ---- Upload Service (JSON Server) ----------------------------------------
+async function uploadToMockServer(
+  file: File,
+  onUploadProgress?: (e: AxiosProgressEvent) => void
+) {
+  const contentBase64 = await toBase64(file);
+  const payload: UploadRecord = {
+    name: file.name,
+    type: file.type,
+    size: file.size,
+    createdAt: new Date().toISOString(),
+    contentBase64,
   };
 
-  const handleDrop = (event: DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    handleFiles(Array.from(event.dataTransfer.files));
+  // json-server expects JSON; axios will emit upload progress events here too
+  const { data } = await axios.post(`${API_BASE_URL}/uploads`, payload, {
+    headers: { "Content-Type": "application/json" },
+    onUploadProgress,
+  });
+  return data as UploadRecord;
+}
+
+/**
+ * If you have a real backend (multipart/form-data), use this instead:
+ *
+ * async function uploadWithFormData(file: File, onUploadProgress?: (e: AxiosProgressEvent) => void) {
+ *   const form = new FormData();
+ *   form.append("file", file);
+ *   const { data } = await axios.post(`${API_BASE_URL}/upload`, form, {
+ *     headers: { "Content-Type": "multipart/form-data" },
+ *     onUploadProgress,
+ *   });
+ *   return data;
+ * }
+ */
+
+// ---- Component ------------------------------------------------------------
+export default function FileUploaderMockJSON() {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const [files, setFiles] = useState<UploadCandidate[]>([]);
+  const [status, setStatus] = useState<UploadStatus>("idle");
+  const [progress, setProgress] = useState<Record<string, number>>({}); // per-file 0-100
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  const totalProgress = useMemo(() => {
+    if (!files.length) return 0;
+    const sum = files.reduce((acc, f) => acc + (progress[f.id] ?? 0), 0);
+    return Math.round(sum / files.length);
+  }, [files, progress]);
+
+  const openFilePicker = () => inputRef.current?.click();
+
+  const onFilesChosen = (list: FileList | null) => {
+    if (!list) return;
+    const incoming = Array.from(list);
+    addFiles(incoming);
+    if (inputRef.current) inputRef.current.value = ""; // allow re-selecting same files
   };
 
-  const handleFiles = (incomingFiles: File[]) => {
-    const allowedTypes = ["application/pdf", "image/jpeg", "image/png"];
-    const maxSize = 10 * 1024 * 1024; // 10MB
+  const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    addFiles(Array.from(e.dataTransfer.files));
+  };
 
-    const validFiles = incomingFiles.filter(
-      (file) => allowedTypes.includes(file.type) && file.size <= maxSize
-    );
+  const addFiles = (incoming: File[]) => {
+    const accepted: UploadCandidate[] = [];
+    const problems: string[] = [];
 
-    const newFiles = validFiles.map((file) => ({
-      id: `${file.name}-${Date.now()}`,
-      file,
-      preview: file.type.startsWith("image") ? URL.createObjectURL(file) : undefined,
-    }));
+    // Deduplicate by name+size+lastModified
+    const already = new Set(files.map((f) => `${f.file.name}|${f.file.size}|${f.file.lastModified}`));
 
-    setFiles((prev) => [...prev, ...newFiles]);
+    for (const f of incoming) {
+      const key = `${f.name}|${f.size}|${f.lastModified}`;
+      if (already.has(key)) continue;
+      if (!isAcceptedType(f.type)) {
+        problems.push(`${f.name}: unsupported type ${f.type || "(unknown)"}`);
+        continue;
+      }
+      if (f.size > MAX_SIZE_BYTES) {
+        problems.push(`${f.name}: exceeds ${prettyBytes(MAX_SIZE_BYTES)}`);
+        continue;
+      }
+      accepted.push({
+        id: `${f.name}-${f.size}-${f.lastModified}`,
+        file: f,
+        preview: f.type.startsWith("image/") ? URL.createObjectURL(f) : undefined,
+      });
+    }
+
+    if (problems.length) setErrorMsg(problems.join("\n"));
+    setFiles((prev) => [...prev, ...accepted]);
   };
 
   const removeFile = (id: string) => {
     setFiles((prev) => prev.filter((f) => f.id !== id));
+    setProgress((p) => {
+      const { [id]: _omit, ...rest } = p;
+      return rest;
+    });
   };
 
+  const prevent = (e: React.DragEvent) => e.preventDefault();
+
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!files.length) return;
+
+    setStatus("uploading");
+    setErrorMsg(null);
+
+    try {
+      for (const f of files) {
+        setProgress((p) => ({ ...p, [f.id]: 0 }));
+        await uploadToMockServer(f.file, (evt) => {
+          const percent = evt.total ? Math.round((evt.loaded * 100) / evt.total) : 0;
+          setProgress((p) => ({ ...p, [f.id]: percent }));
+        });
+        setProgress((p) => ({ ...p, [f.id]: 100 }));
+      }
+      setStatus("success");
+      // Optionally clear after success
+      // setFiles([]);
+    } catch (err: any) {
+      setStatus("error");
+      setErrorMsg(err?.message || "Upload failed");
+    }
+  }, [files]);
+
   return (
-    <div className="flex flex-col gap-4">
-      {/* Upload Box */}
-      <div
-        onDrop={handleDrop}
-        onDragOver={(e) => e.preventDefault()}
-        className="border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:border-blue-400 transition"
-      >
-        <input
-          type="file"
-          accept=".pdf,.jpg,.jpeg,.png"
-          multiple
-          onChange={handleFileSelect}
-          className="hidden"
-          id="fileInput"
-        />
-        <label htmlFor="fileInput" className="text-blue-600 cursor-pointer">
-          Choose File
-        </label>
-        <p className="text-gray-500 text-sm">or drag and drop to upload</p>
-        <p className="text-xs text-gray-400">PDF, JPG, JPEG, or PNG (max. 10 MB)</p>
-      </div>
+    <Container maxWidth="md" sx={{ py: 4 }}>
+      <Box component="form" onSubmit={handleSubmit}>
+        <Typography variant="body2" color="text.secondary" gutterBottom>
+          Upload Reports
+        </Typography>
 
-      {/* File Previews */}
-      {files.length > 0 && (
-        <div className="flex flex-wrap gap-3">
-          {files.map(({ id, file, preview }) => (
-            <div
-              key={id}
-              className="relative w-32 h-32 border rounded-lg flex items-center justify-center shadow-sm"
-            >
-              {file.type === "application/pdf" ? (
-                <img
-                  src="https://cdn-icons-png.flaticon.com/512/337/337946.png"
-                  alt="PDF"
-                  className="w-12 h-12"
-                />
-              ) : (
-                <img
-                  src={preview}
-                  alt={file.name}
-                  className="w-full h-full object-cover rounded-lg"
-                />
-              )}
-              <button
-                onClick={() => removeFile(id)}
-                className="absolute top-1 right-1 bg-red-500 text-white text-xs rounded-full px-2 py-1 hover:bg-red-600"
-              >
-                ✕
-              </button>
-              <p className="absolute bottom-1 text-xs text-center px-1 truncate w-full">
-                {file.name}
-              </p>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* Submit / Update Button */}
-      {files.length > 0 ? (
-        <button className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700">
-          Update Report
-        </button>
-      ) : (
-        <button
-          disabled
-          className="px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed"
+        {/* Dropzone */}
+        <DropzoneContainer
+          elevation={0}
+          onDragEnter={prevent}
+          onDragOver={prevent}
+          onDrop={onDrop}
+          onClick={openFilePicker}
+          role="button"
+          aria-label="File upload dropzone"
+          tabIndex={0}
         >
-          Submit Report
-        </button>
-      )}
-    </div>
-  );
-};
+          <input
+            ref={inputRef}
+            type="file"
+            accept=".pdf,.jpg,.jpeg,.png"
+            multiple
+            onChange={(e) => onFilesChosen(e.target.files)}
+            style={{ display: "none" }}
+          />
+          
+          <CloudUpload sx={{ fontSize: 48, color: "text.secondary", mb: 2 }} />
+          
+          <Typography variant="h6" color="primary" gutterBottom>
+            Choose File
+          </Typography>
+          
+          <Typography variant="body2" color="text.secondary" gutterBottom>
+            or drag and drop to upload
+          </Typography>
+          
+          <Typography variant="caption" color="text.disabled">
+            PDF, JPG, JPEG, or PNG (max. 10 MB)
+          </Typography>
+        </DropzoneContainer>
 
-export default FileUploader;
+        {/* Errors */}
+        {errorMsg && (
+          <Alert 
+            severity="error" 
+            sx={{ mt: 2 }}
+            icon={<ErrorIcon />}
+          >
+            <Typography variant="body2" component="pre" sx={{ whiteSpace: "pre-line" }}>
+              {errorMsg}
+            </Typography>
+          </Alert>
+        )}
+
+        {/* File Previews */}
+        {files.length > 0 && (
+          <Box sx={{ mt: 3 }}>
+            <Stack direction="row" spacing={2} sx={{ flexWrap: "wrap", gap: 2 }}>
+              {files.map(({ id, file, preview }) => (
+                <FilePreviewCard key={id} elevation={2}>
+                  <RemoveButton
+                    size="small"
+                    onClick={() => removeFile(id)}
+                    aria-label={`Remove ${file.name}`}
+                  >
+                    <Close fontSize="small" />
+                  </RemoveButton>
+
+                  {file.type === "application/pdf" ? (
+                    <CardContent sx={{ 
+                      display: "flex", 
+                      flexDirection: "column", 
+                      alignItems: "center", 
+                      justifyContent: "center",
+                      height: "100%",
+                      textAlign: "center"
+                    }}>
+                      <PictureAsPdf sx={{ fontSize: 40, color: "error.main", mb: 1 }} />
+                      <Typography variant="caption" fontWeight="medium">
+                        PDF
+                      </Typography>
+                      <Chip 
+                        label={prettyBytes(file.size)} 
+                        size="small" 
+                        variant="outlined"
+                        sx={{ mt: 1 }}
+                      />
+                    </CardContent>
+                  ) : (
+                    <CardMedia
+                      component="img"
+                      image={preview}
+                      alt={file.name}
+                      sx={{ 
+                        height: 120,
+                        objectFit: "cover"
+                      }}
+                    />
+                  )}
+
+                  <Box sx={{ 
+                    position: "absolute", 
+                    bottom: 0, 
+                    left: 0, 
+                    right: 0,
+                    bgcolor: "rgba(255, 255, 255, 0.9)",
+                    p: 0.5
+                  }}>
+                    <Typography 
+                      variant="caption" 
+                      sx={{ 
+                        display: "block",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap"
+                      }}
+                    >
+                      {file.name}
+                    </Typography>
+                  </Box>
+
+                  {status === "uploading" && (
+                    <ProgressOverlay>
+                      <LinearProgress 
+                        variant="determinate" 
+                        value={progress[id] ?? 0}
+                        sx={{ height: 4 }}
+                      />
+                    </ProgressOverlay>
+                  )}
+                </FilePreviewCard>
+              ))}
+            </Stack>
+          </Box>
+        )}
+
+        {/* Submit Section */}
+        <Box sx={{ mt: 4, display: "flex", alignItems: "center", gap: 2 }}>
+          <Button
+            type="submit"
+            variant="contained"
+            disabled={files.length === 0 || status === "uploading"}
+            startIcon={status === "uploading" ? undefined : <CloudUpload />}
+            sx={{ 
+              borderRadius: 2,
+              textTransform: "none",
+              px: 3,
+              py: 1
+            }}
+          >
+            {status === "uploading"
+              ? `Uploading… ${totalProgress}%`
+              : files.length > 0
+              ? "Submit Report"
+              : "Submit Report"}
+          </Button>
+
+          {status === "success" && (
+            <Alert 
+              severity="success" 
+              variant="outlined"
+              icon={<CheckCircle />}
+              sx={{ py: 0 }}
+            >
+              Uploaded successfully
+            </Alert>
+          )}
+          
+          {status === "error" && (
+            <Alert 
+              severity="error" 
+              variant="outlined"
+              icon={<ErrorIcon />}
+              sx={{ py: 0 }}
+            >
+              Upload failed. {errorMsg || "Try again."}
+            </Alert>
+          )}
+        </Box>
+      </Box>
+    </Container>
+  );
+}
