@@ -4,7 +4,7 @@ import type { Task } from '../../types/task';
 import tasksData from '../../../mockServer/MockData.json'
 
 
-const API_URL = 'http://localhost:8000/Tasks'; // Your REST API endpoint
+const API_URL = 'http://localhost:8000/tasks'; // Your REST API endpoint
 
 interface TaskState{
     tasks:Task[];

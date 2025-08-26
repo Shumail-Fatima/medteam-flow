@@ -3,7 +3,7 @@ import { createSlice, type PayloadAction, createAsyncThunk, } from '@reduxjs/too
 import type { User } from '../../types/Auth';
 import rolesData from '../../../mockServer/MockData.json'
 
-const API_URL = 'http://localhost:8000/Users'; // Your REST API endpoint
+const API_URL = 'http://localhost:8000/users'; // Your REST API endpoint
 
 
 interface UserState{

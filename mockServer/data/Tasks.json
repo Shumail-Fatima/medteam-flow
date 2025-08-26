@@ -1,4 +1,5 @@
-{"Tasks": [
+{
+  "Tasks": [
     {
       "id": "task_1",
       "title": "Administer Morning Medication",
@@ -8,7 +9,7 @@
       "patientId": "patient_1",
       "assigneeId": "7",
       "dueAt": "2025-06-23T09:00",
-      "createdBy": 1,
+      "createdBy": "1",
       "createdAt": "2025-06-13T09:00:00Z",
       "assigneeName": "unknown"
     },
@@ -16,13 +17,14 @@
       "id": "task_2",
       "title": "Check Blood Pressure",
       "type": "Vitals Check",
-      "status": "In Progress",
+      "status": "Done",
       "notes": "Record systolic and diastolic values",
       "patientId": "patient_2",
       "assigneeId": "7",
       "dueAt": "2025-06-23T10:30:00Z",
-      "createdBy": 2,
-      "createdAt": "2025-06-14T09:00:00Z"
+      "createdBy": "2",
+      "createdAt": "2025-06-14T09:00:00Z",
+      "assigneeName": "unknown"
     },
     {
       "id": "task_3",
@@ -33,7 +35,7 @@
       "patientId": "patient_1",
       "assigneeId": "apt_1753768305319",
       "dueAt": "2025-06-23T13:00:00Z",
-      "createdBy": 3,
+      "createdBy": "3",
       "createdAt": "2025-06-15T09:00:00Z",
       "assigneeName": "unknown"
     },
@@ -46,8 +48,9 @@
       "patientId": "patient_2",
       "assigneeId": "2",
       "dueAt": "2025-06-22T15:00:00Z",
-      "createdBy": 2,
-      "createdAt": "2025-06-16T09:00:00Z"
+      "createdBy": "2",
+      "createdAt": "2025-06-16T09:00:00Z",
+      "assigneeName": "unknown"
     },
     {
       "id": "task_1754980819999",
@@ -75,4 +78,5 @@
       "createdAt": "2025-08-12T07:22:12.013Z",
       "assigneeName": "unknown"
     }
-  ]}
+  ]
+}

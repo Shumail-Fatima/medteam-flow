@@ -1,4 +1,5 @@
-{"Users": [
+{
+  "Users": [
     {
       "id": "1",
       "name": "john",
@@ -6,7 +7,8 @@
       "email": "admin@example.com",
       "password": "admin123",
       "roleId": 1,
-      "roleName": "admin"
+      "roleName": "admin",
+      "createdAt": "2024-01-16T14:20:00Z"
     },
     {
       "id": "2",
@@ -70,7 +72,8 @@
       "email": "robert.house@hospital.com",
       "password": "robert123",
       "roleId": 3,
-      "roleName": "nurse"
+      "roleName": "nurse",
+      "createdAt": "2025-07-29T05:01:35.252Z"
     },
     {
       "id": "apt_1753765295252",
@@ -110,8 +113,9 @@
       "email": "mishal.fatima@example.com",
       "password": "mishal123",
       "roleId": 2,
-      "createdAt": "2025-08-18T08:11:14.347Z",
       "roleName": "doctor",
-      "specialtyId": "5"
+      "createdAt": "2025-08-18T08:11:14.347Z",
+      "specialtyId": "6"
     }
-  ]}
+  ]
+}
