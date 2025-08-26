@@ -3,7 +3,7 @@ import { createSlice, type PayloadAction, createAsyncThunk } from '@reduxjs/tool
 import type { Appointment } from '../../types/appointment';
 import appointmentsData from '../../../mockServer/MockData.json';
 
-const API_URL = 'http://localhost:8000/Appointments'; // Your REST API endpoint
+const API_URL = 'http://localhost:8000/appointments'; // Updated to use new backend structure
 
 interface AppointmentState {
   appointments: Appointment[];

@@ -1,4 +1,5 @@
-{"Appointments": [
+{
+  "Appointments": [
     {
       "id": "apt_1",
       "patientId": "patient_1",
@@ -53,7 +54,7 @@
       "doctorId": "5",
       "doctorName": "Dr. James Thompson",
       "appointmentSlot": "2025-07-29T17:30:00Z",
-      "reason": "Patellofemoral Pain Syndrome (Runner’s Knee)",
+      "reason": "Patellofemoral Pain Syndrome (Runner\u00e2\u20ac\u2122s Knee)",
       "createdAt": "2025-07-29T11:55:53.151Z",
       "status": "completed",
       "consultationCompleted": true
@@ -81,7 +82,7 @@
       "doctorId": "6",
       "doctorName": "Dr. Lisa Anderson",
       "appointmentSlot": "2025-07-31T17:00:00Z",
-      "reason": "Acne Vulgaris – Initial Consultation",
+      "reason": "Acne Vulgaris \u00e2\u20ac\u201c Initial Consultation",
       "createdAt": "2025-07-31T19:26:27.444Z",
       "status": "completed",
       "consultationCompleted": true
@@ -95,7 +96,7 @@
       "doctorId": "2",
       "doctorName": "Dr. Sarah Wilson",
       "appointmentSlot": "2025-08-03T09:00:00Z",
-      "reason": "Hypertension – Routine Follow-Up",
+      "reason": "Hypertension \u00e2\u20ac\u201c Routine Follow-Up",
       "createdAt": "2025-08-04T04:31:49.331Z",
       "status": "completed",
       "consultationCompleted": true
@@ -109,7 +110,7 @@
       "doctorId": "2",
       "doctorName": "Dr. Sarah Wilson",
       "appointmentSlot": "2025-08-03T10:00:00Z",
-      "reason": "Stable Angina – Follow-Up After Initial Diagnosis",
+      "reason": "Stable Angina \u00e2\u20ac\u201c Follow-Up After Initial Diagnosis",
       "createdAt": "2025-08-04T04:36:15.898Z",
       "status": "completed",
       "consultationCompleted": true
@@ -123,7 +124,7 @@
       "doctorId": "3",
       "doctorName": "Dr. Michael Chen",
       "appointmentSlot": "2025-08-03T08:00:00Z",
-      "reason": "Migraine Evaluation – First-Time Episode",
+      "reason": "Migraine Evaluation \u00e2\u20ac\u201c First-Time Episode",
       "createdAt": "2025-08-04T04:44:30.395Z",
       "status": "completed",
       "consultationCompleted": true
@@ -137,7 +138,7 @@
       "doctorId": "2",
       "doctorName": "Dr. Sarah Wilson",
       "appointmentSlot": "2025-08-03T10:00:00Z",
-      "reason": "Hypertension Follow-Up – Medication Adjustment",
+      "reason": "Hypertension Follow-Up \u00e2\u20ac\u201c Medication Adjustment",
       "createdAt": "2025-08-04T04:55:59.314Z",
       "status": "completed",
       "consultationCompleted": true
@@ -151,7 +152,7 @@
       "doctorId": "3",
       "doctorName": "Dr. Michael Chen",
       "appointmentSlot": "2025-08-03T09:30:00Z",
-      "reason": "Chronic Tension-Type Headache – Follow-up",
+      "reason": "Chronic Tension-Type Headache \u00e2\u20ac\u201c Follow-up",
       "createdAt": "2025-08-04T05:34:30.979Z",
       "status": "completed",
       "consultationCompleted": true
@@ -320,7 +321,7 @@
       "doctorId": "6",
       "doctorName": "Dr. Lisa Anderson",
       "appointmentSlot": "2025-08-12T14:30:00Z",
-      "reason": "Acne Vulgaris – Moderate Inflammatory Type",
+      "reason": "Acne Vulgaris \u00e2\u20ac\u201c Moderate Inflammatory Type",
       "createdAt": "2025-08-11T09:38:28.172Z",
       "status": "scheduled",
       "consultationCompleted": false
@@ -434,15 +435,15 @@
       "patientId": "65a5",
       "patientName": "Ahmed Raza",
       "patientAge": 55,
-      "specialtyName": "Cardiology",
       "doctorId": "2",
       "doctorName": "Dr. Sarah Wilson",
-      "createdById": "apt_1753765295252",
       "appointmentSlot": "2025-08-21T15:30:00Z",
       "reason": "visit",
-      "createdAt": "2025-08-21T06:47:58.905Z",
       "status": "scheduled",
-      "consultationCompleted": false
+      "consultationCompleted": false,
+      "createdAt": "2025-08-21T06:47:58.905Z",
+      "specialtyName": "Cardiology",
+      "createdById": "apt_1753765295252"
     },
     {
       "id": "apt_1755860871593",
@@ -458,5 +459,21 @@
       "createdAt": "2025-08-22T11:07:51.593Z",
       "status": "scheduled",
       "consultationCompleted": false
+    },
+    {
+      "id": "apt_1756185014297",
+      "patientId": "patient_8a106d73",
+      "patientName": "Hina Khan",
+      "patientAge": 36,
+      "doctorId": "6",
+      "doctorName": "Dr. Lisa Anderson",
+      "appointmentSlot": "2025-08-01T15:00:00Z",
+      "reason": "visit",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-08-26T05:10:14.297Z",
+      "specialtyName": "Dermatology",
+      "createdById": "apt_1753765295252"
     }
-  ]}
+  ]
+}

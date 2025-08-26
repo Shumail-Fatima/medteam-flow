@@ -97,12 +97,13 @@ export const NotificationProvider: React.FC<{children: React.ReactNode}> = ({ ch
           payload: newNotification
         }));
       }
+      
       // Send notification to doctor
-    channel.postMessage(notification);
-    alert('Appointment created and notification sent!');
+      channel.postMessage(notification);
+      alert('Appointment created and notification sent!');
 
-      // Also save to mock server (for persistence)
-      await fetch('http://localhost:8000/Notifications', {
+      // Save to backend server (for persistence)
+      await fetch('http://localhost:8000/notifications', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newNotification),
@@ -121,7 +122,7 @@ export const NotificationProvider: React.FC<{children: React.ReactNode}> = ({ ch
       dispatch(markNotificationAsRead(notificationId));
       
       // Update on server
-      await fetch(`http://localhost:8000/Notifications/${notificationId}`, {
+      await fetch(`http://localhost:8000/notifications/${notificationId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ isRead: true }),

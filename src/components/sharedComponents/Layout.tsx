@@ -77,9 +77,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   // Fetch initial notifications when user is available
   useEffect(() => {
     if (user?.id) {
-      fetch(`http://localhost:8000/Notifications?toUserId=${user.id}`)
+      fetch(`http://localhost:8000/notifications?toUserId=${user.id}`)
         .then(res => res.json())
-        .then(data => setNotifications(Array.isArray(data) ? data : (data.notifications ?? [])))
+        .then(data => setNotifications(Array.isArray(data) ? data : []))
         .catch(error => console.error('Error fetching initial notifications:', error));
     }
   }, [user?.id]);
@@ -98,9 +98,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     
     // Fetch existing notifications from server
     if (user?.id) {
-      fetch(`http://localhost:8000/Notifications?toUserId=${user.id}`)
+      fetch(`http://localhost:8000/notifications?toUserId=${user.id}`)
         .then(res => res.json())
-        .then(data => setNotifications(Array.isArray(data) ? data : (data.notifications ?? [])))
+        .then(data => setNotifications(Array.isArray(data) ? data : []))
         .catch(error => console.error('Error fetching notifications:', error));
     }
   }
@@ -111,29 +111,59 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     setNotifAnchorEl(null);
   }
 
-  const handleMarkAllAsRead = () => {
-    const unreadNotifications = notifications.filter(n => !n.isRead);
-    if (unreadNotifications.length === 0) return;
+  const markNotificationAsRead = async (notificationId: string) => {
+    try {
+      const response = await fetch(`http://localhost:8000/notifications/${notificationId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ isRead: true }),
+      });
 
-    // Update UI immediately
-    setNotifications(prev => 
-      prev.map(n => ({ ...n, isRead: true }))
-    );
+      if (response.ok) {
+        // Update local state
+        setNotifications(prev => 
+          prev.map(notif => 
+            notif.id === notificationId 
+              ? { ...notif, isRead: true }
+              : notif
+          )
+        );
+      }
+    } catch (error) {
+      console.error('Error marking notification as read:', error);
+    }
+  };
 
-    // Update server
-    Promise.all(
-      unreadNotifications.map(n =>
-        fetch(`http://localhost:8000/Notifications/${n.id}`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ isRead: true }),
-        })
-      )
-    ).catch(error => console.error('Error marking all notifications as read:', error));
+  const markAllNotificationsAsRead = async () => {
+    try {
+      const unreadNotifications = notifications.filter(notif => !notif.isRead);
+      
+      // Mark each unread notification as read
+      await Promise.all(
+        unreadNotifications.map(notif => 
+          fetch(`http://localhost:8000/notifications/${notif.id}`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ isRead: true }),
+          })
+        )
+      );
+
+      // Update local state
+      setNotifications(prev => 
+        prev.map(notif => ({ ...notif, isRead: true }))
+      );
+    } catch (error) {
+      console.error('Error marking all notifications as read:', error);
+    }
   };
 
   //const unreadCount = getUnreadCount();
-  const unreadCount = notifications.filter(n => !n.isRead).length;
+  const unreadCount = notifications.filter(notif => !notif.isRead).length;
 
   const getNotificationPath = (notif: any) => {
 
@@ -397,56 +427,42 @@ const sortedNotifications = React.useMemo(() => {
   ) : (
     <>
       {unreadCount > 0 && (
-        <MenuItem onClick={handleMarkAllAsRead} sx={{ justifyContent: 'center', borderBottom: 1, borderColor: 'divider' }}>
-          <Typography variant="body2" color="primary">Mark all as read</Typography>
+        <MenuItem onClick={markAllNotificationsAsRead}>
+          <Typography variant="body2" color="primary">
+            Mark all as read ({unreadCount})
+          </Typography>
         </MenuItem>
       )}
       {sortedNotifications.map((notif) => (
-        <MenuItem 
-          key={notif.id} 
-          onClick={(e) => {e.stopPropagation();
-            
+        <MenuItem
+          key={notif.id}
+          onClick={(e) => {
+            e.stopPropagation();
             handleNotifClose();
             
-            // Mark as read in UI
-            setNotifications((prev) =>
-              prev.map((n) =>
-                n.id === notif.id ? { ...n, isRead: true } : n
-              )
-            );
-
-            // Persist to mock server
-            fetch(`http://localhost:8000/Notifications/${notif.id}`, {
-              method: 'PATCH',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ isRead: true }),
-            }).catch(error => console.error('Error marking notification as read:', error));
+            // Mark as read if not already read
+            if (!notif.isRead) {
+              markNotificationAsRead(notif.id);
+            }
             
+            // Navigate to the appropriate page
             navigate(getNotificationPath(notif));
           }}
           sx={{
-            bgcolor: !notif.isRead ? 'action.hover' : 'transparent',
-            borderLeft: !notif.isRead ? 3 : 0,
-            borderColor: 'primary.main',
+            backgroundColor: notif.isRead ? 'transparent' : 'action.hover',
             '&:hover': {
-              bgcolor: 'action.hover',
-            }
+              backgroundColor: 'action.selected',
+            },
           }}
         >
-          <Box sx={{ width: '100%' }}>
-            <Typography 
-              variant="subtitle2" 
-              sx={{ 
-                fontWeight: !notif.isRead ? 'bold' : 'normal',
-                color: !notif.isRead ? 'text.primary' : 'text.secondary'
-              }}
-            >
+          <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+            <Typography variant="subtitle2" fontWeight={notif.isRead ? 'normal' : 'bold'}>
               {notif.title}
             </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
+            <Typography variant="body2" color="text.secondary" sx={{ wordBreak: 'break-word' }}>
               {notif.message}
             </Typography>
-            <Typography variant="caption" color="text.disabled">
+            <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5 }}>
               {new Date(notif.createdAt).toLocaleString()}
             </Typography>
           </Box>
