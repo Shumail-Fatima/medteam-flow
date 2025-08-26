@@ -6,37 +6,40 @@
     "email": "john.doe@email.com",
     "phone": "+1-555-0123",
     "address": "123 Main St, City, State 12345",
-      "emergencyContact": {
-        "name": "Jane Doe",
-        "phone": "+1-555-0124",
-        "relationship": "Spouse"
-      },
-      "medicalHistory": [
-        {
-          "id": "mh_1",
-          "date": "2024-01-10T10:00:00Z",
-          "type": "diagnosis",
-          "doctorId": "2",
-          "doctorName": "Dr. Sarah Wilson",
-          "title": "Hypertension",
-          "description": "Patient diagnosed with stage 1 hypertension",
-          "severity": "moderate"
-        },
-        {
-          "id": "mh_2",
-          "date": "2024-01-15T14:30:00Z",
-          "type": "prescription",
-          "doctorId": "2",
-          "doctorName": "Dr. Sarah Wilson",
-          "title": "Lisinopril 10mg",
-          "description": "Take once daily for blood pressure control",
-          "dosage": "10mg daily"
-        }
-      ],
-      "allergies": ["Penicillin", "Shellfish"],
-      "bloodType": "A+",
-      "createdAt": "2024-01-01T08:00:00Z"
+    "emergencyContact": {
+      "name": "Jane Doe",
+      "phone": "+1-555-0124",
+      "relationship": "Spouse"
     },
+    "medicalHistory": [
+      {
+        "id": "mh_1",
+        "date": "2024-01-10T10:00:00Z",
+        "type": "diagnosis",
+        "doctorId": "2",
+        "doctorName": "Dr. Sarah Wilson",
+        "title": "Hypertension",
+        "description": "Patient diagnosed with stage 1 hypertension",
+        "severity": "moderate"
+      },
+      {
+        "id": "mh_2",
+        "date": "2024-01-15T14:30:00Z",
+        "type": "prescription",
+        "doctorId": "2",
+        "doctorName": "Dr. Sarah Wilson",
+        "title": "Lisinopril 10mg",
+        "description": "Take once daily for blood pressure control",
+        "dosage": "10mg daily"
+      }
+    ],
+    "allergies": [
+      "Penicillin",
+      "Shellfish"
+    ],
+    "bloodType": "A+",
+    "createdAt": "2024-01-01T08:00:00Z"
+  },
   {
     "id": "patient_2",
     "name": "Jane Smith",
@@ -58,10 +61,15 @@
         "doctorName": "Dr. Michael Chen",
         "title": "Neurological Assessment",
         "description": "Routine neurological examination - all normal",
-        "symptoms": ["Mild headaches", "Occasional dizziness"]
+        "symptoms": [
+          "Mild headaches",
+          "Occasional dizziness"
+        ]
       }
     ],
-    "allergies": ["Aspirin"],
+    "allergies": [
+      "Aspirin"
+    ],
     "bloodType": "O-",
     "createdAt": "2024-01-02T09:00:00Z"
   },
@@ -81,5 +89,236 @@
     "allergies": [],
     "bloodType": "B+",
     "createdAt": "2024-01-03T10:00:00Z"
+  },
+  {
+    "id": "patient_4",
+    "name": "Emily Carter",
+    "dateOfBirth": "2018-05-12",
+    "email": "emily.carter@email.com",
+    "phone": "+1-555-1122",
+    "address": "321 Maple St, City, State 12345",
+    "emergencyContact": {
+      "name": "Michael Carter",
+      "phone": "+1-555-1123",
+      "relationship": "Father"
+    },
+    "medicalHistory": [
+      {
+        "id": "mh_4",
+        "date": "2025-06-01T09:00:00Z",
+        "type": "diagnosis",
+        "doctorId": "4",
+        "doctorName": "Dr. Emily Rodriguez",
+        "title": "Seasonal Allergies",
+        "description": "Mild allergic rhinitis during spring"
+      }
+    ],
+    "allergies": [
+      "Peanuts"
+    ],
+    "bloodType": "O+",
+    "createdAt": "2024-06-01T09:00:00Z"
+  },
+  {
+    "id": "patient_5",
+    "name": "George Miller",
+    "dateOfBirth": "1942-11-23",
+    "email": "george.miller@email.com",
+    "phone": "+1-555-2233",
+    "address": "654 Cedar Ave, City, State 12345",
+    "emergencyContact": {
+      "name": "Helen Miller",
+      "phone": "+1-555-2234",
+      "relationship": "Wife"
+    },
+    "medicalHistory": [
+      {
+        "id": "mh_5",
+        "date": "2025-05-10T10:30:00Z",
+        "type": "diagnosis",
+        "doctorId": "2",
+        "doctorName": "Dr. Sarah Wilson",
+        "title": "Type 2 Diabetes",
+        "description": "Diagnosed 5 years ago, managed with oral medication"
+      }
+    ],
+    "allergies": [],
+    "bloodType": "B-",
+    "createdAt": "2024-05-10T10:30:00Z"
+  },
+  {
+    "id": "patient_6",
+    "name": "Sophia Lee",
+    "dateOfBirth": "2005-09-30",
+    "email": "sophia.lee@email.com",
+    "phone": "+1-555-3344",
+    "address": "987 Birch Rd, City, State 12345",
+    "emergencyContact": {
+      "name": "David Lee",
+      "phone": "+1-555-3345",
+      "relationship": "Father"
+    },
+    "medicalHistory": [
+      {
+        "id": "mh_6",
+        "date": "2025-03-15T14:00:00Z",
+        "type": "diagnosis",
+        "doctorId": "5",
+        "doctorName": "Dr. James Thompson",
+        "title": "Asthma",
+        "description": "Mild persistent asthma, uses inhaler as needed"
+      }
+    ],
+    "allergies": [
+      "Dust mites"
+    ],
+    "bloodType": "AB+",
+    "createdAt": "2024-03-15T14:00:00Z"
+  },
+  {
+    "id": "patient_7",
+    "name": "Oliver Brown",
+    "dateOfBirth": "1988-02-17",
+    "email": "oliver.brown@email.com",
+    "phone": "+1-555-4455",
+    "address": "246 Spruce Ln, City, State 12345",
+    "emergencyContact": {
+      "name": "Laura Brown",
+      "phone": "+1-555-4456",
+      "relationship": "Wife"
+    },
+    "medicalHistory": [],
+    "allergies": [],
+    "bloodType": "A-",
+    "createdAt": "2024-02-17T08:00:00Z"
+  },
+  {
+    "id": "patient_8",
+    "name": "Lucas Martinez",
+    "dateOfBirth": "2012-07-04",
+    "email": "lucas.martinez@email.com",
+    "phone": "+1-555-5566",
+    "address": "135 Willow Dr, City, State 12345",
+    "emergencyContact": {
+      "name": "Maria Martinez",
+      "phone": "+1-555-5567",
+      "relationship": "Mother"
+    },
+    "medicalHistory": [
+      {
+        "id": "mh_7",
+        "date": "2025-02-20T11:00:00Z",
+        "type": "diagnosis",
+        "doctorId": "4",
+        "doctorName": "Dr. Emily Rodriguez",
+        "title": "Chickenpox",
+        "description": "Recovered, no complications"
+      }
+    ],
+    "allergies": [
+      "Eggs"
+    ],
+    "bloodType": "B+",
+    "createdAt": "2024-02-20T11:00:00Z"
+  },
+  {
+    "id": "79cf",
+    "name": "Ayesha Khan",
+    "dateOfBirth": "2006-03-15",
+    "email": "ayesha.khan@example.com",
+    "phone": "+92-331-4567890",
+    "address": "House #25, Street 12, Gulberg, Lahore, Pakistan",
+    "emergencyContact": [
+      {
+        "name": "Sara Khan",
+        "phone": "+92-300-1234567",
+        "relationship": "Mother"
+      }
+    ]
+  },
+  {
+    "id": "65a5",
+    "name": "Ahmed Raza",
+    "dateOfBirth": "1970-06-09",
+    "email": "ahmed.raza@example.com",
+    "phone": "+92-321-5678901",
+    "address": "House #12, Gulshan-e-Iqbal, Karachi, Pakistan",
+    "emergencyContact": [
+      {
+        "name": "Sara Raza",
+        "phone": "+92-322-9876543",
+        "relationship": "Daughter"
+      }
+    ],
+    "bloodType": "B+",
+    "allergies": [
+      "Penicillin",
+      "nuts",
+      "dust"
+    ]
+  },
+  {
+    "id": "559e",
+    "name": "Ayaan Ali",
+    "dateOfBirth": "2018-03-25",
+    "email": "ayaan.ali.parent@example.com",
+    "phone": "03214567890",
+    "address": "45 Garden Town, Lahore, Pakistan",
+    "emergencyContact": [
+      {
+        "name": "Farah Ali",
+        "phone": "03219876543",
+        "relationship": "Mother"
+      }
+    ],
+    "bloodType": "O-",
+    "allergies": [
+      "Amoxicillin (rash reaction reported)",
+      "Peanuts",
+      "Pollen (seasonal)"
+    ]
+  },
+  {
+    "id": "bfce",
+    "name": "Johnathan Miller",
+    "dateOfBirth": "1985-02-15",
+    "email": "john.miller85@example.com",
+    "phone": "+1-202-555-0147",
+    "address": "123 Maple Street, Springfield, IL, USA",
+    "emergencyContact": [
+      {
+        "name": "Emily Miller",
+        "phone": "+1-202-555-0199",
+        "relationship": "Wife"
+      }
+    ],
+    "bloodType": "O+",
+    "allergies": [
+      "Penicillin",
+      "Nuts",
+      "Dust"
+    ]
+  },
+  {
+    "id": "patient_8a106d73",
+    "name": "Hina Khan",
+    "dateOfBirth": "1988-09-06",
+    "email": "hina.khan@example.com",
+    "phone": "+92 333 4567890",
+    "address": "House 24, Street 7, Model Town, Lahore",
+    "emergencyContact": [
+      {
+        "name": "Ahmed Khan",
+        "phone": "+92 300 9876543",
+        "relationship": "Husband"
+      }
+    ],
+    "medicalHistory": [],
+    "allergies": [
+      "Penicillin",
+      "Dust"
+    ],
+    "bloodType": "O+",
+    "createdAt": "2025-08-26T04:45:25.244414Z"
   }
 ]

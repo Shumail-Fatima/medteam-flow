@@ -1574,6 +1574,27 @@
         "Peanuts",
         "Pollen (seasonal)"
       ]
+    },
+    {
+      "id": "bfce",
+      "name": "Johnathan Miller",
+      "dateOfBirth": "1985-02-15",
+      "email": "john.miller85@example.com",
+      "phone": "+1-202-555-0147",
+      "address": "123 Maple Street, Springfield, IL, USA",
+      "emergencyContact": [
+        {
+          "name": "Emily Miller",
+          "phone": "+1-202-555-0199",
+          "relationship": "Wife"
+        }
+      ],
+      "bloodType": "O+",
+      "allergies": [
+        "Penicillin",
+        "Nuts",
+        "Dust"
+      ]
     }
   ],
   "Roles": [

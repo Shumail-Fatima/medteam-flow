@@ -79,7 +79,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     if (user?.id) {
       fetch(`http://localhost:8000/Notifications?toUserId=${user.id}`)
         .then(res => res.json())
-        .then(data => setNotifications(data))
+        .then(data => setNotifications(Array.isArray(data) ? data : (data.notifications ?? [])))
         .catch(error => console.error('Error fetching initial notifications:', error));
     }
   }, [user?.id]);
@@ -100,7 +100,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     if (user?.id) {
       fetch(`http://localhost:8000/Notifications?toUserId=${user.id}`)
         .then(res => res.json())
-        .then(data => setNotifications(data))
+        .then(data => setNotifications(Array.isArray(data) ? data : (data.notifications ?? [])))
         .catch(error => console.error('Error fetching notifications:', error));
     }
   }

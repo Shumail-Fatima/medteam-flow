@@ -4,7 +4,7 @@ import type { Patient } from '../../types/medical';
 import type { ExtendedPatient } from '../../types/medical';
 import patientsData from '../../../mockServer/MockData.json';
 
-const API_URL = 'http://localhost:8000/Patients'; // Your REST API endpoint
+const API_URL = 'http://localhost:8000/patients'; // FastAPI endpoint
 
 interface PatientState {
   // patients: Patient[];
@@ -15,7 +15,8 @@ interface PatientState {
 
 export const fetchPatients = createAsyncThunk('patients/fetchPatients', async () => {
   const res = await fetch(API_URL);
-  return await res.json();
+  const data = await res.json();
+  return Array.isArray(data) ? data : (data.patients ?? data.Patients ?? []);
 });
 
 export const addPatientAsync = createAsyncThunk(
@@ -28,6 +29,31 @@ export const addPatientAsync = createAsyncThunk(
       },
       body: JSON.stringify(patient),
     });
+
+
+    if (!res.ok) {
+      throw new Error('Failed to create patient');
+    }
+    return await res.json();
+  }
+);
+
+export const updatePatientAsync = createAsyncThunk(
+  'patients/updatePatient',
+  async (patient: Patient) => {
+    const res = await fetch(`${API_URL}/${patient.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(patient),
+    });
+    if (!res.ok) {
+      throw new Error('Failed to update patient');
+    }
+
+
+    
     return await res.json();
   }
 );
@@ -44,7 +70,8 @@ export const deletePatientAsync = createAsyncThunk(
     if (!res.ok) {
       throw new Error('Failed to delete patient');
     }
-    return await res.json();
+    // Backend returns 204 No Content
+    return patientId;
   }
 );
 
@@ -159,6 +186,67 @@ const patientSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
+
+
+
+      .addCase(addPatientAsync.fulfilled, (state, action: PayloadAction<Patient>) => {
+        const patient = action.payload as any;
+        const normalizedEmergency = Array.isArray(patient.emergencyContact)
+          ? patient.emergencyContact[0]
+          : patient.emergencyContact;
+        state.patients.push({
+          ...patient,
+          emergencyContact: normalizedEmergency,
+          age: calculateAge(patient.dateOfBirth),
+          medicalHistory: patient.medicalHistory ?? [],
+          allergies: patient.allergies ?? [],
+          createdAt: patient.createdAt ?? new Date().toISOString(),
+        } as any);
+        state.loading = false;
+      })
+      .addCase(addPatientAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to add patient';
+      })
+      .addCase(updatePatientAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updatePatientAsync.fulfilled, (state, action: PayloadAction<Patient>) => {
+        const idx = state.patients.findIndex(p => p.id === action.payload.id);
+        if (idx !== -1) {
+          const p = action.payload as any;
+          const normalizedEmergency = Array.isArray(p.emergencyContact) ? p.emergencyContact[0] : p.emergencyContact;
+          state.patients[idx] = {
+            ...p,
+            emergencyContact: normalizedEmergency,
+            age: calculateAge(p.dateOfBirth),
+            medicalHistory: p.medicalHistory ?? state.patients[idx].medicalHistory ?? [],
+            allergies: p.allergies ?? state.patients[idx].allergies ?? [],
+            createdAt: state.patients[idx].createdAt ?? new Date().toISOString(),
+          } as any;
+        }
+        state.loading = false;
+      })
+      .addCase(updatePatientAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to update patient';
+      })
+      .addCase(deletePatientAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deletePatientAsync.fulfilled, (state, action: PayloadAction<string>) => {
+        state.patients = state.patients.filter(p => p.id !== action.payload);
+        state.loading = false;
+      })
+      .addCase(deletePatientAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to delete patient';
+      });
+
+
+
   },
 });
 

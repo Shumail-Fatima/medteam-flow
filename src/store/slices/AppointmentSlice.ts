@@ -16,7 +16,8 @@ interface AppointmentState {
 // Async GET request
 export const fetchAppointments = createAsyncThunk('appointments/fetchAppointments', async () => {
   const res = await fetch(API_URL);
-  return await res.json();
+  const data = await res.json();
+  return Array.isArray(data) ? data : (data.appointments ?? data.Appointments ?? []);
 });
 
 // Async POST request
