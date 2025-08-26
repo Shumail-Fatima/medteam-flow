@@ -1,77 +1,117 @@
-[
-  {
-    "id": "1",
-    "name":"john",
-    "username":"john123",
-    "email": "admin@example.com",
-    "password": "admin123",
-    "roleId": 1,
-    "roleName": "admin"
-  },
-  {
-    "id": "2",
-    "name": "Dr. Sarah Wilson",
-    "username": "sarahdoc",
-    "email": "doctor@example.com",
-    "password": "doctor123",
-    "roleId": 2,
-    "roleName": "doctor",
-    "specialtyId": "cardiology",
-    "createdAt": "2024-01-16T14:20:00Z"
-  },
-  {
-    "id": "3",
-    "name": "Dr. Michael Chen",
-    "username": "michaeldoc",
-    "email": "michael.chen@example.com",
-    "password": "doctor123",
-    "roleId": 2,
-    "roleName": "doctor",
-    "specialtyId": "neurology",
-    "createdAt": "2024-01-17T09:15:00Z"
-  },
-  {
-    "id": "4",
-    "name": "Dr. Emily Rodriguez",
-    "username": "emilydoc",
-    "email": "emily.rodriguez@example.com",
-    "password": "doctor123",
-    "roleId": 2,
-    "roleName": "doctor",
-    "specialtyId": "pediatrics",
-    "createdAt": "2024-01-18T11:30:00Z"
-  },
-  {
-    "id": "5",
-    "name": "Dr. James Thompson",
-    "username": "jamesdoc",
-    "email": "james.thompson@example.com",
-    "password": "doctor123",
-    "roleId": 2,
-    "roleName": "doctor",
-    "specialtyId": "orthopedics",
-    "createdAt": "2024-01-19T16:45:00Z"
-  },
-  {
-    "id": "6",
-    "name": "Dr. Lisa Anderson",
-    "username": "lisadoc",
-    "email": "lisa.anderson@example.com",
-    "password": "doctor123",
-    "roleId": 2,
-    "roleName": "doctor",
-    "specialtyId": "dermatology",
-    "createdAt": "2024-01-20T13:20:00Z"
-  },
-  {
-    "id": "7",
-    "name": "Nurse Robert House",
-    "username":"Robert House",
-    "email": "robert.house@hospital.com",
-    "password": "robert123",
-    "roleId": 3,
-    "roleName": "nurse"
-  }
-
-]
-
+{"Users": [
+    {
+      "id": "1",
+      "name": "john",
+      "username": "john123",
+      "email": "admin@example.com",
+      "password": "admin123",
+      "roleId": 1,
+      "roleName": "admin"
+    },
+    {
+      "id": "2",
+      "name": "Dr. Sarah Wilson",
+      "username": "sarahdoc",
+      "email": "doctor@example.com",
+      "password": "doctor123",
+      "roleId": 2,
+      "roleName": "doctor",
+      "specialtyId": "1",
+      "createdAt": "2024-01-16T14:20:00Z"
+    },
+    {
+      "id": "3",
+      "name": "Dr. Michael Chen",
+      "username": "michaeldoc",
+      "email": "michael.chen@example.com",
+      "password": "doctor123",
+      "roleId": 2,
+      "roleName": "doctor",
+      "specialtyId": "5",
+      "createdAt": "2024-01-17T09:15:00Z"
+    },
+    {
+      "id": "4",
+      "name": "Dr. Emily Rodriguez",
+      "username": "emilydoc",
+      "email": "emily.rodriguez@example.com",
+      "password": "doctor123",
+      "roleId": 2,
+      "roleName": "doctor",
+      "specialtyId": "7",
+      "createdAt": "2024-01-18T11:30:00Z"
+    },
+    {
+      "id": "5",
+      "name": "Dr. James Thompson",
+      "username": "jamesdoc",
+      "email": "james.thompson@example.com",
+      "password": "doctor123",
+      "roleId": 2,
+      "roleName": "doctor",
+      "specialtyId": "6",
+      "createdAt": "2024-01-19T16:45:00Z"
+    },
+    {
+      "id": "6",
+      "name": "Dr. Lisa Anderson",
+      "username": "lisadoc",
+      "email": "lisa.anderson@example.com",
+      "password": "doctor123",
+      "roleId": 2,
+      "roleName": "doctor",
+      "specialtyId": "2",
+      "createdAt": "2024-01-20T13:20:00Z"
+    },
+    {
+      "id": "7",
+      "name": "Nurse Robert House",
+      "username": "Robert House",
+      "email": "robert.house@hospital.com",
+      "password": "robert123",
+      "roleId": 3,
+      "roleName": "nurse"
+    },
+    {
+      "id": "apt_1753765295252",
+      "name": "Helen Wright",
+      "username": "Helen_Wright",
+      "email": "helen.wright@example.com",
+      "password": "helen123",
+      "roleId": 1,
+      "createdAt": "2025-07-29T05:01:35.252Z",
+      "roleName": "admin"
+    },
+    {
+      "id": "apt_1753768305319",
+      "name": "Nurse Jane Doe",
+      "username": "Nurse Jane Doe",
+      "email": "jane.doe@example.com",
+      "password": "jane123",
+      "roleId": 3,
+      "createdAt": "2025-07-29T05:51:45.319Z",
+      "roleName": "nurse"
+    },
+    {
+      "id": "apt_1754401859360",
+      "name": "Dr. Ayesha Siddiqui",
+      "username": "Ayesha Siddiqui",
+      "email": "ayesha.siddiqui@hospital.com",
+      "password": "doctor123",
+      "roleId": 2,
+      "specialtyId": "9",
+      "createdAt": "2025-08-05T13:50:59.360Z",
+      "roleName": "doctor"
+    },
+    {
+      "id": "apt_1755504674347",
+      "name": "Mishal Fatima",
+      "username": "Doctor Mishal Fatima",
+      "email": "mishal.fatima@example.com",
+      "password": "mishal123",
+      "roleId": 2,
+      "createdAt": "2025-08-18T08:11:14.347Z",
+      "roleName": "doctor",
+      "specialtyId": "5"
+    }
+  ]}

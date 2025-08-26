@@ -4,7 +4,7 @@ import type { Consultation, ExtendedPatient, MedicalHistoryEntry } from '../../t
 import patientData from '../../../mockServer/MockData.json';
 import consultationData from '../../../mockServer/MockData.json';
 
-const API_URL = 'http://localhost:8000/Consultations'; // Your REST API endpoint
+const API_URL = 'http://localhost:8000/consultations'; // Your REST API endpoint
 
 interface MedicalState {
   consultations: Consultation[];
@@ -17,6 +17,10 @@ interface MedicalState {
 export const fetchConsultations = createAsyncThunk('consultations/fetchConsultations', async () => {
   const res = await fetch(API_URL);
   return await res.json();
+  /* code from appointment slice after i implemented the fast endpoints
+  const data = await res.json();
+  return Array.isArray(data) ? data : (data.appointments ?? data.Appointments ?? []);
+  */
 });
 
 // Async POST request

@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from routers import patients
 from routers import appointment
 from routers import notifications
+from routers import consultation
 
 
 app = FastAPI()
@@ -25,6 +26,7 @@ app.add_middleware(
 app.include_router(patients.router)
 app.include_router(appointment.router)
 app.include_router(notifications.router)
+app.include_router(consultation.router)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

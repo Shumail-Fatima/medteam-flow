@@ -439,7 +439,7 @@
       "doctorName": "Dr. Sarah Wilson",
       "appointmentSlot": "2025-08-21T15:30:00Z",
       "reason": "visit",
-      "status": "scheduled",
+      "status": "no-show",
       "consultationCompleted": false,
       "createdAt": "2025-08-21T06:47:58.905Z",
       "specialtyName": "Cardiology",
@@ -450,15 +450,15 @@
       "patientId": "patient_3",
       "patientName": "Robert Johnson",
       "patientAge": 49,
-      "specialtyName": "Cardiology",
       "doctorId": "2",
       "doctorName": "Dr. Sarah Wilson",
-      "createdById": "apt_1753765295252",
       "appointmentSlot": "2025-08-25T11:00:00Z",
       "reason": "visit",
+      "status": "completed",
+      "consultationCompleted": true,
       "createdAt": "2025-08-22T11:07:51.593Z",
-      "status": "scheduled",
-      "consultationCompleted": false
+      "specialtyName": "Cardiology",
+      "createdById": "apt_1753765295252"
     },
     {
       "id": "apt_1756185014297",
@@ -473,6 +473,36 @@
       "consultationCompleted": false,
       "createdAt": "2025-08-26T05:10:14.297Z",
       "specialtyName": "Dermatology",
+      "createdById": "apt_1753765295252"
+    },
+    {
+      "id": "apt_1756191901911",
+      "patientId": "bfce",
+      "patientName": "Johnathan Miller",
+      "patientAge": 40,
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentSlot": "2025-08-26T11:00:00Z",
+      "reason": "Post-Myocardial Infarction (MI) Follow-Up Consultation",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-08-26T07:05:01.911Z",
+      "specialtyName": "Cardiology",
+      "createdById": "apt_1753765295252"
+    },
+    {
+      "id": "apt_1756193668396",
+      "patientId": "patient_8a106d73",
+      "patientName": "Hina Khan",
+      "patientAge": 36,
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentSlot": "2025-08-26T11:00:00Z",
+      "reason": "Hypertensive Heart Disease with Left Ventricular Hypertrophy",
+      "status": "completed",
+      "consultationCompleted": true,
+      "createdAt": "2025-08-26T07:34:28.396Z",
+      "specialtyName": "Cardiology",
       "createdById": "apt_1753765295252"
     }
   ]
