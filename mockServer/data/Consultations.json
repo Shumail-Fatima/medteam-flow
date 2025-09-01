@@ -996,6 +996,43 @@
       "uploadIds": [
         "upl_1756731827868"
       ]
+    },
+    {
+      "id": "cons_1756729711563",
+      "patientId": "patient_ae8066e2",
+      "patientName": "Sana Ali",
+      "doctorId": "5",
+      "doctorName": "Dr. James Thompson",
+      "appointmentId": "apt_1756729463865",
+      "date": "2025-09-01T12:28:31.563Z",
+      "symptoms": [
+        "Anterior knee pain",
+        "especially when climbing stairs",
+        "squatting",
+        "or sitting for long periods (\"theater sign\")",
+        "Occasional clicking or popping in the knee",
+        "Mild swelling after intense activity"
+      ],
+      "diagnosis": "Patellofemoral Pain Syndrome (PFPS) due to overuse and maltracking of the patella",
+      "notes": "The patient reports being a recreational runner who recently increased her mileage. No history of trauma. Physical examination reveals tenderness around the patella and pain on patellar compression. Range of motion intact. X-rays normal, ruling out fractures.",
+      "prescriptions": [
+        {
+          "id": "rx_1756729711563_0",
+          "medication": "Ibuprofen",
+          "dosage": "400 mg",
+          "frequency": "every 8 hours after meals",
+          "duration": "5 days",
+          "instructions": "as needed for pain"
+        }
+      ],
+      "followUpRequired": false,
+      "followUpDate": "2025-09-04T05:27",
+      "createdAt": "2025-09-01T12:28:31.563Z",
+      "status": "completed",
+      "uploadIds": [
+        "upl_1756754911287",
+        "upl_1756754911506"
+      ]
     }
   ]
 }

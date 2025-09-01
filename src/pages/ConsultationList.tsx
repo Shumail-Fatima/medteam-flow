@@ -24,15 +24,9 @@ const ConsultationList: React.FC = () => {
   const patientId = searchParams.get('patientId');
   const consultations = useSelector((state: RootState) => state.medical.consultations);
   const patients = useSelector((state: RootState) => state.patients.patients);
+  const [searchFilter, setSearchFilter] = useState('');
 
-  const { filters, filteredData: filteredConsultations
-    , updateFilter, clearFilters } = useDataFiltering({
-    data: consultations,
-    searchFields: ['patientName', 'date'],
-    filterConfig:{
-      dateField: 'createdAt'
-    }
-  });
+
 
   // 🔑 Fetch required data on first load
   useEffect(() => {
@@ -52,6 +46,22 @@ const ConsultationList: React.FC = () => {
     [consultations, user?.id, patientId]
   );
 
+  const { filters, filteredData: filteredConsultations
+    , updateFilter, clearFilters } = useDataFiltering({
+      data: doctorConsultations.map((consultation) => {
+        // Attach patientName so the generic filter can use it
+        const patient = patients.find((p) => p.id === consultation.patientId);
+        return {
+          ...consultation,
+          patientName: patient?.name || ''
+        };
+      }),
+      searchFields: ['patientName'], // ✅ hook handles search
+      filterConfig: {
+        dateField: 'createdAt',
+      }
+  });
+
   // Helper to get patient birth date
   const getPatientBirthDate = (patientId: string) => {
     const patient = patients.find((p) => p.id === patientId);
@@ -68,7 +78,7 @@ const ConsultationList: React.FC = () => {
       minute: '2-digit',
     });
 
-    const [searchFilter, setSearchFilter] = useState('');
+    //const [searchFilter, setSearchFilter] = useState('');
     // const filteredConsultations = doctorConsultations.filter((consultation) => {
     //   const patient = patients.find((p) => p.id === consultation.patientId);
     //   return patient ? patient.name.toLowerCase().includes(searchFilter.toLowerCase()) : false;
@@ -102,6 +112,7 @@ const ConsultationList: React.FC = () => {
       <PageHeader
         title={pageTitle}
       />
+      {/* <SearchFilterbox value={searchFilter} onChange={setSearchFilter}/> */}
       </Box>
       <FilterBar
         filters={filterFields}

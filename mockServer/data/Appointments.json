@@ -64,14 +64,15 @@
       "patientId": "patient_2",
       "patientName": "Jane Smith",
       "patientAge": 74,
-      "specialtyName": "Orthopedics",
       "doctorId": "5",
       "doctorName": "Dr. James Thompson",
       "appointmentSlot": "2025-07-30T19:00:00Z",
       "reason": "visit",
+      "status": "cancelled",
+      "consultationCompleted": false,
       "createdAt": "2025-07-30T11:19:56.769Z",
-      "status": "scheduled",
-      "consultationCompleted": false
+      "specialtyName": "Orthopedics",
+      "createdById": null
     },
     {
       "id": "apt_1753989987444",
@@ -562,6 +563,36 @@
       "status": "completed",
       "consultationCompleted": true,
       "createdAt": "2025-09-01T06:00:10.396Z",
+      "specialtyName": "Orthopedics",
+      "createdById": "apt_1753765295252"
+    },
+    {
+      "id": "apt_1756729463865",
+      "patientId": "patient_ae8066e2",
+      "patientName": "Sana Ali",
+      "patientAge": 24,
+      "doctorId": "5",
+      "doctorName": "Dr. James Thompson",
+      "appointmentSlot": "2025-09-01T19:00:00Z",
+      "reason": "Patellofemoral Pain Syndrome (Runner\u2019s Knee)",
+      "status": "completed",
+      "consultationCompleted": true,
+      "createdAt": "2025-09-01T12:24:23.865Z",
+      "specialtyName": "Orthopedics",
+      "createdById": "apt_1753765295252"
+    },
+    {
+      "id": "apt_1756734566307",
+      "patientId": "patient_5",
+      "patientName": "George Miller",
+      "patientAge": 82,
+      "doctorId": "5",
+      "doctorName": "Dr. James Thompson",
+      "appointmentSlot": "2025-09-01T21:00:00Z",
+      "reason": "visit",
+      "status": "scheduled",
+      "consultationCompleted": false,
+      "createdAt": "2025-09-01T13:49:26.307Z",
       "specialtyName": "Orthopedics",
       "createdById": "apt_1753765295252"
     }

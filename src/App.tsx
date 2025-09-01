@@ -6,7 +6,6 @@ import AdminTaskManagement from './pages/AdminTaskManagement';
 import Appointment from './pages/Appointment';
 import AdminSupport from './pages/AdminSupport';
 import AdminSettings from './pages/AdminSettings';
-import DashboardPage from './pages/DashboardPage';
 import DocPatientManage from './pages/DocPatientManage';
 import DocDashboard from './pages/DocDashboard';
 import Consultation from './pages/Consultation';
@@ -26,7 +25,6 @@ function App() {
         <Route element={<ProtectedRoute> <Outlet /> </ProtectedRoute>}>
           {/* Optionally wrap with Layout 
           <Route element={<Layout> <Outlet /> </Layout>}></Route>*/}
-            <Route path='/dashboard' element={<DashboardPage/>}/>
             <Route path="/admin/user-management" element={<AdminUserManagement />} />
             <Route path="/task-management" element={<AdminTaskManagement />} />
             <Route path="/Appointment" element={<Appointment />} />

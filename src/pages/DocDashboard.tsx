@@ -247,69 +247,6 @@ const DoctorDashboard: React.FC = () => {
           </Card>
         </Grid>
 
-        {/* Recent Patient Records 
-        <Grid >
-          <Card sx={{ borderRadius: 3, height: '100%' }}>
-            <CardContent>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                <Typography variant="h6" fontWeight="bold">
-                  Recent Patient Records
-                </Typography>
-                <Button
-                  size="small"
-                  onClick={() => navigate('/patients')}
-                  sx={{ textTransform: 'none' }}
-                >
-                  View All
-                </Button>
-              </Box>
-              
-              {recentPatients.length > 0 ? (
-                <List>
-                  {recentPatients.map((item, index) => (
-                    <React.Fragment key={item.consultation.id}>
-                      <ListItem sx={{ px: 0 }}>
-                        <ListItemAvatar>
-                          <Avatar sx={{ bgcolor: 'success.light' }}>
-                            {item.patient?.name.charAt(0)}
-                          </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary={item.patient?.name}
-                          secondary={
-                            <Box>
-                              <Typography variant="caption" color="text.secondary">
-                                Last visit: {formatDate(item.consultation.date)}
-                              </Typography>
-                              <br />
-                              <Typography variant="caption" sx={{ fontWeight: 500 }}>
-                                {item.consultation.diagnosis}
-                              </Typography>
-                            </Box>
-                          }
-                        />
-                        <Button
-                          size="small"
-                          variant="text"
-                          onClick={() => navigate(`/patients/${item.patient?.id}`)}
-                          sx={{ textTransform: 'none' }}
-                        >
-                          View
-                        </Button>
-                      </ListItem>
-                      {index < recentPatients.length - 1 && <Divider />}
-                    </React.Fragment>
-                  ))}
-                </List>
-              ) : (
-                <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center', py: 4 }}>
-                  No recent patient records
-                </Typography>
-              )}
-            </CardContent>
-          </Card>
-        </Grid>*/}
-
         {/* Quick Actions */}
         <Grid size={12}>
           <Card sx={{ borderRadius: 3 }}>

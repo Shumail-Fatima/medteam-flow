@@ -393,7 +393,7 @@ const ConsultationManagement: React.FC = () => {
 
           {/* Follow-up */}
           {!isReadOnly && (
-          <Grid size={2}>
+          <Grid size={12}>
             <Card sx={{ borderRadius: 3 }}>
               <CardContent>
                 <Typography variant="h6" fontWeight="bold" gutterBottom>
