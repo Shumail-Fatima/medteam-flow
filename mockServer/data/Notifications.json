@@ -2148,6 +2148,54 @@
       "patientId": "patient_2",
       "doctorId": null,
       "priority": "high"
+    },
+    {
+      "id": "notif_1756735641049_7f62ildss",
+      "title": "Appointment Updated",
+      "message": "Appointment with Jane Smith has been updated",
+      "type": "appointment",
+      "toUserId": "",
+      "fromUserId": "5",
+      "isRead": false,
+      "createdAt": "2025-09-01T14:07:21.049Z",
+      "appointmentId": "apt_1753874396769",
+      "consultationId": null,
+      "taskId": null,
+      "patientId": "patient_2",
+      "doctorId": null,
+      "priority": "medium"
+    },
+    {
+      "id": "notif_1756735727974_y3eph9535",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with Jane Smith has been cancelled",
+      "type": "appointment",
+      "toUserId": "5",
+      "fromUserId": "apt_1753765295252",
+      "isRead": true,
+      "createdAt": "2025-09-01T14:08:47.974Z",
+      "appointmentId": "apt_1753874396769",
+      "consultationId": null,
+      "taskId": null,
+      "patientId": "patient_2",
+      "doctorId": null,
+      "priority": "high"
+    },
+    {
+      "id": "notif_1756736039281_akel15wlk",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with Ahmed Raza has been cancelled",
+      "type": "appointment",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "2",
+      "isRead": true,
+      "createdAt": "2025-09-01T14:13:59.281Z",
+      "appointmentId": "apt_1755758878905",
+      "consultationId": null,
+      "taskId": null,
+      "patientId": "65a5",
+      "doctorId": null,
+      "priority": "high"
     }
   ]
 }
