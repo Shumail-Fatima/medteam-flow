@@ -42,12 +42,12 @@ import type { ExtendedPatient } from '../types/medical';
 import { useAuth } from '../context/AuthContext';
 import PageHeader from '../components/sharedComponents/PageHeader';
 
+
 const PatientDetails: React.FC = () => {
   const { patientId } = useParams<{ patientId: string }>();
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  //const patients = useSelector((state: RootState) => state.medical.extendedPatients);
   const patients = useSelector((state: RootState) => state.patients.patients);
   const consultations = useSelector((state: RootState) => state.medical.consultations);
   const appointments = useSelector((state: RootState) => state.appointments.appointments);
@@ -74,11 +74,6 @@ const PatientDetails: React.FC = () => {
     );
   };
 
-  // const handleViewMedicalHistory = (patient: ExtendedPatient) => {
-  //   setSelectedPatient(patient);
-  //   setMedicalHistoryDialogOpen(true);
-  // };
-
   const handleBackToPatients = () => {
     navigate('/patients');
   };
@@ -91,19 +86,6 @@ const PatientDetails: React.FC = () => {
       hour: '2-digit',
       minute: '2-digit',
     });
-  };
-
-  const calculateAge = (dateOfBirth: string) => {
-    const today = new Date();
-    const birthDate = new Date(dateOfBirth);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-    
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-    }
-    
-    return age;
   };
 
   const getHistoryTypeIcon = (type: string) => {
@@ -133,8 +115,6 @@ const PatientDetails: React.FC = () => {
       </Layout>
     );
   }
-
-  const patientAppointments = getPatientAppointments(currentPatient.id);
   const patientConsultations = getPatientConsultations(currentPatient.id);
 
   return (
@@ -281,18 +261,6 @@ const PatientDetails: React.FC = () => {
                   </Box>
                 </>
               )}
-
-              <Box sx={{ mt: 3 }}>
-                {/* <Button
-                  variant="outlined"
-                  fullWidth
-                  startIcon={<Timeline />}
-                  onClick={() => handleViewMedicalHistory(currentPatient)}
-                  sx={{ borderRadius: 2, mb: 1 }}
-                >
-                  Medical Timeline
-                </Button> */}
-              </Box>
             </CardContent>
           </Card>
         </Grid>

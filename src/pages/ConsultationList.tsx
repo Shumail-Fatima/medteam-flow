@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Box, Typography, IconButton, TextField, Avatar } from '@mui/material';
-import { ArrowForward, CalendarToday } from '@mui/icons-material';
+import { ArrowForward, CalendarToday, Schedule } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Layout from '../components/sharedComponents/Layout';
@@ -10,8 +10,11 @@ import type { AppDispatch, RootState } from '../store/Store';
 import type { Consultation } from '../types/medical';
 import PageHeader from '../components/sharedComponents/PageHeader';
 import { SearchFilterbox } from '../components/SearchFilterbox';
+import FilterBar from '../components/sharedComponents/FilterBar';
+import { useDataFiltering } from '../hooks/useDataFiltering';
 import { fetchPatients } from '../store/slices/PatientSlice';
 import { fetchConsultations } from '../store/slices/MedicalSlice';
+import { string } from 'yup';
 
 const ConsultationList: React.FC = () => {
   const { user } = useAuth();
@@ -20,8 +23,16 @@ const ConsultationList: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const patientId = searchParams.get('patientId');
   const consultations = useSelector((state: RootState) => state.medical.consultations);
-  //const patients = useSelector((state: RootState) => state.medical.extendedPatients);
   const patients = useSelector((state: RootState) => state.patients.patients);
+
+  const { filters, filteredData: filteredConsultations
+    , updateFilter, clearFilters } = useDataFiltering({
+    data: consultations,
+    searchFields: ['patientName', 'date'],
+    filterConfig:{
+      dateField: 'createdAt'
+    }
+  });
 
   // 🔑 Fetch required data on first load
   useEffect(() => {
@@ -58,14 +69,30 @@ const ConsultationList: React.FC = () => {
     });
 
     const [searchFilter, setSearchFilter] = useState('');
-    const filteredConsultations = doctorConsultations.filter((consultation) => {
-      const patient = patients.find((p) => p.id === consultation.patientId);
-      return patient ? patient.name.toLowerCase().includes(searchFilter.toLowerCase()) : false;
-    })
+    // const filteredConsultations = doctorConsultations.filter((consultation) => {
+    //   const patient = patients.find((p) => p.id === consultation.patientId);
+    //   return patient ? patient.name.toLowerCase().includes(searchFilter.toLowerCase()) : false;
+    // })
 
   const pageTitle = patientId
     ? `Consultation Records for ${patients.find((p) => p.id === patientId)?.name || 'Patient'}`
     : 'Consultation Records';
+
+  
+    const filterFields = [
+      {
+        key: 'search',
+        label: 'Search',
+        type: 'search' as const,
+        placeholder: 'Search patients...',
+      },
+      {
+        key: 'date',
+        label: 'Consultation Date',
+        type: 'date' as const,
+        startIcon: <Schedule />
+      },
+    ];
   
 
   return (
@@ -75,9 +102,14 @@ const ConsultationList: React.FC = () => {
       <PageHeader
         title={pageTitle}
       />
-        <SearchFilterbox value={searchFilter} onChange={setSearchFilter}/>
       </Box>
-      
+      <FilterBar
+        filters={filterFields}
+        values={filters as Record<string, string>}
+        onFilterChange={(key, value) => updateFilter(key as keyof typeof filters, value)}
+        onClearFilters={clearFilters}
+        sx={{mb: 2, flex: 1, mr: 2}}
+      />
 
       <DataTable<Consultation>
         

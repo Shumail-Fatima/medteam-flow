@@ -14,10 +14,9 @@ import AppointmentForm from '../components/formModals/AppointmentForm';
 import ConfirmDeleteDialog from '../components/sharedComponents/ConfirmDeleteDialog';
 import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';
 import { AddButton } from '../components/CustomButton';
-import { SearchFilterbox } from '../components/SearchFilterbox';
-import { AppointmentFilterChips } from '../components/AppointStatFilterBadge';
 import PageHeader from '../components/sharedComponents/PageHeader';
 import ViewDialog from '../components/sharedComponents/ViewDialog';
+import FilterBar from '../components/sharedComponents/FilterBar';
 import { useLocation } from "react-router-dom";
 
 import type { RootState, AppDispatch } from '../store/Store';
@@ -40,7 +39,7 @@ import { useAuth } from '../context/AuthContext';
 import { useNotification } from '../context/NotifSocketContext';
 import { NotificationService } from '../utils/NotificationService';
 import { useDoctors } from '../hooks/useDoctors';
-import { useFilteredAppointments } from '../hooks/useFilteredAppoint';
+import { useDataFiltering } from '../hooks/useDataFiltering';
 import { formatDate, slotDate } from '../utils/DateUtils';
 
 // Types
@@ -104,7 +103,7 @@ const AppointmentManagement: React.FC = () => {
   const navigate = useNavigate();
   const { sendNotification } = useNotification();
   const location = useLocation();
-
+  
   // State
   const [activeTab, setActiveTab] = useState(0);
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
@@ -119,8 +118,6 @@ const AppointmentManagement: React.FC = () => {
   });
   const [statusMenuAnchor, setStatusMenuAnchor] = useState<null | HTMLElement>(null);
   const [selectedAppointmentForStatus, setSelectedAppointmentForStatus] = useState<Appointment | null>(null);
-  const [searchFilter, setSearchFilter] = useState('');
-  const [dateFilter, setDateFilter] = useState('');
 
   // Selectors
   const allAppointments = useSelector((state: RootState) => state.appointments.appointments);
@@ -134,7 +131,39 @@ const AppointmentManagement: React.FC = () => {
     return allAppointments.filter((a) => a.doctorId === user.id);
   }, [allAppointments, user]);
 
-  const filteredAppointments = useFilteredAppointments(appointments, patients, filter, searchFilter, dateFilter);
+  // Use the modern useDataFiltering hook
+  const { 
+    filters, 
+    filteredData: filteredAppointments, 
+    updateFilter, 
+    clearFilters 
+  } = useDataFiltering({
+    data: appointments,
+    searchFields: ['patientName', 'doctorName', 'reason'],
+    filterConfig: {
+      statusField: 'status',
+      dateField: 'appointmentSlot',
+      doctorField: 'doctorId',
+      patientField: 'patientId',
+    },
+    customFilters: (appointment, filters) => {
+      // Custom filter for appointment type (all, upcoming, previous)
+      if (filter !== 'all') {
+        const now = new Date();
+        const appointmentTime = new Date(appointment.appointmentSlot);
+        
+        if (filter === 'upcoming' && appointmentTime <= now) {
+          return false;
+        }
+        
+        if (filter === 'previous' && appointmentTime > now) {
+          return false;
+        }
+      }
+      
+      return true;
+    }
+  });
 
   const tabOptions: TabOption[] = useMemo(() => {
     if (user?.roleName === 'doctor') {
@@ -147,10 +176,8 @@ const AppointmentManagement: React.FC = () => {
   }, [user?.roleName]);
 
   const pageTitle = useMemo(() => {
-    if (!searchFilter) return 'Appointments';
-    const patient = patients.find((p) => p.id === searchFilter);
-    return `Appointments for ${patient?.name || 'Patient'}`;
-  }, [searchFilter, patients]);
+    return 'Appointments';
+  }, []);
 
   // Effects
   useEffect(() => {
@@ -500,7 +527,7 @@ const AppointmentManagement: React.FC = () => {
       )
     },
     {
-      header: '',
+      header: 'Actions',
       render: (appointment: Appointment) => (
         <Box sx={{ display: 'flex', gap: 1 }}>
           <IconButton
@@ -531,6 +558,39 @@ const AppointmentManagement: React.FC = () => {
     ];
   }, [selectedAppointment]);
 
+  // Filter configuration for FilterBar
+  const filterFields = [
+    {
+      key: 'search',
+      label: 'Search',
+      type: 'search' as const,
+      placeholder: 'Search appointments...',
+    },
+    {
+      key: 'status',
+      label: 'Status',
+      type: 'select' as const,
+      options: [
+        { value: 'scheduled', label: 'Scheduled' },
+        { value: 'completed', label: 'Completed' },
+        { value: 'cancelled', label: 'Cancelled' },
+        { value: 'no-show', label: 'No Show' },
+      ],
+    },
+    {
+      key: 'doctor',
+      label: 'Doctor',
+      type: 'select' as const,
+      options: doctors.map(d => ({ value: d.value, label: d.label })),
+    },
+    {
+      key: 'date',
+      label: 'Appointment Date',
+      type: 'date' as const,
+      startIcon: <Schedule />,
+    },
+  ];
+
   return (
     <Layout>
       <Box sx={{ 
@@ -541,10 +601,10 @@ const AppointmentManagement: React.FC = () => {
         justifyContent: 'space-between' 
       }}>
         <PageHeader title={pageTitle} />
-        <SearchFilterbox value={searchFilter} onChange={setSearchFilter} />
       </Box>
 
       {/* Tabs for switching between list and create views */}
+      <Box sx={{display:'flex', justifyContent: 'space-between'}}>
       {user?.roleName !== 'doctor' && (
         <Box sx={{ 
           display: 'flex', 
@@ -553,30 +613,62 @@ const AppointmentManagement: React.FC = () => {
           mb: 3 
         }}>
           <CustomTabs value={activeTab} onChange={handleTabChange} tabs={tabOptions} />
-          <AddButton
+          {/* <AddButton
             onClick={handleCreateAppointment}
             label='Create New Appointment'
             startIcon={<Add />}
-          />
+          /> */}
         </Box>
       )}
+      {/* Filter Type Chips */}
+      <Box sx={{ mb: 2 }}>
+            <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 600 }}>
+              Filter by Time:
+            </Typography>
+            <Box sx={{ display: 'flex', gap: 1 }}>
+              <Chip
+                label="All"
+                onClick={() => setFilter('all')}
+                color={filter === 'all' ? 'primary' : 'default'}
+                variant={filter === 'all' ? 'filled' : 'outlined'}
+                clickable
+              />
+              <Chip
+                label="Upcoming"
+                onClick={() => setFilter('upcoming')}
+                color={filter === 'upcoming' ? 'primary' : 'default'}
+                variant={filter === 'upcoming' ? 'filled' : 'outlined'}
+                clickable
+              />
+              <Chip
+                label="Previous"
+                onClick={() => setFilter('previous')}
+                color={filter === 'previous' ? 'primary' : 'default'}
+                variant={filter === 'previous' ? 'filled' : 'outlined'}
+                clickable
+              />
+            </Box>
+          </Box>
+      </Box>
+      
+
+      
+      
 
       {/* Appointments List Tab */}
       {activeTab === 0 && (
         <Box>
-          <AppointmentFilterChips filter={filter} onChange={setFilter} />
-          <TextField
-            label="Follow-up Date"
-            type="datetime-local"
-            fullWidth
-            value={dateFilter}
-            onChange={(e) => setDateFilter(e.target.value)}
-            InputLabelProps={{ shrink: true }}
-            InputProps={{
-              startAdornment: <Schedule sx={{ mr: 1, color: 'action.active' }} />,
-            }}
+
+          {/* Modern FilterBar */}
+          <FilterBar
+            filters={filterFields}
+            values={filters as Record<string, string>}
+            onFilterChange={(key, value) => updateFilter(key as keyof typeof filters, value)}
+            onClearFilters={clearFilters}
+            sx={{ mb: 3 }}
           />
           
+          {/* Appointments Table */}
           <DataTable<Appointment>
             data={filteredAppointments}
             sortByDate={(a) => a.appointmentSlot}
@@ -638,7 +730,7 @@ const AppointmentManagement: React.FC = () => {
         />
       )}
 
-      {/* View User Dialog */}
+      {/* View Appointment Dialog */}
       <ViewDialog
         open={viewDialogOpen}
         onClose={() => setViewDialogOpen(false)}

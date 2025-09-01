@@ -40,6 +40,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '../components/sharedComponents/Layout';
 import DataTable from '../components/sharedComponents/DataTable';
+import FilterBar from '../components/sharedComponents/FilterBar';
+import { useDataFiltering } from '../hooks/useDataFiltering';
 import type { RootState, AppDispatch } from '../store/Store';
 import type { ExtendedPatient, MedicalHistoryEntry } from '../types/medical';
 import { useAuth } from '../context/AuthContext';
@@ -206,17 +208,6 @@ const DoctorPatientManagement: React.FC = () => {
       </Box>
     )
   },
-          // {
-          //   header: 'Contact',
-          //   render: (patient) => (
-          //     <Box>
-          //       <Typography variant="body2">{patient.email}</Typography>
-          //       <Typography variant="caption" color="text.secondary">
-          //         {patient.phone}
-          //       </Typography>
-          //     </Box>
-          //   )
-          // },
           {
             header: 'Last Consultation',
             render: (patient) => {
@@ -239,28 +230,6 @@ const DoctorPatientManagement: React.FC = () => {
               );
             }
           },
-          // {
-          //   header: 'Allergies',
-          //   render: (patient) => (
-          //     <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
-          //       {patient.allergies.slice(0, 2).map((allergy, index) => (
-          //         <Chip
-          //           key={index}
-          //           label={allergy}
-          //           color="error"
-          //           size="small"
-          //         />
-          //       ))}
-          //       {patient.allergies.length > 2 && (
-          //         <Chip
-          //           label={`+${patient.allergies.length - 2}`}
-          //           size="small"
-          //           variant="outlined"
-          //         />
-          //       )}
-          //     </Box>
-          //   )
-          // },
         ]}
         onView={handleViewPatient}
         onEdit={() => {}} // Doctors can't edit patient basic info
@@ -290,55 +259,6 @@ const DoctorPatientManagement: React.FC = () => {
             <Close />
           </IconButton>
         </DialogTitle>
-        {/* <DialogContent>
-          {selectedPatient && selectedPatient.medicalHistory.length > 0 ? (
-            <Box sx={{ mt: 2 }}>
-              {selectedPatient.medicalHistory
-                .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-                .map((entry, index) => (
-                  <Paper key={entry.id} sx={{ p: 2, mb: 2, borderRadius: 2 }}>
-                    <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
-                      {getHistoryTypeIcon(entry.type)}
-                      <Box sx={{ flex: 1 }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                          <Typography variant="subtitle2" fontWeight="bold">
-                            {entry.title}
-                          </Typography>
-                          <Chip
-                            label={entry.type}
-                            color={getHistoryTypeColor(entry.type)}
-                            size="small"
-                          />
-                        </Box>
-                        <Typography variant="body2" color="text.secondary" gutterBottom>
-                          {formatDate(entry.date)} • Dr. {entry.doctorName}
-                        </Typography>
-                        <Typography variant="body2">
-                          {entry.description}
-                        </Typography>
-                        {entry.dosage && (
-                          <Typography variant="caption" color="primary.main">
-                            Dosage: {entry.dosage}
-                          </Typography>
-                        )}
-                        {entry.symptoms && entry.symptoms.length > 0 && (
-                          <Box sx={{ mt: 1 }}>
-                            <Typography variant="caption" color="text.secondary">
-                              Symptoms: {entry.symptoms.join(', ')}
-                            </Typography>
-                          </Box>
-                        )}
-                      </Box>
-                    </Box>
-                  </Paper>
-                ))}
-            </Box>
-          ) : (
-            <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center', py: 4 }}>
-              No medical history recorded
-            </Typography>
-          )}
-        </DialogContent> */}
         <DialogActions>
           <Button onClick={() => setMedicalHistoryDialogOpen(false)}>
             Close

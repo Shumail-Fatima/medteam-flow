@@ -69,10 +69,8 @@ const ConsultationManagement: React.FC = () => {
   const patientId = searchParams.get('patientId');
 
   // Redux state - Get patients, appointments, and consultations
-  //const patients = useSelector((state: RootState) => state.medical.extendedPatients);
   const patients = useSelector((state: RootState) => state.patients.patients);
   const appointments = useSelector((state: RootState) => state.appointments.appointments);
-  //const consultations = useSelector((state: RootState) => state.medical.consultations);
 
   // Inside your component:
   const { consultationId } = useParams();
@@ -217,13 +215,7 @@ const ConsultationManagement: React.FC = () => {
       };
 
       // Redux action - Add consultation to store
-      // dispatch(addConsultation(newConsultation));
       dispatch(addConsultationAsync(newConsultation));
-
-      // dispatch(updateConsultation({
-      //   ...newConsultation, // the consultation object you want to update
-      //   status: 'completed'
-      // }));
       dispatch(updateConsultationAsync({
         ...newConsultation, // the consultation object you want to update
         status: 'completed'
@@ -458,29 +450,28 @@ const ConsultationManagement: React.FC = () => {
             </Card>
           </Grid>
           )}
-          {/* <FileUploader ref={uploaderRef as any} onUploaded={setUploadedFileIds}></FileUploader> */}
           {/* File Uploads / Attachments */}
-<Grid size={12}>
-  <Card sx={{ borderRadius: 3, mt: 2 }}>
-    <CardContent>
-      <Typography variant="h6" fontWeight="bold" gutterBottom>
-        Attachments
-      </Typography>
+          <Grid size={12}>
+            <Card sx={{ borderRadius: 3, mt: 2 }}>
+              <CardContent>
+                <Typography variant="h6" fontWeight="bold" gutterBottom>
+                  Attachments
+                </Typography>
 
-      {isReadOnly && consultationRecord ? (
-        <FilePreviewList
-          files={(consultationRecord.uploadIds || []).map((id) => ({
-            id,
-            name: `File ${id}`, // optionally fetch real metadata
-            type: "application/pdf", // ideally load type from backend
-          }))}
-        />
-      ) : (
-        <FileUploader ref={uploaderRef as any} onUploaded={setUploadedFileIds} />
-      )}
-    </CardContent>
-  </Card>
-</Grid>
+                {isReadOnly && consultationRecord ? (
+                  <FilePreviewList
+                    files={(consultationRecord.uploadIds || []).map((id) => ({
+                      id,
+                      name: `File ${id}`, // optionally fetch real metadata
+                      type: "application/pdf", // ideally load type from backend
+                    }))}
+                  />
+                ) : (
+                  <FileUploader ref={uploaderRef as any} onUploaded={setUploadedFileIds} />
+                )}
+              </CardContent>
+            </Card>
+          </Grid>
 
 
           {/* Submit Button */}
