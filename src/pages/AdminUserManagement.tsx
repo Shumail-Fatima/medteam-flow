@@ -1,12 +1,11 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  Box,Typography,Chip,Avatar,TextField,MenuItem,FormControl,
-  InputLabel,Select,
+  Box, Typography, Chip, Avatar,
 } from '@mui/material';
-import { Add, People, AdminPanelSettings, LocalHospital, } from '@mui/icons-material';
-import {AddButton} from '../components/CustomButton';
+import { Add, AdminPanelSettings, LocalHospital, People } from '@mui/icons-material';
+import { AddButton } from '../components/CustomButton';
 import Layout from '../components/sharedComponents/Layout';
-import UserFormModal from '../components//formModals/UserFormModal';
+import UserFormModal from '../components/formModals/UserFormModal';
 import type { User, UserFormData } from '../types/Auth';
 import roleData from '../../mockServer/data/Roles.json';
 import DataTable from '../components/sharedComponents/DataTable';
@@ -15,33 +14,88 @@ import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';
 import ViewDialog from '../components/sharedComponents/ViewDialog';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '../store/Store';
-import { addUser, updateUser, deleteUser, fetchUsers, addUserAsync, updateUserAsync, deleteUserAsync } from '../store/slices/UserSlice';
+import { addUserAsync, updateUserAsync, deleteUserAsync, fetchUsers } from '../store/slices/UserSlice';
 import { useNotification } from '../context/NotifSocketContext';
 import { NotificationService } from '../utils/NotificationService';
 import { useAuth } from '../context/AuthContext';
-import { SearchFilterbox } from '../components/SearchFilterbox';
+import { useCrudOperations } from '../hooks/useCrudOperations';
+import { usePermissions } from '../hooks/usePermissions';
+import { useDataFiltering } from '../hooks/useDataFiltering';
+import StatusChip from '../components/sharedComponents/StatusChip';
+import FilterBar from '../components/sharedComponents/FilterBar';
+import ActionButtons, { createViewAction, createEditAction, createDeleteAction } from '../components/sharedComponents/ActionButtons';
 
 const AdminUserManagement: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { user: currentUser } = useAuth();
   const { sendNotification } = useNotification();
   const users = useSelector((state: RootState) => state.user.users);
+
+  // State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [userToDelete, setUserToDelete] = useState<User | null>(null);
   const [viewDialogOpen, setViewDialogOpen] = useState(false);
   const [userToView, setUserToView] = useState<User | null>(null);
-  const [snackbar, setSnackbar] = useState({ 
-    open: false, 
-    message: '', 
-    severity: 'success' as 'success' | 'error' 
+
+  // Hooks
+  const { permissions } = usePermissions();
+  const { snackbar, closeSnackbar, handleAdd, handleUpdate, handleDelete } = useCrudOperations({
+    onAdd: async (user: User) => {
+      await dispatch(addUserAsync(user)).unwrap();
+      const notification = NotificationService.createUserNotification(
+        currentUser?.id || '',
+        currentUser?.id || '',
+        user.name,
+        'created'
+      );
+      sendNotification(notification);
+    },
+    onUpdate: async (user: User) => {
+      await dispatch(updateUserAsync(user)).unwrap();
+      const notification = NotificationService.createUserNotification(
+        currentUser?.id || '',
+        currentUser?.id || '',
+        user.name,
+        'updated'
+      );
+      sendNotification(notification);
+    },
+    onDelete: async (item: User | string) => {
+      const user = typeof item === 'string' ? users.find(u => u.id === item) : item;
+      if (user) {
+        await dispatch(deleteUserAsync(user)).unwrap();
+        const notification = NotificationService.createUserNotification(
+          currentUser?.id || '',
+          currentUser?.id || '',
+          user.name,
+          'deleted'
+        );
+        sendNotification(notification);
+      }
+    },
+    successMessages: {
+      add: 'User created successfully!',
+      update: 'User updated successfully!',
+      delete: 'User deleted successfully!',
+    },
   });
 
-  // Filter states
-  const [roleFilter, setRoleFilter] = useState('');
-  const [searchFilter, setSearchFilter] = useState('');
+  const { filters, filteredData, updateFilter, clearFilters } = useDataFiltering({
+    data: users,
+    searchFields: ['name', 'email', 'username'],
+    filterConfig: {
+      roleField: 'roleName',
+    },
+  });
 
+  // Effects
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, [dispatch]);
+
+  // Helper functions
   const getRoleColor = (roleId: number) => {
     switch (roleId) {
       case 1: return 'error';
@@ -60,69 +114,31 @@ const AdminUserManagement: React.FC = () => {
     }
   };
 
-  /*
-  this was in the original code where there was a 
-  component that showed the amount of current users having an account and their 
-  roles
-  
-  const getStats = () => {
-    const totalUsers = users.length;
-    const adminCount = users.filter(u => u.roleId === 1).length;
-    const doctorCount = users.filter(u => u.roleId === 2).length;
-    const nurseCount = users.filter(u => u.roleId === 3).length;
-
-    return { totalUsers, adminCount, doctorCount, nurseCount };
-  };
-
-  const stats = getStats(); */
-
-  // Filtered users based on search criteria
-  const filteredUsers = useMemo(() => {
-    return users.filter(user => {
-      const matchesRole = roleFilter === '' || 
-        user.roleName.toLowerCase() === roleFilter.toLowerCase();
-      const matchesSearch = searchFilter === '' || 
-        user.name.toLowerCase().includes(searchFilter.toLowerCase()) ||
-        user.email.toLowerCase().includes(searchFilter.toLowerCase());
-      
-      return  matchesRole && matchesSearch;
-    });
-  }, [users, roleFilter, searchFilter]);
-  
-  //create new user button handler
+  // Event handlers
   const handleAddUser = () => {
     setSelectedUser(null);
     setIsModalOpen(true);
   };
 
-  //edit user button handler
   const handleEditUser = (user: User) => {
     setSelectedUser(user);
     setIsModalOpen(true);
   };
 
-  //view user button handler
   const handleViewUser = (user: User) => {
     setUserToView(user);
     setViewDialogOpen(true);
   };
 
-  //delete user button handler
   const handleDeleteUser = (user: User) => {
     setUserToDelete(user);
     setDeleteDialogOpen(true);
   };
 
-  // Fetch users from API on component mount
-  useEffect(() => {
-  dispatch(fetchUsers()); // Load users from backend on mount
-}, [dispatch]);
-
-  // Handle user form submission (create or update)
-  const handleUserSubmit = (data:UserFormData) => {
+  const handleUserSubmit = async (data: UserFormData) => {
     const roleName = roleData.Roles.find(role => role.id === String(data.roleId))?.name || 'unknown';
+    
     if (selectedUser) {
-      // Update existing user using Redux action
       const updatedUser: User = {
         ...selectedUser,
         name: data.name,
@@ -133,81 +149,34 @@ const AdminUserManagement: React.FC = () => {
         roleName,
         specialtyId: data.specialtyId,
       };
-      // dispatch(updateUser(updatedUser));
-      dispatch(updateUserAsync(updatedUser));
-      setSnackbar({
-        open: true,
-        message: 'User updated successfully!',
-        severity: 'success'
-      });
-      // Send notification to admin about new user creation
-    const notification = NotificationService.createUserNotification(
-      currentUser?.id || '',
-      currentUser?.id || '',
-      updatedUser.name,
-      'updated'
-    );
-    sendNotification(notification);
-
-  } else {
-    // Create new user using Redux action
-    const newUser: User ={
-      id: `apt_${Date.now()}`,
-      name: data.name,
-      username: data.username,
-      email: data.email,
-      password: data.password,
-      roleId: data.roleId,
-      createdAt: new Date().toISOString(),
-      roleName,
-      specialtyId: data.specialtyId,
-    };
-    // dispatch(addUser(newUser));
-    dispatch(addUserAsync(newUser)); // Async POST request
-    setSnackbar({
-      open: true,
-      message: 'User created successfully!',
-      severity: 'success'
-    });
+      await handleUpdate(updatedUser);
+    } else {
+      const newUser: User = {
+        id: `apt_${Date.now()}`,
+        name: data.name,
+        username: data.username,
+        email: data.email,
+        password: data.password,
+        roleId: data.roleId,
+        createdAt: new Date().toISOString(),
+        roleName,
+        specialtyId: data.specialtyId,
+      };
+      await handleAdd(newUser);
+    }
     
-    // Send notification to admin about new user creation
-    const notification = NotificationService.createUserNotification(
-      currentUser?.id || '',
-      currentUser?.id || '',
-      newUser.name,
-      'created'
-    );
-    sendNotification(notification);
-  }
-  //close form modal
     setIsModalOpen(false);
     setSelectedUser(null);
-}
+  };
 
-  // Confirm delete user
-  const confirmDelete = () => {
-    if (userToDelete){
-      // Dispatch Redux action to delete user
-      dispatch(deleteUserAsync(userToDelete));
-      setSnackbar({
-        open: true,
-        message: 'User deleted successfully!',
-        severity: 'success'
-      });
-      // Send notification to admin about user deletion
-    const notification = NotificationService.createUserNotification(
-      currentUser?.id || '',
-      currentUser?.id || '',
-      userToDelete.name,
-      'deleted'
-    );
-    sendNotification(notification);
+  const confirmDelete = async () => {
+    if (userToDelete) {
+      await handleDelete(userToDelete);
       setDeleteDialogOpen(false);
       setUserToDelete(null);
     }
-  }
+  };
 
-  // Format date for display
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -218,6 +187,97 @@ const AdminUserManagement: React.FC = () => {
     });
   };
 
+  // Filter configuration
+  const filterFields = [
+    {
+      key: 'search',
+      label: 'Search',
+      type: 'search' as const,
+      placeholder: 'Search users...',
+    },
+    {
+      key: 'role',
+      label: 'Role',
+      type: 'select' as const,
+      options: [
+        { value: 'admin', label: 'Admin' },
+        { value: 'doctor', label: 'Doctor' },
+        { value: 'nurse', label: 'Nurse' },
+      ],
+    },
+  ];
+
+  // Table columns configuration
+  const tableColumns = [
+    {
+      header: 'User',
+      render: (u: User) => (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Avatar sx={{ mr: 2, bgcolor: `${getRoleColor(u.roleId)}.main` }}>
+            {u.name.charAt(0).toUpperCase()}
+          </Avatar>
+          <Typography variant="body2" sx={{ fontWeight: 500 }}>{u.name}</Typography>
+        </Box>
+      ),
+    },
+    { 
+      header: 'Username', 
+      render: (u: User) => <Typography variant="body2">{u.username}</Typography> 
+    },
+    { 
+      header: 'Email', 
+      render: (u: User) => <Typography variant="body2">{u.email}</Typography> 
+    },
+    {
+      header: 'Role',
+      render: (u: User) => (
+        <StatusChip 
+          status={u.roleName} 
+          customConfigs={{
+            admin: {
+              label: 'ADMIN',
+              color: 'error',
+              icon: <AdminPanelSettings />,
+            },
+            doctor: {
+              label: 'DOCTOR',
+              color: 'primary',
+              icon: <LocalHospital />,
+            },
+            nurse: {
+              label: 'NURSE',
+              color: 'secondary',
+              icon: <People />,
+            },
+          }}
+        />
+      ),
+    },
+    { 
+      header: 'Created', 
+      render: (u: User) => (
+        <Typography variant="body2" color="text.secondary">
+          {formatDate(u.createdAt)}
+        </Typography>
+      ) 
+    },
+    {
+      header: 'Actions',
+      render: (u: User) => {
+        const canEdit = u.roleName !== 'admin';
+        const canDelete = u.roleName !== 'admin';
+        
+        const actions = [
+          createViewAction(() => handleViewUser(u)),
+          createEditAction(() => handleEditUser(u), !canEdit),
+          createDeleteAction(() => handleDeleteUser(u), !canDelete),
+        ];
+
+        return <ActionButtons actions={actions} />;
+      },
+    },
+  ];
+
   return (
     <Layout>
       <Box sx={{ mb: 4 }}>
@@ -225,75 +285,35 @@ const AdminUserManagement: React.FC = () => {
           User Management
         </Typography>
       </Box>
-      {/* Action Button */}
+
+      {/* Action Button and Filters */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-      {/* Filter Section */}
-        <Box sx={{  display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'flex-start' }}>
-          <SearchFilterbox
-          value={searchFilter}
-          onChange={setSearchFilter}
-          />
-          <FormControl size="small" sx={{ minWidth: 200, width: 250 }}>
-            <InputLabel>Filter by Role</InputLabel>
-            <Select
-              value={roleFilter}
-              label="Filter by Role"
-              onChange={(e) => setRoleFilter(e.target.value)}
-            >
-              <MenuItem value="">All Roles</MenuItem>
-              <MenuItem value="admin">Admin</MenuItem>
-              <MenuItem value="doctor">Doctor</MenuItem>
-              <MenuItem value="nurse">Nurse</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
+        <FilterBar
+          filters={filterFields}
+          values={filters as Record<string, string>}
+          onFilterChange={(key: string, value: string) => updateFilter(key as keyof typeof filters, value)}
+          onClearFilters={clearFilters}
+          sx={{ mb: 0, flex: 1, mr: 2 }}
+        />
         <AddButton
-        onClick={handleAddUser} 
-        label='Add New User'
-        startIcon= {<Add />}
-        ></AddButton>
+          onClick={handleAddUser}
+          label='Add New User'
+          startIcon={<Add />}
+        />
       </Box>
 
-      {/* Users Table in adminusermanagement*/}
+      {/* Users Table */}
       <DataTable<User>
-        data={filteredUsers}
+        data={filteredData}
         sortByDate={(u) => u.createdAt}
-        columns={[
-          {
-            header: 'User',
-            render: (u) => (
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Avatar sx={{ mr: 2, bgcolor: `${getRoleColor(u.roleId)}.main` }}>
-                  {u.name.charAt(0).toUpperCase()}
-                </Avatar>
-                <Typography variant="body2" sx={{ fontWeight: 500 }}>{u.name}</Typography>
-              </Box>
-            )
-          },
-          { header: 'Username', render: (u) => <Typography variant="body2">{u.username}</Typography> },
-          { header: 'Email', render: (u) => <Typography variant="body2">{u.email}</Typography> },
-          {
-            header: 'Role',
-            render: (u) => (
-              <Chip
-                icon={getRoleIcon(u.roleId)}
-                label={u.roleName.toUpperCase()}
-                color={getRoleColor(u.roleId)}
-                size="small"
-                sx={{ fontWeight: 'bold', minWidth: 100 }}
-              />
-            )
-          },
-          { header: 'Created', render: (u) => <Typography variant="body2" color="text.secondary">{formatDate(u.createdAt)}</Typography> },
-        ]}
-        onView={handleViewUser}
-        onEdit={handleEditUser}
-        onDelete={handleDeleteUser}
-        showEdit={(u) => u.roleName !== 'admin'}
-        showDelete={(u) => u.roleName !== 'admin'}
+        columns={tableColumns}
+        // onView={handleViewUser}
+        // onEdit={handleEditUser}
+        // onDelete={handleDeleteUser}
+        // showEdit={(u) => u.roleName !== 'admin'}
+        // showDelete={(u) => u.roleName !== 'admin'}
         emptyMessage="No users found"
       />
-
 
       {/* Add/Edit User Modal */}
       <UserFormModal
@@ -302,7 +322,6 @@ const AdminUserManagement: React.FC = () => {
           setIsModalOpen(false);
           setSelectedUser(null);
         }}
-        //onSubmit={handleFormSubmit}
         onSubmit={handleUserSubmit}
         user={selectedUser}
       />
@@ -329,11 +348,25 @@ const AdminUserManagement: React.FC = () => {
         }
         chip={
           userToView && (
-            <Chip
-              icon={getRoleIcon(userToView.roleId)}
-              label={userToView.roleName.toUpperCase()}
-              color={getRoleColor(userToView.roleId)}
-              size="small"
+            <StatusChip 
+              status={userToView.roleName}
+              customConfigs={{
+                admin: {
+                  label: 'ADMIN',
+                  color: 'error',
+                  icon: <AdminPanelSettings />,
+                },
+                doctor: {
+                  label: 'DOCTOR',
+                  color: 'primary',
+                  icon: <LocalHospital />,
+                },
+                nurse: {
+                  label: 'NURSE',
+                  color: 'secondary',
+                  icon: <People />,
+                },
+              }}
             />
           )
         }
@@ -349,7 +382,6 @@ const AdminUserManagement: React.FC = () => {
         }
       />
 
-
       {/* Delete Confirmation Dialog */}
       <ConfirmDeleteDialog
         open={deleteDialogOpen}
@@ -363,7 +395,7 @@ const AdminUserManagement: React.FC = () => {
         open={snackbar.open}
         severity={snackbar.severity}
         message={snackbar.message}
-        onClose={() => setSnackbar({ ...snackbar, open: false })}
+        onClose={closeSnackbar}
       />
     </Layout>
   );

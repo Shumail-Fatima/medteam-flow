@@ -127,6 +127,17 @@
       "roleName": "doctor",
       "createdAt": "2025-09-01T06:57:35.313Z",
       "specialtyId": "3"
+    },
+    {
+      "id": "apt_1756713673625",
+      "name": "Hania Tariq",
+      "username": "Nurse Hania Tariq",
+      "email": "hania@example.com",
+      "password": "nursehania",
+      "roleId": 3,
+      "roleName": "nurse",
+      "createdAt": "2025-09-01T08:01:13.625Z",
+      "specialtyId": "4"
     }
   ]
 }
