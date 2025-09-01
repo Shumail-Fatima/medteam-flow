@@ -29,9 +29,9 @@ import {
 import InputAdornment from '@mui/material/InputAdornment';
 import type { UserFormData } from '../../types/Auth';
 import type { User } from '../../types/Auth';
-import rolesData from '../../../mockServer/MockData.json';
+import rolesData from '../../../mockServer/data/Roles.json';
 //import  DoctorSpecialties from '../../../mockServer/data/DoctorSpeciality.json';
-import  DoctorSpecialties from '../../../mockServer/MockData.json';
+import  DoctorSpecialties from '../../../mockServer/data/DoctorSpeciality.json';
 import { DailogButton } from '../CustomButton';
 import { userSchema } from '../../validation/UserFormValidation';
 

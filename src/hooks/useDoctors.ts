@@ -2,8 +2,8 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../store/Store';
-import doctorSlots from '../../mockServer/MockData.json';
-import doctorSpecialtiesData from '../../mockServer/MockData.json';
+import doctorSlots from '../../mockServer/data/DoctorSlots.json';
+import doctorSpecialtiesData from '../../mockServer/data/DoctorSpeciality.json';
 
 export const useDoctors = () => {
   const users = useSelector((state: RootState) => state.user.users);

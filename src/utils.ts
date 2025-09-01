@@ -1,5 +1,5 @@
 // utils.ts
-import roles from './../mockServer/MockData.json'
+import roles from './../mockServer/data/Roles.json'
 
 export const getUserWithRole = async (userEmail: string) => {
   try {

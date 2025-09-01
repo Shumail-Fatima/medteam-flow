@@ -32,9 +32,9 @@ import { fetchPatients } from '../store/slices/PatientSlice';
 import type { Appointment, AppointmentFormData } from '../types/appointment';
 import type { PatientFormData } from '../types/medical';
 
-import usersData from '../../mockServer/MockData.json';
-import doctorSlots from '../../mockServer/MockData.json';
-import doctorSpecialtiesData from '../../mockServer/MockData.json';
+import usersData from '../../mockServer/data/Users.json';
+import doctorSlots from '../../mockServer/data/DoctorSlots.json';
+import doctorSpecialtiesData from '../../mockServer/data/DoctorSpeciality.json';
 
 import { useAuth } from '../context/AuthContext';
 import { useNotification } from '../context/NotifSocketContext';

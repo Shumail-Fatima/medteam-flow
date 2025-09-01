@@ -1,7 +1,11 @@
 // Redux slice for managing user state
 import { createSlice, type PayloadAction, createAsyncThunk, } from '@reduxjs/toolkit';
 import type { Task } from '../../types/task';
-import tasksData from '../../../mockServer/MockData.json'
+import tasksData from '../../../mockServer/data/Tasks.json'
+import { ENDPOINTS } from '../../constants/apiConstants';
+import { apiClient } from '../../utils/apiClient';
+
+const API_PATH = ENDPOINTS.TASKS;
 
 
 const API_URL = 'http://localhost:8000/tasks'; // Your REST API endpoint
@@ -15,11 +19,23 @@ interface TaskState{
 
 // Async GET request
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
-  const res = await fetch(API_URL);
-  return await res.json();
+  const data = await apiClient.get<unknown>(API_PATH);
+  return Array.isArray(data) ? data : (data as any).tasks ?? (data as any).Tasks ?? [];
 });
 
+// export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
+//   const res = await fetch(API_URL);
+//   return await res.json();
+// });
+
 // Async POST request
+export const add = createAsyncThunk(
+  'tasks/addTaskAsync',
+  async(newTask: Task) => {
+    return await apiClient.post<Task, Task>(API_PATH, newTask);
+  }
+);
+
 export const addTaskAsync = createAsyncThunk(
   'tasks/addTaskAsync',
   async (newTask: Task) => {
@@ -50,43 +66,58 @@ const initialState: TaskState = {
   error: null
 };
 
-
 export const updateTaskAsync = createAsyncThunk(
   'tasks/updateTask',
   async (task: Task) => {
-    const response = await fetch(`${API_URL}/${task.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(task),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to update task');
-    }
-
-    return await response.json();
+    const response = await apiClient.put<Task, Task>(`${API_PATH}/${task.id}`, task);
+    return response;
   }
 );
+
+// export const updateTaskAsync = createAsyncThunk(
+//   'tasks/updateTask',
+//   async (task: Task) => {
+//     const response = await fetch(`${API_URL}/${task.id}`, {
+//       method: 'PUT',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify(task),
+//     });
+
+//     if (!response.ok) {
+//       throw new Error('Failed to update task');
+//     }
+
+//     return await response.json();
+//   }
+// );
 
 export const deleteTaskAsync = createAsyncThunk(
   'tasks/deleteTask',
   async (taskId: string) => {
-    const response = await fetch(`${API_URL}/${taskId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to delete task');
-    }
-
-    return await response.json();
+    await apiClient.delete<void>(`${API_PATH}/${taskId}`);
+    return taskId as unknown as Task; // keep reducer shape below but we will adjust
   }
 );
+
+// export const deleteTaskAsync = createAsyncThunk(
+//   'tasks/deleteTask',
+//   async (taskId: string) => {
+//     const response = await fetch(`${API_URL}/${taskId}`, {
+//       method: 'DELETE',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//     });
+
+//     if (!response.ok) {
+//       throw new Error('Failed to delete task');
+//     }
+
+//     return await response.json();
+//   }
+// );
 
 
 const taskSlice = createSlice({
@@ -146,7 +177,7 @@ const taskSlice = createSlice({
             state.tasks[index] = action.payload;
         }
         })
-        .addCase(deleteTaskAsync.fulfilled, (state, action: PayloadAction<string>) => {
+        .addCase(deleteTaskAsync.fulfilled, (state, action: PayloadAction<any>) => {
             state.tasks = state.tasks.filter(t => t.id !== action.payload);
         });
     ;

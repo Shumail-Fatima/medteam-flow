@@ -549,6 +549,21 @@
       "createdAt": "2025-08-29T10:48:57.624Z",
       "specialtyName": "Orthopedics",
       "createdById": "apt_1753765295252"
+    },
+    {
+      "id": "apt_1756706410396",
+      "patientId": "patient_6",
+      "patientName": "Sophia Lee",
+      "patientAge": 19,
+      "doctorId": "5",
+      "doctorName": "Dr. James Thompson",
+      "appointmentSlot": "2025-08-31T19:00:00Z",
+      "reason": "Left Ankle Pain After Fall While Running",
+      "status": "completed",
+      "consultationCompleted": true,
+      "createdAt": "2025-09-01T06:00:10.396Z",
+      "specialtyName": "Orthopedics",
+      "createdById": "apt_1753765295252"
     }
   ]
 }

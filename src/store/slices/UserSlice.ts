@@ -1,34 +1,28 @@
 // Redux slice for managing user state
 import { createSlice, type PayloadAction, createAsyncThunk, } from '@reduxjs/toolkit';
 import type { User } from '../../types/Auth';
-import rolesData from '../../../mockServer/MockData.json'
+import rolesData from '../../../mockServer/data/Roles.json'
+import { ENDPOINTS } from '../../constants/apiConstants';
+import { apiClient } from '../../utils/apiClient';
 
-const API_URL = 'http://localhost:8000/users'; // Your REST API endpoint
-
-
+const API_PATH = ENDPOINTS.USERS;
 interface UserState{
     users: User[];
     loading: boolean;
     error: string | null;
 }
 
-
 // Async GET request
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
-  const res = await fetch(API_URL);
-  return await res.json();
+  const data = await apiClient.get<unknown>(API_PATH);
+  return Array.isArray(data) ? data : (data as any).users ?? (data as any).User ?? [];
 });
 
 // Async POST request
 export const addUserAsync = createAsyncThunk(
   'users/addUserAsync',
   async (newUser: User) => {
-    const res = await fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newUser),
-    });
-    return await res.json();
+    return await apiClient.post<User, User>(API_PATH, newUser);
   }
 );
 
@@ -38,57 +32,23 @@ const initialState: UserState = {
   error: null
 };
 
-// userSlice.ts
+// Async PUT request
 export const updateUserAsync = createAsyncThunk(
   'users/updateUser',
   async (user: User) => {
-    const response = await fetch(`${API_URL}/${user.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(user),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to update user');
-    }
-
-    return await response.json();
+    const response = await apiClient.put<User, User>(`${API_PATH}/${user.id}`, user);
+    return response;
   }
 );
 
+// Async DELETE request
 export const deleteUserAsync = createAsyncThunk(
   'users/deleteUser',
   async (user: User) => {
-    const response = await fetch(`${API_URL}/${user.id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to delete user');
-    }
-
-    return await response.json();
+    await apiClient.delete<void>(`${API_PATH}/${user}`);
+    return user as unknown as User; // keep reducer shape below but we will adjust
   }
 );
-
-
-
-// Initial state with users loaded from JSON data
-// const initialState: UserState = {
-//     users: usersData.map((user: any) => ({
-//     ...user,
-//     id: String(user.id), // convert number to string if needed
-//     roleName: rolesData.find((r) => r.id === user.roleId)?.name || 'unknown',
-//     createdAt: user.createdAt ?? new Date().toISOString(),
-//   })),
-//     loading: false,
-//     error: null,
-// }
 
 // Create user slice with reducers for CRUD operations
 const userSlice = createSlice({

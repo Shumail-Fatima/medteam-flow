@@ -953,6 +953,49 @@
       "uploadIds": [
         "upl_1756489938096"
       ]
+    },
+    {
+      "id": "cons_1756706627897",
+      "patientId": "patient_6",
+      "patientName": "Sophia Lee",
+      "doctorId": "5",
+      "doctorName": "Dr. James Thompson",
+      "appointmentId": "apt_1756706410396",
+      "date": "2025-09-01T06:03:47.897Z",
+      "symptoms": [
+        "Left ankle pain and swelling for 2 days after twisting injury while running",
+        "Difficulty bearing weight on the affected foot",
+        "Mild bruising around lateral side of ankle",
+        "Pain worsens with movement or standing",
+        "No numbness or tingling reported"
+      ],
+      "diagnosis": "Grade II Lateral Ankle Sprain (possible ligament injury)",
+      "notes": "Patient sustained twisting injury with inversion of the ankle during running. Examination shows swelling and tenderness over lateral malleolus, restricted range of motion, and pain on weight-bearing. No obvious fracture signs, but X-ray ankle recommended to rule out fracture.",
+      "prescriptions": [
+        {
+          "id": "rx_1756706627897_0",
+          "medication": "Paracetamol",
+          "dosage": "500 mg",
+          "frequency": "Every 6\u20138 hours as needed for pain",
+          "duration": "5 days",
+          "instructions": "Take with water, do not exceed 4 g/day."
+        },
+        {
+          "id": "rx_1756706627897_1",
+          "medication": " Ibuprofen",
+          "dosage": "400 mg",
+          "frequency": "Twice daily (after meals)",
+          "duration": "3 days",
+          "instructions": "Take after meals to reduce gastric irritation."
+        }
+      ],
+      "followUpRequired": false,
+      "followUpDate": null,
+      "createdAt": "2025-09-01T06:03:47.897Z",
+      "status": "completed",
+      "uploadIds": [
+        "upl_1756731827868"
+      ]
     }
   ]
 }
