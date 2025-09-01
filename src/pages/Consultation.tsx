@@ -50,6 +50,7 @@ import PrescriptionsSection from '../components/PrescriptionSection';
 import { useNotification } from '../context/NotifSocketContext';
 import { NotificationService } from '../utils/NotificationService';
 import FileUploader, { type FileUploaderHandle } from '../components/FileUploader';
+import FilePreviewList from '../components/FilePreviewList';
 
 
 const ConsultationManagement: React.FC = () => {
@@ -457,7 +458,30 @@ const ConsultationManagement: React.FC = () => {
             </Card>
           </Grid>
           )}
-          <FileUploader ref={uploaderRef as any} onUploaded={setUploadedFileIds}></FileUploader>
+          {/* <FileUploader ref={uploaderRef as any} onUploaded={setUploadedFileIds}></FileUploader> */}
+          {/* File Uploads / Attachments */}
+<Grid size={12}>
+  <Card sx={{ borderRadius: 3, mt: 2 }}>
+    <CardContent>
+      <Typography variant="h6" fontWeight="bold" gutterBottom>
+        Attachments
+      </Typography>
+
+      {isReadOnly && consultationRecord ? (
+        <FilePreviewList
+          files={(consultationRecord.uploadIds || []).map((id) => ({
+            id,
+            name: `File ${id}`, // optionally fetch real metadata
+            type: "application/pdf", // ideally load type from backend
+          }))}
+        />
+      ) : (
+        <FileUploader ref={uploaderRef as any} onUploaded={setUploadedFileIds} />
+      )}
+    </CardContent>
+  </Card>
+</Grid>
+
 
           {/* Submit Button */}
           {!isReadOnly && (
