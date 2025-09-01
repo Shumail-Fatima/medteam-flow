@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState, useImperativeHandle, forwardRef } from "react";
 import axios, { type AxiosProgressEvent } from "axios";
 import {
   Box,
@@ -24,34 +24,8 @@ import {
 } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
 
-/**
- * This component provides a drag & drop + click-to-select uploader
- * with validation, previews, removal, and submission to a mock JSON server.
- *
- * Works with json-server (MockData.json / db.json). Ensure your db.json has:
- * {
- *   "uploads": []
- * }
- * Run: json-server --watch db.json --port 3001
- *
- * On submit, each file is converted to Base64 and POSTed as a JSON record to
- *   POST http://localhost:3001/uploads
- * Example record saved in MockData.json:
- * {
- *   "id": 1,
- *   "name": "report.pdf",
- *   "type": "application/pdf",
- *   "size": 12345,
- *   "createdAt": "2025-08-21T00:00:00.000Z",
- *   "contentBase64": "<base64 string>"
- * }
- *
- * If later you switch to a real backend, replace `uploadToMockServer` with
- * a FormData upload endpoint (kept below for reference).
- */
-
 // ---- Config ---------------------------------------------------------------
-const API_BASE_URL = (import.meta as any)?.env?.VITE_API_URL || "http://localhost:8000";
+import { API_BASE_URL } from '../constants/constants';
 const MAX_SIZE_BYTES = 10 * 1024 * 1024; // 10MB
 const ACCEPTED = ["application/pdf", "image/jpeg", "image/png"] as const;
 
@@ -152,49 +126,38 @@ const prettyBytes = (n: number) => {
   return `${mb.toFixed(1)} MB`;
 };
 
-// ---- Upload Service (JSON Server) ----------------------------------------
-async function uploadToMockServer(
+
+async function uploadWithFormData(
   file: File,
   onUploadProgress?: (e: AxiosProgressEvent) => void
 ) {
-  const contentBase64 = await toBase64(file);
-  const payload: UploadRecord = {
-    name: file.name,
-    type: file.type,
-    size: file.size,
-    createdAt: new Date().toISOString(),
-    contentBase64,
-  };
+  const form = new FormData();
+  form.append("file", file);
 
-  // json-server expects JSON; axios will emit upload progress events here too
-  const { data } = await axios.post(`${API_BASE_URL}/uploads`, payload, {
-    headers: { "Content-Type": "application/json" },
+  const { data } = await axios.post(`${API_BASE_URL}/uploads`, form, {
+    headers: { "Content-Type": "multipart/form-data" },
     onUploadProgress,
   });
-  return data as UploadRecord;
+  return data; // contains {id, name, type, size, path, createdAt}
 }
 
-/**
- * If you have a real backend (multipart/form-data), use this instead:
- *
- * async function uploadWithFormData(file: File, onUploadProgress?: (e: AxiosProgressEvent) => void) {
- *   const form = new FormData();
- *   form.append("file", file);
- *   const { data } = await axios.post(`${API_BASE_URL}/upload`, form, {
- *     headers: { "Content-Type": "multipart/form-data" },
- *     onUploadProgress,
- *   });
- *   return data;
- * }
- */
-
 // ---- Component ------------------------------------------------------------
-export default function FileUploaderMockJSON() {
+export type FileUploaderHandle = {
+  uploadAll: () => Promise<string[]>;
+  clear: () => void;
+};
+
+const FileUploaderMockJSON = (
+  { onUploaded }: { onUploaded?: (ids: string[]) => void },
+  ref: React.Ref<FileUploaderHandle>
+) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [files, setFiles] = useState<UploadCandidate[]>([]);
   const [status, setStatus] = useState<UploadStatus>("idle");
   const [progress, setProgress] = useState<Record<string, number>>({}); // per-file 0-100
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [uploadedIds, setUploadedIds] = useState<string[]>([]);
+
 
   const totalProgress = useMemo(() => {
     if (!files.length) return 0;
@@ -255,34 +218,45 @@ export default function FileUploaderMockJSON() {
 
   const prevent = (e: React.DragEvent) => e.preventDefault();
 
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!files.length) return;
-
+  const uploadAll = useCallback(async (): Promise<string[]> => {
+    if (!files.length) return [];
     setStatus("uploading");
     setErrorMsg(null);
-
     try {
+      const ids: string[] = [];
       for (const f of files) {
         setProgress((p) => ({ ...p, [f.id]: 0 }));
-        await uploadToMockServer(f.file, (evt) => {
+        const uploaded = await uploadWithFormData(f.file, (evt) => {
           const percent = evt.total ? Math.round((evt.loaded * 100) / evt.total) : 0;
           setProgress((p) => ({ ...p, [f.id]: percent }));
         });
+        ids.push(uploaded.id);
         setProgress((p) => ({ ...p, [f.id]: 100 }));
       }
+      setUploadedIds(ids);
+      onUploaded?.(ids);
       setStatus("success");
-      // Optionally clear after success
-      // setFiles([]);
+      return ids;
     } catch (err: any) {
       setStatus("error");
       setErrorMsg(err?.message || "Upload failed");
+      throw err;
     }
-  }, [files]);
+  }, [files, onUploaded]);
+
+  const clear = useCallback(() => {
+    setFiles([]);
+    setProgress({});
+    setUploadedIds([]);
+    setStatus("idle");
+    setErrorMsg(null);
+  }, []);
+
+  useImperativeHandle(ref, () => ({ uploadAll, clear }), [uploadAll, clear]);
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
-      <Box component="form" onSubmit={handleSubmit}>
+      <Box component="div">
         <Typography variant="body2" color="text.secondary" gutterBottom>
           Upload Reports
         </Typography>
@@ -419,23 +393,8 @@ export default function FileUploaderMockJSON() {
 
         {/* Submit Section */}
         <Box sx={{ mt: 4, display: "flex", alignItems: "center", gap: 2 }}>
-          <Button
-            type="submit"
-            variant="contained"
-            disabled={files.length === 0 || status === "uploading"}
-            startIcon={status === "uploading" ? undefined : <CloudUpload />}
-            sx={{ 
-              borderRadius: 2,
-              textTransform: "none",
-              px: 3,
-              py: 1
-            }}
-          >
-            {status === "uploading"
-              ? `Uploading… ${totalProgress}%`
-              : files.length > 0
-              ? "Submit Report"
-              : "Submit Report"}
+          <Button disabled startIcon={<CloudUpload />} sx={{ borderRadius: 2, textTransform: "none", px: 3, py: 1 }}>
+            Upload on Save
           </Button>
 
           {status === "success" && (
@@ -463,4 +422,6 @@ export default function FileUploaderMockJSON() {
       </Box>
     </Container>
   );
-}
+};
+
+export default forwardRef<FileUploaderHandle, { onUploaded?: (ids: string[]) => void }>(FileUploaderMockJSON);

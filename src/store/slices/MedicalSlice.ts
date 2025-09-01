@@ -91,7 +91,7 @@ const calculateAge = (dateOfBirth: string): number => {
 
 // Initial state with medical data loaded from JSON
 const initialState: MedicalState = {
-  consultations: (consultationData.Consultations || []) as Consultation[],
+  consultations:  [] as Consultation[],
   // extendedPatients: patientData.Patients.map((patient: any) => ({
   //   ...patient,
   //   age: calculateAge(patient.dateOfBirth)

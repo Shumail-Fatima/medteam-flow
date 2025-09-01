@@ -1,9 +1,10 @@
 // Redux slice for managing appointment state
 import { createSlice, type PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import type { Appointment } from '../../types/appointment';
-import appointmentsData from '../../../mockServer/MockData.json';
+import { ENDPOINTS } from '../../constants/apiConstants';
+import { apiClient } from '../../utils/apiClient';
 
-const API_URL = 'http://localhost:8000/appointments'; // Updated to use new backend structure
+const API_PATH = ENDPOINTS.APPOINTMENTS;
 
 interface AppointmentState {
   appointments: Appointment[];
@@ -11,136 +12,95 @@ interface AppointmentState {
   error: string | null;
 }
 
-
-
-// Async GET request
 export const fetchAppointments = createAsyncThunk('appointments/fetchAppointments', async () => {
-  const res = await fetch(API_URL);
-  const data = await res.json();
-  return Array.isArray(data) ? data : (data.appointments ?? data.Appointments ?? []);
+  const data = await apiClient.get<unknown>(API_PATH);
+  return Array.isArray(data) ? data : (data as any).appointments ?? (data as any).Appointments ?? [];
 });
 
-// Async POST request
 export const addAppointmentAsync = createAsyncThunk(
   'appointments/addAppointmentAsync',
   async (newAppointment: Appointment) => {
-    const res = await fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newAppointment),
-    });
-    return await res.json();
+    return await apiClient.post<Appointment, Appointment>(API_PATH, newAppointment);
   }
 );
 
-// userSlice.ts
 export const updateAppointmentAsync = createAsyncThunk(
   'appointments/updateAppointment',
   async (appointment: Appointment) => {
-    const response = await fetch(`${API_URL}/${appointment.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(appointment),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to update appointment');
-    }
-
-    return await response.json();
+    const response = await apiClient.put<Appointment, Appointment>(`${API_PATH}/${appointment.id}`, appointment);
+    return response;
   }
 );
 
 export const deleteAppointmentAsync = createAsyncThunk(
   'appointments/deleteAppointment',
   async (appointmentId: string) => {
-    const response = await fetch(`${API_URL}/${appointmentId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to delete appointment');
-    }
-
-    return await response.json();
+    await apiClient.delete<void>(`${API_PATH}/${appointmentId}`);
+    return appointmentId as unknown as Appointment; // keep reducer shape below but we will adjust
   }
 );
 
-
-
-// Initial state with appointments loaded from JSON data
 const initialState: AppointmentState = {
-  appointments: appointmentsData.Appointments as Appointment[],
+  appointments: [],
   loading: false,
   error: null,
 };
 
-// Create appointment slice with reducers for CRUD operations
 const appointmentSlice = createSlice({
   name: 'appointments',
   initialState,
   reducers: {
-    // Add a new appointment to the state
     addAppointment: (state, action: PayloadAction<Appointment>) => {
       state.appointments.push(action.payload);
     },
-    // Update an existing appointment by ID
     updateAppointment: (state, action: PayloadAction<Appointment>) => {
       const index = state.appointments.findIndex(apt => apt.id === action.payload.id);
       if (index !== -1) {
         state.appointments[index] = action.payload;
       }
     },
-    // Remove an appointment by ID
     deleteAppointment: (state, action: PayloadAction<string>) => {
       state.appointments = state.appointments.filter(apt => apt.id !== action.payload);
     },
-    // Set loading state for async operations
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
     },
-    // Set error message
     setError: (state, action: PayloadAction<string | null>) => {
       state.error = action.payload;
     },
   },
-    extraReducers: (builder) => {
+  extraReducers: (builder) => {
     builder
       .addCase(fetchAppointments.pending, (state) => {
         state.loading = true;
       })
       .addCase(fetchAppointments.fulfilled, (state, action: PayloadAction<Appointment[]>) => {
-            state.appointments = action.payload.map((appointment) => ({
-                ...appointment,
-            }));
-            state.loading = false;
-            })
-    .addCase(fetchAppointments.rejected, (state, action) => {
+        state.appointments = action.payload;
+        state.loading = false;
+      })
+      .addCase(fetchAppointments.rejected, (state, action) => {
         state.error = action.error.message || 'Failed to fetch appointments';
         state.loading = false;
-    })
-    .addCase(addAppointmentAsync.fulfilled, (state, action) => {
+      })
+      .addCase(addAppointmentAsync.fulfilled, (state, action) => {
         const appointment = action.payload;
         state.appointments.push(appointment);
-        })
-    builder.addCase(updateAppointmentAsync.fulfilled, (state, action: PayloadAction<Appointment>) => {
-    const index = state.appointments.findIndex(apt => apt.id === action.payload.id);
-    if (index !== -1) {
-        state.appointments[index] = action.payload;
-    }
-    })
-    .addCase(deleteAppointmentAsync.fulfilled, (state, action: PayloadAction<Appointment>) => {
-        state.appointments = state.appointments.filter(apt => apt.id !== action.payload.id);
-    });
+      })
+      .addCase(updateAppointmentAsync.fulfilled, (state, action: PayloadAction<Appointment>) => {
+        const index = state.appointments.findIndex(apt => apt.id === action.payload.id);
+        if (index !== -1) {
+          state.appointments[index] = action.payload;
+        }
+      })
+      .addCase(deleteAppointmentAsync.fulfilled, (state, action: PayloadAction<any>) => {
+        const id = typeof action.payload === 'string' ? action.payload : action.payload?.id;
+        if (id) {
+          state.appointments = state.appointments.filter(apt => apt.id !== id);
+        }
+      });
   },
 });
 
-// Export actions for use in components
 export const { 
   addAppointment, 
   updateAppointment, 
@@ -149,5 +109,4 @@ export const {
   setError 
 } = appointmentSlice.actions;
 
-// Export reducer for store configuration
 export default appointmentSlice.reducer;

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -45,6 +45,9 @@ import type { ExtendedPatient, MedicalHistoryEntry } from '../types/medical';
 import { useAuth } from '../context/AuthContext';
 import PatientDetails from './PatientDetails';
 import PageHeader from '../components/sharedComponents/PageHeader';
+import { fetchPatients } from '../store/slices/PatientSlice';
+import { fetchAppointments } from '../store/slices/AppointmentSlice';
+import { fetchConsultations } from '../store/slices/MedicalSlice';
 
 const DoctorPatientManagement: React.FC = () => {
   const { patientId } = useParams<{ patientId: string }>();
@@ -57,6 +60,13 @@ const DoctorPatientManagement: React.FC = () => {
   const patients = useSelector((state: RootState) => state.patients.patients);
   const consultations = useSelector((state: RootState) => state.medical.consultations);
   const appointments = useSelector((state: RootState) => state.appointments.appointments);
+
+    // 🔑 Fetch required data on first load
+    useEffect(() => {
+      dispatch(fetchPatients());
+      dispatch(fetchAppointments());
+       dispatch(fetchConsultations()); // if needed
+    }, [dispatch]);
 
   const [selectedPatient, setSelectedPatient] = useState<ExtendedPatient | null>(null);
   //const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);

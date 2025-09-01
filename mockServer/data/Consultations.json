@@ -782,35 +782,177 @@
       "status": "completed"
     },
     {
-      "id": "cons_1756193780913",
-      "patientId": "patient_8a106d73",
-      "patientName": "Hina Khan",
+      "id": "cons_1756214130481",
+      "patientId": "bfce",
+      "patientName": "Johnathan Miller",
       "doctorId": "2",
       "doctorName": "Dr. Sarah Wilson",
-      "appointmentId": "apt_1756193668396",
-      "date": "2025-08-26T07:36:20.913Z",
+      "appointmentId": "apt_1756191901911",
+      "date": "2025-08-26T13:15:30.481Z",
       "symptoms": [
-        "Persistent headache in the mornings",
-        "Dizziness on exertion",
-        "Occasional chest tightness",
-        "Shortness of breath when climbing stairs"
+        "Mild shortness of breath when lying flat (orthopnea)",
+        "Occasional palpitations",
+        "Fatigue during daily activities",
+        "Reduced exercise tolerance"
       ],
-      "diagnosis": "Hypertensive Heart Disease  Left Ventricular Hypertrophy (LVH)",
-      "notes": "The patient has a long-standing history of uncontrolled hypertension. ECG and echocardiogram reveal evidence of left ventricular hypertrophy. Blood pressure remains elevated despite irregular medication use. Lifestyle counseling provided, with emphasis on strict adherence to antihypertensive therapy, reduced salt intake, and regular physical activity. Follow-up recommended in 6 weeks to assess blood pressure control and cardiac function.",
+      "diagnosis": "Ischemic Heart Disease \u2013 Post-Myocardial Infarction (Anterior Wall)  Left Ventricular Dysfunction (Ejection Fraction ~40%)",
+      "notes": "The patient presented for follow-up 3 months after experiencing an anterior wall myocardial infarction and undergoing stent placement. Currently stable but reports mild palpitations and exertional fatigue. Echocardiogram confirms moderately reduced ejection fraction. Blood pressure and heart rate are controlled. Counseling provided regarding strict adherence to medications, participation in cardiac rehabilitation, and lifestyle modifications including a low-salt diet, regular light exercise, and smoking cessation. Close monitoring of renal function and electrolytes recommended.",
       "prescriptions": [
         {
-          "id": "rx_1756193780913_0",
-          "medication": "Amlodipine",
-          "dosage": "10 mg",
+          "id": "rx_1756214130481_0",
+          "medication": "Clopidogrel",
+          "dosage": "75 mg",
           "frequency": "Once daily",
-          "duration": "Continuous",
-          "instructions": "Take in the morning, avoid sudden discontinuation"
+          "duration": "12 months (post-stent protocol)",
+          "instructions": "Take at the same time daily; do not stop without medical advice"
         }
       ],
       "followUpRequired": false,
       "followUpDate": null,
-      "createdAt": "2025-08-26T07:36:20.913Z",
+      "createdAt": "2025-08-26T13:15:30.481Z",
       "status": "completed"
+    },
+    {
+      "id": "cons_1756214383229",
+      "patientId": "patient_8a106d73",
+      "patientName": "Hina Khan",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentId": "apt_1756214223367",
+      "date": "2025-08-26T13:19:43.229Z",
+      "symptoms": [
+        "Severe shortness of breath",
+        "especially at night (paroxysmal nocturnal dyspnea)",
+        "Swelling of legs and ankles",
+        "Persistent cough producing frothy sputum",
+        "Rapid weight gain over the",
+        "past week",
+        "Fatigue and reduced physical activity tolerance"
+      ],
+      "diagnosis": "Congestive Heart Failure (NYHA Class III)  Fluid overload secondary to Left Ventricular Dysfunction",
+      "notes": "The patient presents with worsening breathlessness and peripheral edema. Physical examination revealed bilateral basal crackles, elevated jugular venous pressure, and pitting pedal edema. Echocardiography confirms reduced ejection fraction. Patient was counseled regarding salt and fluid restriction, regular weight monitoring, and compliance with medications. Hospital admission considered if symptoms worsen. Follow-up planned in 2 weeks.",
+      "prescriptions": [
+        {
+          "id": "rx_1756214383229_0",
+          "medication": "Furosemide",
+          "dosage": "40 mg",
+          "frequency": "Once daily (morning)",
+          "duration": "Continuous, dose adjusted as needed",
+          "instructions": "Take in the morning; monitor urine output and electrolytes"
+        }
+      ],
+      "followUpRequired": false,
+      "followUpDate": null,
+      "createdAt": "2025-08-26T13:19:43.229Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1756216427628",
+      "patientId": "patient_89d66ab6",
+      "patientName": "yosuf Khan",
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Rodriguez",
+      "appointmentId": "apt_1756216296875",
+      "date": "2025-08-26T13:53:47.628Z",
+      "symptoms": [
+        "Yellow discoloration of skin and eyes (noticed on day 3 after birth)",
+        "Mild irritability",
+        "Poor feeding",
+        "Lethargy"
+      ],
+      "diagnosis": "Neonatal Jaundice (likely physiological)",
+      "notes": "The infant, aged 3 days, presents with yellow discoloration of the skin and sclera. No history of birth trauma or hemolytic disease. Physical examination shows mild jaundice extending to the trunk, stable vitals, and no hepatosplenomegaly. Baby is otherwise alert but feeding poorly. A total serum bilirubin test has been ordered to assess severity. Parents counseled on the benign nature of physiological jaundice in most cases, importance of frequent breastfeeding, and red flags for worsening jaundice.",
+      "prescriptions": [
+        {
+          "id": "rx_1756216427628_0",
+          "medication": "Phototherapy (if bilirubin exceeds threshold)",
+          "dosage": "As per bilirubin level and weight chart",
+          "frequency": "Continuous as indicated",
+          "duration": "Until bilirubin normalizes",
+          "instructions": "Infant to be placed under phototherapy unit with eye protection; monitor hydration and bilirubin levels daily"
+        }
+      ],
+      "followUpRequired": false,
+      "followUpDate": null,
+      "createdAt": "2025-08-26T13:53:47.628Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1756290772957",
+      "patientId": "patient_4",
+      "patientName": "Emily Carter",
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Rodriguez",
+      "appointmentId": "apt_1756290594444",
+      "date": "2025-08-27T10:32:52.957Z",
+      "symptoms": [
+        "High-grade fever (38.8\u00b0C) for 2 days",
+        "Sore throat",
+        "painful swallowing",
+        "Fatigue and mild headache",
+        "No cough or runny nose"
+      ],
+      "diagnosis": "Acute Streptococcal Pharyngitis (Strep Throat)",
+      "notes": "Child presents with fever and sore throat, onset 2 days ago. No history of allergies to medications. Tonsils observed to be enlarged, erythematous, with white exudates. Anterior cervical lymph nodes palpable and tender. No signs of dehydration or respiratory distress. Rapid antigen detection test (RADT) recommended for confirmation.",
+      "prescriptions": [
+        {
+          "id": "rx_1756290772957_0",
+          "medication": "Amoxicillin Suspension",
+          "dosage": "50 mg/kg/day divided every 8 hours",
+          "frequency": "Three times daily",
+          "duration": "10 days",
+          "instructions": "Complete full course even if symptoms improve."
+        }
+      ],
+      "followUpRequired": false,
+      "followUpDate": null,
+      "createdAt": "2025-08-27T10:32:52.957Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1756464738200",
+      "patientId": "patient_8a106d73",
+      "patientName": "Hina Khan",
+      "doctorId": "5",
+      "doctorName": "Dr. James Thompson",
+      "appointmentId": "apt_1756464537624",
+      "date": "2025-08-29T10:52:18.200Z",
+      "symptoms": [
+        "Right knee pain for 1 week after twisting injury while playing tennis",
+        "Swelling and stiffness in the knee joint",
+        "Pain worsens with walking or climbing stairs",
+        "Occasional clicking sound in the knee",
+        "No fever",
+        "redness",
+        "or systemic symptoms"
+      ],
+      "diagnosis": "Possible Medial Meniscus Tear (post-traumatic knee injury)",
+      "notes": "Patient reports acute onset of pain and swelling following a twisting movement during sports. Physical examination reveals tenderness over the medial joint line, mild swelling, and limited range of motion. Positive McMurray test. X-ray normal, MRI knee recommended for confirmation of meniscal injury.",
+      "prescriptions": [
+        {
+          "id": "rx_1756464738200_0",
+          "medication": "Ibuprofen",
+          "dosage": "400 mg",
+          "frequency": "Every 8 hours as needed for pain",
+          "duration": "5 days",
+          "instructions": "Take after meals to prevent gastric irritation."
+        },
+        {
+          "id": "rx_1756464738200_1",
+          "medication": "Diclofenac Gel (Topical)",
+          "dosage": "Apply thin layer",
+          "frequency": "Twice daily",
+          "duration": "7 days",
+          "instructions": "Apply over affected knee, do not massage deeply."
+        }
+      ],
+      "followUpRequired": false,
+      "followUpDate": null,
+      "createdAt": "2025-08-29T10:52:18.200Z",
+      "status": "completed",
+      "uploadIds": [
+        "upl_1756489938096"
+      ]
     }
   ]
 }

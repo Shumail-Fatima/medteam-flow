@@ -92,6 +92,7 @@ export interface Consultation {
   followUpDate?: string;
   createdAt: string;
   status: 'pending' | 'completed';
+  uploadIds?: string[];
 }
 
 export interface ConsultationFormData {

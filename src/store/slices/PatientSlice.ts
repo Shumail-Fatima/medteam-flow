@@ -2,7 +2,7 @@
 import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { Patient } from '../../types/medical';
 import type { ExtendedPatient } from '../../types/medical';
-import patientsData from '../../../mockServer/MockData.json';
+import patientsData from '../../../mockServer/data/Patients.json';
 
 const API_URL = 'http://localhost:8000/patients'; // FastAPI endpoint
 
@@ -91,7 +91,7 @@ const calculateAge = (dateOfBirth: string): number => {
 
 // Initial state with patients loaded from JSON data and age calculated
 const initialState: PatientState = {
-  patients: patientsData.Patients.map(patient => ({
+  patients: patientsData.map(patient => ({
     ...patient,
     age: calculateAge(patient.dateOfBirth),
     // Normalize emergencyContact to object if array with one element exists

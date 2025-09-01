@@ -27,6 +27,7 @@ class Consultation(BaseModel):
     followUpDate: Optional[str] = None
     createdAt: str
     status: str
+    uploadIds: Optional[List[str]] = []
 
 
 class Consultations(BaseModel):

@@ -5,7 +5,7 @@ from routers import patients
 from routers import appointment
 from routers import notifications
 from routers import consultation
-from routers import users, tasks, roles
+from routers import users, tasks, roles, uploads
 
 app = FastAPI()
 
@@ -30,6 +30,7 @@ app.include_router(consultation.router)
 app.include_router(users.router)
 app.include_router(tasks.router)
 app.include_router(roles.router)
+app.include_router(uploads.router)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

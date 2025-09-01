@@ -49,7 +49,7 @@ import ConsultationDetailsSection from '../components/ConsultDetails';
 import PrescriptionsSection from '../components/PrescriptionSection';
 import { useNotification } from '../context/NotifSocketContext';
 import { NotificationService } from '../utils/NotificationService';
-import FileUploader from '../components/FileUploader';
+import FileUploader, { type FileUploaderHandle } from '../components/FileUploader';
 
 
 const ConsultationManagement: React.FC = () => {
@@ -58,6 +58,9 @@ const ConsultationManagement: React.FC = () => {
   const { user } = useAuth();
   const [searchParams] = useSearchParams();
   const { sendNotification } = useNotification();
+  const [uploadedFileIds, setUploadedFileIds] = useState<string[]>([]);
+  const uploaderRef = React.useRef<FileUploaderHandle | null>(null);
+
 
 
   // Get URL parameters for pre-filling form
@@ -178,6 +181,15 @@ const ConsultationManagement: React.FC = () => {
     if (!user?.id || !selectedPatient) return;
 
     try {
+      // 1) Upload files first (if any selected), get IDs
+      let fileIds: string[] = uploadedFileIds;
+      if (uploaderRef.current) {
+        try {
+          const ids = await uploaderRef.current.uploadAll();
+          fileIds = ids;
+        } catch {}
+      }
+
       // Create consultation object
       const newConsultation: Consultation = {
         id: `cons_${Date.now()}`,
@@ -200,6 +212,7 @@ const ConsultationManagement: React.FC = () => {
         followUpDate: data.followUpDate || undefined,
         createdAt: new Date().toISOString(),
         status: 'completed' as 'pending' | 'completed',
+        uploadIds: fileIds,
       };
 
       // Redux action - Add consultation to store
@@ -261,6 +274,7 @@ const ConsultationManagement: React.FC = () => {
 
       // Reset form and navigate back
       reset();
+      uploaderRef.current?.clear();
       setTimeout(() => {
         navigate('/consultations-records');
       }, 1500);
@@ -443,7 +457,7 @@ const ConsultationManagement: React.FC = () => {
             </Card>
           </Grid>
           )}
-          <FileUploader></FileUploader>
+          <FileUploader ref={uploaderRef as any} onUploaded={setUploadedFileIds}></FileUploader>
 
           {/* Submit Button */}
           {!isReadOnly && (

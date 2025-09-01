@@ -320,5 +320,28 @@
     ],
     "bloodType": "O+",
     "createdAt": "2025-08-26T04:45:25.244414Z"
+  },
+  {
+    "id": "patient_89d66ab6",
+    "name": "yosuf Khan",
+    "dateOfBirth": "2025-08-05",
+    "email": "ahmed.raza@example.com",
+    "phone": "03009876543",
+    "address": "45 Garden Town, Lahore, Pakistan",
+    "emergencyContact": [
+      {
+        "name": "haris Khan",
+        "phone": "03009876543",
+        "relationship": "father"
+      }
+    ],
+    "medicalHistory": [],
+    "allergies": [
+      "Amoxicillin (rash reaction reported)",
+      "Peanuts",
+      "Pollen (seasonal)"
+    ],
+    "bloodType": "O-",
+    "createdAt": "2025-08-26T09:42:57.527643Z"
   }
 ]

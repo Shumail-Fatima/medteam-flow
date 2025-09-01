@@ -1,24 +1,33 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Box, Typography, IconButton, TextField, Avatar } from '@mui/material';
 import { ArrowForward, CalendarToday } from '@mui/icons-material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Layout from '../components/sharedComponents/Layout';
 import DataTable from '../components/sharedComponents/DataTable';
 import { useAuth } from '../context/AuthContext';
-import type { RootState } from '../store/Store';
+import type { AppDispatch, RootState } from '../store/Store';
 import type { Consultation } from '../types/medical';
 import PageHeader from '../components/sharedComponents/PageHeader';
 import { SearchFilterbox } from '../components/SearchFilterbox';
+import { fetchPatients } from '../store/slices/PatientSlice';
+import { fetchConsultations } from '../store/slices/MedicalSlice';
 
 const ConsultationList: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const dispatch = useDispatch<AppDispatch>();
   const patientId = searchParams.get('patientId');
   const consultations = useSelector((state: RootState) => state.medical.consultations);
   //const patients = useSelector((state: RootState) => state.medical.extendedPatients);
   const patients = useSelector((state: RootState) => state.patients.patients);
+
+  // 🔑 Fetch required data on first load
+  useEffect(() => {
+    dispatch(fetchPatients());
+     dispatch(fetchConsultations()); // if needed
+  }, [dispatch]);
 
   // Only show completed consultations for the logged-in doctor
   const doctorConsultations = useMemo(
