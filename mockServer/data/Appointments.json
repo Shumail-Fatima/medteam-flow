@@ -590,8 +590,8 @@
       "doctorName": "Dr. James Thompson",
       "appointmentSlot": "2025-09-01T21:00:00Z",
       "reason": "visit",
-      "status": "scheduled",
-      "consultationCompleted": false,
+      "status": "completed",
+      "consultationCompleted": true,
       "createdAt": "2025-09-01T13:49:26.307Z",
       "specialtyName": "Orthopedics",
       "createdById": "apt_1753765295252"

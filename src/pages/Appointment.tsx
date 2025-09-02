@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import {
   Box, Typography, Chip, Button, Menu, MenuItem, IconButton,
-  TextField,
 } from '@mui/material';
-import { Add, CalendarToday, MoreVert, Schedule } from '@mui/icons-material';
+import { CalendarToday, MoreVert, Schedule } from '@mui/icons-material';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,7 +12,6 @@ import DataTable from '../components/sharedComponents/DataTable';
 import AppointmentForm from '../components/formModals/AppointmentForm';
 import ConfirmDeleteDialog from '../components/sharedComponents/ConfirmDeleteDialog';
 import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';
-import { AddButton } from '../components/CustomButton';
 import PageHeader from '../components/sharedComponents/PageHeader';
 import ViewDialog from '../components/sharedComponents/ViewDialog';
 import FilterBar from '../components/sharedComponents/FilterBar';
@@ -29,7 +27,6 @@ import {
 import { fetchPatients } from '../store/slices/PatientSlice';
 
 import type { Appointment, AppointmentFormData } from '../types/appointment';
-import type { PatientFormData } from '../types/medical';
 
 import usersData from '../../mockServer/data/Users.json';
 import doctorSlots from '../../mockServer/data/DoctorSlots.json';
@@ -38,7 +35,6 @@ import doctorSpecialtiesData from '../../mockServer/data/DoctorSpeciality.json';
 import { useAuth } from '../context/AuthContext';
 import { useNotification } from '../context/NotifSocketContext';
 import { NotificationService } from '../utils/NotificationService';
-import { useDoctors } from '../hooks/useDoctors';
 import { useDataFiltering } from '../hooks/useDataFiltering';
 import { formatDate, slotDate } from '../utils/DateUtils';
 
@@ -205,11 +201,6 @@ const AppointmentManagement: React.FC = () => {
     if (newValue === 1) {
       setSelectedAppointment(null);
     }
-  }, []);
-
-  const handleCreateAppointment = useCallback(() => {
-    setSelectedAppointment(null);
-    setActiveTab(1);
   }, []);
 
   const handleViewAppointment = useCallback((appointment: Appointment) => {
@@ -613,11 +604,6 @@ const AppointmentManagement: React.FC = () => {
           mb: 3 
         }}>
           <CustomTabs value={activeTab} onChange={handleTabChange} tabs={tabOptions} />
-          {/* <AddButton
-            onClick={handleCreateAppointment}
-            label='Create New Appointment'
-            startIcon={<Add />}
-          /> */}
         </Box>
       )}
       {/* Filter Type Chips */}

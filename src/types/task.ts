@@ -6,6 +6,7 @@ export interface Task {
   notes: string;
   patientId: string;
   assigneeId: string;
+  assigneeName?: string; // Added for display purposes
   dueAt: string;
   createdBy: string;
   createdAt?: string;

@@ -7,15 +7,11 @@ import { apiClient } from '../../utils/apiClient';
 
 const API_PATH = ENDPOINTS.TASKS;
 
-
-const API_URL = 'http://localhost:8000/tasks'; // Your REST API endpoint
-
 interface TaskState{
     tasks:Task[];
     loading: boolean;
     error: string | null;
 }
-
 
 // Async GET request
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
@@ -23,42 +19,13 @@ export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
   return Array.isArray(data) ? data : (data as any).tasks ?? (data as any).Tasks ?? [];
 });
 
-// export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
-//   const res = await fetch(API_URL);
-//   return await res.json();
-// });
-
 // Async POST request
-export const add = createAsyncThunk(
+export const addTaskAsync = createAsyncThunk(
   'tasks/addTaskAsync',
   async(newTask: Task) => {
     return await apiClient.post<Task, Task>(API_PATH, newTask);
   }
 );
-
-export const addTaskAsync = createAsyncThunk(
-  'tasks/addTaskAsync',
-  async (newTask: Task) => {
-    const res = await fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newTask),
-    });
-    return await res.json();
-  }
-);
-
-
-// const initialState: TaskState = {
-//     tasks: tasksData.tasks.map(task => ({
-//     ...task,
-//     assigneeId: String(task.assigneeId),
-//     createdBy: String(task.createdBy),
-//     createdAt: task.createdAt ?? new Date().toISOString()
-//   })) as Task[],
-//     loading: false,
-//     error: null,
-// }
 
 const initialState: TaskState = {
   tasks: [], // start with empty array
@@ -74,51 +41,14 @@ export const updateTaskAsync = createAsyncThunk(
   }
 );
 
-// export const updateTaskAsync = createAsyncThunk(
-//   'tasks/updateTask',
-//   async (task: Task) => {
-//     const response = await fetch(`${API_URL}/${task.id}`, {
-//       method: 'PUT',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify(task),
-//     });
-
-//     if (!response.ok) {
-//       throw new Error('Failed to update task');
-//     }
-
-//     return await response.json();
-//   }
-// );
-
 export const deleteTaskAsync = createAsyncThunk(
   'tasks/deleteTask',
   async (taskId: string) => {
     await apiClient.delete<void>(`${API_PATH}/${taskId}`);
-    return taskId as unknown as Task; // keep reducer shape below but we will adjust
+    // return taskId as unknown as Task; // keep reducer shape below but we will adjust
+    return taskId; // Return the task ID for the reducer
   }
 );
-
-// export const deleteTaskAsync = createAsyncThunk(
-//   'tasks/deleteTask',
-//   async (taskId: string) => {
-//     const response = await fetch(`${API_URL}/${taskId}`, {
-//       method: 'DELETE',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//     });
-
-//     if (!response.ok) {
-//       throw new Error('Failed to delete task');
-//     }
-
-//     return await response.json();
-//   }
-// );
-
 
 const taskSlice = createSlice({
     name: 'tasks',
@@ -177,7 +107,7 @@ const taskSlice = createSlice({
             state.tasks[index] = action.payload;
         }
         })
-        .addCase(deleteTaskAsync.fulfilled, (state, action: PayloadAction<any>) => {
+        .addCase(deleteTaskAsync.fulfilled, (state, action: PayloadAction<string>) => {
             state.tasks = state.tasks.filter(t => t.id !== action.payload);
         });
     ;

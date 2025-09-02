@@ -7,26 +7,11 @@ import {
   TextField,
   Button,
   Grid,
-  Autocomplete,
-  Chip,
-  IconButton,
-  Paper,
-  Divider,
-  Avatar,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemAvatar,
   MenuItem,
 } from '@mui/material';
 import {
-  Add,
-  Remove,
-  Person,
-  LocalHospital,
   Save,
   Schedule,
-  Medication,
 } from '@mui/icons-material';
 import { useForm, Controller, useFieldArray } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -36,7 +21,7 @@ import Layout from '../components/sharedComponents/Layout';
 import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';
 import type { RootState, AppDispatch } from '../store/Store';
 import { fetchConsultations, addConsultationAsync, updateConsultationAsync } from '../store/slices/MedicalSlice';
-import { updateAppointment, fetchAppointments, updateAppointmentAsync } from '../store/slices/AppointmentSlice';
+import { fetchAppointments, updateAppointmentAsync } from '../store/slices/AppointmentSlice';
 import { useAuth } from '../context/AuthContext';
 import type { ConsultationFormData, Consultation } from '../types/medical';
 import { consultationValidationSchema } from '../validation/MedValidation';

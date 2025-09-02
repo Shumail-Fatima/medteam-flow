@@ -70,7 +70,7 @@ def update_user(user_id: str, user_update: User):
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 
 
-@router.delete("{user_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_user(user_id: str):
     """Delete an user"""
     users = load_users()

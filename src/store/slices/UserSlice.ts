@@ -45,7 +45,9 @@ export const updateUserAsync = createAsyncThunk(
 export const deleteUserAsync = createAsyncThunk(
   'users/deleteUser',
   async (user: User) => {
-    await apiClient.delete<void>(`${API_PATH}/${user}`);
+    // await apiClient.delete<void>(`${API_PATH}/${user.id}`);
+    // return user; // Return the user object for the reducer
+    await apiClient.delete<void>(`${API_PATH}/${user.id}`);
     return user as unknown as User; // keep reducer shape below but we will adjust
   }
 );

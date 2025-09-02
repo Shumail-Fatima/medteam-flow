@@ -42,11 +42,6 @@ def get_tasks(task_id: str):
 def create_task(task: Task):
     """Create a new task"""
     tasks = load_tasks()
-    
-    # Generate ID if not provided
-    if not task.id:
-        task.id = f"t_{int(datetime.utcnow().timestamp() * 1000)}"
-    
     task_dict = task.dict()
     tasks.append(task_dict)
     save_tasks(tasks)
@@ -70,7 +65,7 @@ def update_task(task_id: str, task_update: Task):
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Task not found")
 
 
-@router.delete("{task_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{task_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_task(task_id: str):
     """Delete an task"""
     tasks = load_tasks()

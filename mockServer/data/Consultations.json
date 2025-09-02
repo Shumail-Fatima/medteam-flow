@@ -1033,6 +1033,39 @@
         "upl_1756754911287",
         "upl_1756754911506"
       ]
+    },
+    {
+      "id": "cons_1756793192165",
+      "patientId": "patient_5",
+      "patientName": "George Miller",
+      "doctorId": "5",
+      "doctorName": "Dr. James Thompson",
+      "appointmentId": "apt_1756734566307",
+      "date": "2025-09-02T06:06:32.165Z",
+      "symptoms": [
+        "abc",
+        "abc",
+        "vfd"
+      ],
+      "diagnosis": "abc, abc ,vfd",
+      "notes": "abc, abc ,vfd, abc, abc ,vfd,abc, abc ,vfd",
+      "prescriptions": [
+        {
+          "id": "rx_1756793192165_0",
+          "medication": "abc, abc ,vfd",
+          "dosage": "10",
+          "frequency": "abc, abc ,vfd",
+          "duration": "32",
+          "instructions": "abc, abc ,vfd"
+        }
+      ],
+      "followUpRequired": false,
+      "followUpDate": null,
+      "createdAt": "2025-09-02T06:06:32.165Z",
+      "status": "completed",
+      "uploadIds": [
+        "upl_1756818392017"
+      ]
     }
   ]
 }
