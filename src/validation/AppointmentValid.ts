@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import type { AppointmentFormData } from '../types/appointment';
+import type { AppointmentFormData, AppointmentStatus } from '../types/appointment';
 
 export const appointmentValidationSchema: yup.ObjectSchema<AppointmentFormData> = yup.object({
     specialtyId: yup.string().optional(),
@@ -7,4 +7,5 @@ export const appointmentValidationSchema: yup.ObjectSchema<AppointmentFormData> 
     doctorId: yup.string().required('Doctor is required'),
     appointmentSlot: yup.string().required('Appointment slot is required'),
     reason: yup.string().optional(),
+    status: yup.mixed<AppointmentStatus>().required()
 });

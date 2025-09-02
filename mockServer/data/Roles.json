@@ -1,0 +1,14 @@
+{ "Roles": [
+  {
+    "id": "1",
+    "name": "admin"
+  },
+  {
+    "id": "2",
+    "name": "doctor"
+  },
+  {
+    "id": "3",
+    "name": "nurse"
+  }
+]}

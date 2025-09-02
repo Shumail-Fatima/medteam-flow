@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {
   Dialog,
@@ -29,7 +29,9 @@ import {
 import InputAdornment from '@mui/material/InputAdornment';
 import type { UserFormData } from '../../types/Auth';
 import type { User } from '../../types/Auth';
-import rolesData from '../../data/Roles.json';
+import rolesData from '../../../mockServer/data/Roles.json';
+//import  DoctorSpecialties from '../../../mockServer/data/DoctorSpeciality.json';
+import  DoctorSpecialties from '../../../mockServer/data/DoctorSpeciality.json';
 import { DailogButton } from '../CustomButton';
 import { userSchema } from '../../validation/UserFormValidation';
 
@@ -56,19 +58,22 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
     reset,
     watch,
     formState: { errors },
-  } = useForm<UserFormData>({
+  } = useForm({
     resolver: yupResolver(userSchema),
     defaultValues: {
       name: '',
       username: '',
       email: '',
       password: '',
-      roleId: 2 as number, // Default to doctor
+      roleId: 2, // Default to doctor
+      specialtyId: '', // Optional, will be set based on role
     },
   });
 
-  const selectedRoleId = watch('roleId') ?? 2;
-  const selectedRole = rolesData.find(role => role.id === selectedRoleId);
+  const selectedRoleId = Number(watch('roleId')) || 2;
+  const selectedRole = rolesData.Roles.find(role => Number(role.id) === selectedRoleId);
+  //const specialties = DoctorSpecialties || [];
+  const specialties = DoctorSpecialties.DoctorSpecialties || [];
 
   const getRoleIcon = (roleId: number) => {
     switch (roleId) {
@@ -91,11 +96,12 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
   useEffect(() => {
     if (user) {
       reset({
-        name: user.name,
-        username: user.username,
-        email: user.email,
-        password: user.password,
-        roleId: user.roleId,
+        name: user.name ?? '',
+        username: user.username?? '',
+        email: user.email?? '',
+        password: user.password?? '',
+        roleId: user.roleId?? '2',
+        specialtyId: user.specialtyId?? '',
       });
     } else {
       reset({
@@ -104,6 +110,7 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
         email: '',
         password: '',
         roleId: 2,
+        specialtyId: '',
       });
     }
   }, [user, reset]);
@@ -222,7 +229,7 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
                   ),
               }}
             />
-
+          
             <TextField
               {...register('password')}
               label="Password"
@@ -248,10 +255,10 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
               error={!!errors.roleId}
               helperText={errors.roleId?.message || 'Select the user\'s role and permissions'}
             >
-              {rolesData.map((role) => (
+              {rolesData.Roles.map((role) => (
                 <MenuItem key={role.id} value={role.id}>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    {getRoleIcon(role.id)}
+                    {getRoleIcon(Number(role.id))}
                     <Typography>
                       {role.name.charAt(0).toUpperCase() + role.name.slice(1)}
                     </Typography>
@@ -259,6 +266,29 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
                 </MenuItem>
               ))}
             </TextField>
+
+            { selectedRoleId === 2 && (
+            <TextField
+              {...register('specialtyId')}
+              select
+              label="Specialty"
+              fullWidth
+              error={!!errors.specialtyId}
+              helperText={errors.specialtyId?.message || 'Select the user\'s specialty'}
+            >
+              {DoctorSpecialties.DoctorSpecialties.map((specialty) => (
+                <MenuItem key={specialty.id} value={specialty.id}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    {/* {getRoleIcon(specialty.id)} */}
+                    <Typography>
+                      {specialty.name.charAt(0).toUpperCase() + specialty.name.slice(1)}
+                    </Typography>
+                  </Box>
+                </MenuItem>
+              ))}
+            </TextField>)}
+
+
           </Box>
         </DialogContent>
 

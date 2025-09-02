@@ -18,6 +18,8 @@ export interface User {
   roleId: number;
   roleName: string;
   createdAt: string;
+  specialtyId?: string; // Add this
+  specialtyName?: string; // Optional, for display
 }
 
 export interface Role {
@@ -38,5 +40,6 @@ export interface UserFormData {
   username: string;
   email: string;
   password: string;
-  roleId: number;
+  roleId: number ;
+  specialtyId?: string; // Required key; conditionally required by schema
 }

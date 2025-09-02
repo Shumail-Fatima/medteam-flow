@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   Box,
   TextField,
@@ -9,15 +9,16 @@ import {
   Paper,
   Chip,
 } from '@mui/material';
-import { Add, Person, LocalHospital, Category } from '@mui/icons-material';
+import { Add, Person, LocalHospital, Category, Label } from '@mui/icons-material';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import type { RootState, AppDispatch } from '../../store/Store';
 import { useSelector, useDispatch } from 'react-redux';
-import type { AppointmentFormData, DoctorOption, Patient } from '../../types/appointment';
+import type { Appointment, AppointmentFormData, DoctorOption, Patient } from '../../types/appointment';
 import { setSelectedSpecialty, clearSpecialtyFilter } from '../../store/slices/DoctorSlice';
 import PatientFormModal from './PatientFormModal';
 import { appointmentValidationSchema } from '../../validation/AppointmentValid';
+import { fetchPatients, addPatientAsync } from '../../store/slices/PatientSlice';
 
 interface AppointmentFormProps {
     onSubmit: (data: AppointmentFormData) => void;
@@ -34,12 +35,16 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
 }) => {
     //Get patients from Redux store
     const dispatch = useDispatch<AppDispatch>();
+
+    useEffect(() => {
+      dispatch(fetchPatients());
+    }, [dispatch]);
+
     const patients = useSelector((state: RootState) => state.patients.patients);
     const specialties = useSelector((state: RootState) => state.doctors.specialties);
     const selectedSpecialtyId = useSelector((state: RootState) => state.doctors.selectedSpecialtyId);
 
     const [patientModalOpen, setPatientModalOpen] = useState(false);
-
 
     //React hook form setup with yup validation
     const {
@@ -52,6 +57,7 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
             doctorId: '',
             appointmentSlot: '',
             reason: '',
+            status: 'scheduled',
             ...initialValues,
         },
     });
@@ -80,6 +86,8 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
         patient: patient,
     }));
 
+    const statusOptions = ["scheduled" , "completed" , "cancelled" , "no-show"];
+
     const specialtyOptions = [
       {label: 'All Specialties', value: ''},
       ...specialties.map(specialty => ({
@@ -101,9 +109,11 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
     };
 
     const handlePatientAdd = (patientData: any) => {
-        onAddPatient(patientData);
+        //onAddPatient(patientData);
+        dispatch(addPatientAsync(patientData));
         setPatientModalOpen(false);
     };
+
 
     // Handle specialty selection and filter doctors using Redux
     const handleSpecialtyChange = (specialtyId: string) => {
@@ -176,12 +186,12 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
           {/* Add New Patient Button */}
           <Button
             type="button"
-            variant="outlined"
+            variant="text"
             startIcon={<Add />}
             onClick={handleAddNewPatient}
             disabled={mode === 'edit'}
             sx={{
-              alignSelf: 'flex-start',
+              alignSelf: 'flex-end',
               borderRadius: 2,
               borderColor: 'primary.main',
               color: 'primary.main',
@@ -217,13 +227,11 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
                 select
                 label="Doctor Specialty"
                 fullWidth
-                value={field.value}
+                value={field.value }
                 onChange={(e) => {
                   field.onChange(e.target.value);
                   handleSpecialtyChange(e.target.value);
                 }}
-                error={!!errors.specialtyId}
-                helperText={errors.specialtyId?.message || 'Select a specialty to filter doctors'}
                 InputProps={{
                   startAdornment: <Category sx={{ mr: 1, color: 'action.active' }} />,
                 }}
@@ -234,11 +242,11 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
                       <Typography variant="body2" fontWeight={specialty.value === '' ? 'bold' : 'normal'}>
                         {specialty.label}
                       </Typography>
-                      {/*specialty. && (
+                      {/* specialty. && (
                         <Typography variant="caption" color="text.secondary">
                           {specialty.description}
                         </Typography>
-                      )*/}
+                      ) */}
                     </Box>
                   </MenuItem>
                 ))}
@@ -260,15 +268,15 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
                   field.onChange(doctorId);
                   handleDoctorChange(doctorId);
                 }}
-                disabled={!watchedSpecialtyId && !selectedSpecialtyId}
+                disabled={false}
                 renderInput={(params) => (
                   <TextField
                     {...params}
                     label="Select Doctor"
                     error={!!errors.doctorId}
                     helperText={
-                      !watchedSpecialtyId && !selectedSpecialtyId
-                        ? 'Select a specialty first to see available doctors'
+                      watchedSpecialtyId === ''
+                        ? 'Showing all doctors'
                         : errors.doctorId?.message
                     }
                     InputProps={{
@@ -358,6 +366,58 @@ const  AppointmentForm: React.FC <AppointmentFormProps> = ({
                     {selectedDoctor ? 'No slots available' : 'Select a doctor first'}
                   </MenuItem>
                 )}
+              </TextField>
+            )}
+          />
+          
+          {/* Appointment Status */}
+          <Controller
+            name="status"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                select
+                label="Appointment Status"
+                fullWidth
+                error={!!errors.status}
+                helperText={errors.status?.message || "Select the current status of the appointment"}
+                value={field.value}
+                onChange={field.onChange}
+                InputProps={{
+                  startAdornment: <Label sx={{ mr: 1, color: 'action.active' }} />,
+                }}
+                sx={{
+                  '& .MuiSelect-select': {
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 1,
+                  }
+                }}
+              >
+                <MenuItem value="scheduled">
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: 'primary.main' }} />
+                    Scheduled
+                  </Box>
+                </MenuItem>
+                <MenuItem value="completed">
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: 'success.main' }} />
+                    Completed
+                  </Box>
+                </MenuItem>
+                <MenuItem value="cancelled">
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: 'error.main' }} />
+                    Cancelled
+                  </Box>
+                </MenuItem>
+                <MenuItem value="no-show">
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: 'warning.main' }} />
+                    No Show
+                  </Box>
+                </MenuItem>
               </TextField>
             )}
           />

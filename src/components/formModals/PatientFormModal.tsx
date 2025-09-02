@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
-  Dialog, DialogTitle, DialogContent, DialogActions,
-  TextField, Button, Box, MenuItem, Autocomplete, Typography,IconButton,
+  Dialog, DialogTitle, DialogContent,
+  TextField, Box, Typography,IconButton,
 } from '@mui/material';
 import { DailogButton } from '../CustomButton';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import type { PatientFormData, Patient } from '../../types/appointment';
+// import type {  Patient } from '../../types/appointment';
+import type {  Patient } from '../../types/medical';
+import type { PatientFormData } from '../../types/medical';
 import { Close } from '@mui/icons-material';
 import { patientSchema } from '../../validation/PatientValidation';
 
@@ -14,7 +16,8 @@ interface PatientFormModalProps {
   open: boolean;
   onClose: () => void;
   onSubmit: (data: PatientFormData) => void;
-  patient?: Patient | null;
+   patient?: Patient | null;
+  //patient?: ExtendedPatient | null;
   isLoading?: boolean;
   mode?: 'create' | 'edit' | 'view';
 }
@@ -37,6 +40,16 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
       dateOfBirth: '',
       email: '',
       phone: '',
+      address:'',
+      emergencyContact:[
+        {
+          name: '',
+          phone: '',
+          relationship: ''
+        }],
+      allergies: [],
+      bloodType: '',
+      createdAt: ''
     },
   });
 
@@ -44,10 +57,7 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
   useEffect(() => {
     if (patient){
       reset({
-        name: patient.name,
-        dateOfBirth: patient.dateOfBirth,
-        email: patient.email,
-        phone: patient.phone,
+        ...patient
       });
     } else {
       reset({
@@ -55,12 +65,42 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
         dateOfBirth: '',
         email: '',
         phone: '',
+        address:'',
+      emergencyContact:[
+        {
+          name: '',
+          phone: '',
+          relationship: ''
+        }]
       });
     }
   }, [patient, reset, open]);
 
+  // utils/normalizeAllergies.ts
+function normalizeAllergies(value: unknown): string[] {
+  if (Array.isArray(value)) {
+    return value.filter(Boolean).map(String).map(s => s.trim());
+  }
+
+  if (typeof value === 'string') {
+    return value
+      .split(',')
+      .map(s => s.trim())
+      .filter(Boolean);
+  }
+
+  return [];
+}
+
+
   const handleFormSubmit = (data: PatientFormData) => {
-    onSubmit(data);
+    const normalizedAllergies = normalizeAllergies(data.allergies);
+    const payload: PatientFormData = {
+      ...data,
+      allergies: normalizedAllergies,
+      bloodType: data.bloodType,
+    };
+    onSubmit(payload);
   };
 
   const handleClose = () => {
@@ -136,6 +176,64 @@ const PatientFormModal: React.FC<PatientFormModalProps> = ({
               error={!!errors.phone}
               helperText={errors.phone?.message}
             />
+
+            <TextField
+              {...register('address')}
+              label="Address"
+              fullWidth
+              disabled={isView}
+              error={!!errors.address}
+              helperText={errors.address?.message}
+            />
+
+            <TextField
+              {...register('bloodType')}
+              label="Blood Type (optional)"
+              fullWidth
+              disabled={isView}
+              error={!!errors.bloodType}
+              helperText={errors.bloodType?.message}
+            />
+
+            <TextField
+              {...register('allergies', {
+                setValueAs: (value) => normalizeAllergies(value),
+              }) as any}
+              label="Allergies (comma-separated)"
+              placeholder="e.g., Penicillin, Nuts, Dust"
+              fullWidth
+              disabled={isView}
+              error={!!errors.allergies}
+              helperText={typeof errors.allergies?.message === 'string' ? errors.allergies?.message : ''}
+            />
+
+            <TextField
+              {...register('emergencyContact.0.name')}
+              label="Emergency contact Full Name"
+              fullWidth
+              disabled={isView}
+              error={!!errors.emergencyContact?.[0]?.name}
+              helperText={errors.emergencyContact?.[0]?.name?.message}
+            />
+
+            <TextField
+              {...register('emergencyContact.0.phone')}
+              label="Emergency contact Phone number"
+              fullWidth
+              disabled={isView}
+              error={!!errors.emergencyContact?.[0]?.phone}
+              helperText={errors.emergencyContact?.[0]?.phone?.message}
+            />
+
+            <TextField
+              {...register('emergencyContact.0.relationship')}
+              label="Emergency contact relationship with patient"
+              fullWidth
+              disabled={isView}
+              error={!!errors.emergencyContact?.[0]?.relationship}
+              helperText={errors.emergencyContact?.[0]?.relationship?.message}
+            />
+
           </Box>
         </DialogContent>
 

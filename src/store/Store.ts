@@ -7,6 +7,8 @@ import taskReducer from './slices/TaskSlice'
 import settingsReducer from './slices/SettingsSlice';
 import supportReducer from './slices/SupportSlice';
 import doctorReducer from './slices/DoctorSlice';
+import medicalReducer from './slices/MedicalSlice';
+import notificationReducer from './slices/NotificationSlice';
 
 // Configure the Redux store with appointment and patient slices
 export const store = configureStore({
@@ -18,6 +20,8 @@ export const store = configureStore({
     settings: settingsReducer,
     support: supportReducer,
     doctors: doctorReducer,
+    medical: medicalReducer,
+    notifications: notificationReducer,
   },
 });
 

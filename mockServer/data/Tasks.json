@@ -1,0 +1,108 @@
+{
+  "Tasks": [
+    {
+      "id": "task_1",
+      "title": "Administer Morning Medication",
+      "type": "Medication",
+      "status": "In Progress",
+      "notes": "Give 5mg of Atorvastatin",
+      "patientId": "patient_1",
+      "assigneeId": "7",
+      "dueAt": "2025-06-23T09:00",
+      "createdBy": "1",
+      "createdAt": "2025-06-13T09:00:00Z",
+      "assigneeName": "unknown"
+    },
+    {
+      "id": "task_2",
+      "title": "Check Blood Pressure",
+      "type": "Vitals Check",
+      "status": "Done",
+      "notes": "Record systolic and diastolic values",
+      "patientId": "patient_2",
+      "assigneeId": "7",
+      "dueAt": "2025-06-23T10:30:00Z",
+      "createdBy": "2",
+      "createdAt": "2025-06-14T09:00:00Z",
+      "assigneeName": "unknown"
+    },
+    {
+      "id": "task_3",
+      "title": "Prep for Knee Surgery",
+      "type": "Procedure Prep",
+      "status": "Pending",
+      "notes": "Ensure patient is fasting and gown is ready",
+      "patientId": "patient_1",
+      "assigneeId": "apt_1753768305319",
+      "dueAt": "2025-06-23T13:00:00Z",
+      "createdBy": "3",
+      "createdAt": "2025-06-15T09:00:00Z",
+      "assigneeName": "unknown"
+    },
+    {
+      "id": "task_4",
+      "title": "Consultation Follow-up: Diabetes",
+      "type": "Consultation Follow-up",
+      "status": "Done",
+      "notes": "Review insulin dosage and dietary habits",
+      "patientId": "patient_2",
+      "assigneeId": "2",
+      "dueAt": "2025-06-22T15:00:00Z",
+      "createdBy": "2",
+      "createdAt": "2025-06-16T09:00:00Z",
+      "assigneeName": "unknown"
+    },
+    {
+      "id": "task_1754980819999",
+      "title": "Administer Morning Antibiotic Dose",
+      "type": "Medication",
+      "patientId": "patient_3",
+      "assigneeId": "7",
+      "dueAt": "2025-08-12T13:37",
+      "status": "Pending",
+      "notes": "Give 500 mg IV ceftriaxone at 08:00 for patient in Room 204; monitor for allergic reactions.",
+      "createdBy": "apt_1753765295252",
+      "createdAt": "2025-08-12T06:40:19.999Z",
+      "assigneeName": "unknown"
+    },
+    {
+      "id": "task_1754983332013",
+      "title": "Administer Morning Antibiotic Dose",
+      "type": "Medication",
+      "patientId": "patient_3",
+      "assigneeId": "2",
+      "dueAt": "2025-08-12T07:12",
+      "status": "In Progress",
+      "notes": "notes",
+      "createdBy": "apt_1753765295252",
+      "createdAt": "2025-08-12T07:22:12.013Z",
+      "assigneeName": "unknown"
+    },
+    {
+      "id": "task_1756802205712",
+      "title": "procedure prep",
+      "type": "Procedure Prep",
+      "status": "Pending",
+      "notes": "no notes for now",
+      "patientId": "patient_ae8066e2",
+      "assigneeId": "apt_1753768305319",
+      "dueAt": "2025-09-04T11:36",
+      "createdBy": "apt_1753765295252",
+      "createdAt": "2025-09-02T08:36:45.712Z",
+      "assigneeName": null
+    },
+    {
+      "id": "task_1756802342426",
+      "title": "Evening Vitals check",
+      "type": "Vitals Check",
+      "status": "In Progress",
+      "notes": "ongoing vitals check before sending back",
+      "patientId": "patient_6",
+      "assigneeId": "7",
+      "dueAt": "2025-09-02T08:38",
+      "createdBy": "apt_1753765295252",
+      "createdAt": "2025-09-02T08:39:02.426Z",
+      "assigneeName": null
+    }
+  ]
+}

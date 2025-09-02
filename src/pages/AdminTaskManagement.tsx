@@ -1,67 +1,115 @@
-import React, { useState } from 'react';
-import { Box,Typography, Chip, Avatar, Grid, Card, CardContent, } from '@mui/material';
-import { Add, Schedule, CheckCircle, Pending, PlayArrow, } from '@mui/icons-material';
-import {AddButton} from '../components/CustomButton';
+import React, { useEffect, useState } from 'react';
+import { Box, Typography, Chip, Avatar, Grid, Card, CardContent } from '@mui/material';
+import { Add, Schedule } from '@mui/icons-material';
+import { AddButton } from '../components/CustomButton';
 import Layout from '../components/sharedComponents/Layout';
-import TaskFormModal from '../components//formModals/TaskFormModal';
+import TaskFormModal from '../components/formModals/TaskFormModal';
 import DataTable from '../components/sharedComponents/DataTable';
 import ConfirmDeleteDialog from '../components/sharedComponents/ConfirmDeleteDialog';
 import SnackbarAlert from '../components/sharedComponents/SnackbarAlert';
-import type { Task, TaskFormData } from '../types/task';
+import type { Role, Task, TaskFormData } from '../types/task';
 import { useAuth } from '../context/AuthContext';
 import ViewDialog from '../components/sharedComponents/ViewDialog';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '../store/Store';
-import { addTask, updateTask, deleteTask } from '../store/slices/TaskSlice';
-
+import { fetchTasks, addTaskAsync, updateTaskAsync, deleteTaskAsync } from '../store/slices/TaskSlice';
+import { fetchPatients } from '../store/slices/PatientSlice';
+import { fetchUsers } from '../store/slices/UserSlice';
+import { useNotification } from '../context/NotifSocketContext';
+import { NotificationService } from '../utils/NotificationService';
+import { useCrudOperations } from '../hooks/useCrudOperations';
+import { usePermissions } from '../hooks/usePermissions';
+import { useDataFiltering } from '../hooks/useDataFiltering';
+import StatusChip from '../components/sharedComponents/StatusChip';
+import FilterBar from '../components/sharedComponents/FilterBar';
+import ActionButtons, { createViewAction, createEditAction, createDeleteAction } from '../components/sharedComponents/ActionButtons';
 
 const AdminTaskManagement: React.FC = () => {
   const { user } = useAuth();
   const userRole = user?.roleName as 'admin' | 'doctor' | 'nurse';
   const dispatch = useDispatch<AppDispatch>();
   const tasks = useSelector((state: RootState) => state.task.tasks);
+  const patients = useSelector((state: RootState) => state.patients.patients);
+  const users = useSelector((state: RootState) => state.user.users);
+  const { sendNotification } = useNotification();
 
+  // State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
   const [viewDialogOpen, setViewDialogOpen] = useState(false);
   const [taskToView, setTaskToView] = useState<Task | null>(null);
-  const [snackbar, setSnackbar] = useState({ 
-    open: false, 
-    message: '', 
-    severity: 'success' as 'success' | 'error' 
+
+  // Hooks
+  const { permissions, canEditItem, canDeleteItem } = usePermissions();
+  const { snackbar, closeSnackbar, handleAdd, handleUpdate, handleDelete } = useCrudOperations({
+    onAdd: async (task: Task) => {
+      await dispatch(addTaskAsync(task)).unwrap();
+      const notification = NotificationService.createTaskNotification(
+        task.assigneeId,
+        user?.id || '',
+        task.id,
+        task.title,
+        'assigned'
+      );
+      sendNotification(notification);
+    },
+    onUpdate: async (task: Task) => {
+      await dispatch(updateTaskAsync(task)).unwrap();
+      const notification = NotificationService.createTaskNotification(
+        task.assigneeId,
+        user?.id || '',
+        task.id,
+        task.title,
+        task.status === 'Done' ? 'completed' : 'updated'
+      );
+      sendNotification(notification);
+    },
+    onDelete: async (item: string | Task) => {
+      const taskId = typeof item === 'string' ? item : item.id;
+      await dispatch(deleteTaskAsync(taskId)).unwrap();
+    },
+    successMessages: {
+      add: 'Task created successfully!',
+      update: 'Task updated successfully!',
+      delete: 'Task deleted successfully!',
+    },
   });
 
+  const { filters, filteredData, updateFilter, clearFilters } = useDataFiltering({
+    data: tasks,
+    searchFields: ['title', 'type'],
+    filterConfig: {
+      statusField: 'status',
+      assigneeField: 'assigneeId',
+      patientField: 'patientId',
+    },
+    customFilters: (task, filters) => {
+      // Filter by user role
+      if (user?.roleName === 'nurse') {
+        return String(task.assigneeId) === String(user?.id);
+      }
+      return true;
+    },
+  });
+
+  // Effects
+  useEffect(() => {
+    dispatch(fetchPatients());
+    dispatch(fetchUsers());
+    dispatch(fetchTasks());
+  }, [dispatch]);
+
   // Helper functions
-  const patients = useSelector((state: RootState) => state.patients.patients);
   const getPatientName = (patientId: string) => {
     const patient = patients?.find(p => p.id === patientId);
     return patient?.name || 'Unknown Patient';
-  }
-
-  const users = useSelector((state: RootState) => state.user.users);
-  const getAssigneeName = (assigneeId: string) => {
-    const user = users?.find(u => String(u.id) === String(assigneeId));
-    return user?.name || 'Unknown User';
-  }
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'Pending': return 'warning';
-      case 'In Progress': return 'info';
-      case 'Done': return 'success';
-      default: return 'default';
-    }
   };
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'Pending': return <Pending />;
-      case 'In Progress': return <PlayArrow />;
-      case 'Done': return <CheckCircle />;
-      default: return <Schedule />;
-    }
+  const getAssigneeName = (assigneeId: string) => {
+    const user = users?.find(u => u.id === assigneeId);
+    return user?.name || 'Unknown User';
   };
 
   const getTypeColor = (type: string) => {
@@ -86,53 +134,9 @@ const AdminTaskManagement: React.FC = () => {
 
   const stats = getStats();
 
-  // Filter tasks based on user role
-  const getFilteredTasks = () => {
-    switch (userRole) {
-      case 'nurse':
-        // Nurses can only see their own tasks
-        return tasks.filter(task => String(task.assigneeId) === String(user?.id));
-      case 'doctor':
-      case 'admin':
-        // Doctors and admins can see all tasks
-        return tasks;
-      default:
-        return tasks;
-    }
-  };
-
-  const filteredTasks = getFilteredTasks();
-
-  // Permission checks
-  const canCreateTask = userRole === 'admin';
-  
-  const canEditTask = (task: Task) => {
-    if (userRole === 'admin') return true;
-    if (userRole === 'doctor') return true;
-    if (userRole === 'nurse') return String(task.assigneeId) === String(user?.id);
-    return false;
-  };
-
-  const canDeleteTask = (task: Task) => {
-    if (userRole === 'admin') return true;
-    if (userRole === 'doctor') return true;
-    return false;
-  };
-
-  const canReassignTask = (task: Task) => {
-    if (userRole === 'admin') return true;
-    if (userRole === 'doctor') return true;
-    return false;
-  };
-
   // Event handlers
   const handleAddTask = () => {
-    if (!canCreateTask) {
-      setSnackbar({ 
-        open: true, 
-        message: 'You do not have permission to create tasks.', 
-        severity: 'error' 
-      });
+    if (!permissions.canCreate) {
       return;
     }
     setSelectedTask(null);
@@ -140,12 +144,7 @@ const AdminTaskManagement: React.FC = () => {
   };
 
   const handleEditTask = (task: Task) => {
-    if (!canEditTask(task)) {
-      setSnackbar({ 
-        open: true, 
-        message: 'You do not have permission to edit this task.', 
-        severity: 'error' 
-      });
+    if (!canEditItem(task)) {
       return;
     }
     setSelectedTask(task);
@@ -158,62 +157,38 @@ const AdminTaskManagement: React.FC = () => {
   };
 
   const handleDeleteTask = (task: Task) => {
-    if (!canDeleteTask(task)) {
-      setSnackbar({ 
-        open: true, 
-        message: 'You do not have permission to delete this task.', 
-        severity: 'error' 
-      });
+    if (!canDeleteItem(task)) {
       return;
     }
     setTaskToDelete(task);
     setDeleteDialogOpen(true);
   };
 
-  const handleTaskSave = (taskData: TaskFormData) => {
+  const handleTaskSave = async (taskData: TaskFormData) => {
     if (selectedTask) {
-      // Edit existing task
-      dispatch(updateTask({...selectedTask, ...taskData}));
-      /*
-      setTasks(prev => prev.map(task => 
-        task.id === selectedTask.id 
-          ? { ...task, ...taskData, createdBy: task.createdBy }
-          : task
-      ));*/
-      setSnackbar({ 
-        open: true, 
-        message: 'Task updated successfully!', 
-        severity: 'success' 
-      });
+      const updatedTask: Task = {
+        ...selectedTask,
+        type: taskData.type,
+        assigneeId: taskData.assigneeId,
+        status: taskData.status,
+      };
+      await handleUpdate(updatedTask);
     } else {
-      // Add new task
       const newTask: Task = {
         ...taskData,
         id: `task_${Date.now()}`,
         createdBy: user?.id?.toString() || 'unknown',
         createdAt: new Date().toISOString(),
       };
-      dispatch(addTask(newTask));
-      //setTasks(prev => [...prev, newTask]);
-      setSnackbar({ 
-        open: true, 
-        message: 'Task created successfully!', 
-        severity: 'success' 
-      });
+      await handleAdd(newTask);
     }
     
     setIsModalOpen(false);
     setSelectedTask(null);
   };
 
-  const handleTaskDelete = (taskId: string) => {
-    dispatch(deleteTask(taskId));
-    //setTasks(prev => prev.filter(task => task.id !== taskId));
-    setSnackbar({ 
-      open: true, 
-      message: 'Task deleted successfully!', 
-      severity: 'success' 
-    });
+  const handleTaskDelete = async (taskId: string) => {
+    await handleDelete(taskId);
     setDeleteDialogOpen(false);
     setTaskToDelete(null);
   };
@@ -234,6 +209,94 @@ const AdminTaskManagement: React.FC = () => {
     });
   };
 
+  // Filter configuration
+  const filterFields = [
+    {
+      key: 'search',
+      label: 'Search',
+      type: 'search' as const,
+      placeholder: 'Search tasks...',
+    },
+    {
+      key: 'status',
+      label: 'Status',
+      type: 'select' as const,
+      options: [
+        { value: 'Pending', label: 'Pending' },
+        { value: 'In Progress', label: 'In Progress' },
+        { value: 'Done', label: 'Done' },
+      ],
+    },
+    {
+      key: 'assignee',
+      label: 'Assignee',
+      type: 'select' as const,
+      options: users.map(user => ({ value: user.id, label: user.name })),
+    },
+  ];
+
+  // Table columns configuration
+  const tableColumns = [
+    {
+      header: 'Task',
+      render: (task: Task) => (
+        <Box>
+          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+            {task.title}
+          </Typography>
+          <Chip
+            label={task.type}
+            color={getTypeColor(task.type)}
+            size="small"
+            sx={{ mt: 0.5 }}
+          />
+        </Box>
+      ),
+    },
+    {
+      header: 'Patient',
+      render: (task: Task) => (
+        <Typography variant="body2">
+          {getPatientName(task.patientId)}
+        </Typography>
+      ),
+    },
+    {
+      header: 'Assignee',
+      render: (task: Task) => (
+        <Typography variant="body2">
+          {getAssigneeName(task.assigneeId)}
+        </Typography>
+      ),
+    },
+    {
+      header: 'Status',
+      render: (task: Task) => (
+        <StatusChip status={task.status} />
+      ),
+    },
+    {
+      header: 'Due Date',
+      render: (task: Task) => (
+        <Typography variant="body2" color="text.secondary">
+          {formatDate(task.dueAt)}
+        </Typography>
+      ),
+    },
+    {
+      header: 'Actions',
+      render: (task: Task) => {
+        const actions = [
+          createViewAction(() => handleViewTask(task)),
+          createEditAction(() => handleEditTask(task), !canEditItem(task)),
+          createDeleteAction(() => handleDeleteTask(task), !canDeleteItem(task)),
+        ];
+
+        return <ActionButtons actions={actions} />;
+      },
+    },
+  ];
+
   return (
     <Layout>
       <Box sx={{ mb: 4 }}>
@@ -241,152 +304,102 @@ const AdminTaskManagement: React.FC = () => {
           Task Management
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          {userRole === 'admin' && 'Create, assign, and manage all healthcare tasks'}
-          {userRole === 'doctor' && 'View all tasks, reassign tasks, and manage consultations'}
-          {userRole === 'nurse' && 'View your assigned tasks and update task statuses'}
+          {user?.roleName === 'admin' && 'Create, assign, and manage all healthcare tasks'}
+          {user?.roleName === 'doctor' && 'View all tasks, reassign tasks, and manage consultations'}
+          {user?.roleName === 'nurse' && 'View your assigned tasks and update task statuses'}
         </Typography>
       </Box>
 
-      
       {/* Action Button */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Typography variant="h5" sx={{ fontWeight: 600 }}>
-          {userRole === 'nurse' ? 'My Tasks' : 'All Tasks'}
+          {user?.roleName === 'nurse' ? 'My Tasks' : 'All Tasks'}
         </Typography>
-        {canCreateTask && (
+        {permissions.canCreate && (
           <AddButton
-          onClick={ handleAddTask }
-          label='Create New Task'
-          startIcon= {<Add />}
-          ></AddButton>
+            onClick={handleAddTask}
+            label='Create New Task'
+            startIcon={<Add />}
+          />
         )}
       </Box>
 
+      {/* Filter Bar */}
+      <FilterBar
+        filters={filterFields}
+        values={filters as Record<string, string>}
+        onFilterChange={(key, value) => updateFilter(key as keyof typeof filters, value)}
+        onClearFilters={clearFilters}
+      />
+
       {/* Tasks Table */}
       <DataTable<Task>
-        data={filteredTasks}
-        columns={[
-          {
-            header: 'Task',
-            render: (task) => (
-              <Box>
-                <Typography variant="body2" sx={{ fontWeight: 500 }}>
-                  {task.title}
-                </Typography>
-                <Chip
-                  label={task.type}
-                  color={getTypeColor(task.type)}
-                  size="small"
-                  sx={{ mt: 0.5 }}
-                />
-              </Box>
-            )
-          },
-          {
-            header: 'Patient',
-            render: (task) => (
-              <Typography variant="body2">
-                {getPatientName(task.patientId)}
-              </Typography>
-            )
-          },
-          {
-            header: 'Assignee',
-            render: (task) => (
-              <Typography variant="body2">
-                {getAssigneeName(task.assigneeId)}
-              </Typography>
-            )
-          },
-          {
-            header: 'Status',
-            render: (task) => (
-              <Chip
-                icon={getStatusIcon(task.status)}
-                label={task.status}
-                color={getStatusColor(task.status)}
-                size="small"
-                sx={{ fontWeight: 'bold', minWidth: 120 }}
-              />
-            )
-          },
-          {
-            header: 'Due Date',
-            render: (task) => (
-              <Typography variant="body2" color="text.secondary">
-                {formatDate(task.dueAt)}
-              </Typography>
-            )
-          },
-        ]}
-        onView={handleViewTask}
-        onEdit={handleEditTask}
-        onDelete={handleDeleteTask}
-        showEdit={canEditTask}
-        showDelete={canDeleteTask}
+        data={filteredData}
+        sortByDate={(t) => t.dueAt}
+        columns={tableColumns}
+        // onView={handleViewTask}
+        // onEdit={handleEditTask}
+        // onDelete={handleDeleteTask}
+        // showEdit={canEditItem}
+        // showDelete={canDeleteItem}
+        emptyMessage="No tasks available"
       />
 
       {/* Task Form Modal */}
       <TaskFormModal
         open={isModalOpen}
-        mode={selectedTask ? 'edit' : 'create'}  
-        role={userRole}
-        taskId={selectedTask?.id}  
+        mode={selectedTask ? 'edit' : 'create'}
+        role={String(user?.roleId || '3') as Role}
+        taskId={selectedTask?.id}
         onClose={() => {
           setIsModalOpen(false);
           setSelectedTask(null);
         }}
-        //onSave={handleTaskSave}
         onSubmit={handleTaskSave}
         onDelete={handleTaskDelete}
       />
 
       {/* View Task Dialog */}
-        <ViewDialog
-          open={viewDialogOpen}
-          onClose={() => setViewDialogOpen(false)}
-          title="Task Details"
-          avatar={null}
-          chip={
-            taskToView && (
-              <Box sx={{ display: 'flex', gap: 1 }}>
-                <Chip
-                  label={taskToView.type}
-                  color={getTypeColor(taskToView.type)}
-                  size="small"
-                />
-                <Chip
-                  icon={getStatusIcon(taskToView.status)}
-                  label={taskToView.status}
-                  color={getStatusColor(taskToView.status)}
-                  size="small"
-                />
-              </Box>
-            )
-          }
-          fields={
-            taskToView
-              ? [
-                  {
-                    label: 'Patient',
-                    value: getPatientName(taskToView.patientId),
-                  },
-                  {
-                    label: 'Assigned To',
-                    value: getAssigneeName(taskToView.assigneeId),
-                  },
-                  {
-                    label: 'Due Date',
-                    value: formatDate(taskToView.dueAt),
-                  },
-                  {
-                    label: 'Notes',
-                    value: taskToView.notes || 'No notes provided',
-                  },
-                ]
-              : []
-          }
-        />
+      <ViewDialog
+        open={viewDialogOpen}
+        onClose={() => setViewDialogOpen(false)}
+        title="Task Details"
+        avatar={null}
+        chip={
+          taskToView && (
+            <Box sx={{ display: 'flex', gap: 1 }}>
+              <Chip
+                label={taskToView.type}
+                color={getTypeColor(taskToView.type)}
+                size="small"
+              />
+              <StatusChip status={taskToView.status} />
+            </Box>
+          )
+        }
+        fields={
+          taskToView
+            ? [
+                {
+                  label: 'Patient',
+                  value: getPatientName(taskToView.patientId),
+                },
+                {
+                  label: 'Assigned To',
+                  value: getAssigneeName(taskToView.assigneeId),
+                },
+                {
+                  label: 'Due Date',
+                  value: formatDate(taskToView.dueAt),
+                },
+                {
+                  label: 'Notes',
+                  value: taskToView.notes || 'No notes provided',
+                },
+              ]
+            : []
+        }
+      />
 
       {/* Delete Confirmation Dialog */}
       <ConfirmDeleteDialog
@@ -394,7 +407,6 @@ const AdminTaskManagement: React.FC = () => {
         itemName={taskToDelete?.title || ''}
         onClose={() => setDeleteDialogOpen(false)}
         onConfirm={confirmDelete}
-        //message={`Are you sure you want to delete the task "${taskToDelete?.title}"? This action cannot be undone and will remove all task data.`}
       />
 
       {/* Success/Error Snackbar */}
@@ -402,7 +414,7 @@ const AdminTaskManagement: React.FC = () => {
         open={snackbar.open}
         severity={snackbar.severity}
         message={snackbar.message}
-        onClose={() => setSnackbar({ ...snackbar, open: false })}
+        onClose={closeSnackbar}
       />
     </Layout>
   );

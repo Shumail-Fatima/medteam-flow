@@ -1,0 +1,2981 @@
+{
+  "Appointments": [
+    {
+      "id": "apt_1",
+      "patientId": "patient_1",
+      "patientName": "John Doe",
+      "patientAge": 65,
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentSlot": "2025-07-05T09:00:00Z",
+      "reason": "Regular checkup",
+      "status": "no-show",
+      "consultationCompleted": false,
+      "createdAt": "2025-07-01T08:30:00Z",
+      "specialtyName": "Cardiology",
+      "createdById": "1"
+    },
+    {
+      "id": "apt_1753788388045",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "patientAge": 74,
+      "specialtyName": "Orthopedics",
+      "doctorId": "5",
+      "doctorName": "Dr. James Thompson",
+      "appointmentSlot": "2025-07-29T23:00:00Z",
+      "reason": "follow up: soft tissue injury",
+      "createdAt": "2025-07-29T11:26:28.045Z",
+      "status": "completed",
+      "consultationCompleted": true,
+      "createdById": "1"
+    },
+    {
+      "id": "apt_1753790122836",
+      "patientId": "patient_1",
+      "patientName": "John Doe",
+      "patientAge": 67,
+      "specialtyName": "Orthopedics",
+      "doctorId": "5",
+      "doctorName": "Dr. James Thompson",
+      "appointmentSlot": "2025-07-29T23:00:00Z",
+      "reason": "Lumbar Strain Due to Postural Overuse",
+      "createdAt": "2025-07-29T11:55:22.836Z",
+      "status": "completed",
+      "consultationCompleted": true,
+      "createdById": "1"
+    },
+    {
+      "id": "apt_1753790153151",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "patientAge": 49,
+      "specialtyName": "Orthopedics",
+      "doctorId": "5",
+      "doctorName": "Dr. James Thompson",
+      "appointmentSlot": "2025-07-29T17:30:00Z",
+      "reason": "Patellofemoral Pain Syndrome (Runner’s Knee)",
+      "createdAt": "2025-07-29T11:55:53.151Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1753874396769",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "patientAge": 74,
+      "specialtyName": "Orthopedics",
+      "doctorId": "5",
+      "doctorName": "Dr. James Thompson",
+      "appointmentSlot": "2025-07-30T19:00:00Z",
+      "reason": "visit",
+      "createdAt": "2025-07-30T11:19:56.769Z",
+      "status": "scheduled",
+      "consultationCompleted": false
+    },
+    {
+      "id": "apt_1753989987444",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "patientAge": 74,
+      "specialtyName": "Dermatology",
+      "doctorId": "6",
+      "doctorName": "Dr. Lisa Anderson",
+      "appointmentSlot": "2025-07-31T17:00:00Z",
+      "reason": "Acne Vulgaris – Initial Consultation",
+      "createdAt": "2025-07-31T19:26:27.444Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1754281909331",
+      "patientId": "patient_1",
+      "patientName": "John Doe",
+      "patientAge": 67,
+      "specialtyName": "Cardiology",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentSlot": "2025-08-03T09:00:00Z",
+      "reason": "Hypertension – Routine Follow-Up",
+      "createdAt": "2025-08-04T04:31:49.331Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1754282175898",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "patientAge": 74,
+      "specialtyName": "Cardiology",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentSlot": "2025-08-03T10:00:00Z",
+      "reason": "Stable Angina – Follow-Up After Initial Diagnosis",
+      "createdAt": "2025-08-04T04:36:15.898Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1754282670395",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "patientAge": 74,
+      "specialtyName": "Neurology",
+      "doctorId": "3",
+      "doctorName": "Dr. Michael Chen",
+      "appointmentSlot": "2025-08-03T08:00:00Z",
+      "reason": "Migraine Evaluation – First-Time Episode",
+      "createdAt": "2025-08-04T04:44:30.395Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1754283359314",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "patientAge": 49,
+      "specialtyName": "Cardiology",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentSlot": "2025-08-03T10:00:00Z",
+      "reason": "Hypertension Follow-Up – Medication Adjustment",
+      "createdAt": "2025-08-04T04:55:59.314Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1754285670979",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "patientAge": 49,
+      "specialtyName": "Neurology",
+      "doctorId": "3",
+      "doctorName": "Dr. Michael Chen",
+      "appointmentSlot": "2025-08-03T09:30:00Z",
+      "reason": "Chronic Tension-Type Headache – Follow-up",
+      "createdAt": "2025-08-04T05:34:30.979Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1754285964017",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "patientAge": 49,
+      "specialtyName": "Orthopedics",
+      "doctorId": "5",
+      "doctorName": "Dr. James Thompson",
+      "appointmentSlot": "2025-08-03T07:30:00Z",
+      "reason": "Follow-up for Post-Operative Knee Arthroscopy Recovery",
+      "createdAt": "2025-08-04T05:39:24.017Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1754295358944",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "patientAge": 74,
+      "specialtyName": "Dermatology",
+      "doctorId": "6",
+      "doctorName": "Dr. Lisa Anderson",
+      "appointmentSlot": "2025-08-04T09:30:00Z",
+      "reason": "Follow-up for Mild Atopic Dermatitis (Eczema)",
+      "createdAt": "2025-08-04T08:15:58.944Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1754296664444",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "patientAge": 49,
+      "specialtyName": "Pediatrics",
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Rodriguez",
+      "appointmentSlot": "2025-08-04T11:30:00Z",
+      "reason": "Follow-up for Viral Fever and Sore Throat in Child",
+      "createdAt": "2025-08-04T08:37:44.444Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1754313075966",
+      "patientId": "patient_1",
+      "patientName": "John Doe",
+      "patientAge": 67,
+      "specialtyName": "Pediatrics",
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Rodriguez",
+      "appointmentSlot": "2025-08-04T11:30:00Z",
+      "reason": "Evaluation of Chronic Scalp Itching and Flaking",
+      "createdAt": "2025-08-04T13:11:15.966Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1754313385095",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "patientAge": 49,
+      "specialtyName": "Dermatology",
+      "doctorId": "6",
+      "doctorName": "Dr. Lisa Anderson",
+      "appointmentSlot": "2025-08-04T11:00:00Z",
+      "reason": "Acute Eczema Flare on Hands",
+      "createdAt": "2025-08-04T13:16:25.095Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1754372260851",
+      "patientId": "patient_8",
+      "patientName": "Lucas Martinez",
+      "patientAge": 13,
+      "specialtyName": "Pediatrics",
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Rodriguez",
+      "appointmentSlot": "2025-08-04T10:00:00Z",
+      "reason": "Mild Dehydration Due to Acute Gastroenteritis",
+      "createdAt": "2025-08-05T05:37:40.851Z",
+      "status": "no-show",
+      "consultationCompleted": false
+    },
+    {
+      "id": "apt_1754398548666",
+      "patientId": "patient_4",
+      "patientName": "Emily Carter",
+      "patientAge": 7,
+      "specialtyName": "Pediatrics",
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Rodriguez",
+      "appointmentSlot": "2025-08-05T10:00:00Z",
+      "reason": "Mild Dehydration Due to Acute Gastroenteritis",
+      "createdAt": "2025-08-05T12:55:48.666Z",
+      "status": "scheduled",
+      "consultationCompleted": false
+    },
+    {
+      "id": "apt_1754845310817",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "patientAge": 74,
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentSlot": "2025-08-11T14:00:00Z",
+      "reason": "visit follow up",
+      "createdAt": "2025-08-10T17:01:50.817Z",
+      "createdById": "apt_1753765295252",
+      "status": "cancelled",
+      "consultationCompleted": false,
+      "specialtyName": "Cardiology"
+    },
+    {
+      "id": "apt_1754890420558",
+      "patientId": "patient_4",
+      "patientName": "Emily Carter",
+      "patientAge": 7,
+      "specialtyName": "Pediatrics",
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Rodriguez",
+      "appointmentSlot": "2025-08-10T14:00:00Z",
+      "reason": "Recurrent Wheezing in a Child",
+      "createdAt": "2025-08-11T05:33:40.558Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1754892011765",
+      "patientId": "patient_7",
+      "patientName": "Oliver Brown",
+      "patientAge": 37,
+      "specialtyName": "Orthopedics",
+      "doctorId": "5",
+      "doctorName": "Dr. James Thompson",
+      "appointmentSlot": "2025-08-11T10:30:00Z",
+      "reason": "Post-Operative Knee Replacement Follow-Up",
+      "createdAt": "2025-08-11T06:00:11.765Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1754902344064",
+      "patientId": "patient_5",
+      "patientName": "George Miller",
+      "patientAge": 82,
+      "specialtyName": "Neurology",
+      "doctorId": "3",
+      "doctorName": "Dr. Michael Chen",
+      "appointmentSlot": "2025-08-11T13:00:00Z",
+      "reason": "Cognitive Decline with Early Signs of Dementia",
+      "createdAt": "2025-08-11T08:52:24.064Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1754905108172",
+      "patientId": "patient_6",
+      "patientName": "Sophia Lee",
+      "patientAge": 19,
+      "specialtyName": "Dermatology",
+      "doctorId": "6",
+      "doctorName": "Dr. Lisa Anderson",
+      "appointmentSlot": "2025-08-12T14:30:00Z",
+      "reason": "Acne Vulgaris – Moderate Inflammatory Type",
+      "createdAt": "2025-08-11T09:38:28.172Z",
+      "status": "scheduled",
+      "consultationCompleted": false
+    },
+    {
+      "id": "apt_1754998608608",
+      "patientId": "patient_7",
+      "patientName": "Oliver Brown",
+      "patientAge": 37,
+      "specialtyName": "Neurology",
+      "doctorId": "3",
+      "doctorName": "Dr. Michael Chen",
+      "appointmentSlot": "2025-08-13T15:30:00Z",
+      "reason": "visit",
+      "createdAt": "2025-08-12T11:36:48.608Z",
+      "status": "cancelled",
+      "consultationCompleted": false
+    },
+    {
+      "id": "apt_1755491404231",
+      "patientId": "patient_5",
+      "patientName": "George Miller",
+      "patientAge": 82,
+      "specialtyName": "Cardiology",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "createdById": "apt_1753765295252",
+      "appointmentSlot": "2025-08-19T14:30:00Z",
+      "reason": "visit",
+      "createdAt": "2025-08-18T04:30:04.231Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1755502658611",
+      "patientId": "patient_4",
+      "patientName": "Emily Carter",
+      "patientAge": 7,
+      "specialtyName": "Pediatrics",
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Rodriguez",
+      "createdById": "apt_1753765295252",
+      "appointmentSlot": "2025-08-18T14:30:00Z",
+      "reason": "visit",
+      "createdAt": "2025-08-18T07:37:38.611Z",
+      "status": "scheduled",
+      "consultationCompleted": false
+    },
+    {
+      "id": "apt_1755511024831",
+      "patientId": "65a5",
+      "patientName": "Ahmed Raza",
+      "patientAge": 55,
+      "specialtyName": "Neurology",
+      "doctorId": "apt_1755504674347",
+      "doctorName": "Mishal Fatima",
+      "createdById": "apt_1753765295252",
+      "appointmentSlot": "2025-08-18T11:30:00Z",
+      "reason": "Chronic Headaches with Cognitive Changes",
+      "createdAt": "2025-08-18T09:57:04.831Z",
+      "status": "scheduled",
+      "consultationCompleted": false
+    },
+    {
+      "id": "apt_1755578578160",
+      "patientId": "559e",
+      "patientName": "Ayaan Ali",
+      "patientAge": 7,
+      "specialtyName": "Pediatrics",
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Rodriguez",
+      "createdById": "apt_1753765295252",
+      "appointmentSlot": "2025-08-16T11:00:00Z",
+      "reason": "visit",
+      "createdAt": "2025-08-19T04:42:58.160Z",
+      "status": "no-show",
+      "consultationCompleted": false
+    },
+    {
+      "id": "apt_1755584374637",
+      "patientId": "patient_8",
+      "patientName": "Lucas Martinez",
+      "patientAge": 13,
+      "specialtyName": "Pediatrics",
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Rodriguez",
+      "createdById": "apt_1753765295252",
+      "appointmentSlot": "2025-08-18T14:30:00Z",
+      "reason": "visit",
+      "createdAt": "2025-08-19T06:19:34.637Z",
+      "status": "completed",
+      "consultationCompleted": true
+    },
+    {
+      "id": "apt_1755588384263",
+      "patientId": "65a5",
+      "patientName": "Ahmed Raza",
+      "patientAge": 55,
+      "specialtyName": "Cardiology",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "createdById": "apt_1753765295252",
+      "appointmentSlot": "2025-08-19T14:30:00Z",
+      "reason": "visit",
+      "createdAt": "2025-08-19T07:26:24.263Z",
+      "status": "cancelled",
+      "consultationCompleted": false
+    },
+    {
+      "id": "apt_1755758878905",
+      "patientId": "65a5",
+      "patientName": "Ahmed Raza",
+      "patientAge": 55,
+      "specialtyName": "Cardiology",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "createdById": "apt_1753765295252",
+      "appointmentSlot": "2025-08-21T15:30:00Z",
+      "reason": "visit",
+      "createdAt": "2025-08-21T06:47:58.905Z",
+      "status": "scheduled",
+      "consultationCompleted": false
+    },
+    {
+      "id": "apt_1755860871593",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "patientAge": 49,
+      "specialtyName": "Cardiology",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "createdById": "apt_1753765295252",
+      "appointmentSlot": "2025-08-25T11:00:00Z",
+      "reason": "visit",
+      "createdAt": "2025-08-22T11:07:51.593Z",
+      "status": "scheduled",
+      "consultationCompleted": false
+    }
+  ],
+  "Consultations": [
+    {
+      "id": "cons_1",
+      "patientId": "patient_1",
+      "patientName": "John Doe",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentId": "apt_1",
+      "date": "2024-01-10T10:00:00Z",
+      "symptoms": [
+        "Chest pain",
+        "Shortness of breath"
+      ],
+      "diagnosis": "Hypertension Stage 1",
+      "notes": "Patient presents with elevated blood pressure readings. Lifestyle modifications recommended along with medication.",
+      "prescriptions": [
+        {
+          "id": "rx_1",
+          "medication": "Lisinopril",
+          "dosage": "10mg",
+          "frequency": "Once daily",
+          "duration": "30 days",
+          "instructions": "Take with food, monitor blood pressure"
+        }
+      ],
+      "followUpRequired": true,
+      "followUpDate": "2024-02-10T10:00:00Z",
+      "createdAt": "2024-01-10T10:00:00Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1753789653425",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "doctorId": "5",
+      "doctorName": "Dr. James Thompson",
+      "appointmentId": "apt_1753788388045",
+      "date": "2025-07-29T11:47:33.425Z",
+      "symptoms": [
+        "mild swelling",
+        "occasional pain",
+        "stiffness in movement",
+        "slight bruising"
+      ],
+      "diagnosis": "Soft tissue injury (Grade I strain) – healing well with conservative management",
+      "notes": "Patient reports improvement in symptoms since the last visit. Pain is now occasional and manageable without medication. Mild stiffness remains, particularly in the morning. No signs of infection or worsening. The patient has adhered well to rest and physiotherapy instructions. On examination, mild swelling is still present, but range of motion has improved. No new injuries noted. Recommend continuing conservative care and beginning light exercise to restore function.",
+      "prescriptions": [
+        {
+          "id": "rx_1753789653425_0",
+          "medication": " Ibuprofen ",
+          "dosage": "400 mg",
+          "frequency": "Twice daily after meals",
+          "duration": "5 days",
+          "instructions": "Take only if pain returns or becomes bothersome. Discontinue if no pain is experienced."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-07-29T11:47:33.425Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1753790290669",
+      "patientId": "patient_1",
+      "patientName": "John Doe",
+      "doctorId": "5",
+      "doctorName": "Dr. James Thompson",
+      "appointmentId": "apt_1753790122836",
+      "date": "2025-07-29T11:58:10.669Z",
+      "symptoms": [
+        "Localized pain in the lower back",
+        "especially after prolonged sitting",
+        "muscle tightness",
+        "mild limitation in bending forward."
+      ],
+      "diagnosis": "Lumbar strain – likely due to poor posture and overuse. No neurological signs. Conservative treatment advised.",
+      "notes": "Patient complains of lower back pain that has developed gradually over the last week. The pain is dull, increases after prolonged sitting, and is relieved by movement. No radiating pain or numbness. Physical exam reveals tightness in lumbar paraspinal muscles and mild tenderness over L3-L5 region. No red flags observed. Advised posture correction, ergonomic adjustments, and physiotherapy focusing on core strengthening and stretching.",
+      "prescriptions": [
+        {
+          "id": "rx_1753790290669_0",
+          "medication": "Paracetamol",
+          "dosage": "500 mg",
+          "frequency": "Thrice daily",
+          "duration": "3 days",
+          "instructions": "Take after meals; continue only if pain persists beyond 3 days."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-07-29T11:58:10.669Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1753790528507",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "doctorId": "5",
+      "doctorName": "Dr. James Thompson",
+      "appointmentId": "apt_1753790153151",
+      "date": "2025-07-29T12:02:08.507Z",
+      "symptoms": [
+        "Knee pain during stair climbing and squatting",
+        "occasional clicking sound",
+        "minor instability while walking downhill."
+      ],
+      "diagnosis": "Patellofemoral pain syndrome (Runner’s knee) – overuse injury common in active individuals.",
+      "notes": "The patient is physically active and reports anterior knee pain aggravated by stairs, squats, and prolonged sitting. No history of trauma. On examination, there is slight patellar maltracking and tenderness around the patella. No swelling or effusion. Functional tests indicate weak quadriceps and tight hamstrings. Diagnosed with patellofemoral pain syndrome. Advised activity modification, quadriceps strengthening, and hamstring stretching exercises. No surgical intervention required.",
+      "prescriptions": [
+        {
+          "id": "rx_1753790528507_0",
+          "medication": "Naproxen",
+          "dosage": "250 mg",
+          "frequency": " Twice daily after meals",
+          "duration": "7 days",
+          "instructions": "Take with food; avoid if gastric discomfort occurs."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-07-29T12:02:08.507Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1753875384223",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "doctorId": "5",
+      "doctorName": "Dr. James Thompson",
+      "appointmentId": "apt_1753874396769",
+      "date": "2025-07-30T11:36:24.223Z",
+      "symptoms": [
+        "Mild pain during movement",
+        "reduced strength in the affected limb",
+        "minor limping",
+        "stiffness after rest."
+      ],
+      "diagnosis": "Healing distal radius fracture – stable alignment, good callus formation, early functional recovery observed.",
+      "notes": "The patient is in the recovery phase post-cast removal for a distal radius fracture sustained 6 weeks ago. They report reduced pain but some weakness and stiffness remain. No signs of neurovascular compromise. On examination, there is mild tenderness at the fracture site and limited grip strength, but range of motion is improving. Patient is advised to continue physiotherapy focused on strength and flexibility. X-ray confirms proper healing. No complications noted.",
+      "prescriptions": [
+        {
+          "id": "rx_1753875384224_0",
+          "medication": "Calcium + Vitamin D3 Supplement",
+          "dosage": " 1 tablet",
+          "frequency": "Once daily after meals",
+          "duration": "30 days",
+          "instructions": "Continue supplementation to support bone healing."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-07-30T11:36:24.224Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1753990110342",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "doctorId": "6",
+      "doctorName": "Dr. Lisa Anderson",
+      "appointmentId": "apt_1753989987444",
+      "date": "2025-07-31T19:28:30.342Z",
+      "symptoms": [
+        "Red inflamed pimples",
+        "whiteheads",
+        "blackheads",
+        "occasional tenderness on touch",
+        "increased oiliness on the face",
+        "primarily on the forehead and cheeks."
+      ],
+      "diagnosis": "Mild to moderate Acne Vulgaris – comedonal and inflammatory type.",
+      "notes": "Patient presents with a 3-month history of persistent acne, worsened recently due to stress and possible dietary triggers. Lesions are most prominent on the forehead and upper cheeks, with a mix of open and closed comedones, along with a few pustules. No scarring or nodules observed at this stage. Patient reports no prior treatment. Skin type is oily. Emphasized importance of consistent skincare routine and avoiding squeezing pimples. Advised on gentle cleansing and non-comedogenic products. Follow-up scheduled in 4 weeks to monitor response.",
+      "prescriptions": [
+        {
+          "id": "rx_1753990110342_0",
+          "medication": "Benzoyl Peroxide 2.5% gel",
+          "dosage": "Apply thin layer to affected areas",
+          "frequency": "Once daily at night",
+          "duration": "4 weeks",
+          "instructions": "Start every other night to reduce irritation; avoid eye and mouth areas."
+        }
+      ],
+      "followUpRequired": true,
+      "followUpDate": "2025-08-04T12:30",
+      "createdAt": "2025-07-31T19:28:30.342Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1754282072280",
+      "patientId": "patient_1",
+      "patientName": "John Doe",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentId": "apt_1754281909331",
+      "date": "2025-08-04T04:34:32.280Z",
+      "symptoms": [
+        "Occasional headaches",
+        "mild dizziness on standing",
+        "fatigue",
+        "no chest pain or palpitations."
+      ],
+      "diagnosis": "Essential Hypertension – Stage 1 (controlled with medication)",
+      "notes": "Patient is a known case of hypertension, diagnosed 6 months ago. Currently on regular antihypertensive therapy. Reports good medication adherence with occasional missed doses. BP on examination: 132/86 mmHg. Pulse: 78 bpm, regular. No abnormal heart sounds or peripheral edema. Patient denies any recent episodes of chest discomfort or palpitations. Lifestyle changes have been moderately followed, with some improvement in diet and reduced salt intake. Advised to continue monitoring BP at home and encouraged further weight management and physical activity.",
+      "prescriptions": [
+        {
+          "id": "rx_1754282072280_0",
+          "medication": "Amlodipine",
+          "dosage": "5 mg",
+          "frequency": "Once daily in the morning",
+          "duration": "30 days",
+          "instructions": "Take at the same time daily, preferably with breakfast. Monitor blood pressure weekly."
+        },
+        {
+          "id": "rx_1754282072280_1",
+          "medication": "Atorvastatin",
+          "dosage": "10 mg",
+          "frequency": "Once daily at night",
+          "duration": "30 days",
+          "instructions": "Take after dinner. Recheck lipid profile in 3 months."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-08-04T04:34:32.280Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1754282389243",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentId": "apt_1754282175898",
+      "date": "2025-08-04T04:39:49.243Z",
+      "symptoms": [
+        "Chest tightness during exertion",
+        "occasional shortness of breath",
+        "symptoms relieved by rest",
+        "no dizziness or syncope."
+      ],
+      "diagnosis": "Stable Angina (NYHA Class II) – Under Medical Management",
+      "notes": "Patient presents for follow-up after being diagnosed with stable angina 4 weeks ago. Reports chest discomfort when climbing stairs or walking briskly, which resolves with rest. No episodes at rest or during sleep. Adherence to medication has been good. ECG shows no new changes; vitals are stable. Pulse: 74 bpm, BP: 128/80 mmHg. Weight slightly reduced since last visit. No signs of fluid overload or heart failure. Advised to continue medications, monitor symptoms, and avoid physical overexertion. Referred for a stress test in the coming week to assess exercise tolerance.",
+      "prescriptions": [
+        {
+          "id": "rx_1754282389243_0",
+          "medication": "Nitroglycerin",
+          "dosage": "0.5 mg (sublingual)",
+          "frequency": "As needed during chest pain",
+          "duration": "As required",
+          "instructions": "Place under the tongue at onset of chest pain. Repeat once after 5 minutes if pain persists, up to 3 doses. Seek immediate care if no relief."
+        },
+        {
+          "id": "rx_1754282389243_1",
+          "medication": "Metoprolol",
+          "dosage": "25 mg",
+          "frequency": "Twice daily",
+          "duration": "30 days",
+          "instructions": "Take with meals. Do not skip or double dose."
+        },
+        {
+          "id": "rx_1754282389243_2",
+          "medication": "Aspirin",
+          "dosage": "75 mg",
+          "frequency": "Once daily",
+          "duration": "30 days",
+          "instructions": "Take after breakfast to minimize gastric irritation."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-08-04T04:39:49.243Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1754282950548",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "doctorId": "3",
+      "doctorName": "Dr. Michael Chen",
+      "appointmentId": "apt_1754282670395",
+      "date": "2025-08-04T04:49:10.548Z",
+      "symptoms": [
+        "Throbbing headache on one side",
+        "light sensitivity",
+        "nausea",
+        "visual aura (zigzag lines)",
+        "lasted 6 hours"
+      ],
+      "diagnosis": "Migraine with Aura – First Episode",
+      "notes": "Patient presents with a first-time episode of a severe, unilateral throbbing headache accompanied by nausea, photophobia, and visual aura. The episode lasted around 6 hours and resolved spontaneously after rest in a dark room. No prior history of similar symptoms. No neurological deficits on examination. No family history of migraines or seizures. Brain imaging is not warranted at this stage due to normal clinical exam and classic presentation. Educated patient about migraine triggers and non-pharmacological management. Prescribed abortive medication and advised to maintain a headache diary.",
+      "prescriptions": [
+        {
+          "id": "rx_1754282950549_0",
+          "medication": "Sumatriptan",
+          "dosage": "50 mg",
+          "frequency": "At onset of migraine",
+          "duration": "As needed, maximum 2 tablets in 24 hours",
+          "instructions": "Take at the first sign of migraine. Avoid driving after taking. Do not exceed the dose."
+        },
+        {
+          "id": "rx_1754282950549_1",
+          "medication": "Paracetamol",
+          "dosage": "500 mg",
+          "frequency": "Every 6 hours if needed",
+          "duration": "3–5 days",
+          "instructions": "Use for mild headache or fever. Do not exceed 8 tablets/day."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-08-04T04:49:10.549Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1754283467704",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentId": "apt_1754283359314",
+      "date": "2025-08-04T04:57:47.704Z",
+      "symptoms": [
+        "Mild headaches in the morning",
+        "occasional dizziness when standing",
+        "no chest pain or shortness of breath",
+        "no vision disturbances."
+      ],
+      "diagnosis": "Essential Hypertension – Suboptimal Control on Current Regimen",
+      "notes": "Patient reports mild morning headaches and occasional light-headedness. No recent medication changes. Blood pressure today is 152/96 mmHg, slightly elevated despite adherence to current antihypertensive therapy. No signs of hypertensive retinopathy or cardiac complications. Physical exam is otherwise unremarkable. Discussed lifestyle modifications and importance of salt restriction and weight management. Current medication regimen appears insufficient for optimal BP control. Plan to adjust medications and monitor closely.",
+      "prescriptions": [
+        {
+          "id": "rx_1754283467704_0",
+          "medication": "Losartan",
+          "dosage": "50 mg",
+          "frequency": "Once daily",
+          "duration": "30 days",
+          "instructions": "Take at the same time each day. Avoid potassium-rich foods or supplements."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-08-04T04:57:47.704Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1754285736486",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "doctorId": "3",
+      "doctorName": "Dr. Michael Chen",
+      "appointmentId": "apt_1754285670979",
+      "date": "2025-08-04T05:35:36.486Z",
+      "symptoms": [
+        "Dull",
+        "bilateral headache",
+        "tight pressure around the head",
+        "worsens with stress",
+        "no nausea or aura",
+        "present for several months"
+      ],
+      "diagnosis": "Chronic Tension-Type Headache",
+      "notes": "Patient reports a long-standing history of dull, non-throbbing headaches occurring bilaterally with a sensation of tightness or pressure. Symptoms are more frequent during workdays and periods of emotional stress. No associated nausea, vomiting, photophobia, or aura. Headaches are relieved with rest and over-the-counter analgesics. Neurological examination is normal. No red flag symptoms to suggest secondary causes. Patient was counseled on lifestyle changes, stress management techniques, posture correction, and regular exercise. Non-pharmacological management emphasized.",
+      "prescriptions": [
+        {
+          "id": "rx_1754285736486_0",
+          "medication": "Amitriptyline",
+          "dosage": "10 mg",
+          "frequency": "At bedtime",
+          "duration": "30 days",
+          "instructions": "Take daily at bedtime to reduce headache frequency. May cause drowsiness."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-08-04T05:35:36.486Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1754286069626",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "doctorId": "5",
+      "doctorName": "Dr. James Thompson",
+      "appointmentId": "apt_1754285964017",
+      "date": "2025-08-04T05:41:09.626Z",
+      "symptoms": [
+        "Mild knee pain",
+        "occasional clicking sensation",
+        "stiffness after prolonged sitting",
+        "slight limp"
+      ],
+      "diagnosis": "Post-operative recovery following arthroscopic meniscectomy – healing as expected",
+      "notes": "Patient is 4 weeks post knee arthroscopy for medial meniscus tear. Reports progressive improvement in mobility. Occasional clicking sounds noted during flexion but no locking or instability. Pain has reduced significantly and is mostly activity-related. Slight stiffness experienced after sitting for long durations. Gait shows mild limp, improving with physiotherapy. Wound site healed with no signs of infection. Advised to continue strengthening exercises and increase activity level gradually.",
+      "prescriptions": [
+        {
+          "id": "rx_1754286069626_0",
+          "medication": "Paracetamol",
+          "dosage": "500 mg",
+          "frequency": "Thrice daily after meals",
+          "duration": "5 days",
+          "instructions": "Take after meals to relieve residual pain during activity."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-08-04T05:41:09.626Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1754295483869",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "doctorId": "6",
+      "doctorName": "Dr. Lisa Anderson",
+      "appointmentId": "apt_1754295358944",
+      "date": "2025-08-04T08:18:03.869Z",
+      "symptoms": [
+        "Itchy skin",
+        "dry patches on elbows and behind knees",
+        "mild redness",
+        "occasional flare-ups"
+      ],
+      "diagnosis": "Atopic Dermatitis – Mild Chronic Case",
+      "notes": "Patient reports intermittent flare-ups of eczema, primarily during weather changes or after exposure to dust. The current flare is mild with localized dryness and itching. Skin examination shows dry, scaly patches on flexural areas (elbows and behind knees), with no signs of infection or weeping lesions. The patient has been compliant with emollient use but inconsistently applies topical medication during flare-ups. Educated on importance of regular moisturization and avoiding known triggers (wool, harsh soaps, dust). Emphasis placed on routine skin care maintenance to prevent recurrence.",
+      "prescriptions": [
+        {
+          "id": "rx_1754295483869_0",
+          "medication": "Hydrocortisone 1% cream",
+          "dosage": "Apply a thin layer",
+          "frequency": "Twice daily to affected areas",
+          "duration": "7 days",
+          "instructions": "Use during flare-up only. Avoid prolonged use."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-08-04T08:18:03.869Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1754296753042",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Rodriguez",
+      "appointmentId": "apt_1754296664444",
+      "date": "2025-08-04T08:39:13.042Z",
+      "symptoms": [
+        "Low-grade fever",
+        "sore throat",
+        "fatigue",
+        "mild cough",
+        "decreased appetite"
+      ],
+      "diagnosis": "Viral upper respiratory tract infection (URTI)",
+      "notes": "Child presented with a 3-day history of low-grade fever and sore throat. Parent reports improvement in fever after administering paracetamol. Cough is mild, mostly dry. Appetite is slightly reduced, but hydration is adequate. On examination, throat appears erythematous with no pus or swelling. Chest is clear on auscultation, and there are no signs of ear infection. Vitals are stable. Diagnosis is consistent with a viral infection. No need for antibiotics at this stage. Advised supportive care and monitoring for worsening symptoms.",
+      "prescriptions": [
+        {
+          "id": "rx_1754296753042_0",
+          "medication": "Paracetamol 250 mg syrup",
+          "dosage": "5 ml",
+          "frequency": "Every 6–8 hours as needed for fever",
+          "duration": "3 days",
+          "instructions": "Administer only if temperature is above 100°F. Maintain hydration."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-08-04T08:39:13.042Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1754313170231",
+      "patientId": "patient_1",
+      "patientName": "John Doe",
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Rodriguez",
+      "appointmentId": "apt_1754313075966",
+      "date": "2025-08-04T13:12:50.231Z",
+      "symptoms": [
+        "Persistent scalp itching",
+        "white flaking",
+        "mild redness along the hairline",
+        "occasional soreness"
+      ],
+      "diagnosis": "Seborrheic Dermatitis of the Scalp",
+      "notes": "Patient presents with ongoing scalp irritation for the past 2–3 months, worsened during periods of stress and cold weather. Examination reveals diffuse white scales and erythema on the scalp, especially near the frontal hairline and behind the ears. No signs of fungal infection or hair loss noted. The patient has tried over-the-counter anti-dandruff shampoos with limited relief. Advised on scalp hygiene and prescribed medicated treatment. Emphasized that the condition is chronic but manageable with regular care.",
+      "prescriptions": [
+        {
+          "id": "rx_1754313170232_0",
+          "medication": "Ketoconazole 2% shampoo",
+          "dosage": "Apply to scalp, leave for 5 minutes before rinsing",
+          "frequency": "3 times a week",
+          "duration": "2 weeks, then reduce to once a week as maintenance",
+          "instructions": "Avoid contact with eyes. Alternate with regular gentle shampoo."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-08-04T13:12:50.232Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1754313503188",
+      "patientId": "patient_3",
+      "patientName": "Robert Johnson",
+      "doctorId": "6",
+      "doctorName": "Dr. Lisa Anderson",
+      "appointmentId": "apt_1754313385095",
+      "date": "2025-08-04T13:18:23.188Z",
+      "symptoms": [
+        "Redness",
+        "intense itching",
+        "dry and cracked skin on hands",
+        "mild oozing in some areas"
+      ],
+      "diagnosis": "Acute Contact Dermatitis (Irritant Eczema)",
+      "notes": "Patient reports a 1-week history of worsening hand rash after frequent handwashing and use of alcohol-based sanitizers at work. Skin appears erythematous with small vesicles, dry scaling, and fissures, especially on fingers and dorsal surfaces. No signs of systemic infection. Patient reports previous similar episodes during winter. Advised on protective measures and avoidance of irritants. Initiated topical treatment to reduce inflammation and restore skin barrier.",
+      "prescriptions": [
+        {
+          "id": "rx_1754313503188_0",
+          "medication": "Mometasone furoate 0.1% cream",
+          "dosage": "Apply a thin layer to affected areas",
+          "frequency": "Twice daily",
+          "duration": "7 days",
+          "instructions": "Use only on affected areas. Avoid use on face or broken skin."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-08-04T13:18:23.188Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1754890536433",
+      "patientId": "patient_4",
+      "patientName": "Emily Carter",
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Rodriguez",
+      "appointmentId": "apt_1754890420558",
+      "date": "2025-08-11T05:35:36.433Z",
+      "symptoms": [
+        "Persistent cough",
+        "recurrent wheezing",
+        "shortness of breath during physical activity",
+        "occasional night-time coughing"
+      ],
+      "diagnosis": "Mild intermittent asthma – currently stable with inhaler therapy",
+      "notes": "The patient, a 7-year-old girl, presents for follow-up after an asthma diagnosis 3 months ago. The mother reports significant improvement since starting salbutamol inhaler therapy, with only two mild wheezing episodes in the past month, both triggered by outdoor play. No hospital visits or oral steroid use reported. Examination shows clear breath sounds and no respiratory distress. Oxygen saturation is 98%. Advised on inhaler technique review, continued trigger avoidance, and monitoring symptoms. Parents were educated on when to seek urgent care. Follow-up in 3 months or sooner if symptoms worsen.",
+      "prescriptions": [
+        {
+          "id": "rx_1754890536434_0",
+          "medication": "Salbutamol Inhaler",
+          "dosage": "100 mcg",
+          "frequency": "Up to 4 times daily if wheezing occurs",
+          "duration": "As required for symptom control",
+          "instructions": "Use with spacer, rinse mouth after use, avoid overuse."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-08-11T05:35:36.434Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1754899226537",
+      "patientId": "patient_7",
+      "patientName": "Oliver Brown",
+      "doctorId": "5",
+      "doctorName": "Dr. James Thompson",
+      "appointmentId": "apt_1754892011765",
+      "date": "2025-08-11T08:00:26.537Z",
+      "symptoms": [
+        "Mild knee stiffness in the morning",
+        "slight swelling after walking",
+        "occasional dull pain at the surgical site"
+      ],
+      "diagnosis": "Post-total knee arthroplasty recovery – progressing well",
+      "notes": "The patient, a 37-year-old male, is seen 6 weeks post left total knee replacement. She reports steady improvement in mobility, with only mild stiffness in the mornings and occasional swelling after extended walking. Pain is mild and does not require daily analgesics. Surgical incision is well-healed with no redness or discharge. Range of motion is now 0–110 degrees. Physiotherapy attendance has been regular and beneficial. Recommended continuing physiotherapy with gradual increase in activity. Follow-up in 6 weeks to assess further range of motion improvement.",
+      "prescriptions": [
+        {
+          "id": "rx_1754899226537_0",
+          "medication": "Paracetamol",
+          "dosage": "500 mg",
+          "frequency": "Twice daily as needed for pain",
+          "duration": "7 days",
+          "instructions": "Take after meals, do not exceed 4 grams in 24 hours."
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-08-11T08:00:26.537Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1754906198961",
+      "patientId": "patient_5",
+      "patientName": "George Miller",
+      "doctorId": "3",
+      "doctorName": "Dr. Michael Chen",
+      "appointmentId": "apt_1754902344064",
+      "date": "2025-08-11T09:56:38.961Z",
+      "symptoms": [
+        "Gradual memory loss",
+        "difficulty recalling recent events",
+        "mild confusion about time and place",
+        "occasional word-finding difficulty",
+        "slower problem-solving",
+        "slight imbalance while walking."
+      ],
+      "diagnosis": "Mild Cognitive Impairment (MCI) – probable early Alzheimer’s disease.",
+      "notes": "The patient’s family reports increasing forgetfulness over the past year, including misplacing items and repeating questions. He remains independent in daily activities but occasionally forgets appointments. No major mood or behavioral changes noted. On examination, Mini-Mental State Examination (MMSE) score was 24/30, showing deficits in recall and orientation. Motor exam revealed mild gait instability without tremor. No focal neurological deficits. MRI brain shows mild cortical atrophy consistent with age and early Alzheimer’s pathology. Recommend further neuropsychological assessment and close follow-up. Discussed cognitive stimulation activities, safe home modifications, and possible initiation of cholinesterase inhibitor therapy.",
+      "prescriptions": [
+        {
+          "id": "rx_1754906198961_0",
+          "medication": "Donepezil",
+          "dosage": "5 mg",
+          "frequency": "Once daily at bedtime",
+          "duration": "Ongoing",
+          "instructions": "Take with water at night; monitor for nausea, dizziness, or vivid dreams."
+        }
+      ],
+      "followUpRequired": true,
+      "followUpDate": "2025-08-13T13:00",
+      "createdAt": "2025-08-11T09:56:38.961Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1755501965313",
+      "patientId": "patient_5",
+      "patientName": "George Miller",
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentId": "apt_1755491404231",
+      "date": "2025-08-18T07:26:05.313Z",
+      "symptoms": [
+        "Shortness of breath (worsening over 1 week)",
+        "fatigue",
+        "swelling in legs",
+        "difficulty sleeping flat",
+        "occasional chest discomfort"
+      ],
+      "diagnosis": "Congestive Heart Failure (CHF) exacerbation, NYHA Class III",
+      "notes": "Patient is an 82-year-old male with a known history of ischemic heart disease and hypertension. Presents with progressive dyspnea and pedal edema. Blood pressure is borderline low, lungs reveal bilateral basal crepitations, and mild jugular venous distention noted. ECG shows old infarct changes; echocardiogram reveals reduced ejection fraction (~35%). Discussed lifestyle modifications, medication adherence, and close monitoring.",
+      "prescriptions": [
+        {
+          "id": "rx_1755501965313_0",
+          "medication": "Furosemide ",
+          "dosage": "40mg",
+          "frequency": "Once daily (morning)",
+          "duration": "14 days",
+          "instructions": "Take with water, monitor urine output, avoid taking at night"
+        },
+        {
+          "id": "rx_1755501965313_1",
+          "medication": "Carvedilol ",
+          "dosage": "6.25mg",
+          "frequency": "Twice daily",
+          "duration": "Ongoing",
+          "instructions": "Take with meals, do not stop abruptly"
+        },
+        {
+          "id": "rx_1755501965313_2",
+          "medication": "Ramipril ",
+          "dosage": "2.5mg",
+          "frequency": "Once daily",
+          "duration": "Ongoing",
+          "instructions": "Take at night, monitor blood pressure regularly"
+        }
+      ],
+      "followUpRequired": false,
+      "createdAt": "2025-08-18T07:26:05.313Z",
+      "status": "completed"
+    },
+    {
+      "id": "cons_1755585519636",
+      "patientId": "patient_8",
+      "patientName": "Lucas Martinez",
+      "doctorId": "4",
+      "doctorName": "Dr. Emily Rodriguez",
+      "appointmentId": "apt_1755584374637",
+      "date": "2025-08-19T06:38:39.636Z",
+      "symptoms": [
+        "Recurrent dry cough",
+        "wheezing",
+        "occasional shortness of breath (especially at night and during physical activity)",
+        "nasal congestion."
+      ],
+      "diagnosis": "Suspected childhood asthma (differential: allergic rhinitis, viral-induced wheeze).",
+      "notes": "Child has experienced multiple episodes of cough and wheezing over the past 3 months. Symptoms are worse at night and after playing outdoors. Family history of asthma (father). Known food and environmental allergies (peanuts, dust mites, pollen) may be exacerbating symptoms. No recent hospitalizations, but has required nebulizer use during one acute episode. Examination revealed mild expiratory wheeze on auscultation. Oxygen saturation normal.",
+      "prescriptions": [
+        {
+          "id": "rx_1755585519636_0",
+          "medication": "Cetirizine Syrup",
+          "dosage": " 5 mg",
+          "frequency": "Once daily at night",
+          "duration": "14 days",
+          "instructions": "Helps with allergy-related triggers."
+        }
+      ],
+      "followUpRequired": true,
+      "followUpDate": "2025-08-22T23:38",
+      "createdAt": "2025-08-19T06:38:39.636Z",
+      "status": "completed"
+    }
+  ],
+  "DoctorsSlots": [
+    {
+      "doctorId": "2",
+      "slots": [
+        "2025-08-04T09:00:00Z",
+        "2025-08-04T10:00:00Z",
+        "2025-08-09T11:00:00Z",
+        "2025-08-11T14:00:00Z",
+        "2025-08-13T15:00:00Z",
+        "2025-08-15T09:00:00Z",
+        "2025-08-17T10:00:00Z",
+        "2025-08-19T14:30:00Z",
+        "2025-08-21T15:30:00Z",
+        "2025-08-22T09:00:00Z",
+        "2025-08-23T10:00:00Z",
+        "2025-08-25T11:00:00Z",
+        "2025-08-26T11:00:00Z"
+      ],
+      "id": "5a00"
+    },
+    {
+      "doctorId": "3",
+      "slots": [
+        "2025-08-04T08:00:00Z",
+        "2025-08-04T09:30:00Z",
+        "2025-08-09T11:00:00Z",
+        "2025-08-11T13:00:00Z",
+        "2025-08-13T15:30:00Z",
+        "2025-08-15T08:00:00Z",
+        "2025-08-17T10:30:00Z",
+        "2025-08-19T13:00:00Z",
+        "2025-08-21T16:00:00Z"
+      ],
+      "id": "4db1"
+    },
+    {
+      "doctorId": "4",
+      "slots": [
+        "2025-08-05T10:00:00Z",
+        "2025-08-05T11:30:00Z",
+        "2025-08-10T14:00:00Z",
+        "2025-08-12T16:00:00Z",
+        "2025-08-14T09:00:00Z",
+        "2025-08-16T11:00:00Z",
+        "2025-08-18T14:30:00Z",
+        "2025-08-20T16:30:00Z",
+        "2025-08-26T16:30:00Z",
+        "2025-08-27T16:30:00Z"
+      ],
+      "id": "fc5d"
+    },
+    {
+      "doctorId": "5",
+      "slots": [
+        "2025-08-04T07:30:00Z",
+        "2025-08-04T09:00:00Z",
+        "2025-08-11T10:30:00Z",
+        "2025-08-13T13:30:00Z",
+        "2025-08-15T15:00:00Z",
+        "2025-08-17T08:30:00Z",
+        "2025-08-19T10:00:00Z",
+        "2025-08-21T13:30:00Z",
+        "2025-08-29T19:00:00Z",
+        "2025-08-29T21:00:00Z",
+        "2025-08-31T19:00:00Z",
+        "2025-09-01T19:00:00Z",
+        "2025-09-01T21:00:00Z"
+      ],
+      "id": "918c"
+    },
+    {
+      "doctorId": "6",
+      "slots": [
+        "2025-08-04T09:30:00Z",
+        "2025-08-04T11:00:00Z",
+        "2025-08-12T14:30:00Z",
+        "2025-08-14T16:00:00Z",
+        "2025-08-16T09:30:00Z",
+        "2025-08-18T11:30:00Z",
+        "2025-08-20T15:00:00Z",
+        "2025-08-31T17:00:00Z",
+        "2025-08-31T15:00:00Z",
+        "2025-08-01T15:00:00Z"
+      ],
+      "id": "07ea"
+    },
+    {
+      "doctorId": "apt_1755504674347",
+      "slots": [
+        "2025-08-04T09:30:00Z",
+        "2025-08-04T11:00:00Z",
+        "2025-08-12T14:30:00Z",
+        "2025-08-14T16:00:00Z",
+        "2025-08-16T09:30:00Z",
+        "2025-08-18T11:30:00Z",
+        "2025-08-20T15:00:00Z",
+        "2025-08-31T17:00:00Z",
+        "2025-08-31T15:00:00Z",
+        "2025-08-01T15:00:00Z"
+      ],
+      "id": "a4dd"
+    }
+  ],
+  "DoctorSpecialties": [
+    {
+      "id": "1",
+      "name": "Cardiology",
+      "description": "Heart and cardiovascular system"
+    },
+    {
+      "id": "2",
+      "name": "Dermatology",
+      "description": "Skin, hair, and nail conditions"
+    },
+    {
+      "id": "3",
+      "name": "Endocrinology",
+      "description": "Hormones and metabolic disorders"
+    },
+    {
+      "id": "4",
+      "name": "Gastroenterology",
+      "description": "Digestive system disorders"
+    },
+    {
+      "id": "5",
+      "name": "Neurology",
+      "description": "Nervous system and brain disorders"
+    },
+    {
+      "id": "6",
+      "name": "Orthopedics",
+      "description": "Bones, joints, and musculoskeletal system"
+    },
+    {
+      "id": "7",
+      "name": "Pediatrics",
+      "description": "Medical care for infants, children, and adolescents"
+    },
+    {
+      "id": "8",
+      "name": "Psychiatry",
+      "description": "Mental health and behavioral disorders"
+    },
+    {
+      "id": "9",
+      "name": "General Medicine",
+      "description": "Primary care and general health"
+    }
+  ],
+  "Patients": [
+    {
+      "id": "patient_1",
+      "name": "John Doe",
+      "dateOfBirth": "1958-03-15",
+      "email": "john.doe@email.com",
+      "phone": "+1-555-0123",
+      "address": "123 Main St, City, State 12345",
+      "emergencyContact": {
+        "name": "Jane Doe",
+        "phone": "+1-555-0124",
+        "relationship": "Spouse"
+      },
+      "medicalHistory": [
+        {
+          "id": "mh_1",
+          "date": "2024-01-10T10:00:00Z",
+          "type": "diagnosis",
+          "doctorId": "2",
+          "doctorName": "Dr. Sarah Wilson",
+          "title": "Hypertension",
+          "description": "Patient diagnosed with stage 1 hypertension",
+          "severity": "moderate"
+        },
+        {
+          "id": "mh_2",
+          "date": "2024-01-15T14:30:00Z",
+          "type": "prescription",
+          "doctorId": "2",
+          "doctorName": "Dr. Sarah Wilson",
+          "title": "Lisinopril 10mg",
+          "description": "Take once daily for blood pressure control",
+          "dosage": "10mg daily"
+        }
+      ],
+      "allergies": [
+        "Penicillin",
+        "Shellfish"
+      ],
+      "bloodType": "A+",
+      "createdAt": "2024-01-01T08:00:00Z"
+    },
+    {
+      "id": "patient_2",
+      "name": "Jane Smith",
+      "dateOfBirth": "1951-07-22",
+      "email": "jane.smith@email.com",
+      "phone": "+1-555-0456",
+      "address": "456 Oak Ave, City, State 12345",
+      "emergencyContact": {
+        "name": "Robert Smith",
+        "phone": "+1-555-0457",
+        "relationship": "Son"
+      },
+      "medicalHistory": [
+        {
+          "id": "mh_3",
+          "date": "2024-01-12T09:00:00Z",
+          "type": "consultation",
+          "doctorId": "3",
+          "doctorName": "Dr. Michael Chen",
+          "title": "Neurological Assessment",
+          "description": "Routine neurological examination - all normal",
+          "symptoms": [
+            "Mild headaches",
+            "Occasional dizziness"
+          ]
+        }
+      ],
+      "allergies": [
+        "Aspirin"
+      ],
+      "bloodType": "O-",
+      "createdAt": "2024-01-02T09:00:00Z"
+    },
+    {
+      "id": "patient_3",
+      "name": "Robert Johnson",
+      "dateOfBirth": "1975-11-08",
+      "email": "robert.j@email.com",
+      "phone": "+1-555-0789",
+      "address": "789 Pine St, City, State 12345",
+      "emergencyContact": {
+        "name": "Mary Johnson",
+        "phone": "+1-555-0790",
+        "relationship": "Wife"
+      },
+      "medicalHistory": [],
+      "allergies": [],
+      "bloodType": "B+",
+      "createdAt": "2024-01-03T10:00:00Z"
+    },
+    {
+      "id": "patient_4",
+      "name": "Emily Carter",
+      "dateOfBirth": "2018-05-12",
+      "email": "emily.carter@email.com",
+      "phone": "+1-555-1122",
+      "address": "321 Maple St, City, State 12345",
+      "emergencyContact": {
+        "name": "Michael Carter",
+        "phone": "+1-555-1123",
+        "relationship": "Father"
+      },
+      "medicalHistory": [
+        {
+          "id": "mh_4",
+          "date": "2025-06-01T09:00:00Z",
+          "type": "diagnosis",
+          "doctorId": "4",
+          "doctorName": "Dr. Emily Rodriguez",
+          "title": "Seasonal Allergies",
+          "description": "Mild allergic rhinitis during spring"
+        }
+      ],
+      "allergies": [
+        "Peanuts"
+      ],
+      "bloodType": "O+",
+      "createdAt": "2024-06-01T09:00:00Z"
+    },
+    {
+      "id": "patient_5",
+      "name": "George Miller",
+      "dateOfBirth": "1942-11-23",
+      "email": "george.miller@email.com",
+      "phone": "+1-555-2233",
+      "address": "654 Cedar Ave, City, State 12345",
+      "emergencyContact": {
+        "name": "Helen Miller",
+        "phone": "+1-555-2234",
+        "relationship": "Wife"
+      },
+      "medicalHistory": [
+        {
+          "id": "mh_5",
+          "date": "2025-05-10T10:30:00Z",
+          "type": "diagnosis",
+          "doctorId": "2",
+          "doctorName": "Dr. Sarah Wilson",
+          "title": "Type 2 Diabetes",
+          "description": "Diagnosed 5 years ago, managed with oral medication"
+        }
+      ],
+      "allergies": [],
+      "bloodType": "B-",
+      "createdAt": "2024-05-10T10:30:00Z"
+    },
+    {
+      "id": "patient_6",
+      "name": "Sophia Lee",
+      "dateOfBirth": "2005-09-30",
+      "email": "sophia.lee@email.com",
+      "phone": "+1-555-3344",
+      "address": "987 Birch Rd, City, State 12345",
+      "emergencyContact": {
+        "name": "David Lee",
+        "phone": "+1-555-3345",
+        "relationship": "Father"
+      },
+      "medicalHistory": [
+        {
+          "id": "mh_6",
+          "date": "2025-03-15T14:00:00Z",
+          "type": "diagnosis",
+          "doctorId": "5",
+          "doctorName": "Dr. James Thompson",
+          "title": "Asthma",
+          "description": "Mild persistent asthma, uses inhaler as needed"
+        }
+      ],
+      "allergies": [
+        "Dust mites"
+      ],
+      "bloodType": "AB+",
+      "createdAt": "2024-03-15T14:00:00Z"
+    },
+    {
+      "id": "patient_7",
+      "name": "Oliver Brown",
+      "dateOfBirth": "1988-02-17",
+      "email": "oliver.brown@email.com",
+      "phone": "+1-555-4455",
+      "address": "246 Spruce Ln, City, State 12345",
+      "emergencyContact": {
+        "name": "Laura Brown",
+        "phone": "+1-555-4456",
+        "relationship": "Wife"
+      },
+      "medicalHistory": [],
+      "allergies": [],
+      "bloodType": "A-",
+      "createdAt": "2024-02-17T08:00:00Z"
+    },
+    {
+      "id": "patient_8",
+      "name": "Lucas Martinez",
+      "dateOfBirth": "2012-07-04",
+      "email": "lucas.martinez@email.com",
+      "phone": "+1-555-5566",
+      "address": "135 Willow Dr, City, State 12345",
+      "emergencyContact": {
+        "name": "Maria Martinez",
+        "phone": "+1-555-5567",
+        "relationship": "Mother"
+      },
+      "medicalHistory": [
+        {
+          "id": "mh_7",
+          "date": "2025-02-20T11:00:00Z",
+          "type": "diagnosis",
+          "doctorId": "4",
+          "doctorName": "Dr. Emily Rodriguez",
+          "title": "Chickenpox",
+          "description": "Recovered, no complications"
+        }
+      ],
+      "allergies": [
+        "Eggs"
+      ],
+      "bloodType": "B+",
+      "createdAt": "2024-02-20T11:00:00Z"
+    },
+    {
+      "id": "79cf",
+      "name": "Ayesha Khan",
+      "dateOfBirth": "2006-03-15",
+      "email": "ayesha.khan@example.com",
+      "phone": "+92-331-4567890",
+      "address": "House #25, Street 12, Gulberg, Lahore, Pakistan",
+      "emergencyContact": [
+        {
+          "name": "Sara Khan",
+          "phone": "+92-300-1234567",
+          "relationship": "Mother"
+        }
+      ]
+    },
+    {
+      "id": "65a5",
+      "name": "Ahmed Raza",
+      "dateOfBirth": "1970-06-09",
+      "email": "ahmed.raza@example.com",
+      "phone": "+92-321-5678901",
+      "address": "House #12, Gulshan-e-Iqbal, Karachi, Pakistan",
+      "emergencyContact": [
+        {
+          "name": "Sara Raza",
+          "phone": "+92-322-9876543",
+          "relationship": "Daughter"
+        }
+      ],
+      "bloodType": "B+",
+      "allergies": [
+        "Penicillin",
+        "nuts",
+        "dust"
+      ]
+    },
+    {
+      "id": "559e",
+      "name": "Ayaan Ali",
+      "dateOfBirth": "2018-03-25",
+      "email": "ayaan.ali.parent@example.com",
+      "phone": "03214567890",
+      "address": "45 Garden Town, Lahore, Pakistan",
+      "emergencyContact": [
+        {
+          "name": "Farah Ali",
+          "phone": "03219876543",
+          "relationship": "Mother"
+        }
+      ],
+      "bloodType": "O-",
+      "allergies": [
+        "Amoxicillin (rash reaction reported)",
+        "Peanuts",
+        "Pollen (seasonal)"
+      ]
+    },
+    {
+      "id": "bfce",
+      "name": "Johnathan Miller",
+      "dateOfBirth": "1985-02-15",
+      "email": "john.miller85@example.com",
+      "phone": "+1-202-555-0147",
+      "address": "123 Maple Street, Springfield, IL, USA",
+      "emergencyContact": [
+        {
+          "name": "Emily Miller",
+          "phone": "+1-202-555-0199",
+          "relationship": "Wife"
+        }
+      ],
+      "bloodType": "O+",
+      "allergies": [
+        "Penicillin",
+        "Nuts",
+        "Dust"
+      ]
+    }
+  ],
+  "Roles": [
+    {
+      "id": "1",
+      "name": "admin"
+    },
+    {
+      "id": "2",
+      "name": "doctor"
+    },
+    {
+      "id": "3",
+      "name": "nurse"
+    }
+  ],
+  "Tasks": [
+    {
+      "id": "task_1",
+      "title": "Administer Morning Medication",
+      "type": "Medication",
+      "status": "In Progress",
+      "notes": "Give 5mg of Atorvastatin",
+      "patientId": "patient_1",
+      "assigneeId": "7",
+      "dueAt": "2025-06-23T09:00",
+      "createdBy": 1,
+      "createdAt": "2025-06-13T09:00:00Z",
+      "assigneeName": "unknown"
+    },
+    {
+      "id": "task_2",
+      "title": "Check Blood Pressure",
+      "type": "Vitals Check",
+      "status": "In Progress",
+      "notes": "Record systolic and diastolic values",
+      "patientId": "patient_2",
+      "assigneeId": "7",
+      "dueAt": "2025-06-23T10:30:00Z",
+      "createdBy": 2,
+      "createdAt": "2025-06-14T09:00:00Z"
+    },
+    {
+      "id": "task_3",
+      "title": "Prep for Knee Surgery",
+      "type": "Procedure Prep",
+      "status": "Pending",
+      "notes": "Ensure patient is fasting and gown is ready",
+      "patientId": "patient_1",
+      "assigneeId": "apt_1753768305319",
+      "dueAt": "2025-06-23T13:00:00Z",
+      "createdBy": 3,
+      "createdAt": "2025-06-15T09:00:00Z",
+      "assigneeName": "unknown"
+    },
+    {
+      "id": "task_4",
+      "title": "Consultation Follow-up: Diabetes",
+      "type": "Consultation Follow-up",
+      "status": "Done",
+      "notes": "Review insulin dosage and dietary habits",
+      "patientId": "patient_2",
+      "assigneeId": "2",
+      "dueAt": "2025-06-22T15:00:00Z",
+      "createdBy": 2,
+      "createdAt": "2025-06-16T09:00:00Z"
+    },
+    {
+      "id": "task_1754980819999",
+      "title": "Administer Morning Antibiotic Dose",
+      "type": "Medication",
+      "patientId": "patient_3",
+      "assigneeId": "7",
+      "dueAt": "2025-08-12T13:37",
+      "status": "Pending",
+      "notes": "Give 500 mg IV ceftriaxone at 08:00 for patient in Room 204; monitor for allergic reactions.",
+      "createdBy": "apt_1753765295252",
+      "createdAt": "2025-08-12T06:40:19.999Z",
+      "assigneeName": "unknown"
+    },
+    {
+      "id": "task_1754983332013",
+      "title": "Administer Morning Antibiotic Dose",
+      "type": "Medication",
+      "patientId": "patient_3",
+      "assigneeId": "2",
+      "dueAt": "2025-08-12T07:12",
+      "status": "In Progress",
+      "notes": "notes",
+      "createdBy": "apt_1753765295252",
+      "createdAt": "2025-08-12T07:22:12.013Z",
+      "assigneeName": "unknown"
+    }
+  ],
+  "Users": [
+    {
+      "id": "1",
+      "name": "john",
+      "username": "john123",
+      "email": "admin@example.com",
+      "password": "admin123",
+      "roleId": 1,
+      "roleName": "admin"
+    },
+    {
+      "id": "2",
+      "name": "Dr. Sarah Wilson",
+      "username": "sarahdoc",
+      "email": "doctor@example.com",
+      "password": "doctor123",
+      "roleId": 2,
+      "roleName": "doctor",
+      "specialtyId": "1",
+      "createdAt": "2024-01-16T14:20:00Z"
+    },
+    {
+      "id": "3",
+      "name": "Dr. Michael Chen",
+      "username": "michaeldoc",
+      "email": "michael.chen@example.com",
+      "password": "doctor123",
+      "roleId": 2,
+      "roleName": "doctor",
+      "specialtyId": "5",
+      "createdAt": "2024-01-17T09:15:00Z"
+    },
+    {
+      "id": "4",
+      "name": "Dr. Emily Rodriguez",
+      "username": "emilydoc",
+      "email": "emily.rodriguez@example.com",
+      "password": "doctor123",
+      "roleId": 2,
+      "roleName": "doctor",
+      "specialtyId": "7",
+      "createdAt": "2024-01-18T11:30:00Z"
+    },
+    {
+      "id": "5",
+      "name": "Dr. James Thompson",
+      "username": "jamesdoc",
+      "email": "james.thompson@example.com",
+      "password": "doctor123",
+      "roleId": 2,
+      "roleName": "doctor",
+      "specialtyId": "6",
+      "createdAt": "2024-01-19T16:45:00Z"
+    },
+    {
+      "id": "6",
+      "name": "Dr. Lisa Anderson",
+      "username": "lisadoc",
+      "email": "lisa.anderson@example.com",
+      "password": "doctor123",
+      "roleId": 2,
+      "roleName": "doctor",
+      "specialtyId": "2",
+      "createdAt": "2024-01-20T13:20:00Z"
+    },
+    {
+      "id": "7",
+      "name": "Nurse Robert House",
+      "username": "Robert House",
+      "email": "robert.house@hospital.com",
+      "password": "robert123",
+      "roleId": 3,
+      "roleName": "nurse"
+    },
+    {
+      "id": "apt_1753765295252",
+      "name": "Helen Wright",
+      "username": "Helen_Wright",
+      "email": "helen.wright@example.com",
+      "password": "helen123",
+      "roleId": 1,
+      "createdAt": "2025-07-29T05:01:35.252Z",
+      "roleName": "admin"
+    },
+    {
+      "id": "apt_1753768305319",
+      "name": "Nurse Jane Doe",
+      "username": "Nurse Jane Doe",
+      "email": "jane.doe@example.com",
+      "password": "jane123",
+      "roleId": 3,
+      "createdAt": "2025-07-29T05:51:45.319Z",
+      "roleName": "nurse"
+    },
+    {
+      "id": "apt_1754401859360",
+      "name": "Dr. Ayesha Siddiqui",
+      "username": "Ayesha Siddiqui",
+      "email": "ayesha.siddiqui@hospital.com",
+      "password": "doctor123",
+      "roleId": 2,
+      "specialtyId": "9",
+      "createdAt": "2025-08-05T13:50:59.360Z",
+      "roleName": "doctor"
+    },
+    {
+      "id": "apt_1755504674347",
+      "name": "Mishal Fatima",
+      "username": "Doctor Mishal Fatima",
+      "email": "mishal.fatima@example.com",
+      "password": "mishal123",
+      "roleId": 2,
+      "createdAt": "2025-08-18T08:11:14.347Z",
+      "roleName": "doctor",
+      "specialtyId": "5"
+    }
+  ],
+  "Notifications": [
+    {
+      "id": "notif_1",
+      "userId": "2",
+      "title": "New Appointment Scheduled",
+      "message": "You have a new appointment with John Doe on 2025-08-05 at 09:00 AM.",
+      "type": "appointment",
+      "isRead": true,
+      "createdAt": "2025-08-04T10:00:00Z"
+    },
+    {
+      "id": "notif_2",
+      "userId": "3",
+      "title": "Consultation Completed",
+      "message": "Consultation for Jane Smith has been marked as completed.",
+      "type": "consultation",
+      "isRead": true,
+      "createdAt": "2025-08-04T11:30:00Z"
+    },
+    {
+      "id": "notif_3",
+      "userId": "4",
+      "title": "Task Reminder",
+      "message": "Don't forget to check Robert Johnson's blood pressure today.",
+      "type": "task",
+      "isRead": true,
+      "createdAt": "2025-08-03T08:00:00Z"
+    },
+    {
+      "id": "notif_4",
+      "userId": "2",
+      "title": "Follow-up Required",
+      "message": "A follow-up is required for patient Jane Smith on 2025-08-10.",
+      "type": "followup",
+      "isRead": true,
+      "createdAt": "2025-08-04T12:00:00Z"
+    },
+    {
+      "id": "notif_1754892011766_5imc7q9h1",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with Oliver Brown on 8/11/2025",
+      "type": "appointment",
+      "toUserId": "5",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-11T06:00:11.766Z"
+    },
+    {
+      "id": "notif_1754893430358_5iekd6tr0",
+      "title": "New User Account Created",
+      "message": "New user account has been created for Dr Mishal Fatima",
+      "type": "user",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-11T06:23:50.358Z"
+    },
+    {
+      "id": "notif_1754898852099_v6i1byb6a",
+      "title": "Consultation Started",
+      "message": "Consultation with Oliver Brown has started",
+      "type": "consultation",
+      "toUserId": "5",
+      "fromUserId": "5",
+      "consultationId": "apt_1754892011765",
+      "patientId": "apt_1754892011765",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-11T07:54:12.099Z"
+    },
+    {
+      "id": "notif_1754899226540_cu0by5syi",
+      "title": "Consultation Completed",
+      "message": "Consultation with Oliver Brown has been completed",
+      "type": "consultation",
+      "toUserId": "5",
+      "fromUserId": "5",
+      "consultationId": "cons_1754899226537",
+      "patientId": "cons_1754899226537",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-11T08:00:26.540Z"
+    },
+    {
+      "id": "notif_1754899707833_svmdvchwr",
+      "title": "New User Account Created",
+      "message": "New user account has been created for Dr Mishal Fatima",
+      "type": "user",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-11T08:08:27.833Z"
+    },
+    {
+      "id": "notif_1754899733328_71e2clsgb",
+      "title": "User Account Deleted",
+      "message": "User account for Dr Mishal Fatima has been deleted",
+      "type": "user",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "apt_1753765295252",
+      "priority": "high",
+      "isRead": true,
+      "createdAt": "2025-08-11T08:08:53.328Z"
+    },
+    {
+      "id": "notif_1754902344068_n37xw70ia",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with George Miller on 8/11/2025",
+      "type": "appointment",
+      "toUserId": "3",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-11T08:52:24.068Z"
+    },
+    {
+      "id": "notif_1754905108173_u04m85oz7",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with Sophia Lee on 8/12/2025",
+      "type": "appointment",
+      "toUserId": "6",
+      "fromUserId": "1",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-11T09:38:28.173Z"
+    },
+    {
+      "id": "notif_1754906009627_jd991zvfw",
+      "title": "Consultation Started",
+      "message": "Consultation with George Miller has started",
+      "type": "consultation",
+      "toUserId": "3",
+      "fromUserId": "3",
+      "consultationId": "apt_1754902344064",
+      "patientId": "apt_1754902344064",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-11T09:53:29.627Z"
+    },
+    {
+      "id": "notif_1754906198964_aeo7rl19r",
+      "title": "Consultation Completed",
+      "message": "Consultation with George Miller has been completed",
+      "type": "consultation",
+      "toUserId": "3",
+      "fromUserId": "3",
+      "consultationId": "cons_1754906198961",
+      "patientId": "cons_1754906198961",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-11T09:56:38.965Z"
+    },
+    {
+      "id": "notif_1754906198963_5d0drxkif",
+      "title": "Follow-up Required",
+      "message": "Follow-up consultation required for George Miller",
+      "type": "followup",
+      "toUserId": "3",
+      "fromUserId": "3",
+      "consultationId": "cons_1754906198961",
+      "priority": "high",
+      "isRead": true,
+      "createdAt": "2025-08-11T09:56:38.963Z"
+    },
+    {
+      "id": "notif_1754908431187_fjj5s57cl",
+      "title": "User Account Updated",
+      "message": "User account for Jane Doe has been updated",
+      "type": "user",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-11T10:33:51.187Z"
+    },
+    {
+      "id": "notif_1754908451011_98ckm1hq1",
+      "title": "User Account Updated",
+      "message": "User account for Jane Doe has been updated",
+      "type": "user",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-11T10:34:11.011Z"
+    },
+    {
+      "id": "notif_1754979398819_fdx2aidry",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-12T06:16:38.819Z"
+    },
+    {
+      "id": "notif_1754979429825_vnwp336i9",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with John Doe has been cancelled",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "high",
+      "isRead": true,
+      "createdAt": "2025-08-12T06:17:09.825Z"
+    },
+    {
+      "id": "notif_1754979480715_mh6a9yzti",
+      "title": "Appointment Updated",
+      "message": "Appointment with Jane Smith has been updated",
+      "type": "appointment",
+      "toUserId": "5",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-12T06:18:00.715Z"
+    },
+    {
+      "id": "notif_1754979583320_vcvrwt41l",
+      "title": "Appointment Updated",
+      "message": "Appointment with Jane Smith has been updated",
+      "type": "appointment",
+      "toUserId": "5",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-12T06:19:43.320Z"
+    },
+    {
+      "id": "notif_1754979596276_r3gwdn579",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-12T06:19:56.276Z"
+    },
+    {
+      "id": "notif_1754979618555_7km4g4ayz",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-12T06:20:18.555Z"
+    },
+    {
+      "id": "notif_1754979644845_exopy4e4t",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with John Doe has been cancelled",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "high",
+      "isRead": true,
+      "createdAt": "2025-08-12T06:20:44.845Z"
+    },
+    {
+      "id": "notif_1754979709604_3x8q0sozp",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-12T06:21:49.604Z"
+    },
+    {
+      "id": "notif_1754979794504_lroa44wvn",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with John Doe has been cancelled",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "high",
+      "isRead": true,
+      "createdAt": "2025-08-12T06:23:14.504Z"
+    },
+    {
+      "id": "notif_1754979813960_fkijhk1ks",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-12T06:23:33.960Z"
+    },
+    {
+      "id": "notif_1754979833419_3w60yoea1",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-12T06:23:53.419Z"
+    },
+    {
+      "id": "notif_1754979848307_h9sms6re8",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-12T06:24:08.307Z"
+    },
+    {
+      "id": "notif_1754979882707_3j42fahkf",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-12T06:24:42.707Z"
+    },
+    {
+      "id": "notif_1754979901442_ydiz9gvx5",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with John Doe has been cancelled",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "high",
+      "isRead": true,
+      "createdAt": "2025-08-12T06:25:01.442Z"
+    },
+    {
+      "id": "notif_1754979990115_1om5jyb5u",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-12T06:26:30.115Z"
+    },
+    {
+      "id": "notif_1754980022994_hhuzvbg0n",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with John Doe has been cancelled",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "high",
+      "isRead": true,
+      "createdAt": "2025-08-12T06:27:02.994Z"
+    },
+    {
+      "id": "notif_1754980044436_bfxio9x3g",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-12T06:27:24.436Z"
+    },
+    {
+      "id": "notif_1754983332015_0uub31as8",
+      "title": "New Task Assigned",
+      "message": "You have been assigned a new task: Administer Morning Antibiotic Dose",
+      "type": "task",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "taskId": "task_1754983332013",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-12T07:22:12.015Z"
+    },
+    {
+      "id": "notif_1754983372373_2dp0jvv5t",
+      "title": "Task Completed",
+      "message": "Task \"Administer Morning Antibiotic Dose\" has been completed",
+      "type": "task",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "taskId": "task_1754983332013",
+      "priority": "low",
+      "isRead": true,
+      "createdAt": "2025-08-12T07:22:52.373Z"
+    },
+    {
+      "id": "notif_1754983393253_jwshwc7i2",
+      "title": "Task Updated",
+      "message": "Task \"Administer Morning Antibiotic Dose\" has been updated",
+      "type": "task",
+      "toUserId": "2",
+      "fromUserId": "2",
+      "taskId": "task_1754983332013",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-12T07:23:13.253Z"
+    },
+    {
+      "id": "notif_1754990382002_t7abdxr7i",
+      "title": "User Account Updated",
+      "message": "User account for Nurse Jane Doe has been updated",
+      "type": "user",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-12T09:19:42.002Z"
+    },
+    {
+      "id": "notif_1754990404007_ybd46qvdl",
+      "title": "Task Updated",
+      "message": "Task \"Prep for Knee Surgery\" has been updated",
+      "type": "task",
+      "toUserId": "7",
+      "fromUserId": "apt_1753765295252",
+      "taskId": "task_3",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-12T09:20:04.007Z"
+    },
+    {
+      "id": "notif_1754990467383_udzlkq0oh",
+      "title": "Appointment Updated",
+      "message": "Appointment with Jane Smith has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-12T09:21:07.383Z"
+    },
+    {
+      "id": "notif_1754993842863_oxp4tofdy",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-12T10:17:22.863Z"
+    },
+    {
+      "id": "notif_1754996710695_81oeh4yia",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-12T11:05:10.695Z"
+    },
+    {
+      "id": "notif_1754998608609_a26a61037",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with Oliver Brown on 8/13/2025",
+      "type": "appointment",
+      "toUserId": "3",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-12T11:36:48.609Z"
+    },
+    {
+      "id": "notif_1754998721262_y2k6i665k",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with Oliver Brown has been cancelled",
+      "type": "appointment",
+      "toUserId": "3",
+      "fromUserId": "apt_1753765295252",
+      "priority": "high",
+      "isRead": true,
+      "createdAt": "2025-08-12T11:38:41.262Z"
+    },
+    {
+      "id": "notif_1754998761162_dalpk4j0i",
+      "title": "Appointment Updated",
+      "message": "Appointment with Oliver Brown has been updated",
+      "type": "appointment",
+      "toUserId": "3",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-12T11:39:21.162Z"
+    },
+    {
+      "id": "notif_1754998872740_r7uhq8k1n",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with Oliver Brown has been cancelled",
+      "type": "appointment",
+      "toUserId": "3",
+      "fromUserId": "apt_1753765295252",
+      "priority": "high",
+      "isRead": true,
+      "createdAt": "2025-08-12T11:41:12.740Z"
+    },
+    {
+      "id": "notif_1755491154294_yy89bqu5i",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with George Miller on 8/17/2025",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "1",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T04:25:54.295Z"
+    },
+    {
+      "id": "notif_1755491404233_6uf2syj2v",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with George Miller on 8/17/2025",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "1",
+      "patientId": "patient_5",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T04:30:04.233Z"
+    },
+    {
+      "id": "notif_1755491435947_70dww4tp3",
+      "title": "Appointment Updated",
+      "message": "Appointment with George Miller has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "1",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T04:30:35.947Z"
+    },
+    {
+      "id": "notif_1755499213910_3xr5gm2mx",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with John Doe has been cancelled",
+      "type": "appointment",
+      "toUserId": "1",
+      "fromUserId": "2",
+      "priority": "high",
+      "isRead": false,
+      "createdAt": "2025-08-18T06:40:13.910Z"
+    },
+    {
+      "id": "notif_1755499239698_okkye6m42",
+      "title": "Appointment Updated",
+      "message": "Appointment with John Doe has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "1",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T06:40:39.698Z"
+    },
+    {
+      "id": "notif_1755499287805_yppvq0zvg",
+      "title": "Appointment Updated",
+      "message": "Appointment with Jane Smith has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "1",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T06:41:27.805Z"
+    },
+    {
+      "id": "notif_1755499414364_zpyzngjjz",
+      "title": "Appointment Updated",
+      "message": "Appointment with Jane Smith has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "1",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T06:43:34.364Z"
+    },
+    {
+      "id": "notif_1755499806785_n9uce5i5u",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with Jane Smith has been cancelled",
+      "type": "appointment",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "2",
+      "priority": "high",
+      "isRead": true,
+      "createdAt": "2025-08-18T06:50:06.785Z"
+    },
+    {
+      "id": "notif_1755499989488_dkdq8tcq3",
+      "title": "Appointment Updated",
+      "message": "Appointment with George Miller has been updated",
+      "type": "appointment",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "2",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T06:53:09.488Z"
+    },
+    {
+      "id": "notif_1755500011981_u3fowhjps",
+      "title": "Appointment Updated",
+      "message": "Appointment with George Miller has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T06:53:31.981Z"
+    },
+    {
+      "id": "notif_1755501105745_kk6tk4ydl",
+      "title": "Appointment Updated",
+      "message": "Appointment with Jane Smith has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "patient_2",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T07:11:45.745Z"
+    },
+    {
+      "id": "notif_1755501122224_bfxdex8pv",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with Jane Smith has been cancelled",
+      "type": "appointment",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "2",
+      "patientId": "patient_2",
+      "priority": "high",
+      "isRead": true,
+      "createdAt": "2025-08-18T07:12:02.224Z"
+    },
+    {
+      "id": "notif_1755501666913_heoedwi8g",
+      "title": "Consultation Started",
+      "message": "Consultation with George Miller has started",
+      "type": "consultation",
+      "toUserId": "2",
+      "fromUserId": "2",
+      "consultationId": "apt_1755491404231",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T07:21:06.913Z"
+    },
+    {
+      "id": "notif_1755501965315_5l5wrf5jl",
+      "title": "Consultation Completed",
+      "message": "Consultation with George Miller has been completed",
+      "type": "consultation",
+      "toUserId": "2",
+      "fromUserId": "2",
+      "consultationId": "cons_1755501965313",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T07:26:05.315Z"
+    },
+    {
+      "id": "notif_1755502658614_gfqw9xnrv",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with Emily Carter on 8/18/2025",
+      "type": "appointment",
+      "toUserId": "4",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "patient_4",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T07:37:38.614Z"
+    },
+    {
+      "id": "notif_1755502761113_jhaymos9w",
+      "title": "Appointment Updated",
+      "message": "Appointment with Emily Carter has been updated",
+      "type": "appointment",
+      "toUserId": "4",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "patient_4",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T07:39:21.114Z"
+    },
+    {
+      "id": "notif_1755502792606_upriq5ya2",
+      "title": "Appointment Updated",
+      "message": "Appointment with Emily Carter has been updated",
+      "type": "appointment",
+      "toUserId": "4",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "patient_4",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T07:39:52.606Z"
+    },
+    {
+      "id": "notif_1755502850379_d1i4kb7q1",
+      "title": "Appointment Updated",
+      "message": "Appointment with Lucas Martinez has been updated",
+      "type": "appointment",
+      "toUserId": "4",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "patient_8",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T07:40:50.379Z"
+    },
+    {
+      "id": "notif_1755503446665_l6k6wndta",
+      "title": "New User Account Created",
+      "message": "New user account has been created for Mishal Fatima",
+      "type": "user",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T07:50:46.665Z"
+    },
+    {
+      "id": "notif_1755504674348_mq78ck39h",
+      "title": "New User Account Created",
+      "message": "New user account has been created for Mishal Fatima",
+      "type": "user",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "apt_1753765295252",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T08:11:14.348Z"
+    },
+    {
+      "id": "notif_1755505039720_31ld2jnuk",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with Ahmed Raza on 8/18/2025",
+      "type": "appointment",
+      "toUserId": "apt_1755504674347",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "e803",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T08:17:19.720Z"
+    },
+    {
+      "id": "notif_1755510263045_9ckch5x3a",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with Ahmed Raza on 8/18/2025",
+      "type": "appointment",
+      "toUserId": "apt_1755504674347",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "1404",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T09:44:23.045Z"
+    },
+    {
+      "id": "notif_1755511024833_l4hv5f7ya",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with Ahmed Raza on 8/18/2025",
+      "type": "appointment",
+      "toUserId": "apt_1755504674347",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "65a5",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-18T09:57:04.833Z"
+    },
+    {
+      "id": "notif_1755578578166_6o69f1dwt",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with Ayaan Ali on 8/16/2025",
+      "type": "appointment",
+      "toUserId": "4",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "559e",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-19T04:42:58.166Z"
+    },
+    {
+      "id": "notif_1755578628159_l5ox6c5wz",
+      "title": "Appointment Updated",
+      "message": "Appointment with Ayaan Ali has been updated",
+      "type": "appointment",
+      "toUserId": "",
+      "fromUserId": "4",
+      "patientId": "559e",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-19T04:43:48.159Z"
+    },
+    {
+      "id": "notif_1755579962116_gjhchtdln",
+      "title": "Appointment Updated",
+      "message": "Appointment with Ayaan Ali has been updated",
+      "type": "appointment",
+      "toUserId": "",
+      "fromUserId": "4",
+      "patientId": "559e",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-19T05:06:02.116Z"
+    },
+    {
+      "id": "notif_1755580162982_vlsnj9mw1",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with Ayaan Ali has been cancelled",
+      "type": "appointment",
+      "fromUserId": "4",
+      "patientId": "559e",
+      "priority": "high",
+      "isRead": true,
+      "createdAt": "2025-08-19T05:09:22.982Z"
+    },
+    {
+      "id": "notif_1755580272246_ypsvpy3hv",
+      "title": "Appointment Updated",
+      "message": "Appointment with Ayaan Ali has been updated",
+      "type": "appointment",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "4",
+      "patientId": "559e",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-19T05:11:12.246Z"
+    },
+    {
+      "id": "notif_1755580614231_53qhc77om",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with Ayaan Ali has been cancelled",
+      "type": "appointment",
+      "toUserId": "4",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "559e",
+      "priority": "high",
+      "isRead": true,
+      "createdAt": "2025-08-19T05:16:54.231Z"
+    },
+    {
+      "id": "notif_1755580629168_k5s9fmbyp",
+      "title": "Appointment Updated",
+      "message": "Appointment with Ayaan Ali has been updated",
+      "type": "appointment",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "4",
+      "patientId": "559e",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-19T05:17:09.168Z"
+    },
+    {
+      "id": "notif_1755580781508_8deo1iq63",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with Ayaan Ali has been cancelled",
+      "type": "appointment",
+      "toUserId": "4",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "559e",
+      "priority": "high",
+      "isRead": true,
+      "createdAt": "2025-08-19T05:19:41.508Z"
+    },
+    {
+      "id": "notif_1755580795957_tw5ek8qlm",
+      "title": "Appointment Updated",
+      "message": "Appointment with Ayaan Ali has been updated",
+      "type": "appointment",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "4",
+      "patientId": "559e",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-19T05:19:55.957Z"
+    },
+    {
+      "id": "notif_1755583898740_o6dj3ij6w",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with Ayaan Ali has been cancelled",
+      "type": "appointment",
+      "toUserId": "4",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "559e",
+      "priority": "high",
+      "isRead": true,
+      "createdAt": "2025-08-19T06:11:38.740Z"
+    },
+    {
+      "id": "notif_1755583907872_2s821zvoe",
+      "title": "Appointment Updated",
+      "message": "Appointment with Ayaan Ali has been updated",
+      "type": "appointment",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "4",
+      "patientId": "559e",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-19T06:11:47.872Z"
+    },
+    {
+      "id": "notif_1755583938797_3ra93z0ul",
+      "title": "Consultation Started",
+      "message": "Consultation with Emily Carter has started",
+      "type": "consultation",
+      "toUserId": "4",
+      "fromUserId": "4",
+      "consultationId": "apt_1755502658611",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-19T06:12:18.797Z"
+    },
+    {
+      "id": "notif_1755583988190_ntmoa1vlm",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with Lucas Martinez on 8/18/2025",
+      "type": "appointment",
+      "toUserId": "4",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "patient_8",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-19T06:13:08.190Z"
+    },
+    {
+      "id": "notif_1755584374784_0sb85bs1t",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with Lucas Martinez on 8/18/2025",
+      "type": "appointment",
+      "toUserId": "4",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "patient_8",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-19T06:19:34.784Z"
+    },
+    {
+      "id": "notif_1755584420796_7sqt797l3",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with Lucas Martinez has been cancelled",
+      "type": "appointment",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "4",
+      "patientId": "patient_8",
+      "priority": "high",
+      "isRead": false,
+      "createdAt": "2025-08-19T06:20:20.797Z"
+    },
+    {
+      "id": "notif_1755584442793_fdzr4kslu",
+      "title": "Appointment Updated",
+      "message": "Appointment with Lucas Martinez has been updated",
+      "type": "appointment",
+      "toUserId": "4",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "patient_8",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-19T06:20:42.793Z"
+    },
+    {
+      "id": "notif_1755584457609_nzo9j42wa",
+      "title": "Consultation Started",
+      "message": "Consultation with Lucas Martinez has started",
+      "type": "consultation",
+      "toUserId": "4",
+      "fromUserId": "4",
+      "consultationId": "apt_1755584374637",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-19T06:20:57.609Z"
+    },
+    {
+      "id": "notif_1755585385378_f62qn037w",
+      "title": "Consultation Started",
+      "message": "Consultation with Lucas Martinez has started",
+      "type": "consultation",
+      "toUserId": "4",
+      "fromUserId": "4",
+      "consultationId": "apt_1755584374637",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-19T06:36:25.378Z"
+    },
+    {
+      "id": "notif_1755585519638_mn9sn3rkg",
+      "title": "Follow-up Required",
+      "message": "Follow-up consultation required for Lucas Martinez",
+      "type": "followup",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "4",
+      "consultationId": "cons_1755585519636",
+      "priority": "high",
+      "isRead": false,
+      "createdAt": "2025-08-19T06:38:39.638Z"
+    },
+    {
+      "id": "notif_1755585521188_2etjdfeqr",
+      "title": "Consultation Completed",
+      "message": "Consultation with Lucas Martinez has been completed",
+      "type": "consultation",
+      "toUserId": "4",
+      "fromUserId": "4",
+      "consultationId": "cons_1755585519636",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-19T06:38:41.188Z"
+    },
+    {
+      "id": "notif_1755588384396_heo6if6y7",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with Ahmed Raza on 8/19/2025",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "patientId": "65a5",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-19T07:26:24.396Z"
+    },
+    {
+      "id": "notif_1755588411502_s36lgsdvz",
+      "title": "Consultation Started",
+      "message": "Consultation with Ahmed Raza has started",
+      "type": "consultation",
+      "toUserId": "2",
+      "fromUserId": "2",
+      "consultationId": "apt_1755588384263",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-19T07:26:51.502Z"
+    },
+    {
+      "id": "notif_1755684978145_wobp625n0",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with Ahmed Raza has been cancelled",
+      "type": "appointment",
+      "toUserId": "apt_1753765295252",
+      "fromUserId": "2",
+      "patientId": "65a5",
+      "priority": "high",
+      "isRead": false,
+      "createdAt": "2025-08-20T10:16:18.146Z"
+    },
+    {
+      "id": "notif_1755758879202_kkqxvkw22",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with Ahmed Raza on 8/21/2025",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "appointmentId": "apt_1755758878905",
+      "patientId": "65a5",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-21T06:47:59.202Z"
+    },
+    {
+      "id": "notif_1755759253746_ol7f094k2",
+      "title": "Appointment Cancelled",
+      "message": "Appointment with Ahmed Raza has been cancelled",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "appointmentId": "apt_1755758878905",
+      "patientId": "65a5",
+      "priority": "high",
+      "isRead": true,
+      "createdAt": "2025-08-21T06:54:13.746Z"
+    },
+    {
+      "id": "notif_1755759854192_98c515b6n",
+      "title": "Appointment Updated",
+      "message": "Appointment with Ahmed Raza has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "appointmentId": "apt_1755758878905",
+      "patientId": "65a5",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-21T07:04:14.192Z"
+    },
+    {
+      "id": "notif_1755761818975_cyjepf29s",
+      "title": "Consultation Started",
+      "message": "Consultation with Ahmed Raza has started",
+      "type": "consultation",
+      "toUserId": "2",
+      "fromUserId": "2",
+      "consultationId": "apt_1755758878905",
+      "priority": "medium",
+      "isRead": true,
+      "createdAt": "2025-08-21T07:36:58.975Z"
+    },
+    {
+      "id": "notif_1755772917158_gl5bm0t82",
+      "title": "Consultation Started",
+      "message": "Consultation with Ahmed Raza has started",
+      "type": "consultation",
+      "toUserId": "2",
+      "fromUserId": "2",
+      "consultationId": "apt_1755758878905",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-21T10:41:57.158Z"
+    },
+    {
+      "id": "notif_1755860871745_ob4s0rd5a",
+      "title": "New Appointment Scheduled",
+      "message": "A new appointment has been scheduled with Robert Johnson on 8/22/2025",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "appointmentId": "apt_1755860871593",
+      "patientId": "patient_3",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-22T11:07:51.746Z"
+    },
+    {
+      "id": "notif_1755860990448_c07rkyl2u",
+      "title": "Consultation Started",
+      "message": "Consultation with Robert Johnson has started",
+      "type": "consultation",
+      "toUserId": "2",
+      "fromUserId": "2",
+      "consultationId": "apt_1755860871593",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-22T11:09:50.448Z"
+    },
+    {
+      "id": "notif_1756096407279_srucf8nlp",
+      "title": "Appointment Updated",
+      "message": "Appointment with Robert Johnson has been updated",
+      "type": "appointment",
+      "toUserId": "2",
+      "fromUserId": "apt_1753765295252",
+      "appointmentId": "apt_1755860871593",
+      "patientId": "patient_3",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-25T04:33:27.279Z"
+    },
+    {
+      "id": "notif_1756096420630_tdiyf1p17",
+      "title": "Consultation Started",
+      "message": "Consultation with Robert Johnson has started",
+      "type": "consultation",
+      "toUserId": "2",
+      "fromUserId": "2",
+      "consultationId": "apt_1755860871593",
+      "priority": "medium",
+      "isRead": false,
+      "createdAt": "2025-08-25T04:33:40.630Z"
+    }
+  ],
+  "uploads": []
+}

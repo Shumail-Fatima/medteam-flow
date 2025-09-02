@@ -1,13 +1,45 @@
 // Redux slice for managing patient state
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { Patient } from '../../types/appointment';
-import patientsData from '../../data/Patients.json';
+import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import type { Patient } from '../../types/medical';
+import type { ExtendedPatient } from '../../types/medical';
+import { ENDPOINTS } from '../../constants/apiConstants';
+import { apiClient } from '../../utils/apiClient';
 
+const API_PATH = ENDPOINTS.PATIENTS;
 interface PatientState {
-  patients: Patient[];
+  // patients: Patient[];
+  patients: ExtendedPatient[];
   loading: boolean;
   error: string | null;
 }
+
+export const fetchPatients = createAsyncThunk('patients/fetchPatients', async () => {
+  const data = await apiClient.get<unknown>(API_PATH);
+  return Array.isArray(data) ? data : (data as any).patients ?? (data as any).Patients ?? [];
+});
+
+export const addPatientAsync = createAsyncThunk(
+  'patients/addPatient',
+  async (patient: Patient) => {
+    return await apiClient.post<Patient, Patient>(API_PATH, patient);
+  }
+);
+
+export const updatePatientAsync = createAsyncThunk(
+  'patients/updatePatient',
+  async (patient: Patient) => {
+    const response = await apiClient.put<Patient, Patient>(`${API_PATH}/${patient.id}`, patient);
+    return response;
+  }
+);
+
+export const deletePatientAsync = createAsyncThunk(
+  'patients/deletePatient',
+  async (patientId: string) => {
+    await apiClient.delete<void>(`${API_PATH}/${patientId}`);
+    return patientId as unknown as Patient; // keep reducer shape below but we will adjust
+  }
+);
 
 // Calculate age from date of birth
 const calculateAge = (dateOfBirth: string): number => {
@@ -25,10 +57,7 @@ const calculateAge = (dateOfBirth: string): number => {
 
 // Initial state with patients loaded from JSON data and age calculated
 const initialState: PatientState = {
-  patients: patientsData.map(patient => ({
-    ...patient,
-    age: calculateAge(patient.dateOfBirth)
-  })) as Patient[],
+  patients: [],
   loading: false,
   error: null,
 };
@@ -40,20 +69,38 @@ const patientSlice = createSlice({
   reducers: {
     // Add a new patient to the state
     addPatient: (state, action: PayloadAction<Patient>) => {
-      const patientWithAge = {
+      // const patientWithAge = {
+      //   ...action.payload,
+      //   age: calculateAge(action.payload.dateOfBirth)
+      // };
+      const normalizedEmergency = Array.isArray(action.payload.emergencyContact)
+        ? action.payload.emergencyContact[0]
+        : (action.payload as any).emergencyContact;
+      const patientWithAge: ExtendedPatient = {
         ...action.payload,
-        age: calculateAge(action.payload.dateOfBirth)
-      };
+        emergencyContact: normalizedEmergency as any,
+        age: calculateAge(action.payload.dateOfBirth),
+        medicalHistory: [],
+        allergies: action.payload.allergies ?? [],
+        createdAt: new Date().toISOString(),
+      } as any;
       state.patients.push(patientWithAge);
     },
     // Update an existing patient by ID
     updatePatient: (state, action: PayloadAction<Patient>) => {
       const index = state.patients.findIndex(patient => patient.id === action.payload.id);
       if (index !== -1) {
-        const patientWithAge = {
+        const normalizedEmergency = Array.isArray(action.payload.emergencyContact)
+          ? action.payload.emergencyContact[0]
+          : (action.payload as any).emergencyContact;
+        const patientWithAge: ExtendedPatient = {
           ...action.payload,
-          age: calculateAge(action.payload.dateOfBirth)
-        };
+          emergencyContact: normalizedEmergency as any,
+          age: calculateAge(action.payload.dateOfBirth),
+          medicalHistory: state.patients[index].medicalHistory ?? [],
+          allergies: action.payload.allergies ?? state.patients[index].allergies ?? [],
+          createdAt: state.patients[index].createdAt ?? new Date().toISOString(),
+        } as any;
         state.patients[index] = patientWithAge;
       }
     },
@@ -69,6 +116,96 @@ const patientSlice = createSlice({
     setError: (state, action: PayloadAction<string | null>) => {
       state.error = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchPatients.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchPatients.fulfilled, (state, action: PayloadAction<Patient[]>) => {
+        state.patients = action.payload.map(patient => ({
+          ...patient,
+          emergencyContact: Array.isArray((patient as any).emergencyContact)
+            ? ((patient as any).emergencyContact[0] ?? undefined)
+            : (patient as any).emergencyContact,
+          age: calculateAge(patient.dateOfBirth),
+          medicalHistory: [],
+          allergies: (patient as any).allergies ?? [],
+          createdAt: (patient as any).createdAt ?? new Date().toISOString(),
+        })) as any;
+        state.loading = false;
+      })
+      .addCase(fetchPatients.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to fetch patients';
+      });
+    builder
+      .addCase(addPatientAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+
+
+
+      .addCase(addPatientAsync.fulfilled, (state, action: PayloadAction<Patient>) => {
+        const patient = action.payload as any;
+        const normalizedEmergency = Array.isArray(patient.emergencyContact)
+          ? patient.emergencyContact[0]
+          : patient.emergencyContact;
+        state.patients.push({
+          ...patient,
+          emergencyContact: normalizedEmergency,
+          age: calculateAge(patient.dateOfBirth),
+          medicalHistory: patient.medicalHistory ?? [],
+          allergies: patient.allergies ?? [],
+          createdAt: patient.createdAt ?? new Date().toISOString(),
+        } as any);
+        state.loading = false;
+      })
+      .addCase(addPatientAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to add patient';
+      })
+      .addCase(updatePatientAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updatePatientAsync.fulfilled, (state, action: PayloadAction<Patient>) => {
+        const idx = state.patients.findIndex(p => p.id === action.payload.id);
+        if (idx !== -1) {
+          const p = action.payload as any;
+          const normalizedEmergency = Array.isArray(p.emergencyContact) ? p.emergencyContact[0] : p.emergencyContact;
+          state.patients[idx] = {
+            ...p,
+            emergencyContact: normalizedEmergency,
+            age: calculateAge(p.dateOfBirth),
+            medicalHistory: p.medicalHistory ?? state.patients[idx].medicalHistory ?? [],
+            allergies: p.allergies ?? state.patients[idx].allergies ?? [],
+            createdAt: state.patients[idx].createdAt ?? new Date().toISOString(),
+          } as any;
+        }
+        state.loading = false;
+      })
+      .addCase(updatePatientAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to update patient';
+      })
+      .addCase(deletePatientAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deletePatientAsync.fulfilled, (state, action: PayloadAction<any>) => {
+        state.patients = state.patients.filter(p => p.id !== action.payload);
+        state.loading = false;
+      })
+      .addCase(deletePatientAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to delete patient';
+      });
+
+
+
   },
 });
 

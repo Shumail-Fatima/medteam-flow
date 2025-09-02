@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import {
   Box,
   Drawer,
@@ -16,6 +16,7 @@ import {
   Divider,
   useTheme,
   useMediaQuery,
+  Badge,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -26,33 +27,62 @@ import {
   Settings as SettingsIcon,
   Support as SupportIcon,
   LocalHospital,
+  Dashboard as DashboardIcon,
+  Notifications as NotificationsIcon,
 } from '@mui/icons-material';
 import {Menu, MenuItem} from '@mui/material';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation} from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { rolePages } from '../RolePages';
+import { useState } from 'react';
+// import { useNotificationSocket } from '../../context/NotifSocketContext';
+import { useNotification } from '../../context/NotifSocketContext';
+import { createNotificationChannel } from '../../utils/NotificationChannel';
+import { useNotificationListener } from '../../hooks/useNotifListen';
 
 interface LayoutProps {
   children: React.ReactNode;
 }
-
-const drawerItems = [
-  { text: 'User Management', icon: <PeopleIcon />, path: '/admin/user-management' },
-  { text: 'Task Management', icon: <AssignmentIcon />, path: '/task-management' },
-  { text: 'Appointment', icon: <AssessmentIcon />, path: '/Appointment' },
-  { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
-  { text: 'Support', icon: <SupportIcon />, path: '/support' },
-];
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   //const [drawerOpen, setDrawerOpen] = React.useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useAuth();
+  //const drawerItems = user ? rolePages[user.roleName as keyof typeof rolePages] || [] : [];
+  const drawerItems = user ? rolePages[user.roleName as keyof typeof rolePages] || [] : [];
   const [anchorE1, setAnchorE1] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorE1);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [notifAnchorEl, setNotifAnchorEl] = React.useState<null | HTMLElement>(null);
+  const notifOpen = Boolean(notifAnchorEl);
+  //const { notifications, markAsRead, getUnreadCount } = useNotification();
+  const [notifications, setNotifications] = useState<any[]>([]);
+
+  // Real-time notification receiving logic
+  useEffect(() => {
+    const channel = createNotificationChannel();
+
+    channel.onmessage = (event) => {
+      setNotifications((prev) => [event.data, ...prev]);
+    };
+
+    return () => {
+      channel.close();
+    };
+  }, []);
+
+  // Fetch initial notifications when user is available
+  useEffect(() => {
+    if (user?.id) {
+      fetch(`http://localhost:8000/notifications?toUserId=${user.id}`)
+        .then(res => res.json())
+        .then(data => setNotifications(Array.isArray(data) ? data : []))
+        .catch(error => console.error('Error fetching initial notifications:', error));
+    }
+  }, [user?.id]);
 
   const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
@@ -62,6 +92,106 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const handleMenuClose = () => {
     setAnchorE1(null);
   }
+
+  const handleNotifClick = (event: React.MouseEvent<HTMLElement>) => {
+    setNotifAnchorEl(event.currentTarget);
+    
+    // Fetch existing notifications from server
+    if (user?.id) {
+      fetch(`http://localhost:8000/notifications?toUserId=${user.id}`)
+        .then(res => res.json())
+        .then(data => setNotifications(Array.isArray(data) ? data : []))
+        .catch(error => console.error('Error fetching notifications:', error));
+    }
+  }
+
+  //const handleNotifClick = (e: React.MouseEvent<HTMLElement>) => setNotifAnchorEl(e.currentTarget);
+
+  const handleNotifClose = () => {
+    setNotifAnchorEl(null);
+  }
+
+  const markNotificationAsRead = async (notificationId: string) => {
+    try {
+      const response = await fetch(`http://localhost:8000/notifications/${notificationId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ isRead: true }),
+      });
+
+      if (response.ok) {
+        // Update local state
+        setNotifications(prev => 
+          prev.map(notif => 
+            notif.id === notificationId 
+              ? { ...notif, isRead: true }
+              : notif
+          )
+        );
+      }
+    } catch (error) {
+      console.error('Error marking notification as read:', error);
+    }
+  };
+
+  const markAllNotificationsAsRead = async () => {
+    try {
+      const unreadNotifications = notifications.filter(notif => !notif.isRead);
+      
+      // Mark each unread notification as read
+      await Promise.all(
+        unreadNotifications.map(notif => 
+          fetch(`http://localhost:8000/notifications/${notif.id}`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ isRead: true }),
+          })
+        )
+      );
+
+      // Update local state
+      setNotifications(prev => 
+        prev.map(notif => ({ ...notif, isRead: true }))
+      );
+    } catch (error) {
+      console.error('Error marking all notifications as read:', error);
+    }
+  };
+
+  //const unreadCount = getUnreadCount();
+  const unreadCount = notifications.filter(notif => !notif.isRead).length;
+
+  const getNotificationPath = (notif: any) => {
+
+  switch (notif.type) {
+    case 'appointment':
+      // route with query so page can open the correct dialog
+      return notif.appointmentId 
+        ? `/Appointment?showModal=appointment&appointmentId=${encodeURIComponent(notif.appointmentId)}` 
+        : '/Appointment?showModal=appointment';
+    case 'consultation':
+      return notif.consultationId ? `/consultation/view/${notif.consultationId}` : '/consultations-records';
+    case 'task':
+      return '/task-management';
+    case 'followup':
+      return notif.patientId ? `/patients/${notif.patientId}` : '/patients';
+    default:
+      return '/';
+  }
+};
+
+// sort notifications by createdAt. most recent notifs at top
+const sortedNotifications = React.useMemo(() => {
+  return [...notifications].sort((a, b) => {
+    const at = new Date(a.createdAt).getTime();
+    const bt = new Date(b.createdAt).getTime();
+    return bt - at; // most recent first
+  });
+}, [notifications]);
 
   //const toggleDrawer = () => setDrawerOpen(!drawerOpen);
   const toggleDrawer = () => setMobileOpen(!mobileOpen);
@@ -78,16 +208,23 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     if (isMobile) {setMobileOpen(false)}
   };
 
+  function isSidebarSelected(itemPath: string, locationPath: string) {
+    if (itemPath === '/Appointment') return locationPath === '/Appointment' || (locationPath.startsWith('/consultation') && !locationPath.startsWith('/consultation-records') && !locationPath.startsWith('/consultations') && !locationPath.startsWith('/consultation/view'));
+    if (itemPath === '/consultations-records') return locationPath === '/consultations-records' || locationPath.startsWith('/consultation/view');
+    if (itemPath === '/patients') return locationPath === '/patients' || locationPath.startsWith('/patients/');
+    return locationPath === itemPath;
+  }
+
   const drawerWidth = 280;
   const drawerContent = (
-    <Box sx={{ width: 280 }} role="presentation">
+    <Box sx={{ width: 280, display: 'flex', flexDirection: 'column', height: '100%' }} role="presentation">
           
-          <List sx={{ pt: 5 }}>
+          <List sx={{ pt: 5, flexGrow: 1 }}>
             {drawerItems.map((item) => (
-              <ListItem key={item.text} disablePadding sx={{ px: 1, mb: 0.5 }}>
+              <ListItem key={item.label} disablePadding sx={{ px: 1, mb: 0.5 }}>
                 <ListItemButton
                   onClick={() => handleNavigation(item.path)}
-                  selected={location.pathname === item.path}
+                  selected={isSidebarSelected(item.path, location.pathname)}
                   sx={{
                     borderRadius: 2,
                     '&.Mui-selected': {
@@ -112,14 +249,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   <ListItemIcon sx={{ minWidth: 40 }}>
                     {item.icon}
                   </ListItemIcon>
-                  <ListItemText primary={item.text} />
+                  <ListItemText primary={item.label} />
                 </ListItemButton>
               </ListItem>
             ))}
           </List>
 
-          {/* Sticky Logout at bottom
-          tried to move the logout to the bottom of sidebar */}
+          {/* Sticky Logout at bottom */}
           <Box sx={{ mt: 'auto' }}>
             <List>
               <ListItem disablePadding>
@@ -149,7 +285,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         open={mobileOpen}
         onClose={toggleDrawer}
         ModalProps={{ keepMounted: true }}
-        sx={{ '& .MuiDrawer-paper': { width: drawerWidth, paddingTop: '80px' } }}
+        sx={{ '& .MuiDrawer-paper': { width: drawerWidth, paddingTop: '80px', display: 'flex', flexDirection: 'column' } }}
       >
         {drawerContent}
       </Drawer>
@@ -164,6 +300,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             width: drawerWidth,
             top: 64,
             height: 'calc(100% - 64px)',
+            display: 'flex',
+            flexDirection: 'column',
           },
         }}
       >
@@ -173,8 +311,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   }
 };
 
-  return (
-    <Box sx={{ display: 'flex' }}>
+  const headerBar = () => {
+    return(
       <AppBar 
         position="fixed" 
         sx={{ 
@@ -201,17 +339,48 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           {/* from here till toolbar tag is for adding a dropdown/menu from the user 
           icon on header. also has logout as a menu option */}
           <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
+              {/* {unreadCount > 0 && ( */}
+              <Badge badgeContent={unreadCount} color="error" >
+                <IconButton 
+                  onClick={handleNotifClick}
+                  sx={{
+                    ...(unreadCount > 0 && {
+                      animation: 'pulse 2s infinite',
+                      '@keyframes pulse': {
+                        '0%': {
+                          transform: 'scale(1)',
+                        },
+                        '50%': {
+                          transform: 'scale(1.1)',
+                        },
+                        '100%': {
+                          transform: 'scale(1)',
+                        },
+                      },
+                    }),
+                  }}
+                >
+                  <NotificationsIcon htmlColor='rgb(254 254 254 / 87%)' />
+                </IconButton>
+              </Badge>
+          {/* )} */}
+          </Box>
             <IconButton onClick={handleMenuOpen} sx={{ p: 0 }}>
-              <Avatar sx={{ width: 32, height: 32, bgcolor: 'rgba(255,255,255,0.2)' }}>
+              <Avatar sx={{ width: 32, height: 32, bgcolor: 'rgba(255, 255, 255, 0.2)' }}>
                 {user?.name.charAt(0).toUpperCase()}
               </Avatar>
             </IconButton>
             <Box sx={{ ml: 1 }}>
-              <Typography variant="body2" sx={{ ml: 0, cursor: 'pointer' }}>
+              <Typography variant="body2" sx={{ ml: 0, cursor: 'pointer', lineHeight: 0.5, mt: 1}}>
                 {/*user?.name*/}
                 {user && capitalize(user.name)}
               </Typography>
-              <Typography variant="caption" color="text">
+              <Typography variant="caption" color="text"
+                  sx={{
+                    lineHeight: 0,
+                    mt: '1px',
+                  }}>
                 {user?.roleName}
               </Typography>
             </Box>
@@ -233,9 +402,86 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 Logout
               </MenuItem>
             </Menu>
+
+<Menu
+  anchorEl={notifAnchorEl}
+  open={Boolean(notifAnchorEl)}
+  onClose={handleNotifClose}
+  anchorOrigin={{
+    vertical: 'bottom',
+    horizontal: 'right',
+  }}
+  transformOrigin={{
+    vertical: 'top',
+    horizontal: 'right',
+  }}
+  PaperProps={{
+    sx: {
+      maxHeight: 400,
+      width: 350,
+    }
+  }}
+>
+  {sortedNotifications.length === 0 ? (
+    <MenuItem disabled>No notifications</MenuItem>
+  ) : (
+    <>
+      {unreadCount > 0 && (
+        <MenuItem onClick={markAllNotificationsAsRead}>
+          <Typography variant="body2" color="primary">
+            Mark all as read ({unreadCount})
+          </Typography>
+        </MenuItem>
+      )}
+      {sortedNotifications.map((notif) => (
+        <MenuItem
+          key={notif.id}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleNotifClose();
+            
+            // Mark as read if not already read
+            if (!notif.isRead) {
+              markNotificationAsRead(notif.id);
+            }
+            
+            // Navigate to the appropriate page
+            navigate(getNotificationPath(notif));
+          }}
+          sx={{
+            backgroundColor: notif.isRead ? 'transparent' : 'action.hover',
+            '&:hover': {
+              backgroundColor: 'action.selected',
+            },
+          }}
+        >
+          <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+            <Typography variant="subtitle2" fontWeight={notif.isRead ? 'normal' : 'bold'}>
+              {notif.title}
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ wordBreak: 'break-word' }}>
+              {notif.message}
+            </Typography>
+            <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5 }}>
+              {new Date(notif.createdAt).toLocaleString()}
+            </Typography>
+          </Box>
+        </MenuItem>
+      ))}
+    </>
+  )}
+</Menu>
+
           </Box>
         </Toolbar>
       </AppBar>
+    );
+  };
+
+  return (
+    <Box sx={{ display: 'flex' }}>
+      
+      {headerBar()}
 
       {/* Drawer – Responsive */}
       <Box
@@ -249,7 +495,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         component="main" 
         sx={{ 
           flexGrow: 1, 
-          p: {xs: 2, md: 4}, 
+          p: {xs: 2, md: 8}, 
           mt: 8,
           bgcolor: '#f5f5f5',
           minHeight: 'calc(100vh - 64px)',

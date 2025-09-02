@@ -14,10 +14,13 @@ export interface Appointment {
   patientAge: number;
   doctorId: string;
   doctorName: string;
+  createdById?: string;
   appointmentSlot: string;
   reason?: string;
   createdAt: string;
   specialtyName?: string;
+  status: "scheduled" | "completed" | "cancelled" | "no-show";
+  consultationCompleted: boolean;
 }
 
 export interface DoctorSpecialty {
@@ -35,12 +38,15 @@ export interface DoctorOption {
   description?: string;
 }
 
+export type AppointmentStatus = "scheduled" | "completed" | "cancelled" | "no-show";
+
 export interface AppointmentFormData {
   patientId: string;
   doctorId: string;
   appointmentSlot: string;
   reason?: string;
   specialtyId?: string;
+  status: "scheduled" | "completed" | "cancelled" | "no-show";
 }
 
 export interface PatientFormData {
