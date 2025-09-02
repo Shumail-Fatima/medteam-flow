@@ -41,40 +41,10 @@ export const NotificationProvider: React.FC<{children: React.ReactNode}> = ({ ch
   const ws = useRef<WebSocket | null>(null);
   const channel = createNotificationChannel();
 
-  // Initialize WebSocket connection
-  // useEffect(() => {
-  //   ws.current = new WebSocket('ws://localhost:8000');
-    
-  //   ws.current.onopen = () => {
-  //     console.log('WebSocket connected for notifications');
-  //   };
-    
-  //   ws.current.onmessage = (event) => {
-  //     try {
-  //       const data = JSON.parse(event.data);
-  //       if (data.type === 'notification') {
-  //         // Handle incoming real-time notifications
-  //         dispatch(addNotification(data.payload))
-  //       }
-  //     } catch (error) {
-  //       console.error('Error parsing WebSocket message:', error);
-  //     }
-  //   };
-    
-  //   ws.current.onclose = () => {
-  //     console.log('WebSocket disconnected');
-  //   };
-    
-  //   ws.current.onerror = (error) => {
-  //     console.error('WebSocket error:', error);
-  //   };
+  /* check before this commit to see the websocket implementation in branch fastApiBackend the commit in question is below 
+     the commit = feat: add new user account and notification entries for Robert Dale; update WebSocket implementation comments in NotifSocketContext
+  */
 
-  //   return () => {
-  //     if (ws.current) {
-  //       ws.current.close();
-  //     }
-  //   };
-  // }, [dispatch]);
 
   // Send notification function
   const sendNotification = async (notification: Omit<Notification, 'id' | 'isRead' | 'createdAt'>) => {
@@ -100,7 +70,6 @@ export const NotificationProvider: React.FC<{children: React.ReactNode}> = ({ ch
       
       // Send notification to doctor
       channel.postMessage(notification);
-      alert('Appointment created and notification sent!');
 
       // Save to backend server (for persistence)
       await fetch('http://localhost:8000/notifications', {

@@ -138,6 +138,17 @@
       "roleName": "nurse",
       "createdAt": "2025-09-01T08:01:13.625Z",
       "specialtyId": "4"
+    },
+    {
+      "id": "apt_1756803213998",
+      "name": "Robert Dale",
+      "username": "Dr Robert Dale",
+      "email": "robert.dale@example.com",
+      "password": "doctor123",
+      "roleId": 2,
+      "roleName": "doctor",
+      "createdAt": "2025-09-02T08:53:33.998Z",
+      "specialtyId": "8"
     }
   ]
 }
