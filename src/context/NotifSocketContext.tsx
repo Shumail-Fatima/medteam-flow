@@ -1,5 +1,5 @@
 // NotificationContext.tsx
-import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
+import React, { createContext, useContext, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, RootState } from '../store/Store';
 import { addNotification, markNotificationAsRead } from '../store/slices/NotificationSlice';
