@@ -1,3 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Environment files
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
 # Logs
 logs
 *.log

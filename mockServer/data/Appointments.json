@@ -440,7 +440,7 @@
       "doctorName": "Dr. Sarah Wilson",
       "appointmentSlot": "2025-08-21T15:30:00Z",
       "reason": "visit",
-      "status": "cancelled",
+      "status": "no-show",
       "consultationCompleted": false,
       "createdAt": "2025-08-21T06:47:58.905Z",
       "specialtyName": "Cardiology",
@@ -595,6 +595,36 @@
       "createdAt": "2025-09-01T13:49:26.307Z",
       "specialtyName": "Orthopedics",
       "createdById": "apt_1753765295252"
+    },
+    {
+      "id": "apt_1775123354268",
+      "patientId": "patient_5",
+      "patientName": "George Miller",
+      "patientAge": 83,
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentSlot": "2026-04-25T11:00:00Z",
+      "reason": "first visit. pain in chest",
+      "status": "completed",
+      "consultationCompleted": true,
+      "createdAt": "2026-04-02T09:49:14.268Z",
+      "specialtyName": "Cardiology",
+      "createdById": "1"
+    },
+    {
+      "id": "apt_1775124286093",
+      "patientId": "patient_2",
+      "patientName": "Jane Smith",
+      "patientAge": 74,
+      "doctorId": "2",
+      "doctorName": "Dr. Sarah Wilson",
+      "appointmentSlot": "2026-04-25T11:00:00Z",
+      "reason": "lskdnckle",
+      "status": "cancelled",
+      "consultationCompleted": false,
+      "createdAt": "2026-04-02T10:04:46.093Z",
+      "specialtyName": "Cardiology",
+      "createdById": "1"
     }
   ]
 }

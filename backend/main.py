@@ -5,7 +5,7 @@ from routers import patients
 from routers import appointment
 from routers import notifications
 from routers import consultation
-from routers import users, tasks, roles, uploads
+from routers import Users, Tasks, Roles, uploads
 
 app = FastAPI()
 
@@ -27,9 +27,9 @@ app.include_router(patients.router)
 app.include_router(appointment.router)
 app.include_router(notifications.router)
 app.include_router(consultation.router)
-app.include_router(users.router)
-app.include_router(tasks.router)
-app.include_router(roles.router)
+app.include_router(Users.router)
+app.include_router(Tasks.router)
+app.include_router(Roles.router)
 app.include_router(uploads.router)
 
 if __name__ == "__main__":
