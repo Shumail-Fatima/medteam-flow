@@ -1,6 +1,10 @@
 # Python
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
 .venv/
 venv/
 
@@ -21,10 +25,12 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+#Node
 node_modules
 dist
 dist-ssr
 *.local
+build
 
 # Editor directories and files
 .vscode/*
@@ -37,7 +43,13 @@ dist-ssr
 *.sln
 *.sw?
 
+# Environment files
 .env
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
 
 
 

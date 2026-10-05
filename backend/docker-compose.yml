@@ -1,0 +1,21 @@
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    container_name: medteam-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: medteam
+    ports:
+      - "5432:5432"
+    volumes:
+      - medteam_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d medteam"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  medteam_pgdata:
